@@ -1,2 +1,2 @@
 # whirlpool-gui
-GUI wrapper for Whirlpool-cli
+GUI wrapper for Whirlpool-cli.
