@@ -97,7 +97,9 @@ app.on('ready', async () => {
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 
-  backendService.startLocal()
+  if(false) {
+    backendService.startLocal()
+  }
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line

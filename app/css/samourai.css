@@ -1,0 +1,14 @@
+.btn-primary {
+  background-color: #700606;
+  border-color: #700606;
+}
+.btn-primary:hover {
+  background-color: #b71c1c;
+  border-color: #b71c1c;
+}
+.form-control:focus {
+  border-color: #b71c1c;
+}
+.page-middle {
+  margin-top:10%;
+}

@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("https://samouraiwallet.com/font/roboto/Roboto-Regular.eot?#iefix") format("embedded-opentype"), url("https://samouraiwallet.com/font/roboto/Roboto-Regular.woff2") format("woff2"), url("https://samouraiwallet.com/font/roboto/Roboto-Regular.woff") format("woff"), url("https://samouraiwallet.com/font/roboto/Roboto-Regular.ttf") format("truetype");
+  font-weight: 400;
+}
+.navbar .navbar-brand {
+  font-family: "Roboto";
+  font-size: 1.25rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+.navbar-brand img {
+  width:30px;
+}
+.sidebar .nav-link.active, .container-fluid a {
+  color: #700606;
+}
+.container-fluid a:hover {
+  color: #b71c1c;
+}
