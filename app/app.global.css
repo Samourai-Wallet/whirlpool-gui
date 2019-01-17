@@ -7,3 +7,35 @@
 @import './css/bootstrap-dashboard.css';
 @import './css/samourai.css';
 @import './css/dashboard.css';
+
+.statusPage {
+  font-size:0.9em;
+}
+.statusPage .btn-sm {
+  line-height: 1em !important;
+}
+
+.progress-bar {
+  font-weight:bold;
+}
+
+.navbar {
+  color:#fff !important;
+}
+
+.stats {
+  padding-top:1em;
+}
+
+.tablescroll {
+  overflow-y: scroll;
+  border-left:1px solid #700606;
+}
+
+.statusPage .tablescroll {
+  max-height: 300px;
+}
+
+.depositPage .tablescroll {
+  max-height: 500px;
+}

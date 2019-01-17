@@ -6,6 +6,7 @@ import ConfigPage from './containers/ConfigPage';
 import InitPage from './containers/InitPage';
 import StatusPage from './containers/StatusPage';
 import { Link } from "react-router-dom";
+import DepositPage from './containers/DepositPage';
 
 export default () => (
   <App>
@@ -14,10 +15,18 @@ export default () => (
         <div className="sidebar-sticky">
           <ul className="nav flex-column">
             <li className="nav-item">
+              <Link to={routes.DEPOSIT}>
+                <a className="nav-link">
+                  <span data-feather="plus"></span>
+                  Deposit (8)
+                </a>
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link to={routes.STATUS}>
                 <a className="nav-link">
                   <span data-feather="play"></span>
-                  Status
+                  Mix (10)
                 </a>
               </Link>
             </li>
@@ -37,6 +46,7 @@ export default () => (
 
         <Switch>
           <Route path={routes.STATUS} component={StatusPage} />
+          <Route path={routes.DEPOSIT} component={DepositPage} />
           <Route path={routes.CONFIG} component={ConfigPage} />
           <Route path={routes.INIT} component={InitPage} />
         </Switch>

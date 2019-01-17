@@ -6,6 +6,9 @@
   background-color: #b71c1c;
   border-color: #b71c1c;
 }
+.text-primary {
+  color: #700606 !important;
+}
 .form-control:focus {
   border-color: #b71c1c;
 }
