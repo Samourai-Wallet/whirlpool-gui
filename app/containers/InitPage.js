@@ -2,19 +2,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../constants/routes';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as CounterActions from '../actions/counter';
-
-function mapStateToProps(state) {
-  return {
-    counter: state.counter
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(CounterActions, dispatch);
-}
 
 class InitPage extends Component<Props> {
   props: Props;
@@ -143,6 +131,16 @@ class InitPage extends Component<Props> {
         }
       </div>
     );
+  }
+}
+function mapStateToProps(state) {
+  return {
+  };
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    dispatch
   }
 }
 

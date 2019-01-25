@@ -1,13 +1,14 @@
 // @flow
 import React, { Component } from 'react';
-import {Modal,Button} from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import './StatusPage.css';
 import * as Icon from 'react-feather';
+import { bindActionCreators } from 'redux';
+import { walletActions } from '../actions/wallet';
+import { connect } from 'react-redux';
+import walletService from '../services/walletService';
 
-type Props = {};
-
-export default class DepositPage extends Component<Props> {
-  props: Props;
+class DepositPage extends Component {
 
   constructor(props) {
     super(props)
@@ -114,164 +115,194 @@ export default class DepositPage extends Component<Props> {
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>
-              <small>9353e3c299b84fc3...02e0c:8</small>
-            </td>
-            <td>0.28</td>
-            <td>0.01btc</td>
-            <td><span className='text-primary'>TX0</span></td>
-            <td>
-              <div className="progress">
-                <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={{ width: '100%' }}>
-                  TX0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          {walletService.getUtxosDeposit().map((utxo,i) => {
+            return <tr key={i}>
+              <th scope="row">{(i+1)}</th>
+              <td>
+                <small>{utxo.hash}:{utxo.index}</small>
+              </td>
+              <td>{utxo.value}</td>
+              <td>-</td>
+              <td><span className='text-primary'>READY</span></td>
+              <td>
+
+              </td>
+              <td></td>
+              <td></td>
+              <td>
+
+              </td>
+            </tr>
+          })}
+          {false && <todo>
+            <tr>
+              <th scope="row">1</th>
+              <td>
+                <small>9353e3c299b84fc3...02e0c:8</small>
+              </td>
+              <td>0.28</td>
+              <td>0.01btc</td>
+              <td><span className='text-primary'>TX0</span></td>
+              <td>
+                <div className="progress">
+                  <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                       aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={{ width: '100%' }}>
+                    TX0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td>0/3</td>
-            <td>5s ago</td>
-            <td>
-              <button className='btn btn-sm btn-primary' title='Stop'><Icon.Square size={12}/></button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>
-              <small>198787d1085b1d94...c8476:1</small>
-            </td>
-            <td>0.64</td>
-            <td>-</td>
-            <td>READY</td>
-            <td>
+              </td>
+              <td>0/3</td>
+              <td>5s ago</td>
+              <td>
+                <button className='btn btn-sm btn-primary' title='Stop'><Icon.Square size={12}/></button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>
+                <small>198787d1085b1d94...c8476:1</small>
+              </td>
+              <td>0.64</td>
+              <td>-</td>
+              <td>READY</td>
+              <td>
 
-            </td>
-            <td>-</td>
-            <td>26d ago</td>
-            <td>
-              <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/></button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>
-              <small>198787d1085b1d94...c8476:1</small>
-            </td>
-            <td>0.014</td>
-            <td>-</td>
-            <td>READY</td>
-            <td>
+              </td>
+              <td>-</td>
+              <td>26d ago</td>
+              <td>
+                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>
+                <small>198787d1085b1d94...c8476:1</small>
+              </td>
+              <td>0.014</td>
+              <td>-</td>
+              <td>READY</td>
+              <td>
 
-            </td>
-            <td>-</td>
-            <td>31d ago</td>
-            <td>
-              <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/></button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">4</th>
-            <td>
-              <small>198787d1085b1d94...c8476:1</small>
-            </td>
-            <td>0.1241</td>
-            <td>-</td>
-            <td>READY</td>
-            <td>
+              </td>
+              <td>-</td>
+              <td>31d ago</td>
+              <td>
+                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">4</th>
+              <td>
+                <small>198787d1085b1d94...c8476:1</small>
+              </td>
+              <td>0.1241</td>
+              <td>-</td>
+              <td>READY</td>
+              <td>
 
-            </td>
-            <td>-</td>
-            <td>41d ago</td>
-            <td>
-              <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/></button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>
-              <small>198787d1085b1d94...c8476:1</small>
-            </td>
-            <td>0.0014</td>
-            <td>-</td>
-            <td>READY</td>
-            <td>
+              </td>
+              <td>-</td>
+              <td>41d ago</td>
+              <td>
+                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>
+                <small>198787d1085b1d94...c8476:1</small>
+              </td>
+              <td>0.0014</td>
+              <td>-</td>
+              <td>READY</td>
+              <td>
 
-            </td>
-            <td>-</td>
-            <td>73d ago</td>
-            <td>
-              <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/></button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">5</th>
-            <td>
-              <small>198787d1085b1d94...c8476:1</small>
-            </td>
-            <td>0.1083</td>
-            <td>-</td>
-            <td>READY</td>
-            <td>
+              </td>
+              <td>-</td>
+              <td>73d ago</td>
+              <td>
+                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">5</th>
+              <td>
+                <small>198787d1085b1d94...c8476:1</small>
+              </td>
+              <td>0.1083</td>
+              <td>-</td>
+              <td>READY</td>
+              <td>
 
-            </td>
-            <td>-</td>
-            <td>82d ago</td>
-            <td>
-              <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/></button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">6</th>
-            <td>
-              <small>198787d1085b1d94...c8476:1</small>
-            </td>
-            <td>0.31</td>
-            <td>-</td>
-            <td>READY</td>
-            <td>
+              </td>
+              <td>-</td>
+              <td>82d ago</td>
+              <td>
+                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">6</th>
+              <td>
+                <small>198787d1085b1d94...c8476:1</small>
+              </td>
+              <td>0.31</td>
+              <td>-</td>
+              <td>READY</td>
+              <td>
 
-            </td>
-            <td>-</td>
-            <td>26d ago</td>
-            <td>
-              <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/></button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">7</th>
-            <td>
-              <small>198787d1085b1d94...c8476:1</small>
-            </td>
-            <td>1.2</td>
-            <td>-</td>
-            <td>READY</td>
-            <td>
+              </td>
+              <td>-</td>
+              <td>26d ago</td>
+              <td>
+                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">7</th>
+              <td>
+                <small>198787d1085b1d94...c8476:1</small>
+              </td>
+              <td>1.2</td>
+              <td>-</td>
+              <td>READY</td>
+              <td>
 
-            </td>
-            <td>-</td>
-            <td>128d ago</td>
-            <td>
-              <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/></button>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">8</th>
-            <td>
-              <small>198787d1085b1d94...c8476:1</small>
-            </td>
-            <td>0.04</td>
-            <td>-</td>
-            <td>READY</td>
-            <td>
+              </td>
+              <td>-</td>
+              <td>128d ago</td>
+              <td>
+                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">8</th>
+              <td>
+                <small>198787d1085b1d94...c8476:1</small>
+              </td>
+              <td>0.04</td>
+              <td>-</td>
+              <td>READY</td>
+              <td>
 
-            </td>
-            <td>-</td>
-            <td>2 years ago</td>
-            <td>
-              <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/></button>
-            </td>
-          </tr>
+              </td>
+              <td>-</td>
+              <td>2 years ago</td>
+              <td>
+                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
+                </button>
+              </td>
+            </tr>
+          </todo>
+          }
           </tbody>
         </table>
         </div>
@@ -280,3 +311,21 @@ export default class DepositPage extends Component<Props> {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    wallet: state.wallet
+  };
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    dispatch,
+    walletActions: bindActionCreators(walletActions, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DepositPage);

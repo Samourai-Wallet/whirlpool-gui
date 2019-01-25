@@ -1,32 +1,79 @@
-import {exec} from 'child_process'
+import utils from './utils';
+import status from './status';
 
+const HOST = 'http://127.0.0.7:8080'
 
 class BackendService {
+  constructor () {
+    this.dispatch = undefined
+    this.sessid = undefined
+  }
 
-  startLocal () {
-    console.log('Starting local backend...')
+  init (dispatch) {
+    this.dispatch = dispatch
+  }
 
-    const args = "--listen --debug --network=test --pool=0.01btc --server=pool.whirl.mx:8081 --seed-passphrase=foo --seed-words='all all all all all all all all all all all all' --tor=false"
+  setSessid (sessid) {
+    console.log('cliService: setSessid', sessid)
+    this.sessid = sessid
+  }
 
-    const backendProc = exec('java -jar /zl/workspaces/whirlpool/whirlpool-client-cli/target/whirlpool-client-cli-develop-SNAPSHOT-run.jar '+args, undefined,
-      (error, stdout, stderr) => {
-        console.log('Backend stdout: ' + stdout);
-        console.log('Backend stderr: ' + stderr);
-        if(error !== null){
-          console.log('Backend exec error: ' + error);
-        }
-      }
-    )
-    console.log('Backend started...')
-    backendProc.on('exit', (code, sig) => {
-      // finishing
-      console.log('Backend exiting...')
-    })
-    backendProc.on('error', (error) => {
-      // error handling
-      console.log('Backend error...')
+  computeHeaders () {
+    const headers = {
+      'Content-Type': 'application/json'
+    }
+    if (this.sessid !== undefined) {
+      headers['X-SESSID'] = this.sessid
+    }
+    return headers
+  }
+
+  fetchBackend (url, method, jsonBody) {
+    return fetch(HOST + url, {
+      method,
+      headers: this.computeHeaders(),
+      body: jsonBody !== undefined ? JSON.stringify(jsonBody) : undefined
     })
   }
 
+  fetchJsonBackend (url, method, jsonBody) {
+    return utils.fetchJson(this.fetchBackend(url, method, jsonBody))
+  }
+
+  withStatus (mainLabel, label, executor, itemId) {
+    console.log(`=> req backend: ${mainLabel}: ${label}`)
+    return status.executeWithStatus(
+      mainLabel,
+      label,
+      executor,
+      this.dispatch,
+      itemId
+    )
+  }
+
+  session = {
+    login: (login, password) =>
+      this.withStatus('Login', 'Authenticate', () =>
+        this.fetchJsonBackend(
+          '/session/login',
+          'POST',
+          {
+            login,
+            password
+          },
+          'session.login'
+        )
+      ),
+    logout: () => this.fetchBackend('/session/logout', 'POST')
+  };
+
+  wallet = {
+    fetch: () => {
+      return this.withStatus('Wallet', 'Fetch wallet state', () =>
+        this.fetchJsonBackend('/wallet', 'GET')
+      )
+    }
+  };
 }
-export const backendService = new BackendService()
+const backendService = new BackendService()
+export default backendService

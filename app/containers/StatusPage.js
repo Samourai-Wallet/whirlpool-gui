@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import './StatusPage.css';
 import * as Icon from 'react-feather';
+import walletService from '../services/walletService';
 
 type Props = {};
 
@@ -38,6 +39,22 @@ export default class StatusPage extends Component<Props> {
           </tr>
           </thead>
           <tbody>
+          {walletService.getUtxosPremix().map((utxo,i) => {
+            return <tr key={i}>
+              <th scope="row">{(i+1)}</th>
+              <td>
+                <small>{utxo.hash}:{utxo.index}</small>
+              </td>
+              <td>{utxo.value}</td>
+              <td>-</td>
+              <td><span className='text-primary'></span></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          })}
+          {false && <todo>
           <tr>
             <th scope="row">1</th>
             <td><small>9353e3c299b84fc3...02e0c:3</small></td>
@@ -126,6 +143,7 @@ export default class StatusPage extends Component<Props> {
               <button className='btn btn-sm btn-primary' title='Stop'><Icon.Square size={12} /></button>
             </td>
           </tr>
+          </todo>}
           </tbody>
         </table>
         </div>
@@ -154,6 +172,21 @@ export default class StatusPage extends Component<Props> {
           </tr>
           </thead>
           <tbody>
+          {walletService.getUtxosPostmix().map((utxo,i) => {
+            return <tr key={i}>
+              <td>
+                <small>{utxo.hash}:{utxo.index}</small>
+              </td>
+              <td>{utxo.value}</td>
+              <td>-</td>
+              <td><span className='text-primary'></span></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          })}
+          {false && <todo>
           <tr>
             <td><small>9353e3c299b84f74...02e0c:3</small></td>
             <td>0.1</td>
@@ -214,6 +247,7 @@ export default class StatusPage extends Component<Props> {
               <button className='btn btn-sm btn-primary' title='Retry'><Icon.RefreshCw size={12} /></button>
             </td>
           </tr>
+          </todo>}
           </tbody>
         </table>
         </div>
