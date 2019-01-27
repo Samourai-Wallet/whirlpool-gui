@@ -1,3 +1,6 @@
+const AMOUNT_PRECISION = 4
+const BTC_TO_SAT = 100000000
+
 class Utils {
   constructor () {
   }
@@ -10,6 +13,26 @@ class Utils {
       }
       return json.then(Promise.reject.bind(Promise))
     })
+  }
+
+  sumUtxos (utxos) {
+    return utxos.reduce(function (sum, utxo) {
+      return sum + utxo.value;
+    }, 0);
+  }
+
+  scale (value, precision) {
+    const factor = Math.pow(10, precision)
+    return Math.floor(value * factor) / factor
+  }
+
+  toBtc (sats, scale = false) {
+    if (sats === 0) {
+      return 0
+    }
+    let valueBtc = sats / BTC_TO_SAT
+    if (scale === true) valueBtc = this.scale(valueBtc, AMOUNT_PRECISION)
+    return valueBtc
   }
 }
 

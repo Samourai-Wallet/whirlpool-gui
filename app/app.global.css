@@ -2,34 +2,33 @@
  * @NOTE: Prepend a `~` to css file paths that are in your node_modules
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
-@import "~@fortawesome/fontawesome-free/css/all.css";
-@import "~bootstrap/dist/css/bootstrap.min.css";
+@import '~bootstrap/dist/css/bootstrap.min.css';
 @import './css/bootstrap-dashboard.css';
 @import './css/samourai.css';
 @import './css/dashboard.css';
 
 .statusPage {
-  font-size:0.9em;
+  font-size: 0.9em;
 }
 .statusPage .btn-sm {
   line-height: 1em !important;
 }
 
 .progress-bar {
-  font-weight:bold;
+  font-weight: bold;
 }
 
 .navbar {
-  color:#fff !important;
+  color: #fff !important;
 }
 
 .stats {
-  padding-top:1em;
+  padding-top: 1em;
 }
 
 .tablescroll {
   overflow-y: scroll;
-  border-left:1px solid #700606;
+  border-left: 1px solid #700606;
 }
 
 .statusPage .tablescroll {

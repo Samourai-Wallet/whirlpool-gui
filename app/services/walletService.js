@@ -1,5 +1,5 @@
+import ifNot from 'if-not-running';
 import backendService from './backendService';
-import lockService from './lockService';
 
 const REFRESH_RATE = 10000;
 class WalletService {
@@ -10,7 +10,7 @@ class WalletService {
   }
 
   init (state, setState) {
-    lockService.lock('walletService:init', () => {
+    ifNot.run('walletService:init', () => {
       this.setState = setState
       if (this.state === undefined) {
         console.log('wallet: init...')
@@ -23,7 +23,7 @@ class WalletService {
       }
     })
     if (this.refreshTimeout === undefined) {
-      this.refreshTimeout = setTimeout(this.loadFromBackend.bind(this), REFRESH_RATE)
+      this.refreshTimeout = setInterval(this.loadFromBackend.bind(this), REFRESH_RATE)
     }
   }
 
@@ -56,9 +56,9 @@ class WalletService {
   }
 
   loadFromBackend () {
-    return lockService.lockPromise('walletService:loadFromBackend', () =>
+    return ifNot.run('walletService:loadFromBackend', () => {
       // fetch backend
-      backendService.wallet.fetch().then(wallet => {
+      return backendService.wallet.fetch().then(wallet => {
         // set state
         if (this.state === undefined) {
           console.log('walletService: initializing new state')
@@ -71,7 +71,7 @@ class WalletService {
         }
         this.pushState()
       })
-    )
+    })
   }
 
   pushState () {

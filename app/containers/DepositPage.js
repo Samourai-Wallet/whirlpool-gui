@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { walletActions } from '../actions/wallet';
 import { connect } from 'react-redux';
 import walletService from '../services/walletService';
+import utils from '../services/utils';
 
 class DepositPage extends Component {
 
@@ -40,6 +41,7 @@ class DepositPage extends Component {
   }
 
   render() {
+    const utxosDeposit = walletService.getUtxosDeposit()
     return (
       <div className='depositPage'>
         <Modal show={this.state.show} onHide={this.handleClose} animation={false}>
@@ -93,7 +95,7 @@ class DepositPage extends Component {
             <h2>Deposit</h2>
           </div>
           <div className='col-sm-4 stats'>
-            <span className='text-primary'>8 utxo deposit (2.04btc)</span>
+            <span className='text-primary'>{utxosDeposit.length} utxo deposit ({utils.toBtc(utils.sumUtxos(utxosDeposit))}btc)</span>
           </div>
           <div className='col-sm-4 stats'>
             <button className='btn btn-sm btn-primary' onClick={this.handleShow}><Icon.Plus size={12}/> Deposit</button>
@@ -115,13 +117,13 @@ class DepositPage extends Component {
           </tr>
           </thead>
           <tbody>
-          {walletService.getUtxosDeposit().map((utxo,i) => {
+          {utxosDeposit.map((utxo,i) => {
             return <tr key={i}>
               <th scope="row">{(i+1)}</th>
               <td>
                 <small>{utxo.hash}:{utxo.index}</small>
               </td>
-              <td>{utxo.value}</td>
+              <td>{utils.toBtc(utxo.value)}</td>
               <td>-</td>
               <td><span className='text-primary'>READY</span></td>
               <td>

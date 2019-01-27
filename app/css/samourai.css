@@ -13,5 +13,25 @@
   border-color: #b71c1c;
 }
 .page-middle {
-  margin-top:10%;
+  margin-top: 10%;
+}
+
+/* status */
+.status {
+  position: absolute;
+  left: 253px;
+  bottom: 0;
+  z-index: 999999;
+}
+.status .item {
+  width: 800px;
+  font-size: 0.8em;
+  background-color: #f0f2f5;
+}
+.status .item .label {
+  font-weight: bold;
+}
+.status .item .errorMessage {
+  font-weight: bold;
+  color: red;
 }

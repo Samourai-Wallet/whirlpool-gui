@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './StatusPage.css';
 import * as Icon from 'react-feather';
 import walletService from '../services/walletService';
+import utils from '../services/utils';
 
 type Props = {};
 
@@ -10,6 +11,8 @@ export default class StatusPage extends Component<Props> {
   props: Props;
 
   render() {
+    const utxosPremix = walletService.getUtxosPremix()
+    const utxosPostmix = walletService.getUtxosPostmix()
     return (
       <div className='statusPage'>
         <div class='row'>
@@ -17,13 +20,13 @@ export default class StatusPage extends Component<Props> {
             <h2>Premix</h2>
           </div>
           <div class='col-sm-4 stats'>
-            <span class='text-primary'>4 utxo mixing (1.58btc) · 0.16btc volume</span>
+            <span class='text-primary'>{utxosPremix.length} utxo mixing ({utils.toBtc(utils.sumUtxos(utxosPremix))}btc)</span>
           </div>
           <div className='col-sm-4 stats'>
             <button className='btn btn-sm btn-primary'><Icon.Square size={12}/> Stop all</button> <button className='btn btn-sm btn-primary'><Icon.Play size={12}/> Resume all</button>
           </div>
         </div>
-        <div class="tablescroll">
+        <div class='tablescroll'>
         <table className="table table-sm table-hover">
           <thead>
           <tr>
@@ -39,13 +42,13 @@ export default class StatusPage extends Component<Props> {
           </tr>
           </thead>
           <tbody>
-          {walletService.getUtxosPremix().map((utxo,i) => {
+          {utxosPremix.map((utxo,i) => {
             return <tr key={i}>
               <th scope="row">{(i+1)}</th>
               <td>
                 <small>{utxo.hash}:{utxo.index}</small>
               </td>
-              <td>{utxo.value}</td>
+              <td>{utils.toBtc(utxo.value)}</td>
               <td>-</td>
               <td><span className='text-primary'></span></td>
               <td></td>
@@ -155,7 +158,7 @@ export default class StatusPage extends Component<Props> {
             <h2>Postmix</h2>
           </div>
           <div className='col-sm-8 stats'>
-            <span className='text-primary'>4 utxo mixed (0.17btc) · 0.87btc volume</span>
+            <span className='text-primary'>{utxosPostmix.length} utxo mixed ({utils.toBtc(utils.sumUtxos(utxosPostmix))}btc)</span>
           </div>
         </div>
         <div className="tablescroll">
@@ -172,12 +175,12 @@ export default class StatusPage extends Component<Props> {
           </tr>
           </thead>
           <tbody>
-          {walletService.getUtxosPostmix().map((utxo,i) => {
+          {utxosPostmix.map((utxo,i) => {
             return <tr key={i}>
               <td>
                 <small>{utxo.hash}:{utxo.index}</small>
               </td>
-              <td>{utxo.value}</td>
+              <td>{utils.toBtc(utxo.value)}</td>
               <td>-</td>
               <td><span className='text-primary'></span></td>
               <td></td>

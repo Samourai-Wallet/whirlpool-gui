@@ -8,7 +8,6 @@ export const ACTION_APP_STATUS_ITEM_CLEAR =
 export const ACTION_APP_STATUS_ITEM_RETRY =
   'app/App/ACTION_APP_STATUS_ITEM_RETRY'
 
-
 export const statusActions = {
   add: (id, mainLabel, label, executor) => {
     return {
