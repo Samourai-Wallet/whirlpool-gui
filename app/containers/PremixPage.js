@@ -45,7 +45,8 @@ export default class PremixPage extends Component<Props> {
             return <tr key={i}>
               <th scope="row">{(i+1)}</th>
               <td>
-                <small><a href={utils.linkExplorer(utxo)} target='_blank'>{utxo.hash}:{utxo.index}</a></small>
+                <small><a href={utils.linkExplorer(utxo)} target='_blank'>{utxo.hash}:{utxo.index}</a><br/>
+                  {utxo.path} · {utxo.confirmations} confirms</small>
               </td>
               <td>{utils.toBtc(utxo.value)}</td>
               <td>-</td>

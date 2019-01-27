@@ -38,12 +38,13 @@ export default class PostmixPage extends Component<Props> {
           {utxosPostmix.map((utxo,i) => {
             return <tr key={i}>
               <td>
-                <small><a href={utils.linkExplorer(utxo)} target='_blank'>{utxo.hash}:{utxo.index}</a></small>
+                <small><a href={utils.linkExplorer(utxo)} target='_blank'>{utxo.hash}:{utxo.index}</a><br/>
+                {utxo.path} · {utxo.confirmations} confirms</small>
               </td>
               <td>{utils.toBtc(utxo.value)}</td>
               <td>-</td>
               <td><span className='text-primary'></span></td>
-              <td></td>
+              <td></td>,
               <td></td>
               <td></td>
             </tr>
