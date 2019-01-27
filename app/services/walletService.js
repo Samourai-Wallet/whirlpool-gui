@@ -1,5 +1,6 @@
 import ifNot from 'if-not-running';
 import backendService from './backendService';
+import utils from './utils';
 
 const REFRESH_RATE = 10000;
 class WalletService {
@@ -55,10 +56,39 @@ class WalletService {
     return this.state.wallet.utxosPostmix
   }
 
+  getBalanceDeposit () {
+    if (!this.isLoaded()) {
+      console.error('getBalanceDeposit() but not loaded!')
+      return []
+    }
+    return this.state.wallet.balanceDeposit
+  }
+
+  getBalancePremix () {
+    if (!this.isLoaded()) {
+      console.error('getBalancePremix() but not loaded!')
+      return []
+    }
+    return this.state.wallet.balancePremix
+  }
+
+  getBalancePostmix () {
+    if (!this.isLoaded()) {
+      console.error('getBalancePostmix() but not loaded!')
+      return []
+    }
+    return this.state.wallet.balancePostmix
+  }
+
   loadFromBackend () {
     return ifNot.run('walletService:loadFromBackend', () => {
       // fetch backend
       return backendService.wallet.fetch().then(wallet => {
+        // compute balances
+        wallet.balanceDeposit = utils.sumUtxos(wallet.utxosDeposit)
+        wallet.balancePremix = utils.sumUtxos(wallet.utxosPremix)
+        wallet.balancePostmix = utils.sumUtxos(wallet.utxosPostmix)
+
         // set state
         if (this.state === undefined) {
           console.log('walletService: initializing new state')

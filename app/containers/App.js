@@ -15,6 +15,7 @@ import DepositPage from '../containers/DepositPage';
 import Status from '../components/Status';
 import { statusActions } from '../services/statusActions';
 import PostmixPage from './PostmixPage';
+import utils from '../services/utils';
 
 type Props = {
   children: React.Node
@@ -48,7 +49,7 @@ class App extends React.Component<Props> {
               <Link to={routes.DEPOSIT}>
                 <a className="nav-link">
                   <span data-feather="plus"></span>
-                  Deposit ({utxosDeposit.length})
+                  Deposit ({utxosDeposit.length} · {utils.toBtc(walletService.getBalanceDeposit(), true)})
                 </a>
               </Link>
             </li>
@@ -56,7 +57,7 @@ class App extends React.Component<Props> {
               <Link to={routes.PREMIX}>
                 <a className="nav-link">
                   <span data-feather="play"></span>
-                  Mixing ({utxosPremix.length})
+                  Mixing ({utxosPremix.length} · {utils.toBtc(walletService.getBalancePremix(), true)})
                 </a>
               </Link>
             </li>
@@ -64,7 +65,7 @@ class App extends React.Component<Props> {
               <Link to={routes.POSTMIX}>
                 <a className="nav-link">
                   <span data-feather="check"></span>
-                  Mixed ({utxosPostmix.length})
+                  Mixed ({utxosPostmix.length} · {utils.toBtc(walletService.getBalancePostmix(), true)})
                 </a>
               </Link>
             </li>

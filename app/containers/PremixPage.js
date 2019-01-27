@@ -19,7 +19,7 @@ export default class PremixPage extends Component<Props> {
             <h2>Mixing</h2>
           </div>
           <div class='col-sm-4 stats'>
-            <span class='text-primary'>{utxosPremix.length} utxos mixing ({utils.toBtc(utils.sumUtxos(utxosPremix))}btc)</span>
+            <span class='text-primary'>{utxosPremix.length} utxos mixing ({utils.toBtc(walletService.getBalancePremix())}btc)</span>
           </div>
           <div className='col-sm-4 stats'>
             <button className='btn btn-sm btn-primary'><Icon.Square size={12}/> Stop all</button> <button className='btn btn-sm btn-primary'><Icon.Play size={12}/> Resume all</button>

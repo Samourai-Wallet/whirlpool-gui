@@ -19,7 +19,7 @@ export default class PostmixPage extends Component<Props> {
             <h2>Mixed</h2>
           </div>
           <div className='col-sm-8 stats'>
-            <span className='text-primary'>{utxosPostmix.length} utxos mixed ({utils.toBtc(utils.sumUtxos(utxosPostmix))}btc)</span>
+            <span className='text-primary'>{utxosPostmix.length} utxos mixed ({utils.toBtc(walletService.getBalancePostmix())}btc)</span>
           </div>
         </div>
         <div className="tablescroll">

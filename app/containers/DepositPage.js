@@ -95,7 +95,7 @@ class DepositPage extends Component {
             <h2>Deposit</h2>
           </div>
           <div className='col-sm-4 stats'>
-            <span className='text-primary'>{utxosDeposit.length} utxos on deposit ({utils.toBtc(utils.sumUtxos(utxosDeposit))}btc)</span>
+            <span className='text-primary'>{utxosDeposit.length} utxos on deposit ({utils.toBtc(walletService.getBalanceDeposit())}btc)</span>
           </div>
           <div className='col-sm-4 stats'>
             <button className='btn btn-sm btn-primary' onClick={this.handleShow}><Icon.Plus size={12}/> Deposit</button>

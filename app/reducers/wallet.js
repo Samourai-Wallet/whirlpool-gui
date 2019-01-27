@@ -7,7 +7,10 @@ const initialState = {
   wallet: {
     utxosDeposit: [],
     utxosPremix: [],
-    utxosPostmix: []
+    utxosPostmix: [],
+    balanceDeposit: 0,
+    balancePremix: 0,
+    balancePostmix: 0
   }
 }
 
