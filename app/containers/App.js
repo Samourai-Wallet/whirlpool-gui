@@ -10,10 +10,11 @@ import { Route, Switch } from 'react-router';
 import routes from '../constants/routes';
 import ConfigPage from '../containers/ConfigPage';
 import InitPage from '../containers/InitPage';
-import StatusPage from '../containers/StatusPage';
+import PremixPage from './PremixPage';
 import DepositPage from '../containers/DepositPage';
 import Status from '../components/Status';
 import { statusActions } from '../services/statusActions';
+import PostmixPage from './PostmixPage';
 
 type Props = {
   children: React.Node
@@ -52,10 +53,18 @@ class App extends React.Component<Props> {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to={routes.STATUS}>
+              <Link to={routes.PREMIX}>
                 <a className="nav-link">
                   <span data-feather="play"></span>
-                  Mix ({utxosPremix.length})
+                  Mixing ({utxosPremix.length})
+                </a>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to={routes.POSTMIX}>
+                <a className="nav-link">
+                  <span data-feather="check"></span>
+                  Mixed ({utxosPostmix.length})
                 </a>
               </Link>
             </li>
@@ -78,8 +87,9 @@ class App extends React.Component<Props> {
       <main role="main" className="col-md-10 ml-sm-auto col-lg-10 px-4">
 
         <Switch>
-          <Route path={routes.STATUS} component={StatusPage} />
           <Route path={routes.DEPOSIT} component={DepositPage} />
+          <Route path={routes.PREMIX} component={PremixPage} />
+          <Route path={routes.POSTMIX} component={PostmixPage} />
           <Route path={routes.CONFIG} component={ConfigPage} />
           <Route path={routes.INIT} component={InitPage} />
         </Switch>

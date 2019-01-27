@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import './StatusPage.css';
+import './PremixPage.css';
 import * as Icon from 'react-feather';
 import { bindActionCreators } from 'redux';
 import { walletActions } from '../actions/wallet';
@@ -46,7 +46,7 @@ class DepositPage extends Component {
       <div className='depositPage'>
         <Modal show={this.state.show} onHide={this.handleClose} animation={false}>
           <Modal.Header>
-            <Modal.Title>Add to deposit</Modal.Title>
+            <Modal.Title>Start mixing</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <p>
@@ -66,7 +66,7 @@ class DepositPage extends Component {
           </Modal.Header>
           <Modal.Body>
             <p>
-              This will split your UTXO and start mixing it.<br/>
+              This will split your UTXO and start mixing.<br/>
               <small style={{fontSize:'0.8em'}}>a68d9291104646e763ce5b1013ac99af25812db6bf45372d1f09dd9524e24824:6 (1.24btc)</small>.<br/><br/>
               Select a pool:
               <select className="form-control" id="exampleFormControlSelect1">
@@ -95,7 +95,7 @@ class DepositPage extends Component {
             <h2>Deposit</h2>
           </div>
           <div className='col-sm-4 stats'>
-            <span className='text-primary'>{utxosDeposit.length} utxo deposit ({utils.toBtc(utils.sumUtxos(utxosDeposit))}btc)</span>
+            <span className='text-primary'>{utxosDeposit.length} utxos on deposit ({utils.toBtc(utils.sumUtxos(utxosDeposit))}btc)</span>
           </div>
           <div className='col-sm-4 stats'>
             <button className='btn btn-sm btn-primary' onClick={this.handleShow}><Icon.Plus size={12}/> Deposit</button>
@@ -111,7 +111,6 @@ class DepositPage extends Component {
             <th scope="col">Pool</th>
             <th scope="col">Status</th>
             <th scope="col"></th>
-            <th scope="col">Mixs</th>
             <th scope="col">Last activity</th>
             <th scope="col"></th>
           </tr>
@@ -121,7 +120,7 @@ class DepositPage extends Component {
             return <tr key={i}>
               <th scope="row">{(i+1)}</th>
               <td>
-                <small>{utxo.hash}:{utxo.index}</small>
+                <small><a href={utils.linkExplorer(utxo)} target='_blank'>{utxo.hash}:{utxo.index}</a></small>
               </td>
               <td>{utils.toBtc(utxo.value)}</td>
               <td>-</td>
@@ -130,9 +129,8 @@ class DepositPage extends Component {
 
               </td>
               <td></td>
-              <td></td>
               <td>
-
+                <button className='btn btn-sm btn-primary' title='Start mixing' onClick={this.handleShow2}>Mix <Icon.ChevronsRight size={12}/></button>
               </td>
             </tr>
           })}
@@ -153,7 +151,6 @@ class DepositPage extends Component {
                   </div>
                 </div>
               </td>
-              <td>0/3</td>
               <td>5s ago</td>
               <td>
                 <button className='btn btn-sm btn-primary' title='Stop'><Icon.Square size={12}/></button>
@@ -170,7 +167,6 @@ class DepositPage extends Component {
               <td>
 
               </td>
-              <td>-</td>
               <td>26d ago</td>
               <td>
                 <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
@@ -188,7 +184,6 @@ class DepositPage extends Component {
               <td>
 
               </td>
-              <td>-</td>
               <td>31d ago</td>
               <td>
                 <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
@@ -206,7 +201,6 @@ class DepositPage extends Component {
               <td>
 
               </td>
-              <td>-</td>
               <td>41d ago</td>
               <td>
                 <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
@@ -224,7 +218,6 @@ class DepositPage extends Component {
               <td>
 
               </td>
-              <td>-</td>
               <td>73d ago</td>
               <td>
                 <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
@@ -242,7 +235,6 @@ class DepositPage extends Component {
               <td>
 
               </td>
-              <td>-</td>
               <td>82d ago</td>
               <td>
                 <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
@@ -260,7 +252,6 @@ class DepositPage extends Component {
               <td>
 
               </td>
-              <td>-</td>
               <td>26d ago</td>
               <td>
                 <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
@@ -278,7 +269,6 @@ class DepositPage extends Component {
               <td>
 
               </td>
-              <td>-</td>
               <td>128d ago</td>
               <td>
                 <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
@@ -296,7 +286,6 @@ class DepositPage extends Component {
               <td>
 
               </td>
-              <td>-</td>
               <td>2 years ago</td>
               <td>
                 <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>

@@ -69,7 +69,9 @@ class BackendService {
 
   wallet = {
     fetch: () => {
-      return this.fetchJsonBackend('/wallet', 'GET')
+      return this.withStatus('Wallet', 'Fetch wallet state', () =>
+        this.fetchJsonBackend('/wallet', 'GET')
+      )
     }
   };
 }

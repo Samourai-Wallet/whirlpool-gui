@@ -34,6 +34,10 @@ class Utils {
     if (scale === true) valueBtc = this.scale(valueBtc, AMOUNT_PRECISION)
     return valueBtc
   }
+
+  linkExplorer(utxo) {
+    return 'https://blockstream.info/testnet/tx/'+utxo.hash
+  }
 }
 
 const utils = new Utils()

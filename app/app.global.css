@@ -7,10 +7,10 @@
 @import './css/samourai.css';
 @import './css/dashboard.css';
 
-.statusPage {
+.premixPage {
   font-size: 0.9em;
 }
-.statusPage .btn-sm {
+.premixPage .btn-sm {
   line-height: 1em !important;
 }
 
@@ -29,12 +29,5 @@
 .tablescroll {
   overflow-y: scroll;
   border-left: 1px solid #700606;
-}
-
-.statusPage .tablescroll {
-  max-height: 300px;
-}
-
-.depositPage .tablescroll {
   max-height: 500px;
 }
