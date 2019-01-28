@@ -5,12 +5,18 @@ import produce from 'immer';
 
 const initialState = {
   wallet: {
-    utxosDeposit: [],
-    utxosPremix: [],
-    utxosPostmix: [],
-    balanceDeposit: 0,
-    balancePremix: 0,
-    balancePostmix: 0
+    deposit: {
+      utxos:[],
+      balance:0
+    },
+    premix: {
+      utxos:[],
+      balance:0
+    },
+    postmix: {
+      utxos:[],
+      balance:0
+    }
   }
 }
 

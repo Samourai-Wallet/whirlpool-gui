@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import { withRouter } from 'react-router'
 import backendService from '../services/backendService';
 import { connect } from 'react-redux';
 import walletService from '../services/walletService';
@@ -33,7 +34,7 @@ class App extends React.Component<Props> {
     walletService.init(props.wallet, walletState =>
       props.walletActions.set(walletState)
     )
-    walletService.loadFromBackend()
+    walletService.fetchWallet()
   }
 
   render() {
@@ -116,7 +117,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(App));

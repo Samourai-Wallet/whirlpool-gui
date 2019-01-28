@@ -31,3 +31,7 @@
   border-left: 1px solid #700606;
   max-height: 500px;
 }
+
+.depositAddress {
+  text-align: center;
+}

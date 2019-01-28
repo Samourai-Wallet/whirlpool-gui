@@ -24,70 +24,72 @@ class WalletService {
       }
     })
     if (this.refreshTimeout === undefined) {
-      this.refreshTimeout = setInterval(this.loadFromBackend.bind(this), REFRESH_RATE)
+      this.refreshTimeout = setInterval(this.fetchWallet.bind(this), REFRESH_RATE)
     }
   }
 
-  isLoaded () {
+  // wallet
+
+  isWalletLoaded () {
     return this.state !== undefined && this.state.wallet !== undefined
   }
 
   getUtxosDeposit () {
-    if (!this.isLoaded()) {
+    if (!this.isWalletLoaded()) {
       console.error('getUtxosDeposit() but not loaded!')
       return []
     }
-    return this.state.wallet.utxosDeposit
+    return this.state.wallet.deposit.utxos;
   }
 
   getUtxosPremix () {
-    if (!this.isLoaded()) {
+    if (!this.isWalletLoaded()) {
       console.error('getUtxosPremix() but not loaded!')
       return []
     }
-    return this.state.wallet.utxosPremix
+    return this.state.wallet.premix.utxos;
   }
 
   getUtxosPostmix () {
-    if (!this.isLoaded()) {
+    if (!this.isWalletLoaded()) {
       console.error('getUtxosPostmix() but not loaded!')
       return []
     }
-    return this.state.wallet.utxosPostmix
+    return this.state.wallet.postmix.utxos;
   }
 
   getBalanceDeposit () {
-    if (!this.isLoaded()) {
+    if (!this.isWalletLoaded()) {
       console.error('getBalanceDeposit() but not loaded!')
       return []
     }
-    return this.state.wallet.balanceDeposit
+    return this.state.wallet.deposit.balance
   }
 
   getBalancePremix () {
-    if (!this.isLoaded()) {
+    if (!this.isWalletLoaded()) {
       console.error('getBalancePremix() but not loaded!')
       return []
     }
-    return this.state.wallet.balancePremix
+    return this.state.wallet.premix.balance
   }
 
   getBalancePostmix () {
-    if (!this.isLoaded()) {
+    if (!this.isWalletLoaded()) {
       console.error('getBalancePostmix() but not loaded!')
       return []
     }
-    return this.state.wallet.balancePostmix
+    return this.state.wallet.postmix.balance
   }
 
-  loadFromBackend () {
-    return ifNot.run('walletService:loadFromBackend', () => {
-      // fetch backend
-      return backendService.wallet.fetch().then(wallet => {
+  fetchWallet () {
+    return ifNot.run('walletService:fetchWallet', () => {
+      // fetchWallet backend
+      return backendService.wallet.fetchWallet().then(wallet => {
         // compute balances
-        wallet.balanceDeposit = utils.sumUtxos(wallet.utxosDeposit)
-        wallet.balancePremix = utils.sumUtxos(wallet.utxosPremix)
-        wallet.balancePostmix = utils.sumUtxos(wallet.utxosPostmix)
+        wallet.deposit.balance = utils.sumUtxos(wallet.deposit.utxos)
+        wallet.premix.balance = utils.sumUtxos(wallet.premix.utxos)
+        wallet.postmix.balance = utils.sumUtxos(wallet.postmix.utxos)
 
         // set state
         if (this.state === undefined) {
@@ -101,6 +103,26 @@ class WalletService {
         }
         this.pushState()
       })
+    })
+  }
+
+  // deposit
+
+  fetchDepositAddress (increment=false) {
+    return backendService.wallet.fetchDeposit(increment).then(depositResponse => {
+      const depositAddress = depositResponse.depositAddress
+      return depositAddress;
+    })
+  }
+
+  fetchDepositAddressDistinct(distinctAddress, increment=false) {
+    return this.fetchDepositAddress(increment).then(depositAddress => {
+      if (depositAddress === distinctAddress) {
+        return this.fetchDepositAddressDistinct(distinctAddress, true).then(distinctDepositAddress => {
+          return distinctDepositAddress
+        })
+      }
+      return depositAddress;
     })
   }
 
