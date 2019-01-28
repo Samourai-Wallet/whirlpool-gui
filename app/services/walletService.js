@@ -86,11 +86,6 @@ class WalletService {
     return ifNot.run('walletService:fetchWallet', () => {
       // fetchWallet backend
       return backendService.wallet.fetchWallet().then(wallet => {
-        // compute balances
-        wallet.deposit.balance = utils.sumUtxos(wallet.deposit.utxos)
-        wallet.premix.balance = utils.sumUtxos(wallet.premix.utxos)
-        wallet.postmix.balance = utils.sumUtxos(wallet.postmix.utxos)
-
         // set state
         if (this.state === undefined) {
           console.log('walletService: initializing new state')
