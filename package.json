@@ -1,7 +1,7 @@
 {
-  "name": "electron-react-boilerplate",
+  "name": "whirlpool-gui",
   "productName": "whirlpool-gui",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
@@ -109,7 +109,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/electron-react-boilerplate/electron-react-boilerplate.git"
+    "url": "git+https://github.com/Samourai-Wallet/whirlpool-gui.git"
   },
   "author": {
     "name": "Electron React Boilerplte Maintainers",

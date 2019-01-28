@@ -82,3 +82,44 @@ script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then yarn test; fi
   - yarn build-e2e
   - yarn test-e2e
+
+after_success:
+  - PACKAGE_NAME=`node -e "console.log(require('./package.json').name)"`
+  - PACKAGE_VERSION=`node -e "console.log(require('./package.json').version)"`
+  - PRODUCT_NAME=whirlpool-gui
+  - RELEASE=${PACKAGE_NAME}-${PACKAGE_VERSION}
+  - echo "$PACKAGE_NAME"
+  - echo "$PACKAGE_VERSION"
+  - echo "$PRODUCT_NAME"
+  - echo "$RELEASE"
+  - mkdir -p releases
+  - |
+    # build:mac-x64
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      # https://github.com/electron-userland/electron-builder/issues/398
+      security import "scripts/certs/Certum-Code-Signing-CA-SHA2.cer" -k ~/Library/Keychains/login.keychain -T /usr/bin/codesign;
+      # https://github.com/electron-userland/electron-osx-sign/issues/83
+      # Temporarily Bypass Gatekeeper
+      sudo spctl --master-disable;
+      sudo spctl --status;
+      yarn package-all;
+      ls -al release release/*;
+      zip releases/whirlpool-gui.app.zip release/mac/whirlpool-gui.app;
+      ls -al releases/*;
+    fi
+
+before_deploy:
+  - echo "Deploying to GitHub releases"
+deploy:
+  provider: releases
+  api_key:
+    secure: Fw3epZKiqvHzjdPxGGJRLgNKDnxNeIDxUCpEKGj4q3hQxjwQ7YCdB8+GWnpnR0dGPmmS7a95X+CRXytz+ANrC1ctZutVcCyJbWD8WXwCzAMEhE9EP61bXhggPArLdRShfdyC8gKifQ51SJoeICGuR04ADQ+Yy7zv7yVf5iYJAy189QWnrMYUuPTUdq/dRPkXSGm9hj6WLPhkgC6xez5DIlPufDj4FCrF/Vba7pgorBNVE0AUk0Ip17uG0KNsAIwcxR86HmNAZiqPCdDskpy8lnrVEkW1KMtEMQRj1toNr36ljQw8dC9E9YV5/wjhmFRlVGoVrXNKlpspmdcChRq+xyeJMBOqIu7rBT/OlEgACWHgenzaPFQpf6EtIvDxkpkI7EcPqH/ILSlIq/FjIaazG0kFS5JuBHkPDOOOhlo/SpmFFo2ARtWRJESmlNT8BEAo9MShNS9faMN0LuKDgTp1+qXa5L6JPBp2z2sSU1w4exi9muFnMh4YbG5Aoi4m4TjrXIMS/rN5DmwYBR2fJAD/4CPHA7HgK4x5sV9AYh0kq3xfXp0XvLY4dEdaBDHW8/xEuozMKi9d6/EY5lT7WZf9pryT3C52RViVBLo+9PnkdDOAUCoy5JAyBibWOt/zwRyc3UnzfW/3lNVxtoA8ayXDcHdPkNnaDbSYuW1RE4f19gA=
+  file_glob: true
+  file:
+    - 'releases/*.*'
+  overwrite: true
+  skip_cleanup: true
+  on:
+    # https://docs.travis-ci.com/user/deployment#Conditional-Releases-with-on
+    tags: false  # Deploy app only when a tag is applied to the commit
+    branch: develop
