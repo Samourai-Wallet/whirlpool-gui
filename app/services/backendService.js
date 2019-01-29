@@ -2,29 +2,23 @@ import utils from './utils';
 import status from './status';
 
 const HOST = 'http://127.0.0.7:8080'
+const API_VERSION = '0.2'
+const HEADER_API_VERSION = 'apiVersion'
 
 class BackendService {
   constructor () {
     this.dispatch = undefined
-    this.sessid = undefined
   }
 
   init (dispatch) {
     this.dispatch = dispatch
   }
 
-  setSessid (sessid) {
-    console.log('cliService: setSessid', sessid)
-    this.sessid = sessid
-  }
-
   computeHeaders () {
     const headers = {
       'Content-Type': 'application/json'
     }
-    if (this.sessid !== undefined) {
-      headers['X-SESSID'] = this.sessid
-    }
+    headers[HEADER_API_VERSION] = API_VERSION
     return headers
   }
 
@@ -51,32 +45,16 @@ class BackendService {
     )
   }
 
-  session = {
-    login: (login, password) =>
-      this.withStatus('Login', 'Authenticate', () =>
-        this.fetchJsonBackend(
-          '/session/login',
-          'POST',
-          {
-            login,
-            password
-          },
-          'session.login'
-        )
-      ),
-    logout: () => this.fetchBackend('/session/logout', 'POST')
-  };
-
   wallet = {
     fetchWallet: () => {
       return this.withStatus('Wallet', 'Fetch wallet state', () =>
-        this.fetchJsonBackend('/wallet', 'GET')
+        this.fetchJsonBackend('/rest/wallet', 'GET')
       )
     },
 
     fetchDeposit: (increment) => {
       return this.withStatus('Wallet', 'Fetch deposit address', () =>
-        this.fetchJsonBackend('/wallet/deposit?increment='+increment, 'GET')
+        this.fetchJsonBackend('/rest/wallet/deposit?increment='+increment, 'GET')
       )
     }
   };
