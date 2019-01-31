@@ -1,7 +1,7 @@
 import utils from './utils';
 import status from './status';
 
-const HOST = 'http://127.0.0.7:8080'
+const HOST = 'http://127.0.0.1:8080'
 const API_VERSION = '0.2'
 const HEADER_API_VERSION = 'apiVersion'
 
