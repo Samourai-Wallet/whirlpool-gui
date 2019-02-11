@@ -5,12 +5,13 @@ import QRCode from 'qrcode.react';
 import './PremixPage.css';
 import * as Icon from 'react-feather';
 import { bindActionCreators } from 'redux';
-import { walletActions } from '../actions/wallet';
+import { walletActions } from '../actions/walletActions';
 import { connect } from 'react-redux';
 import walletService from '../services/walletService';
 import utils from '../services/utils';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import * as Icons from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as Icons from '@fortawesome/free-solid-svg-icons';
+import mixService from '../services/mixService';
 
 class DepositPage extends Component {
 
@@ -76,7 +77,7 @@ class DepositPage extends Component {
             <p>
               Send funds to your deposit wallet:
             </p>
-            <div class='depositAddress'>
+            <div className='depositAddress'>
               <QRCode value={this.state.depositAddress} /><br/>
               <b>{this.state.depositAddress}</b> <a onClick={this.handleNextDepositAddress} title='Change deposit address'><FontAwesomeIcon icon={Icons.faRedo} /></a>
             </div>
@@ -137,7 +138,7 @@ class DepositPage extends Component {
             <th scope="col">Status</th>
             <th scope="col"></th>
             <th scope="col">Mixs</th>
-            <th scope="col">Last activity</th>
+            <th scope="col" colSpan={2}>Last activity</th>
             <th scope="col"></th>
           </tr>
           </thead>
@@ -150,10 +151,11 @@ class DepositPage extends Component {
               </td>
               <td>{utils.toBtc(utxo.value)}</td>
               <td>{utxo.poolId}</td>
-              <td><span className='text-primary'>{utxo.status}</span></td>
+              <td><span className='text-primary'>{utils.statusLabel(utxo.status)}</span></td>
               <td></td>
               <td>{utxo.mixsDone}/{utxo.mixsTarget}</td>
               <td>{utxo.message}</td>
+              <td><small>{mixService.computeLastActivity(utxo)}</small></td>
               <td>
                 <button className='btn btn-sm btn-primary' title='Start mixing' onClick={this.handleShow2}>Mix <Icon.ChevronsRight size={12}/></button>
               </td>

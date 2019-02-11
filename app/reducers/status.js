@@ -1,5 +1,4 @@
 // @flow
-import { DECREMENT_COUNTER } from '../actions/wallet';
 import type { Action } from './types';
 import produce from 'immer';
 import moment from 'moment';

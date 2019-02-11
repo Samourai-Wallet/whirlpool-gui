@@ -1,30 +1,24 @@
 // @flow
-import { WALLET_SET } from '../actions/walletActions';
 import type { Action } from './types';
 import produce from 'immer';
+import { MIX_SET } from '../actions/mixActions';
 
 const initialState = {
-  wallet: {
-    deposit: {
-      utxos:[],
-      balance:0
-    },
-    premix: {
-      utxos:[],
-      balance:0
-    },
-    postmix: {
-      utxos:[],
-      balance:0
-    }
+  mix: {
+    started: false,
+    nbMixing: 0,
+    maxClients: 0,
+    nbIdle:0,
+    nbQueued:0,
+    threads: []
   }
 }
 
 const reducer = produce((state, action) => {
   const payload = action.payload
   switch (action.type) {
-    case WALLET_SET:
-      state.wallet = payload
+    case MIX_SET:
+      state.mix = payload
       return
     default:
       return

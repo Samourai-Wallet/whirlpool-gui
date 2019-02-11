@@ -4,6 +4,7 @@ import './PremixPage.css';
 import * as Icon from 'react-feather';
 import walletService from '../services/walletService';
 import utils from '../services/utils';
+import mixService from '../services/mixService';
 
 type Props = {};
 
@@ -14,19 +15,15 @@ export default class PremixPage extends Component<Props> {
     const utxosPremix = walletService.getUtxosPremix()
     return (
       <div className='premixPage'>
-        <div class='row'>
-          <div class='col-sm-2'>
+        <div className='row'>
+          <div className='col-sm-2'>
             <h2>Mixing</h2>
           </div>
-          <div class='col-sm-4 stats'>
-            <span class='text-primary'>{utxosPremix.length} utxos mixing ({utils.toBtc(walletService.getBalancePremix())}btc)</span>
-          </div>
-          <div className='col-sm-4 stats'>
-            <button className='btn btn-sm btn-primary' onClick={() => walletService.stop()}><Icon.Square size={12}/> Stop mixing</button>
-            <button className='btn btn-sm btn-primary' onClick={() => walletService.start()}><Icon.Play size={12}/> Start mixing</button>
+          <div className='col-sm-10 stats'>
+            <span className='text-primary'>{utxosPremix.length} utxos mixing ({utils.toBtc(walletService.getBalancePremix())}btc)</span>
           </div>
         </div>
-        <div class='tablescroll'>
+        <div className='tablescroll'>
         <table className="table table-sm table-hover">
           <thead>
           <tr>
@@ -37,7 +34,7 @@ export default class PremixPage extends Component<Props> {
             <th scope="col">Status</th>
             <th scope="col"></th>
             <th scope="col">Mixs</th>
-            <th scope="col">Last activity</th>
+            <th scope="col" colSpan={2}>Last activity</th>
             <th scope="col"></th>
           </tr>
           </thead>
@@ -51,10 +48,11 @@ export default class PremixPage extends Component<Props> {
               </td>
               <td>{utils.toBtc(utxo.value)}</td>
               <td>{utxo.poolId}</td>
-              <td><span className='text-primary'>{utxo.status}</span></td>
+              <td><span className='text-primary'>{utils.statusLabel(utxo.status)}</span></td>
               <td></td>
               <td>{utxo.mixsDone}/{utxo.mixsTarget}</td>
               <td>{utxo.message}</td>
+              <td><small>{mixService.computeLastActivity(utxo)}</small></td>
               <td>
                 <button className='btn btn-sm btn-primary' title='Stop mixing'>Stop <Icon.Square size={12} /></button>
               </td>

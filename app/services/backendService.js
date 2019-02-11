@@ -49,13 +49,13 @@ class BackendService {
     fetchUtxos: () => {
       return this.withStatus('Wallet', 'Fetch utxos', () =>
         this.fetchBackendAsJson('/rest/wallet/utxos', 'GET')
-      )
+        , 'wallet.fetchUtxos')
     },
 
     fetchDeposit: (increment) => {
       return this.withStatus('Wallet', 'Fetch deposit address', () =>
         this.fetchBackendAsJson('/rest/wallet/deposit?increment='+increment, 'GET')
-      )
+        , 'wallet.fetchDeposit')
     }
   };
 
@@ -63,7 +63,7 @@ class BackendService {
     fetchState: () => {
       return this.withStatus('Mix', 'Fetch state', () =>
         this.fetchBackendAsJson('/rest/mix', 'GET')
-      )
+        , 'mix.fetchState')
     },
     start: () => {
       return this.withStatus('Mix', 'Start mixing', () =>

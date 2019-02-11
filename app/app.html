@@ -21,40 +21,33 @@
 </head>
 
 <body>
-<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#" title="Samourai Whirlpool"><img src="img/samourai.png"/> Whirlpool</a>
-</nav>
+<div id="root"></div>
 
-<div class="container-fluid">
+<script>
+  {
+    const scripts = [];
 
-  <div id="root"></div>
-
-  <script>
-    {
-      const scripts = [];
-
-      // Dynamically insert the DLL script in development env in the
-      // renderer process
-      if (process.env.NODE_ENV === 'development') {
-        scripts.push('../dll/renderer.dev.dll.js');
-      }
-
-      // Dynamically insert the bundled app script in the renderer process
-      const port = process.env.PORT || 1212;
-      scripts.push(
-        (process.env.HOT)
-          ? 'http://localhost:' + port + '/dist/renderer.dev.js'
-          : './dist/renderer.prod.js'
-      );
-
-      document.write(
-        scripts
-          .map(script => `<script defer src="${script}"><\/script>`)
-          .join('')
-      );
+    // Dynamically insert the DLL script in development env in the
+    // renderer process
+    if (process.env.NODE_ENV === 'development') {
+      scripts.push('../dll/renderer.dev.dll.js');
     }
-  </script>
-</div>
+
+    // Dynamically insert the bundled app script in the renderer process
+    const port = process.env.PORT || 1212;
+    scripts.push(
+      (process.env.HOT)
+        ? 'http://localhost:' + port + '/dist/renderer.dev.js'
+        : './dist/renderer.prod.js'
+    );
+
+    document.write(
+      scripts
+        .map(script => `<script defer src="${script}"><\/script>`)
+        .join('')
+    );
+  }
+</script>
 
 </body>
 </html>

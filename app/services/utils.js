@@ -42,6 +42,19 @@ class Utils {
   linkExplorer(utxo) {
     return 'https://blockstream.info/testnet/tx/'+utxo.hash
   }
+
+  statusLabel(status) {
+    switch(status) {
+      case 'READY': return 'READY'
+      case 'TX0': return 'TX0'
+      case 'TXO_SUCCESS': return 'TXO:SUCCESS'
+      case 'MIX_QUEUE': return 'MIX:QUEUED'
+      case 'MIX_STARTED': return 'MIXING'
+      case 'MIX_SUCCESS': return 'MIX:SUCCESS'
+      case 'MIX_FAILED': return 'MIX:ERROR'
+      default: return '?'
+    }
+  }
 }
 
 const utils = new Utils()

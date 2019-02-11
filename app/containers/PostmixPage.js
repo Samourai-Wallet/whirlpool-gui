@@ -4,6 +4,7 @@ import './PostmixPage.css';
 import * as Icon from 'react-feather';
 import walletService from '../services/walletService';
 import utils from '../services/utils';
+import mixService from '../services/mixService';
 
 type Props = {};
 
@@ -31,7 +32,7 @@ export default class PostmixPage extends Component<Props> {
             <th scope="col">Pool</th>
             <th scope="col" colSpan={2}>Status</th>
             <th scope="col">Mixs</th>
-            <th scope="col">Last activity</th>
+            <th scope="col" colSpan={2}>Last activity</th>
           </tr>
           </thead>
           <tbody>
@@ -43,10 +44,11 @@ export default class PostmixPage extends Component<Props> {
               </td>
               <td>{utils.toBtc(utxo.value)}</td>
               <td>{utxo.poolId}</td>
-              <td><span className='text-primary'>{utxo.status}</span></td>
+              <td><span className='text-primary'>{utils.statusLabel(utxo.status)}</span></td>
               <td></td>
               <td>{utxo.mixsDone}/{utxo.mixsTarget}</td>
               <td>{utxo.message}</td>
+              <td><small>{mixService.computeLastActivity(utxo)}</small></td>
             </tr>
           })}
           {false && <todo>
