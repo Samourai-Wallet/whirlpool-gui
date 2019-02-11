@@ -22,7 +22,8 @@ export default class PremixPage extends Component<Props> {
             <span class='text-primary'>{utxosPremix.length} utxos mixing ({utils.toBtc(walletService.getBalancePremix())}btc)</span>
           </div>
           <div className='col-sm-4 stats'>
-            <button className='btn btn-sm btn-primary'><Icon.Square size={12}/> Stop all</button> <button className='btn btn-sm btn-primary'><Icon.Play size={12}/> Resume all</button>
+            <button className='btn btn-sm btn-primary' onClick={() => walletService.stop()}><Icon.Square size={12}/> Stop mixing</button>
+            <button className='btn btn-sm btn-primary' onClick={() => walletService.start()}><Icon.Play size={12}/> Start mixing</button>
           </div>
         </div>
         <div class='tablescroll'>
@@ -43,17 +44,17 @@ export default class PremixPage extends Component<Props> {
           <tbody>
           {utxosPremix.map((utxo,i) => {
             return <tr key={i}>
-              <th scope="row">{(i+1)}</th>
+              <th scope="row">{utxo.priority}</th>
               <td>
                 <small><a href={utils.linkExplorer(utxo)} target='_blank'>{utxo.hash}:{utxo.index}</a><br/>
-                  {utxo.path} · {utxo.confirmations} confirms</small>
+                  {utxo.account} · {utxo.path} · {utxo.confirmations} confirms</small>
               </td>
               <td>{utils.toBtc(utxo.value)}</td>
-              <td>-</td>
-              <td><span className='text-primary'></span></td>
+              <td>{utxo.poolId}</td>
+              <td><span className='text-primary'>{utxo.status}</span></td>
               <td></td>
-              <td></td>
-              <td></td>
+              <td>{utxo.mixsDone}/{utxo.mixsTarget}</td>
+              <td>{utxo.message}</td>
               <td>
                 <button className='btn btn-sm btn-primary' title='Stop mixing'>Stop <Icon.Square size={12} /></button>
               </td>

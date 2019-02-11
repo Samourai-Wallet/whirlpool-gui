@@ -5,13 +5,17 @@ class Utils {
   constructor () {
   }
 
-  fetchJson (fetch) {
-    return fetch.then(resp => {
-      const json = resp.json()
-      if (resp.status >= 200 && resp.status < 300) {
-        return json
+  fetch(input, init, json=false) {
+    return fetch(input, init).then(resp => {
+      if (!resp || !resp.ok) {
+        const message = 'Fetch failed: status='+(resp ? resp.status : 'null')
+        console.error(message)
+        return Promise.reject(message)
       }
-      return json.then(Promise.reject.bind(Promise))
+      if (json) {
+        return resp.json()
+      }
+      return resp
     })
   }
 

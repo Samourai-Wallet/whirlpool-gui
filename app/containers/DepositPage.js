@@ -131,12 +131,12 @@ class DepositPage extends Component {
         <table className="table table-sm table-hover">
           <thead>
           <tr>
-            <th scope="col">Priority</th>
             <th scope="col">UTXO</th>
             <th scope="col">Amount</th>
             <th scope="col">Pool</th>
             <th scope="col">Status</th>
             <th scope="col"></th>
+            <th scope="col">Mixs</th>
             <th scope="col">Last activity</th>
             <th scope="col"></th>
           </tr>
@@ -144,18 +144,16 @@ class DepositPage extends Component {
           <tbody>
           {utxosDeposit.map((utxo,i) => {
             return <tr key={i}>
-              <th scope="row">{(i+1)}</th>
               <td>
                 <small><a href={utils.linkExplorer(utxo)} target='_blank'>{utxo.hash}:{utxo.index}</a><br/>
-                  {utxo.path} · {utxo.confirmations} confirms</small>
+                  {utxo.account} · {utxo.path} · {utxo.confirmations} confirms</small>
               </td>
               <td>{utils.toBtc(utxo.value)}</td>
-              <td>-</td>
-              <td><span className='text-primary'>READY</span></td>
-              <td>
-
-              </td>
+              <td>{utxo.poolId}</td>
+              <td><span className='text-primary'>{utxo.status}</span></td>
               <td></td>
+              <td>{utxo.mixsDone}/{utxo.mixsTarget}</td>
+              <td>{utxo.message}</td>
               <td>
                 <button className='btn btn-sm btn-primary' title='Start mixing' onClick={this.handleShow2}>Mix <Icon.ChevronsRight size={12}/></button>
               </td>

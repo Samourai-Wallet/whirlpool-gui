@@ -39,14 +39,14 @@ export default class PostmixPage extends Component<Props> {
             return <tr key={i}>
               <td>
                 <small><a href={utils.linkExplorer(utxo)} target='_blank'>{utxo.hash}:{utxo.index}</a><br/>
-                {utxo.path} · {utxo.confirmations} confirms</small>
+                  {utxo.account} · {utxo.path} · {utxo.confirmations} confirms</small>
               </td>
               <td>{utils.toBtc(utxo.value)}</td>
-              <td>-</td>
-              <td><span className='text-primary'></span></td>
-              <td></td>,
+              <td>{utxo.poolId}</td>
+              <td><span className='text-primary'>{utxo.status}</span></td>
               <td></td>
-              <td></td>
+              <td>{utxo.mixsDone}/{utxo.mixsTarget}</td>
+              <td>{utxo.message}</td>
             </tr>
           })}
           {false && <todo>

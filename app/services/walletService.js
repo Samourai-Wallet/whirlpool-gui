@@ -1,6 +1,5 @@
 import ifNot from 'if-not-running';
 import backendService from './backendService';
-import utils from './utils';
 
 const REFRESH_RATE = 10000;
 class WalletService {
@@ -26,6 +25,14 @@ class WalletService {
     if (this.refreshTimeout === undefined) {
       this.refreshTimeout = setInterval(this.fetchWallet.bind(this), REFRESH_RATE)
     }
+  }
+
+  start() {
+    backendService.mix.start()
+  }
+
+  stop() {
+    backendService.mix.stop()
   }
 
   // wallet
@@ -85,7 +92,7 @@ class WalletService {
   fetchWallet () {
     return ifNot.run('walletService:fetchWallet', () => {
       // fetchWallet backend
-      return backendService.wallet.fetchWallet().then(wallet => {
+      return backendService.wallet.fetchUtxos().then(wallet => {
         // set state
         if (this.state === undefined) {
           console.log('walletService: initializing new state')
