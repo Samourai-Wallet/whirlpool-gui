@@ -5,13 +5,15 @@ import QRCode from 'qrcode.react';
 import './PremixPage.css';
 import * as Icon from 'react-feather';
 import { bindActionCreators } from 'redux';
+import moment from 'moment';
 import { walletActions } from '../actions/walletActions';
 import { connect } from 'react-redux';
 import walletService from '../services/walletService';
-import utils from '../services/utils';
+import utils, { TX0_MIN_CONFIRMATIONS } from '../services/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import mixService from '../services/mixService';
+import backendService from '../services/backendService';
 
 class DepositPage extends Component {
 
@@ -20,14 +22,18 @@ class DepositPage extends Component {
 
     this.state = {
       show: false,
+      showTx0: false,
       depositAddress: undefined
     };
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleNextDepositAddress = this.handleNextDepositAddress.bind(this)
 
-    this.handleShow2 = this.handleShow2.bind(this);
-    this.handleClose2 = this.handleClose2.bind(this);
+    this.handleShowTx0 = this.handleShowTx0.bind(this);
+    this.handleCloseTx0 = this.handleCloseTx0.bind(this);
+    this.handleChangePoolTx0 = this.handleChangePoolTx0.bind(this);
+    this.handleChangeMixsTargetTx0 = this.handleChangeMixsTargetTx0.bind(this);
+    this.handleSubmitTx0 = this.handleSubmitTx0.bind(this)
   }
 
   handleClose() {
@@ -44,7 +50,6 @@ class DepositPage extends Component {
 
   doFetchDepositAddressAndShow(distinct=false) {
     const setState = depositAddress => {
-      console.log('depositAddress='+depositAddress)
       this.setState({
         show: true,
         depositAddress: depositAddress
@@ -57,12 +62,53 @@ class DepositPage extends Component {
     }
   }
 
-  handleClose2() {
-    this.setState({ show2: false });
+  // tx0
+
+  handleCloseTx0() {
+    this.setState({ showTx0: false });
   }
 
-  handleShow2() {
-    this.setState({ show2: true });
+  handleShowTx0(utxo) {
+    const setState = poolsResponse => {
+      console.log('poolsResponse',poolsResponse)
+      this.setState({
+        showTx0: {
+          utxo: utxo,
+          poolsResponse: poolsResponse,
+          poolId: poolsResponse.pools.length>0 ? poolsResponse.pools[0].poolId : undefined,
+          mixsTarget: 0
+        }
+      })
+    }
+    return backendService.tx0.fetchPools(utxo.value).then(setState)
+  }
+
+  handleChangePoolTx0(e) {
+    const poolId = e.target.value
+
+    const showTx0New = Object.assign({}, this.state.showTx0)
+    showTx0New.poolId = poolId
+    this.setState({
+      showTx0: showTx0New
+    })
+  }
+
+  handleChangeMixsTargetTx0(e) {
+    const mixsTarget = parseInt(e.target.value)
+
+    const showTx0New = Object.assign({}, this.state.showTx0)
+    showTx0New.mixsTarget = mixsTarget
+    this.setState({
+      mixsTarget: mixsTarget
+    })
+  }
+
+  handleSubmitTx0() {
+    backendService.tx0.create(this.state.showTx0.utxo.hash, this.state.showTx0.utxo.index, this.state.showTx0.poolId, this.state.showTx0.mixsTarget).then((tx0Response) => {
+      console.log('tx0Response',tx0Response)
+      walletService.fetchState()
+    })
+    this.handleCloseTx0();
   }
 
   render() {
@@ -70,7 +116,7 @@ class DepositPage extends Component {
     return (
       <div className='depositPage'>
         <Modal show={this.state.show} onHide={this.handleClose} animation={false}>
-          <Modal.Header>
+            <Modal.Header>
             <Modal.Title>Start mixing</Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -87,35 +133,36 @@ class DepositPage extends Component {
           </Modal.Footer>
         </Modal>
 
-        <Modal show={this.state.show2} onHide={this.handleClose2} animation={false}>
+        {this.state.showTx0 && <Modal show={this.state.showTx0} onHide={this.handleCloseTx0} animation={false} dialogClassName="modal-tx0">
           <Modal.Header>
-            <Modal.Title>Add to premix </Modal.Title>
+            <Modal.Title>Add to premix<br/>
+              <small>{this.state.showTx0.utxo.hash}:{this.state.showTx0.utxo.index}</small></Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <p>
               This will split your UTXO and start mixing.<br/>
-              <small style={{fontSize:'0.8em'}}>a68d9291104646e763ce5b1013ac99af25812db6bf45372d1f09dd9524e24824:6 (1.24btc)</small>.<br/><br/>
+              Value: <strong>{utils.toBtc(this.state.showTx0.utxo.value)}btc</strong><br/>
+              <br/>
               Select a pool:
-              <select className="form-control" id="exampleFormControlSelect1">
-                <option>0.1btc (anonymity set: 5, connected: 4, last mix: 2m ago)</option>
-                <option>0.05btc (anonymity set: 5, connected: 14, last mix: 12s ago)</option>
-                <option>0.01btc (anonymity set: 5, connected: 28, last mix: 1m ago)</option>
+              <select className="form-control" onChange={this.handleChangePoolTx0} defaultValue={this.state.showTx0.poolId}>
+                {this.state.showTx0.poolsResponse.pools.map(pool => <option key={pool.poolId} value={pool.poolId}>{pool.poolId} (denomination: {utils.toBtc(pool.denomination)}btc, anonymity set: {pool.mixAnonymitySet}, connected: {pool.nbRegistered}, last mix: {moment.duration(pool.elapsedTime).humanize()})</option>)}
               </select><br/>
 
-              Mixs target: <select className="form-control col-sm-2" id="exampleFormControlSelect1">
-              <option>1</option>
-              <option selected>3</option>
-              <option>5</option>
-              <option>10</option>
-              <option>∞</option>
+              Mixs target: <select className="form-control col-sm-2" onChange={this.handleChangeMixsTargetTx0} defaultValue={this.state.showTx0.mixsTarget}>
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={0}>∞</option>
             </select> (you can change this later)
             </p>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.handleClose2}>Close</Button>
-            <Button onClick={this.handleClose2}>Start mixing</Button>
+            <Button onClick={this.handleCloseTx0}>Close</Button>
+            <Button onClick={this.handleSubmitTx0}>Start mixing</Button>
           </Modal.Footer>
-        </Modal>
+        </Modal>}
 
         <div className='row'>
           <div className='col-sm-2'>
@@ -157,7 +204,8 @@ class DepositPage extends Component {
               <td>{utxo.message}</td>
               <td><small>{mixService.computeLastActivity(utxo)}</small></td>
               <td>
-                <button className='btn btn-sm btn-primary' title='Start mixing' onClick={this.handleShow2}>Mix <Icon.ChevronsRight size={12}/></button>
+                {utxo.confirmations < TX0_MIN_CONFIRMATIONS && <small>unconfirmed</small>}
+                {utxo.confirmations >= TX0_MIN_CONFIRMATIONS && <button className='btn btn-sm btn-primary' title='Start mixing' onClick={() => this.handleShowTx0(utxo)} >Mix <Icon.ChevronsRight size={12}/></button>}
               </td>
             </tr>
           })}
@@ -196,7 +244,7 @@ class DepositPage extends Component {
               </td>
               <td>26d ago</td>
               <td>
-                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
+                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShowTx0}><Icon.Plus size={12}/>
                 </button>
               </td>
             </tr>
@@ -213,7 +261,7 @@ class DepositPage extends Component {
               </td>
               <td>31d ago</td>
               <td>
-                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
+                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShowTx0}><Icon.Plus size={12}/>
                 </button>
               </td>
             </tr>
@@ -230,7 +278,7 @@ class DepositPage extends Component {
               </td>
               <td>41d ago</td>
               <td>
-                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
+                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShowTx0}><Icon.Plus size={12}/>
                 </button>
               </td>
             </tr>
@@ -247,7 +295,7 @@ class DepositPage extends Component {
               </td>
               <td>73d ago</td>
               <td>
-                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
+                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShowTx0}><Icon.Plus size={12}/>
                 </button>
               </td>
             </tr>
@@ -264,7 +312,7 @@ class DepositPage extends Component {
               </td>
               <td>82d ago</td>
               <td>
-                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
+                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShowTx0}><Icon.Plus size={12}/>
                 </button>
               </td>
             </tr>
@@ -281,7 +329,7 @@ class DepositPage extends Component {
               </td>
               <td>26d ago</td>
               <td>
-                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
+                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShowTx0}><Icon.Plus size={12}/>
                 </button>
               </td>
             </tr>
@@ -298,7 +346,7 @@ class DepositPage extends Component {
               </td>
               <td>128d ago</td>
               <td>
-                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
+                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShowTx0}><Icon.Plus size={12}/>
                 </button>
               </td>
             </tr>
@@ -315,7 +363,7 @@ class DepositPage extends Component {
               </td>
               <td>2 years ago</td>
               <td>
-                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShow2}><Icon.Plus size={12}/>
+                <button className='btn btn-sm btn-primary' title='TX0' onClick={this.handleShowTx0}><Icon.Plus size={12}/>
                 </button>
               </td>
             </tr>

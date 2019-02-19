@@ -6,6 +6,10 @@
   background-color: #b71c1c;
   border-color: #b71c1c;
 }
+.btn-primary.disabled,
+.btn-primary:disabled {
+  background-color: #aaa;
+}
 .text-primary {
   color: #700606 !important;
 }
@@ -43,9 +47,15 @@
   line-height: 0.9em;
 }
 .mixThreads {
-  line-height:0.9em;
-  font-size:0.9em;
-  padding-top:0.3em;
+  line-height: 0.9em;
+  font-size: 0.9em;
+  padding-top: 0.3em;
   overflow: auto;
-  height:3em;
+  height: 3em;
+}
+
+/* DepositPage */
+.modal-tx0 {
+  width: 80%;
+  max-width: none !important;
 }

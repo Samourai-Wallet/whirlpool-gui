@@ -76,6 +76,24 @@ class BackendService {
       )
     },
   };
+
+  tx0 = {
+    fetchPools: utxoValue => {
+      return this.withStatus('Mix', 'Fetch pools for utxo', () =>
+        this.fetchBackendAsJson('/rest/tx0/pools?value='+utxoValue, 'GET')
+      )
+    },
+    create: (utxoHash, utxoIndex, poolId, mixsTarget) => {
+      return this.withStatus('Tx0', 'Tx0', () =>
+        this.fetchBackendAsJson('/rest/tx0/create', 'POST', {
+          hash: utxoHash,
+          index: utxoIndex,
+          poolId: poolId,
+          mixsTarget: mixsTarget
+        })
+      )
+    },
+  }
 }
 const backendService = new BackendService()
 export default backendService

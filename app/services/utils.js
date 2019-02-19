@@ -1,5 +1,6 @@
 const AMOUNT_PRECISION = 4
 const BTC_TO_SAT = 100000000
+export const TX0_MIN_CONFIRMATIONS = 1
 
 class Utils {
   constructor () {
@@ -47,7 +48,8 @@ class Utils {
     switch(status) {
       case 'READY': return 'READY'
       case 'TX0': return 'TX0'
-      case 'TXO_SUCCESS': return 'TXO:SUCCESS'
+      case 'TX0_SUCCESS': return 'TX0:SUCCESS'
+      case 'TX0_FAILED': return 'TX0:ERROR'
       case 'MIX_QUEUE': return 'MIX:QUEUED'
       case 'MIX_STARTED': return 'MIXING'
       case 'MIX_SUCCESS': return 'MIX:SUCCESS'
