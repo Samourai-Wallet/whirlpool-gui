@@ -21,7 +21,8 @@ import utils from '../services/utils';
 import MixStatus from '../components/MixStatus';
 import mixService from '../services/mixService';
 import modalService from '../services/modalService';
-import Tx0Modal from '../components/Tx0Modal';
+import Tx0Modal from '../components/Modals/Tx0Modal';
+import DepositModal from '../components/Modals/DepositModal';
 
 type Props = {
   children: React.Node
@@ -121,6 +122,7 @@ class App extends React.Component<Props> {
             </Switch>
 
             {this.state.modalTx0 && <Tx0Modal utxo={this.state.modalTx0} onClose={modalService.close.bind(modalService)}/>}
+            {this.state.modalDeposit && <DepositModal onClose={modalService.close.bind(modalService)}/>}
 
           </main>
         </div>

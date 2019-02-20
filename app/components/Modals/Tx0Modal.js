@@ -1,44 +1,42 @@
 // @flow
 import React, { Component } from 'react';
 import { Button, Modal, Alert } from 'react-bootstrap';
-import '../containers/PremixPage.css';
 import moment from 'moment';
-import walletService from '../services/walletService';
-import utils from '../services/utils';
+import walletService from '../../services/walletService';
+import utils from '../../services/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import backendService from '../services/backendService';
+import backendService from '../../services/backendService';
 
 export default class DepositPage extends React.PureComponent {
   constructor(props) {
     super(props)
 
     this.state = {
+      loaded: false,
+      error: undefined,
+
       pools: undefined,
       poolId: undefined,
-      mixsTarget: 0,
-      error: undefined,
-      loaded: false
+      mixsTarget: 0
     };
 
     // fetch pools for tx0
-    if (props.utxo) {
-      backendService.tx0.fetchPools(props.utxo.value).then(poolsResponse => {
-        console.log('poolsResponse', poolsResponse)
-        const pools = poolsResponse.pools
+    backendService.tx0.fetchPools(props.utxo.value).then(poolsResponse => {
+      console.log('poolsResponse', poolsResponse)
+      const pools = poolsResponse.pools
 
-        let error = undefined
-        if (pools.length == 0) {
-          error = "No pool found for this utxo value."
-        }
-        this.setState({
-          pools: pools,
-          poolId: pools.length > 0 ? pools[0].poolId : undefined,
-          mixsTarget: 0,
-          error: error,
-          loaded: true
-        })
+      let error = undefined
+      if (pools.length == 0) {
+        error = "No pool found for this utxo value."
+      }
+      this.setState({
+        pools: pools,
+        poolId: pools.length > 0 ? pools[0].poolId : undefined,
+        mixsTarget: 0,
+        error: error,
+        loaded: true
       })
-    }
+    })
 
     this.handleChangePoolTx0 = this.handleChangePoolTx0.bind(this);
     this.handleChangeMixsTargetTx0 = this.handleChangeMixsTargetTx0.bind(this);

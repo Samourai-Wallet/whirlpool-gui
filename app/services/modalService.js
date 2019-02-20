@@ -13,8 +13,17 @@ class ModalService {
     })
   }
 
+  openDeposit() {
+    this.setState({
+      modalDeposit: true
+    })
+  }
+
   close() {
-    this.setState({ modalTx0: false });
+    this.setState({
+      modalTx0: false,
+      modalDeposit: false
+    });
   }
 }
 
