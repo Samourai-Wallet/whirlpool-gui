@@ -8,8 +8,8 @@ import { bindActionCreators } from 'redux';
 import { walletActions } from '../actions/walletActions';
 import { connect } from 'react-redux';
 import walletService from '../services/walletService';
+import modalService from '../services/modalService';
 import utils, { TX0_MIN_CONFIRMATIONS } from '../services/utils';
-import Tx0Modal from '../components/Tx0Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import mixService from '../services/mixService';
@@ -21,15 +21,11 @@ class DepositPage extends Component {
 
     this.state = {
       show: false,
-      showTx0: false,
       depositAddress: undefined
     };
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleNextDepositAddress = this.handleNextDepositAddress.bind(this)
-
-    this.handleShowTx0 = this.handleShowTx0.bind(this);
-    this.handleCloseTx0 = this.handleCloseTx0.bind(this);
   }
 
   handleClose() {
@@ -60,16 +56,6 @@ class DepositPage extends Component {
 
   // tx0
 
-  handleCloseTx0() {
-    this.setState({ showTx0: false });
-  }
-
-  handleShowTx0(utxo) {
-    this.setState({
-      showTx0: utxo
-    })
-  }
-
   render() {
     const utxosDeposit = walletService.getUtxosDeposit()
     return (
@@ -92,7 +78,6 @@ class DepositPage extends Component {
           </Modal.Footer>
         </Modal>
 
-        {this.state.showTx0 && <Tx0Modal utxo={this.state.showTx0} onClose={this.handleCloseTx0}/>}
 
         <div className='row'>
           <div className='col-sm-2'>
@@ -135,7 +120,7 @@ class DepositPage extends Component {
               <td><small>{mixService.computeLastActivity(utxo)}</small></td>
               <td>
                 {utxo.confirmations < TX0_MIN_CONFIRMATIONS && <small>unconfirmed</small>}
-                {utxo.confirmations >= TX0_MIN_CONFIRMATIONS && <button className='btn btn-sm btn-primary' title='Start mixing' onClick={() => this.handleShowTx0(utxo)} >Mix <Icon.ChevronsRight size={12}/></button>}
+                {utxo.confirmations >= TX0_MIN_CONFIRMATIONS && <button className='btn btn-sm btn-primary' title='Start mixing' onClick={() => modalService.openTx0(utxo)} >Mix <Icon.ChevronsRight size={12}/></button>}
               </td>
             </tr>
           })}

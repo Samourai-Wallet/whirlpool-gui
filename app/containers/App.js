@@ -20,6 +20,8 @@ import PostmixPage from './PostmixPage';
 import utils from '../services/utils';
 import MixStatus from '../components/MixStatus';
 import mixService from '../services/mixService';
+import modalService from '../services/modalService';
+import Tx0Modal from '../components/Tx0Modal';
 
 type Props = {
   children: React.Node
@@ -31,6 +33,10 @@ class App extends React.Component<Props> {
   constructor(props) {
     super(props)
 
+    this.state = {
+      // managed by modalService
+      modalTx0: false
+    }
 
     backendService.init(props.dispatch)
 
@@ -40,6 +46,7 @@ class App extends React.Component<Props> {
     walletService.init(props.wallet, walletState =>
       props.walletActions.set(walletState)
     )
+    modalService.init(this.setState.bind(this))
   }
 
   render() {
@@ -112,6 +119,8 @@ class App extends React.Component<Props> {
               <Route path={routes.CONFIG} component={ConfigPage} />
               <Route path={routes.INIT} component={InitPage} />
             </Switch>
+
+            {this.state.modalTx0 && <Tx0Modal utxo={this.state.modalTx0} onClose={modalService.close.bind(modalService)}/>}
 
           </main>
         </div>

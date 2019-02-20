@@ -72,7 +72,7 @@ export default class DepositPage extends React.PureComponent {
 
   render() {
     return (
-      <Modal show={true} onHide={this.handleCloseTx0} dialogClassName="modal-tx0">
+      <Modal show={true} onHide={this.props.onClose} dialogClassName="modal-tx0">
         <Modal.Header>
           <Modal.Title>Add to premix<br/>
             <small>{this.props.utxo.hash}:{this.props.utxo.index}</small></Modal.Title>
