@@ -5,6 +5,7 @@ import * as Icon from 'react-feather';
 import walletService from '../services/walletService';
 import utils from '../services/utils';
 import mixService from '../services/mixService';
+import modalService from '../services/modalService';
 
 type Props = {};
 
@@ -33,6 +34,7 @@ export default class PostmixPage extends Component<Props> {
             <th scope="col" colSpan={2}>Status</th>
             <th scope="col">Mixs</th>
             <th scope="col" colSpan={2}>Last activity</th>
+            <th scope="col"></th>
           </tr>
           </thead>
           <tbody>
@@ -49,6 +51,11 @@ export default class PostmixPage extends Component<Props> {
               <td>{utxo.mixsDone}/{utxo.mixsTarget}</td>
               <td>{utxo.message}</td>
               <td><small>{mixService.computeLastActivity(utxo)}</small></td>
+              <td>
+                {mixService.isTx0Possible(utxo) && <button className='btn btn-sm btn-primary' title='Start mixing' onClick={() => modalService.openTx0(utxo)} >Tx0 <Icon.ChevronsRight size={12}/></button>}
+                {mixService.isStartMixPossible(utxo) && <button className='btn btn-sm btn-primary' title='Start mixing' onClick={() => mixService.startMix(utxo)}>Start <Icon.Play size={12} /></button>}
+                {mixService.isStopMixPossible(utxo) && <button className='btn btn-sm btn-primary' title='Stop mixing' onClick={() => mixService.stopMix(utxo)}>Stop <Icon.Square size={12} /></button>}
+              </td>
             </tr>
           })}
           {false && <todo>

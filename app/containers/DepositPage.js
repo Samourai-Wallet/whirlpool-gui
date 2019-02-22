@@ -62,7 +62,7 @@ class DepositPage extends Component {
               <td><small>{mixService.computeLastActivity(utxo)}</small></td>
               <td>
                 {utxo.confirmations < TX0_MIN_CONFIRMATIONS && <small>unconfirmed</small>}
-                {utxo.confirmations >= TX0_MIN_CONFIRMATIONS && <button className='btn btn-sm btn-primary' title='Start mixing' onClick={() => modalService.openTx0(utxo)} >Tx0 <Icon.ChevronsRight size={12}/></button>}
+                {mixService.isTx0Possible(utxo) && <button className='btn btn-sm btn-primary' title='Start mixing' onClick={() => modalService.openTx0(utxo)} >Tx0 <Icon.ChevronsRight size={12}/></button>}
               </td>
             </tr>
           })}

@@ -59,3 +59,7 @@
   width: 80%;
   max-width: none !important;
 }
+
+.modal-status {
+  width: 100%;
+}

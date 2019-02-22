@@ -5,6 +5,7 @@ import * as Icon from 'react-feather';
 import walletService from '../services/walletService';
 import utils from '../services/utils';
 import mixService from '../services/mixService';
+import modalService from '../services/modalService';
 
 type Props = {};
 
@@ -54,7 +55,9 @@ export default class PremixPage extends Component<Props> {
               <td>{utxo.message}</td>
               <td><small>{mixService.computeLastActivity(utxo)}</small></td>
               <td>
-                <button className='btn btn-sm btn-primary' title='Stop mixing'>Stop <Icon.Square size={12} /></button>
+                {mixService.isTx0Possible(utxo) && <button className='btn btn-sm btn-primary' title='Start mixing' onClick={() => modalService.openTx0(utxo)} >Tx0 <Icon.ChevronsRight size={12}/></button>}
+                {mixService.isStartMixPossible(utxo) && <button className='btn btn-sm btn-primary' title='Start mixing' onClick={() => mixService.startMix(utxo)}>Start <Icon.Play size={12} /></button>}
+                {mixService.isStopMixPossible(utxo) && <button className='btn btn-sm btn-primary' title='Stop mixing' onClick={() => mixService.stopMix(utxo)}>Stop <Icon.Square size={12} /></button>}
               </td>
             </tr>
           })}

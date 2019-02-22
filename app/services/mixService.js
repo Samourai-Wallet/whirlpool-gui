@@ -1,6 +1,7 @@
 import ifNot from 'if-not-running';
 import moment from 'moment';
 import backendService from './backendService';
+import { TX0_MIN_CONFIRMATIONS } from './utils';
 
 const REFRESH_RATE = 3000;
 class MixService {
@@ -29,14 +30,48 @@ class MixService {
     }
   }
 
-  // controls
+  // controls global
 
   start() {
-    backendService.mix.start().then(() => this.fetchState())
+    return backendService.mix.start().then(() => this.fetchState())
   }
 
   stop() {
-    backendService.mix.stop().then(() => this.fetchState())
+    return backendService.mix.stop().then(() => this.fetchState())
+  }
+
+  // controls utxo
+
+  pools(utxo) {
+    return backendService.utxo.pools(utxo.hash, utxo.index)
+  }
+
+  isTx0Possible(utxo) {
+    return (utxo.account === 'DEPOSIT' || utxo.account === 'PREMIX')
+      && (utxo.status === 'READY' || utxo.status === 'TX0_FAILED')
+      && utxo.confirmations >= TX0_MIN_CONFIRMATIONS
+  }
+
+  tx0(utxo, poolId, mixsTarget) {
+    return backendService.utxo.tx0(utxo.hash, utxo.index, poolId, mixsTarget).then(() => this.fetchState())
+  }
+
+  startMix(utxo) {
+    return backendService.utxo.startMix(utxo.hash, utxo.index).then(() => this.fetchState())
+  }
+
+  stopMix(utxo) {
+    return backendService.utxo.stopMix(utxo.hash, utxo.index).then(() => this.fetchState())
+  }
+
+  isStartMixPossible(utxo) {
+    return (utxo.account === 'PREMIX' || utxo.account === 'POSTMIX')
+      && (utxo.status === 'MIX_FAILED' || utxo.status === 'READY')
+  }
+
+  isStopMixPossible(utxo) {
+    return (utxo.account === 'PREMIX' || utxo.account === 'POSTMIX')
+      && (utxo.status === 'MIX_QUEUE' || utxo.status === 'MIX_FAILED' || utxo.status === 'MIX_STARTED' || utxo.status === 'MIX_SUCCESS')
   }
 
   // state

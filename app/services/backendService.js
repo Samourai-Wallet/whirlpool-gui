@@ -48,7 +48,7 @@ class BackendService {
   wallet = {
     fetchUtxos: () => {
       return this.withStatus('Wallet', 'Fetch utxos', () =>
-        this.fetchBackendAsJson('/rest/wallet/utxos', 'GET')
+        this.fetchBackendAsJson('/rest/utxos', 'GET')
         , 'wallet.fetchUtxos')
     },
 
@@ -67,27 +67,35 @@ class BackendService {
     },
     start: () => {
       return this.withStatus('Mix', 'Start mixing', () =>
-        this.fetchBackend('/rest/mix/start', 'POST')
+        this.fetchBackendAsJson('/rest/mix/start', 'POST')
       )
     },
     stop: () => {
       return this.withStatus('Mix', 'Stop mixing', () =>
-        this.fetchBackend('/rest/mix/stop', 'POST')
+        this.fetchBackendAsJson('/rest/mix/stop', 'POST')
       )
-    },
+    }
   };
 
-  tx0 = {
-    fetchPools: utxoValue => {
-      return this.withStatus('Mix', 'Fetch pools for utxo', () =>
-        this.fetchBackendAsJson('/rest/tx0/pools?value='+utxoValue, 'GET')
+  utxo = {
+    startMix: (hash, index) => {
+      return this.withStatus('Utxo', 'Start mixing', () =>
+        this.fetchBackendAsJson('/rest/utxos/'+hash+':'+index+'/startMix', 'POST')
       )
     },
-    create: (utxoHash, utxoIndex, poolId, mixsTarget) => {
-      return this.withStatus('Tx0', 'Tx0', () =>
-        this.fetchBackendAsJson('/rest/tx0/create', 'POST', {
-          hash: utxoHash,
-          index: utxoIndex,
+    stopMix: (hash, index) => {
+      return this.withStatus('Utxo', 'Stop mixing', () =>
+        this.fetchBackendAsJson('/rest/utxos/'+hash+':'+index+'/stopMix', 'POST')
+      )
+    },
+    pools: (hash, index) => {
+      return this.withStatus('Utxo', 'Fetch pools for utxo', () =>
+        this.fetchBackendAsJson('/rest/utxos/'+hash+':'+index+'/pools', 'GET')
+      )
+    },
+    tx0: (hash, index, poolId, mixsTarget) => {
+      return this.withStatus('Utxo', 'Tx0', () =>
+        this.fetchBackendAsJson('/rest/utxos/'+hash+':'+index+'/tx0', 'POST', {
           poolId: poolId,
           mixsTarget: mixsTarget
         })
