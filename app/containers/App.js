@@ -9,6 +9,7 @@ import { walletActions } from '../actions/walletActions';
 import { mixActions } from '../actions/mixActions';
 import { Link } from 'react-router-dom';
 import { Route, Switch } from 'react-router';
+import * as Icon from 'react-feather';
 import routes from '../constants/routes';
 import ConfigPage from '../containers/ConfigPage';
 import InitPage from '../containers/InitPage';
@@ -70,6 +71,7 @@ class App extends React.Component<Props> {
         <div className="row">
           <nav className="col-md-2 d-none d-md-block bg-light sidebar">
             <div className="sidebar-sticky">
+              <button className='btn btn-sm btn-primary' onClick={() => modalService.openDeposit()}><Icon.Plus size={12}/> Deposit</button>
               <ul className="nav flex-column">
                 <li className="nav-item">
                   <Link to={routes.DEPOSIT}>

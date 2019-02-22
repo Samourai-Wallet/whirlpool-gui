@@ -39,3 +39,10 @@
 .modal-deposit .depositAddress canvas {
   margin: 0.6em 0 0.2em 0;
 }
+
+.sidebar-sticky {
+  text-align:center;
+}
+.sidebar-sticky .nav {
+  text-align:left;
+}

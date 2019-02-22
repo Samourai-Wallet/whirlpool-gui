@@ -28,11 +28,8 @@ class DepositPage extends Component {
           <div className='col-sm-2'>
             <h2>Deposit</h2>
           </div>
-          <div className='col-sm-4 stats'>
+          <div className='col-sm-8 stats'>
             <span className='text-primary'>{utxosDeposit.length} utxos on deposit ({utils.toBtc(walletService.getBalanceDeposit())}btc)</span>
-          </div>
-          <div className='col-sm-4 stats'>
-            <button className='btn btn-sm btn-primary' onClick={() => modalService.openDeposit()}><Icon.Plus size={12}/> Deposit</button>
           </div>
         </div>
         <div className="tablescroll">
@@ -65,7 +62,7 @@ class DepositPage extends Component {
               <td><small>{mixService.computeLastActivity(utxo)}</small></td>
               <td>
                 {utxo.confirmations < TX0_MIN_CONFIRMATIONS && <small>unconfirmed</small>}
-                {utxo.confirmations >= TX0_MIN_CONFIRMATIONS && <button className='btn btn-sm btn-primary' title='Start mixing' onClick={() => modalService.openTx0(utxo)} >Mix <Icon.ChevronsRight size={12}/></button>}
+                {utxo.confirmations >= TX0_MIN_CONFIRMATIONS && <button className='btn btn-sm btn-primary' title='Start mixing' onClick={() => modalService.openTx0(utxo)} >Tx0 <Icon.ChevronsRight size={12}/></button>}
               </td>
             </tr>
           })}
