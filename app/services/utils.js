@@ -8,9 +8,21 @@ class Utils {
 
   fetch(input, init, json=false) {
     return fetch(input, init).then(resp => {
-      if (!resp || !resp.ok) {
-        const message = 'Fetch failed: status='+(resp ? resp.status : 'null')
-        console.error(message)
+      if (!resp) {
+        const message = 'Fetch failed'
+        console.error('fetch error', message)
+        return Promise.reject(message)
+      }
+      if (!resp.ok) {
+        if (json) {
+          return resp.json().then(responseError => {
+            const message = responseError.message ? responseError.message : 'Fetch failed'
+            console.error('fetch error', message)
+            return Promise.reject(message)
+          })
+        }
+        const message = 'Fetch failed: status='+resp.status
+        console.error('fetch error', message)
         return Promise.reject(message)
       }
       if (json) {
