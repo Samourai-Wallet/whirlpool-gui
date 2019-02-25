@@ -29,6 +29,10 @@ class WalletService {
     }
   }
 
+  isReady() {
+    return this.state && this.state.wallet
+  }
+
   // wallet
 
   computeLastActivity(utxo) {

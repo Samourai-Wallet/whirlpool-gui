@@ -5,6 +5,7 @@ import moment from 'moment';
 import utils from '../../services/utils';
 import mixService from '../../services/mixService';
 import AbstractModal from './AbstractModal';
+import poolsService from '../../services/poolsService';
 
 export default class Tx0Modal extends AbstractModal {
   constructor(props) {
@@ -16,11 +17,11 @@ export default class Tx0Modal extends AbstractModal {
     super(props, 'modal-tx0', initialState)
 
     // fetch pools for tx0
-    this.loading("Fetching pools for tx0...", mixService.pools(props.utxo).then(poolsResponse => {
-      const pools = poolsResponse.pools
+    this.loading("Fetching pools for tx0...", poolsService.fetchState().then(foo => {
+      const pools = mixService.getPoolsForTx0(props.utxo)
 
       if (pools.length == 0) {
-        this.setError("No pool found for this utxo.")
+        this.setError("No pool applicable to this utxo.")
       }
       this.setState({
         pools: pools,
@@ -63,7 +64,7 @@ export default class Tx0Modal extends AbstractModal {
   }
 
   renderButtons() {
-    return <Button onClick={this.handleSubmitTx0}>Start mixing</Button>
+    return <Button onClick={this.handleSubmitTx0}>Tx0</Button>
   }
 
   renderBody() {

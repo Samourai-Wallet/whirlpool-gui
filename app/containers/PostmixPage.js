@@ -6,6 +6,7 @@ import walletService from '../services/walletService';
 import utils from '../services/utils';
 import mixService from '../services/mixService';
 import modalService from '../services/modalService';
+import poolsService from '../services/poolsService';
 
 type Props = {};
 
@@ -13,6 +14,16 @@ export default class PostmixPage extends Component<Props> {
   props: Props;
 
   render() {
+    if (!walletService.isReady()) {
+      return <small>Fetching wallet...</small>
+    }
+    if (!mixService.isReady()) {
+      return <small>Fetching mix state...</small>
+    }
+    if (!poolsService.isReady()) {
+      return <small>Fetching pools...</small>
+    }
+
     const utxosPostmix = walletService.getUtxosPostmix()
     return (
       <div className='postmixPage'>

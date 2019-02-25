@@ -20,7 +20,7 @@ export default class AbstractModal extends React.PureComponent {
     this.state.loading = loadingMessage
     this.state.error = undefined
 
-    return promise.then(result => this.setLoading(false)).catch(this.setError)
+    return promise.then(result => this.setLoading(false)).catch(error => this.setError(error.message))
   }
 
   setLoading(loadingMessage) {

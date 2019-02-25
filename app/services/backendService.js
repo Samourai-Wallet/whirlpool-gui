@@ -2,7 +2,7 @@ import utils from './utils';
 import status from './status';
 
 const HOST = 'http://127.0.0.1:8899'
-const API_VERSION = '0.3'
+const API_VERSION = '0.4'
 const HEADER_API_VERSION = 'apiVersion'
 
 class BackendService {
@@ -45,6 +45,14 @@ class BackendService {
     )
   }
 
+  pools = {
+    fetchPools: () => {
+      return this.withStatus('Pools', 'Fetch pools', () =>
+          this.fetchBackendAsJson('/rest/pools', 'GET')
+        , 'pools.fetchPools')
+    }
+  };
+
   wallet = {
     fetchUtxos: () => {
       return this.withStatus('Wallet', 'Fetch utxos', () =>
@@ -68,12 +76,12 @@ class BackendService {
     start: () => {
       return this.withStatus('Mix', 'Start mixing', () =>
         this.fetchBackendAsJson('/rest/mix/start', 'POST')
-      )
+        , 'mix.start')
     },
     stop: () => {
       return this.withStatus('Mix', 'Stop mixing', () =>
         this.fetchBackendAsJson('/rest/mix/stop', 'POST')
-      )
+        , 'mix.stop')
     }
   };
 
@@ -86,11 +94,6 @@ class BackendService {
     stopMix: (hash, index) => {
       return this.withStatus('Utxo', 'Stop mixing', () =>
         this.fetchBackendAsJson('/rest/utxos/'+hash+':'+index+'/stopMix', 'POST')
-      )
-    },
-    pools: (hash, index) => {
-      return this.withStatus('Utxo', 'Fetch pools for utxo', () =>
-        this.fetchBackendAsJson('/rest/utxos/'+hash+':'+index+'/pools', 'GET')
       )
     },
     tx0: (hash, index, poolId, mixsTarget) => {

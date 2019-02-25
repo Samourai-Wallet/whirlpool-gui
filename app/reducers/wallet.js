@@ -4,7 +4,7 @@ import type { Action } from './types';
 import produce from 'immer';
 
 const initialState = {
-  wallet: {
+  /*wallet: {
     deposit: {
       utxos:[],
       balance:0
@@ -17,7 +17,7 @@ const initialState = {
       utxos:[],
       balance:0
     }
-  }
+  }*/
 }
 
 const reducer = produce((state, action) => {

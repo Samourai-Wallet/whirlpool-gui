@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import walletService from '../services/walletService';
 import { bindActionCreators } from 'redux';
 import { walletActions } from '../actions/walletActions';
+import { poolsActions } from '../actions/poolsActions';
 import { mixActions } from '../actions/mixActions';
 import { Link } from 'react-router-dom';
 import { Route, Switch } from 'react-router';
@@ -24,6 +25,7 @@ import mixService from '../services/mixService';
 import modalService from '../services/modalService';
 import Tx0Modal from '../components/Modals/Tx0Modal';
 import DepositModal from '../components/Modals/DepositModal';
+import poolsService from '../services/poolsService';
 
 type Props = {
   children: React.Node
@@ -48,21 +50,20 @@ class App extends React.Component<Props> {
     walletService.init(props.wallet, walletState =>
       props.walletActions.set(walletState)
     )
+    poolsService.init(props.pools, poolsState =>
+      props.poolsActions.set(poolsState)
+    )
     modalService.init(this.setState.bind(this))
   }
 
   render() {
-    const utxosDeposit = walletService.getUtxosDeposit()
-    const utxosPremix = walletService.getUtxosPremix()
-    const utxosPostmix = walletService.getUtxosPostmix()
-
     return <div>
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
         <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="#" title="Samourai Whirlpool">
           <img src="img/samourai.png"/> Whirlpool
         </a>
         <div className='col-md-10'>
-          <MixStatus mixState={this.props.mix} mixActions={this.props.mixActions}/>
+          {mixService.isReady() ? <MixStatus mixState={this.props.mix} mixActions={this.props.mixActions}/> : <small>Fetching mix state...</small>}
         </div>
       </nav>
 
@@ -73,30 +74,30 @@ class App extends React.Component<Props> {
             <div className="sidebar-sticky">
               <button className='btn btn-sm btn-primary' onClick={() => modalService.openDeposit()}><Icon.Plus size={12}/> Deposit</button>
               <ul className="nav flex-column">
-                <li className="nav-item">
+                {walletService.isReady() && <li className="nav-item">
                   <Link to={routes.DEPOSIT}>
                     <a className="nav-link">
                       <span data-feather="plus"></span>
-                      Deposit ({utxosDeposit.length} · {utils.toBtc(walletService.getBalanceDeposit(), true)})
+                      Deposit ({walletService.getUtxosDeposit().length} · {utils.toBtc(walletService.getBalanceDeposit(), true)})
                     </a>
                   </Link>
-                </li>
-                <li className="nav-item">
+                </li>}
+                {walletService.isReady() && <li className="nav-item">
                   <Link to={routes.PREMIX}>
                     <a className="nav-link">
                       <span data-feather="play"></span>
-                      Mixing ({utxosPremix.length} · {utils.toBtc(walletService.getBalancePremix(), true)})
+                      Mixing ({walletService.getUtxosPremix().length} · {utils.toBtc(walletService.getBalancePremix(), true)})
                     </a>
                   </Link>
-                </li>
-                <li className="nav-item">
+                </li>}
+                {walletService.isReady() && <li className="nav-item">
                   <Link to={routes.POSTMIX}>
                     <a className="nav-link">
                       <span data-feather="check"></span>
-                      Mixed ({utxosPostmix.length} · {utils.toBtc(walletService.getBalancePostmix(), true)})
+                      Mixed ({walletService.getUtxosPostmix().length} · {utils.toBtc(walletService.getBalancePostmix(), true)})
                     </a>
                   </Link>
-                </li>
+                </li>}
                 <li className="nav-item">
                   <Link to={routes.CONFIG}>
                     <a className="nav-link">
@@ -106,6 +107,7 @@ class App extends React.Component<Props> {
                   </Link>
                 </li>
               </ul>
+              {!walletService.isReady() && <div><small>Fetching wallet...</small></div>}
             </div>
             <Status
               status={this.props.status}
@@ -148,6 +150,7 @@ function mapDispatchToProps (dispatch) {
     dispatch,
     statusActions: bindActionCreators(statusActions, dispatch),
     walletActions: bindActionCreators(walletActions, dispatch),
+    poolsActions: bindActionCreators(poolsActions, dispatch),
     mixActions: bindActionCreators(mixActions, dispatch)
   }
 }

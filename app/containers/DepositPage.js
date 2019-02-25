@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Modal } from 'react-bootstrap';
 import './PremixPage.css';
 import * as Icon from 'react-feather';
 import { bindActionCreators } from 'redux';
@@ -9,8 +8,8 @@ import { connect } from 'react-redux';
 import walletService from '../services/walletService';
 import modalService from '../services/modalService';
 import utils, { TX0_MIN_CONFIRMATIONS } from '../services/utils';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import mixService from '../services/mixService';
+import poolsService from '../services/poolsService';
 
 class DepositPage extends Component {
 
@@ -21,6 +20,16 @@ class DepositPage extends Component {
   // tx0
 
   render() {
+    if (!walletService.isReady()) {
+      return <small>Fetching wallet...</small>
+    }
+    if (!mixService.isReady()) {
+      return <small>Fetching mix state...</small>
+    }
+    if (!poolsService.isReady()) {
+      return <small>Fetching pools...</small>
+    }
+
     const utxosDeposit = walletService.getUtxosDeposit()
     return (
       <div className='depositPage'>

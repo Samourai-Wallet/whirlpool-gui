@@ -24,7 +24,7 @@ class Status {
       })
       .catch(error => {
         console.error(`failed: ${label}`, error)
-        dispatch(statusActions.error(itemId, error))
+        dispatch(statusActions.error(itemId, error.message))
       })
     return promise
   }

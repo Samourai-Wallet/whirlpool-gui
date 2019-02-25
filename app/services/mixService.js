@@ -2,6 +2,7 @@ import ifNot from 'if-not-running';
 import moment from 'moment';
 import backendService from './backendService';
 import { TX0_MIN_CONFIRMATIONS } from './utils';
+import poolsService from './poolsService';
 
 const REFRESH_RATE = 3000;
 class MixService {
@@ -30,6 +31,10 @@ class MixService {
     }
   }
 
+  isReady() {
+    return this.state && this.state.mix
+  }
+
   // controls global
 
   start() {
@@ -42,14 +47,15 @@ class MixService {
 
   // controls utxo
 
-  pools(utxo) {
-    return backendService.utxo.pools(utxo.hash, utxo.index)
+  getPoolsForTx0(utxo) {
+    return poolsService.getPoolsForTx0(utxo.value)
   }
 
   isTx0Possible(utxo) {
     return (utxo.account === 'DEPOSIT' || utxo.account === 'PREMIX')
       && (utxo.status === 'READY' || utxo.status === 'TX0_FAILED')
       && utxo.confirmations >= TX0_MIN_CONFIRMATIONS
+      && this.getPoolsForTx0(utxo).length > 0
   }
 
   tx0(utxo, poolId, mixsTarget) {
@@ -64,9 +70,14 @@ class MixService {
     return backendService.utxo.stopMix(utxo.hash, utxo.index).then(() => this.fetchState())
   }
 
+  getPoolsForMix(utxo) {
+    return poolsService.getPoolsForMix(utxo.value)
+  }
+
   isStartMixPossible(utxo) {
     return (utxo.account === 'PREMIX' || utxo.account === 'POSTMIX')
       && (utxo.status === 'MIX_FAILED' || utxo.status === 'READY')
+      && this.getPoolsForMix(utxo).length > 0
   }
 
   isStopMixPossible(utxo) {
@@ -77,9 +88,6 @@ class MixService {
   // state
 
   computeLastActivity(utxo) {
-    if (!utxo.lastActivityElapsed) {
-      return undefined
-    }
     const fetchElapsed = new Date().getTime()-this.state.mix.fetchTime
     return moment.duration(fetchElapsed + utxo.lastActivityElapsed).humanize()
   }

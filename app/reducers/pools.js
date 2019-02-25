@@ -1,24 +1,19 @@
 // @flow
 import type { Action } from './types';
 import produce from 'immer';
-import { MIX_SET } from '../actions/mixActions';
+import { POOLS_SET } from '../actions/poolsActions';
 
 const initialState = {
-  /*mix: {
-    started: false,
-    nbMixing: 0,
-    maxClients: 0,
-    nbIdle:0,
-    nbQueued:0,
-    threads: []
+  /*pools: {
+    pools: []
   }*/
 }
 
 const reducer = produce((state, action) => {
   const payload = action.payload
   switch (action.type) {
-    case MIX_SET:
-      state.mix = payload
+    case POOLS_SET:
+      state.pools = payload
       return
     default:
       return
