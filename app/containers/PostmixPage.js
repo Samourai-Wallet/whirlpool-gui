@@ -2,11 +2,16 @@
 import React, { Component } from 'react';
 import './PostmixPage.css';
 import * as Icon from 'react-feather';
+import moment from 'moment';
 import walletService from '../services/walletService';
 import utils from '../services/utils';
 import mixService from '../services/mixService';
 import modalService from '../services/modalService';
 import poolsService from '../services/poolsService';
+import { Dropdown, DropdownButton } from 'react-bootstrap';
+import UtxoPoolSelector from '../components/Utxo/UtxoPoolSelector';
+import UtxoMixsTargetSelector from '../components/Utxo/UtxoMixsTargetSelector';
+import UtxoControls from '../components/Utxo/UtxoControls';
 
 type Props = {};
 
@@ -45,27 +50,31 @@ export default class PostmixPage extends Component<Props> {
             <th scope="col" colSpan={2}>Status</th>
             <th scope="col">Mixs</th>
             <th scope="col" colSpan={2}>Last activity</th>
-            <th scope="col"></th>
+            <th scope="col">
+            </th>
           </tr>
           </thead>
           <tbody>
           {utxosPostmix.map((utxo,i) => {
+            const lastActivity = mixService.computeLastActivity(utxo)
             return <tr key={i}>
               <td>
                 <small><a href={utils.linkExplorer(utxo)} target='_blank'>{utxo.hash}:{utxo.index}</a><br/>
-                  {utxo.account} · {utxo.path} · {utxo.confirmations} confirms</small>
+                  {utxo.account} · {utxo.path} · {utxo.confirmations>0?<span>{utxo.confirmations} confirms</span>:<strong>unconfirmed</strong>}</small>
               </td>
               <td>{utils.toBtc(utxo.value)}</td>
-              <td>{utxo.poolId}</td>
+              <td>
+                <UtxoPoolSelector utxo={utxo}/>
+              </td>
               <td><span className='text-primary'>{utils.statusLabel(utxo.status)}</span></td>
               <td></td>
-              <td>{utxo.mixsDone}/{utxo.mixsTarget}</td>
-              <td>{utxo.message}</td>
-              <td><small>{mixService.computeLastActivity(utxo)}</small></td>
               <td>
-                {mixService.isTx0Possible(utxo) && <button className='btn btn-sm btn-primary' title='Start mixing' onClick={() => modalService.openTx0(utxo)} >Tx0 <Icon.ChevronsRight size={12}/></button>}
-                {mixService.isStartMixPossible(utxo) && <button className='btn btn-sm btn-primary' title='Start mixing' onClick={() => mixService.startMix(utxo)}>Start <Icon.Play size={12} /></button>}
-                {mixService.isStopMixPossible(utxo) && <button className='btn btn-sm btn-primary' title='Stop mixing' onClick={() => mixService.stopMix(utxo)}>Stop <Icon.Square size={12} /></button>}
+                <UtxoMixsTargetSelector utxo={utxo}/>
+              </td>
+              <td><small>{utxo.message}</small></td>
+              <td><small>{lastActivity ? lastActivity : '-'}</small></td>
+              <td>
+                <UtxoControls utxo={utxo}/>
               </td>
             </tr>
           })}

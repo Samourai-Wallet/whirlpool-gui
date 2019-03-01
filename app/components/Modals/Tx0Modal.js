@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import moment from 'moment';
+import * as Icon from 'react-feather';
 import utils from '../../services/utils';
 import mixService from '../../services/mixService';
 import AbstractModal from './AbstractModal';
@@ -64,7 +65,7 @@ export default class Tx0Modal extends AbstractModal {
   }
 
   renderButtons() {
-    return <Button onClick={this.handleSubmitTx0}>Tx0</Button>
+    return <Button onClick={this.handleSubmitTx0}>Tx0 <Icon.ChevronsRight size={12}/></Button>
   }
 
   renderBody() {
@@ -75,7 +76,7 @@ export default class Tx0Modal extends AbstractModal {
       {!this.isLoading() && !this.isError() && <div>
         Select a pool:
         <select className="form-control" onChange={this.handleChangePoolTx0} defaultValue={this.state.poolId}>
-          {this.state.pools.map(pool => <option key={pool.poolId} value={pool.poolId}>{pool.poolId} (denomination: {utils.toBtc(pool.denomination)}btc, anonymity set: {pool.mixAnonymitySet}, connected: {pool.nbRegistered}, last mix: {moment.duration(pool.elapsedTime).humanize()})</option>)}
+          {this.state.pools.map(pool => <option key={pool.poolId} value={pool.poolId}>{pool.poolId} (denomination: {utils.toBtc(pool.denomination)}btc, fee: {utils.toBtc(pool.feeValue)}, anonymity set: {pool.mixAnonymitySet}, connected: {pool.nbRegistered}, last mix: {moment.duration(pool.elapsedTime).humanize()})</option>)}
         </select><br/>
 
         Mixs target:

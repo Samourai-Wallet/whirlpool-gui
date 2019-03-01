@@ -75,12 +75,12 @@ class BackendService {
     },
     start: () => {
       return this.withStatus('Mix', 'Start mixing', () =>
-        this.fetchBackendAsJson('/rest/mix/start', 'POST')
+        this.fetchBackend('/rest/mix/start', 'POST')
         , 'mix.start')
     },
     stop: () => {
       return this.withStatus('Mix', 'Stop mixing', () =>
-        this.fetchBackendAsJson('/rest/mix/stop', 'POST')
+        this.fetchBackend('/rest/mix/stop', 'POST')
         , 'mix.stop')
     }
   };
@@ -88,12 +88,12 @@ class BackendService {
   utxo = {
     startMix: (hash, index) => {
       return this.withStatus('Utxo', 'Start mixing', () =>
-        this.fetchBackendAsJson('/rest/utxos/'+hash+':'+index+'/startMix', 'POST')
+        this.fetchBackend('/rest/utxos/'+hash+':'+index+'/startMix', 'POST')
       )
     },
     stopMix: (hash, index) => {
       return this.withStatus('Utxo', 'Stop mixing', () =>
-        this.fetchBackendAsJson('/rest/utxos/'+hash+':'+index+'/stopMix', 'POST')
+        this.fetchBackend('/rest/utxos/'+hash+':'+index+'/stopMix', 'POST')
       )
     },
     tx0: (hash, index, poolId, mixsTarget) => {

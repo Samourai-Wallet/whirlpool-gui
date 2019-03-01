@@ -1,8 +1,9 @@
 import ifNot from 'if-not-running';
 import moment from 'moment';
 import backendService from './backendService';
-import { TX0_MIN_CONFIRMATIONS } from './utils';
+import { TX0_MIN_CONFIRMATIONS, WHIRLPOOL_ACCOUNTS } from './utils';
 import poolsService from './poolsService';
+import walletService from './walletService';
 
 const REFRESH_RATE = 3000;
 class MixService {
@@ -52,22 +53,22 @@ class MixService {
   }
 
   isTx0Possible(utxo) {
-    return (utxo.account === 'DEPOSIT' || utxo.account === 'PREMIX')
+    return (utxo.account === WHIRLPOOL_ACCOUNTS.DEPOSIT || utxo.account === WHIRLPOOL_ACCOUNTS.PREMIX)
       && (utxo.status === 'READY' || utxo.status === 'TX0_FAILED')
       && utxo.confirmations >= TX0_MIN_CONFIRMATIONS
       && this.getPoolsForTx0(utxo).length > 0
   }
 
   tx0(utxo, poolId, mixsTarget) {
-    return backendService.utxo.tx0(utxo.hash, utxo.index, poolId, mixsTarget).then(() => this.fetchState())
+    return backendService.utxo.tx0(utxo.hash, utxo.index, poolId, mixsTarget).then(() => walletService.fetchState())
   }
 
   startMix(utxo) {
-    return backendService.utxo.startMix(utxo.hash, utxo.index).then(() => this.fetchState())
+    return backendService.utxo.startMix(utxo.hash, utxo.index).then(() => Promise.all(walletService.fetchState(), this.fetchState()))
   }
 
   stopMix(utxo) {
-    return backendService.utxo.stopMix(utxo.hash, utxo.index).then(() => this.fetchState())
+    return backendService.utxo.stopMix(utxo.hash, utxo.index).then(() => Promise.all(walletService.fetchState(), this.fetchState()))
   }
 
   getPoolsForMix(utxo) {
@@ -75,19 +76,22 @@ class MixService {
   }
 
   isStartMixPossible(utxo) {
-    return (utxo.account === 'PREMIX' || utxo.account === 'POSTMIX')
+    return (utxo.account === WHIRLPOOL_ACCOUNTS.PREMIX || utxo.account === WHIRLPOOL_ACCOUNTS.POSTMIX)
       && (utxo.status === 'MIX_FAILED' || utxo.status === 'READY')
       && this.getPoolsForMix(utxo).length > 0
   }
 
   isStopMixPossible(utxo) {
-    return (utxo.account === 'PREMIX' || utxo.account === 'POSTMIX')
-      && (utxo.status === 'MIX_QUEUE' || utxo.status === 'MIX_FAILED' || utxo.status === 'MIX_STARTED' || utxo.status === 'MIX_SUCCESS')
+    return (utxo.account === WHIRLPOOL_ACCOUNTS.PREMIX || utxo.account === WHIRLPOOL_ACCOUNTS.POSTMIX)
+      && (utxo.status === 'MIX_QUEUE' || utxo.status === 'MIX_STARTED' || utxo.status === 'MIX_SUCCESS')
   }
 
   // state
 
   computeLastActivity(utxo) {
+    if (!utxo.lastActivityElapsed) {
+      return undefined
+    }
     const fetchElapsed = new Date().getTime()-this.state.mix.fetchTime
     return moment.duration(fetchElapsed + utxo.lastActivityElapsed).humanize()
   }

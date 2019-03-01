@@ -2,6 +2,12 @@ const AMOUNT_PRECISION = 4
 const BTC_TO_SAT = 100000000
 export const TX0_MIN_CONFIRMATIONS = 1
 
+export const WHIRLPOOL_ACCOUNTS = {
+  DEPOSIT: 'DEPOSIT',
+  PREMIX: 'PREMIX',
+  POSTMIX: 'POSTMIX'
+}
+
 class Utils {
   constructor () {
   }
@@ -10,20 +16,18 @@ class Utils {
     return fetch(input, init).then(resp => {
       if (!resp) {
         const message = 'Fetch failed'
-        console.error('fetch error', message)
-        return Promise.reject(message)
+        console.error('fetch error:', message)
+        return Promise.reject(new Error(message))
       }
       if (!resp.ok) {
-        if (json) {
-          return resp.json().then(responseError => {
-            const message = responseError.message ? responseError.message : 'Fetch failed'
-            console.error('fetch error', message)
-            return Promise.reject(message)
-          })
-        }
+        return resp.json().then(responseError => {
+          const message = responseError.message ? responseError.message : 'Fetch failed'
+          console.error('fetch error:', message)
+          return Promise.reject(new Error(message))
+        })
         const message = 'Fetch failed: status='+resp.status
-        console.error('fetch error', message)
-        return Promise.reject(message)
+        console.error('fetch error:', message)
+        return Promise.reject(new Error(message))
       }
       if (json) {
         return resp.json()
@@ -59,11 +63,11 @@ class Utils {
   statusLabel(status) {
     switch(status) {
       case 'READY': return 'READY'
-      case 'TX0': return 'TX0'
+      case 'TX0': return 'TX0...'
       case 'TX0_SUCCESS': return 'TX0:SUCCESS'
       case 'TX0_FAILED': return 'TX0:ERROR'
       case 'MIX_QUEUE': return 'MIX:QUEUED'
-      case 'MIX_STARTED': return 'MIXING'
+      case 'MIX_STARTED': return 'MIX...'
       case 'MIX_SUCCESS': return 'MIX:SUCCESS'
       case 'MIX_FAILED': return 'MIX:ERROR'
       default: return '?'

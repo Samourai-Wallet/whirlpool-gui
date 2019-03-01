@@ -20,6 +20,13 @@
   margin-top: 10%;
 }
 
+.dropdown-item.active, .dropdown-item:active {
+  background-color: #700606 !important;
+}
+.container-fluid a.dropdown-item.active:hover {
+  color:#fff !important;
+}
+
 /* status */
 .status {
   position: absolute;
@@ -62,4 +69,8 @@
 
 .modal-status {
   width: 100%;
+}
+
+.utxoPoolSelector .dropdown-item, .utxoMixsTargetSelector .dropdown-item {
+  padding: 0 0.4em;
 }
