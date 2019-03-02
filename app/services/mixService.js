@@ -86,7 +86,8 @@ class MixService {
   }
 
   getPoolsForMix(utxo) {
-    return poolsService.getPoolsForMix(utxo.value)
+    const liquidity = utxo.account === WHIRLPOOL_ACCOUNTS.POSTMIX
+    return poolsService.getPoolsForMix(utxo.value, liquidity)
   }
 
   isStartMixPossible(utxo) {

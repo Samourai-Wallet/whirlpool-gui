@@ -20,11 +20,12 @@
   margin-top: 10%;
 }
 
-.dropdown-item.active, .dropdown-item:active {
+.dropdown-item.active,
+.dropdown-item:active {
   background-color: #700606 !important;
 }
 .container-fluid a.dropdown-item.active:hover {
-  color:#fff !important;
+  color: #fff !important;
 }
 
 .progress-bar {
@@ -58,7 +59,7 @@
   font-size: 0.9em;
   padding-top: 0.3em;
   overflow: auto;
-  height: 3em;
+  height: 5em;
 }
 .mixThreads .progress-bar {
   font-weight: normal;
@@ -74,6 +75,7 @@
   width: 100%;
 }
 
-.utxoPoolSelector .dropdown-item, .utxoMixsTargetSelector .dropdown-item {
+.utxoPoolSelector .dropdown-item,
+.utxoMixsTargetSelector .dropdown-item {
   padding: 0 0.4em;
 }

@@ -43,7 +43,10 @@ class PoolsService {
     return this.getPools().filter(pool => utxoBalance >= pool.tx0BalanceMin)
   }
 
-  getPoolsForMix(utxoBalance) {
+  getPoolsForMix(utxoBalance, liquidity) {
+    if (liquidity) {
+      return this.getPools().filter(pool => utxoBalance == pool.denomination)
+    }
     return this.getPools().filter(pool => utxoBalance >= pool.mustMixBalanceMin && utxoBalance <= pool.mustMixBalanceMax)
   }
 

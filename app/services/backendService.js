@@ -2,8 +2,10 @@ import utils from './utils';
 import status from './status';
 
 const HOST = 'http://127.0.0.1:8899'
-const API_VERSION = '0.4'
+const API_VERSION = '0.5'
+const API_KEY = 'foo'
 const HEADER_API_VERSION = 'apiVersion'
+const HEADER_API_KEY = 'apiKey'
 
 class BackendService {
   constructor () {
@@ -19,6 +21,7 @@ class BackendService {
       'Content-Type': 'application/json'
     }
     headers[HEADER_API_VERSION] = API_VERSION
+    headers[HEADER_API_KEY] = API_KEY
     return headers
   }
 
