@@ -68,7 +68,7 @@ class Utils {
       case 'TX0_SUCCESS': return 'TX0:SUCCESS'
       case 'TX0_FAILED': return 'TX0:ERROR'
       case 'MIX_QUEUE': return 'MIX:QUEUED'
-      case 'MIX_STARTED': return 'MIX...'
+      case 'MIX_STARTED': return 'MIXING...'
       case 'MIX_SUCCESS': return 'MIX:SUCCESS'
       case 'MIX_FAILED': return 'MIX:ERROR'
       default: return '?'

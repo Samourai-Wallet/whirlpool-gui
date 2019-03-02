@@ -27,6 +27,10 @@
   color:#fff !important;
 }
 
+.progress-bar {
+  background-color: #700606 !important;
+}
+
 /* status */
 .status {
   position: absolute;
@@ -50,15 +54,14 @@
 .mixStatus {
   text-align: center;
 }
-.mixStatus button {
-  line-height: 0.9em;
-}
 .mixThreads {
-  line-height: 0.9em;
   font-size: 0.9em;
   padding-top: 0.3em;
   overflow: auto;
   height: 3em;
+}
+.mixThreads .progress-bar {
+  font-weight: normal;
 }
 
 /* DepositPage */

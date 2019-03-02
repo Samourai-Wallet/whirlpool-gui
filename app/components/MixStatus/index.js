@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import {ProgressBar} from 'react-bootstrap';
 import mixService from '../../services/mixService';
 import utils from '../../services/utils';
 import * as Icon from 'react-feather';
@@ -23,15 +24,17 @@ class MixStatus extends React.PureComponent {
           <div className='col-sm-10 mixThreads'>
             <div className='row'>
             {mixService.getThreads().map((utxo,i) => {
-              let progressStr = ''
-              if (utxo.progressPercent) progressStr += utxo.progressPercent + '%'
-              if (utxo.progressLabel) progressStr += (progressStr?' · ':'')+utxo.progressLabel
+              const progressLabel = utxo.progressLabel ? utxo.progressLabel : ''
               return <div className='col-sm-6' key={i}>
-                  <div className='row no-gutters'>
-                    <div className='col-sm-3'>#{(i+1)}: <span className='text-primary'>{utils.statusLabel(utxo.status)}</span> <small>{utxo.poolId}</small></div>
-                    <div className='col-sm-4'><small>{progressStr ? ' (' + progressStr + ')' : ''}</small></div>
-                    <div className='col-sm-3'><small>{mixService.computeLastActivity(utxo)}</small></div>
+                <div className='row no-gutters'>
+                  <div className='col-sm-2'>#{(i+1)}: <small>{utxo.poolId}</small></div>
+                  <div className='col-sm-2'>{utils.statusLabel(utxo.status)}</div>
+                  <div className='col-sm-5'>
+                    {utxo.progressPercent && <div className='col-sm-11'><ProgressBar animated now={utxo.progressPercent} label={progressLabel} /></div>}
+                    {!utxo.progressPercent && <small>{progressLabel}</small>}
                   </div>
+                  <div className='col-sm-3'><small>{mixService.computeLastActivity(utxo)}</small></div>
+                </div>
               </div>
             })}
             </div>
