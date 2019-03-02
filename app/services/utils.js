@@ -1,6 +1,7 @@
 const AMOUNT_PRECISION = 4
 const BTC_TO_SAT = 100000000
 export const TX0_MIN_CONFIRMATIONS = 1
+export const MIXSTARGET_UNLIMITED = 0
 
 export const WHIRLPOOL_ACCOUNTS = {
   DEPOSIT: 'DEPOSIT',
@@ -72,6 +73,10 @@ class Utils {
       case 'MIX_FAILED': return 'MIX:ERROR'
       default: return '?'
     }
+  }
+
+  mixsTargetLabel(mixsTarget) {
+    return mixsTarget !== MIXSTARGET_UNLIMITED ? mixsTarget : '∞'
   }
 }
 

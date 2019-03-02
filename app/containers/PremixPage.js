@@ -37,7 +37,7 @@ export default class PremixPage extends Component<Props> {
             <h2>Mixing</h2>
           </div>
           <div className='col-sm-10 stats'>
-            <span className='text-primary'>{utxosPremix.length} utxos mixing ({utils.toBtc(walletService.getBalancePremix())}btc)</span>
+            <span className='text-primary'>{utxosPremix.length} utxos ({utils.toBtc(walletService.getBalancePremix())}btc)</span>
           </div>
         </div>
         <div className='tablescroll'>

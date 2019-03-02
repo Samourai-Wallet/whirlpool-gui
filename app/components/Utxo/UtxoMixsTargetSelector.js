@@ -6,29 +6,24 @@
 
 import React from 'react';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
+import mixService from '../../services/mixService';
+import { MIXSTARGET_UNLIMITED } from '../../services/utils';
+import utils from '../../services/utils';
 
 /* eslint-disable react/prefer-stateless-function */
 class UtxoMixsTargetSelector extends React.PureComponent {
 
   render () {
     const utxo = this.props.utxo
-    const targets = {
-      1:1,
-      2:2,
-      3:3,
-      5:5,
-      10:10
-    }
+    const targets = [1, 2, 3, 5, 10, MIXSTARGET_UNLIMITED]
 
     return (
-      <DropdownButton size='sm' variant="default" title={utxo.mixsDone+' / '+utxo.mixsTarget} className='utxoMixsTargetSelector'>
-        {Object.keys(targets).map(value => {
+      <DropdownButton size='sm' variant="default" title={utxo.mixsDone+' / '+utils.mixsTargetLabel(utxo.mixsTarget)} className='utxoMixsTargetSelector'>
+        {targets.map(value => {
           value = parseInt(value)
-          const label = targets[value]
-          return <Dropdown.Item key={value} active={value === utxo.mixsTarget}>{label}</Dropdown.Item>
+          const label = utils.mixsTargetLabel(value)
+          return <Dropdown.Item key={value} active={value === utxo.mixsTarget} onClick={() => mixService.setMixsTarget(utxo, value)}>{label}</Dropdown.Item>
         })}
-        <Dropdown.Divider />
-        <Dropdown.Item active={!utxo.mixsTarget}>∞</Dropdown.Item>
       </DropdownButton>
     )
   }

@@ -43,7 +43,7 @@ class DepositPage extends Component {
             <h2>Deposit</h2>
           </div>
           <div className='col-sm-10 stats'>
-            <span className='text-primary'>{utxosDeposit.length} utxos on deposit ({utils.toBtc(walletService.getBalanceDeposit())}btc)</span>
+            <span className='text-primary'>{utxosDeposit.length} utxos ({utils.toBtc(walletService.getBalanceDeposit())}btc)</span>
           </div>
         </div>
         <div className="tablescroll">

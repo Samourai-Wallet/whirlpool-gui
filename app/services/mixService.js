@@ -59,8 +59,22 @@ class MixService {
       && this.getPoolsForTx0(utxo).length > 0
   }
 
-  tx0(utxo, poolId, mixsTarget) {
-    return backendService.utxo.tx0(utxo.hash, utxo.index, poolId, mixsTarget).then(() => walletService.fetchState())
+  setPoolId(utxo, poolId) {
+    utxo.poolId = poolId
+    return this.configure(utxo)
+  }
+
+  setMixsTarget(utxo, mixsTarget) {
+    utxo.mixsTarget = mixsTarget
+    return this.configure(utxo)
+  }
+
+  configure(utxo) {
+    return backendService.utxo.configure(utxo.hash, utxo.index, utxo.poolId, utxo.mixsTarget).then(() => walletService.fetchState())
+  }
+
+  tx0(utxo) {
+    return backendService.utxo.tx0(utxo.hash, utxo.index).then(() => walletService.fetchState())
   }
 
   startMix(utxo) {

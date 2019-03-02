@@ -53,7 +53,7 @@ export default class Tx0Modal extends AbstractModal {
   }
 
   handleSubmitTx0() {
-    mixService.tx0(this.props.utxo, this.state.poolId, this.state.mixsTarget)
+    mixService.tx0(this.props.utxo)
     this.props.onClose();
   }
 

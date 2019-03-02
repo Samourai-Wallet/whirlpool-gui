@@ -6,9 +6,8 @@
 
 import React from 'react';
 import mixService from '../../services/mixService';
-import utils, { WHIRLPOOL_ACCOUNTS } from '../../services/utils';
+import { WHIRLPOOL_ACCOUNTS } from '../../services/utils';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
-import moment from 'moment';
 
 /* eslint-disable react/prefer-stateless-function */
 class UtxoPoolSelector extends React.PureComponent {
@@ -32,10 +31,10 @@ class UtxoPoolSelector extends React.PureComponent {
       <DropdownButton size='sm' variant="default" title={activeLabel} className='utxoPoolSelector'>
         {pools.map(pool => {
           const poolLabel = this.computePoolLabel(pool.poolId)
-          return <Dropdown.Item key={utxo.poolId} href="#/action-1" active={utxo.poolId === pool.poolId}>{poolLabel}</Dropdown.Item>
+          return <Dropdown.Item key={utxo.poolId} active={utxo.poolId === pool.poolId} onClick={() => mixService.setPoolId(utxo, pool.poolId)}>{poolLabel}</Dropdown.Item>
         })}
         <Dropdown.Divider />
-        <Dropdown.Item active={!utxo.poolId}>{this.computePoolLabel(undefined)}</Dropdown.Item>
+        <Dropdown.Item active={!utxo.poolId} onClick={() => mixService.setPoolId(utxo, undefined)}>{this.computePoolLabel(undefined)}</Dropdown.Item>
       </DropdownButton>
     )
   }

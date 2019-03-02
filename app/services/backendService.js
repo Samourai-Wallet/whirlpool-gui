@@ -86,6 +86,19 @@ class BackendService {
   };
 
   utxo = {
+    tx0: (hash, index) => {
+      return this.withStatus('Utxo', 'Tx0', () =>
+        this.fetchBackendAsJson('/rest/utxos/'+hash+':'+index+'/tx0', 'POST')
+      )
+    },
+    configure: (hash, index, poolId, mixsTarget) => {
+      return this.withStatus('Utxo', 'Tx0', () =>
+        this.fetchBackendAsJson('/rest/utxos/'+hash+':'+index, 'POST', {
+          poolId: poolId,
+          mixsTarget: mixsTarget
+        })
+      )
+    },
     startMix: (hash, index) => {
       return this.withStatus('Utxo', 'Start mixing', () =>
         this.fetchBackend('/rest/utxos/'+hash+':'+index+'/startMix', 'POST')
@@ -94,14 +107,6 @@ class BackendService {
     stopMix: (hash, index) => {
       return this.withStatus('Utxo', 'Stop mixing', () =>
         this.fetchBackend('/rest/utxos/'+hash+':'+index+'/stopMix', 'POST')
-      )
-    },
-    tx0: (hash, index, poolId, mixsTarget) => {
-      return this.withStatus('Utxo', 'Tx0', () =>
-        this.fetchBackendAsJson('/rest/utxos/'+hash+':'+index+'/tx0', 'POST', {
-          poolId: poolId,
-          mixsTarget: mixsTarget
-        })
       )
     },
   }
