@@ -7,9 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SeedSelector from '../components/SeedSelector/seedSelector';
 import txt from 'raw-loader!../resources/en_US.txt';
 import encryptUtils from '../services/encryptUtils';
-import backendService from '../services/backendService';
 import cliService from '../services/cliService';
-import { statusActions } from '../services/statusActions';
 
 const STEP_LAST = 3
 const CLI_URL_LOCAL = 'LOCAL'
@@ -17,6 +15,9 @@ const SETUP_MODE = {
   LOCAL:'LOCAL',
   REMOTE:'REMOTE'
 }
+const DEFAULT_CLIHOST = 'http://localhost'
+const DEFAULT_CLIPORT = 8899
+const DEFAULT_APIKEY = ''
 class InitPage extends Component<Props> {
   props: Props;
 
@@ -26,6 +27,9 @@ class InitPage extends Component<Props> {
       step: 0,
       setupMode: SETUP_MODE.REMOTE,
       cliUrl: undefined,
+      currentCliHost: DEFAULT_CLIHOST,
+      currentCliPort: DEFAULT_CLIPORT,
+      currentApiKey: DEFAULT_APIKEY,
       cliError: undefined,
       hasPassphrase: false,
       hasEncryptedSeedWords: false,
@@ -39,6 +43,7 @@ class InitPage extends Component<Props> {
 
     this.inputCliHost = React.createRef()
     this.inputCliPort = React.createRef()
+    this.inputApiKey = React.createRef()
 
     this.goNextStep = this.goNextStep.bind(this)
     this.goPrevStep = this.goPrevStep.bind(this)
@@ -52,11 +57,15 @@ class InitPage extends Component<Props> {
   }
 
   goNextStep () {
-    this.setState({step: this.state.step+1})
+    this.goStep(this.state.step+1)
   }
 
   goPrevStep () {
-    this.setState({step: this.state.step-1})
+    this.goStep(this.state.step-1)
+  }
+
+  goStep (i) {
+    this.setState({step: i})
   }
 
   navButtons(next=true,previous=true) {
@@ -114,24 +123,43 @@ class InitPage extends Component<Props> {
   resetCliUrl() {
     this.setState({
       cliUrl: undefined,
-      cliError: undefined
+      cliError: undefined,
+      currentCliHost: DEFAULT_CLIHOST,
+      currentCliPort: DEFAULT_CLIPORT,
+      currentApiKey: DEFAULT_APIKEY,
     });
     this.resetPassphrase()
   }
 
   onChangeInputCliHostPort(e) {
     this.resetCliUrl()
+    this.setState({
+      currentCliHost: this.inputCliHost.current.value,
+      currentCliPort: this.inputCliPort.current.value,
+      currentApiKey: this.inputApiKey.current.value
+    })
   }
 
-  connectCliRemote(host, port) {
-    const cliUrl = host+':'+port
+  connectCliRemote() {
+    const cliUrl = this.state.currentCliHost+':'+this.state.currentCliPort
+    const apiKey = this.state.currentApiKey
 
-    cliService.testCliUrl(cliUrl).then(() => {
+    cliService.testCliUrl(cliUrl, apiKey).then(cliStatusReady => {
+      // connection success
       this.setState({
         cliUrl: cliUrl,
         cliError: undefined
       })
-      this.goNextStep()
+
+      if (cliStatusReady) {
+        // CLI already initialized => save configuration & finish
+        cliService.saveConfig(cliUrl, apiKey)
+        this.goStep(STEP_LAST)
+      }
+      else {
+        // CLI not initialized yet => continue configuration
+        this.goNextStep()
+      }
     }).catch(error => {
       this.setState({
         cliError: error.message
@@ -156,16 +184,18 @@ class InitPage extends Component<Props> {
               Connect to your existing DOJO / whirlpool-client-cli<br/>
               {this.state.setupMode === SETUP_MODE.REMOTE &&
               <div className="row">
-                <div className="col-sm-6">
-                  <input type="text" className="form-control" id="inputEmail3" placeholder="host" defaultValue='http://localhost' ref={this.inputCliHost} onChange={this.onChangeInputCliHostPort} required/>
+                <div className="col-sm-5">
+                  <input type="text" className="form-control" placeholder="host" defaultValue={this.state.currentCliHost} ref={this.inputCliHost} onChange={this.onChangeInputCliHostPort} required/>
+                </div>
+                <div className="col-sm-2">
+                  <input type="number" className="form-control" placeholder="port" defaultValue={this.state.currentCliPort} ref={this.inputCliPort} onChange={this.onChangeInputCliHostPort} required/>
+                </div>
+                <div className="col-sm-2">
+                  <input type="password" className="form-control" placeholder="apiKey" defaultValue={this.state.currentApiKey} ref={this.inputApiKey} onChange={this.onChangeInputCliHostPort} />
                 </div>
                 <div className="col-sm-3">
-                  <input type="number" className="form-control" id="inputEmail3" placeholder="port" defaultValue={8899} ref={this.inputCliPort} onChange={this.onChangeInputCliHostPort} required/>
-                </div>
-                <div className="col-sm-3">
-                  {this.inputCliHost.current && this.inputCliHost.current.value
-                  && this.inputCliPort.current && this.inputCliPort.current.value
-                  && !this.state.cliUrl && <button type='button' className='btn btn-default' onClick={() => this.connectCliRemote(this.inputCliHost.current.value, this.inputCliPort.current.value)}>Connect</button>}
+                  {this.state.currentCliHost && this.state.currentCliPort
+                  && !this.state.cliUrl && <button type='button' className='btn btn-default' onClick={this.connectCliRemote}>Connect</button>}
                 </div>
               </div>
               }
@@ -243,7 +273,7 @@ class InitPage extends Component<Props> {
   }
 
   onSubmitInitialize() {
-    cliService.initializeCli(this.state.cliUrl, this.encryptedSeedWords).then(() => {
+    cliService.initializeCli(this.state.cliUrl, this.state.currentApiKey, this.encryptedSeedWords).then(() => {
       // success!
       this.goNextStep()
     }).catch(error => {

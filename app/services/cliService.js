@@ -1,9 +1,13 @@
 import ifNot from 'if-not-running';
+import Store from'electron-store';
 import backendService from './backendService';
 import { CLI_STATUS } from './utils';
 import mixService from './mixService';
 import walletService from './walletService';
 import poolsService from './poolsService';
+
+const STORE_CLIURL = "cli.url"
+const STORE_APIKEY = "cli.apiKey"
 
 class CliService {
   constructor () {
@@ -11,11 +15,11 @@ class CliService {
     this.state = undefined
     this.cliUrl = undefined
     this.apiKey = undefined
+    this.store = new Store()
   }
 
-  init (state, setState, cliUrl, apiKey) {
-    this.cliUrl = cliUrl
-    this.apiKey = apiKey
+  init (state, setState) {
+    this.loadConfig()
 
     ifNot.run('cliService:init', () => {
       this.setState = setState
@@ -52,6 +56,10 @@ class CliService {
     return this.state && this.state.cli
   }
 
+  isConfigured() {
+    return this.cliUrl && this.apiKey
+  }
+
   // cli API
 
   getCliUrl() {
@@ -62,12 +70,14 @@ class CliService {
     return this.apiKey
   }
 
-  testCliUrl(cliUrl) {
-    return backendService.cli.fetchState(cliUrl)
+  testCliUrl(cliUrl, apiKey) {
+    return backendService.cli.fetchState(cliUrl, apiKey).then(cliState => {
+      return cliState.cliStatus === CLI_STATUS.READY
+    })
   }
 
-  initializeCli(cliUrl, encryptedSeedWords) {
-    return backendService.cli.init(cliUrl, encryptedSeedWords).then(result => {
+  initializeCli(cliUrl, apiKey, encryptedSeedWords) {
+    return backendService.cli.init(cliUrl, apiKey, encryptedSeedWords).then(result => {
       const apiKey = result.apiKey
 
       // save configuration
@@ -75,27 +85,38 @@ class CliService {
     })
   }
 
-  saveConfig(cliUrl, apiKey) {
-    console.log('**** saveConfig', cliUrl, apiKey)
+  loadConfig() {
+    this.cliUrl = this.store.get(STORE_CLIURL)
+    this.apiKey = this.store.get(STORE_APIKEY)
+    console.log('cliService.loadConfig: cliUrl='+this.cliUrl)
   }
 
-  aaa(cliUrl) {
-    const wasStarted = this.isCliStatusReady()
+  saveConfig(cliUrl, apiKey) {
+    this.store.set(STORE_CLIURL, cliUrl)
+    this.store.set(STORE_APIKEY, apiKey)
 
-    // stop all services
-    this.stop()
-
-    // set url
     this.cliUrl = cliUrl
+    this.apiKey = apiKey
+  }
 
-    // test
+  resetConfig() {
+    this.store.delete(STORE_CLIURL)
+    this.store.delete(STORE_APIKEY)
 
-    // restart services
+    this.cliUrl = undefined
+    this.apiKey = undefined
   }
 
   // state
 
+  getCliUrlError() {
+    return this.state ? this.state.cliUrlError : undefined
+  }
+
   getCliStatus() {
+    if (!this.isReady()) {
+      return undefined
+    }
     return this.state.cli.cliStatus;
   }
 
@@ -104,6 +125,9 @@ class CliService {
   }
 
   fetchState () {
+    if (!this.isConfigured()) {
+      return Promise.reject("not configured")
+    }
     return ifNot.run('cliService:fetchState', () => {
       // fetchState backend
       return backendService.cli.fetchState().then(cli => {
@@ -111,7 +135,8 @@ class CliService {
         if (this.state === undefined) {
           console.log('cliService: initializing new state')
           this.state = {
-            cli: cli
+            cli: cli,
+            cliUrlError: undefined
           }
         } else {
           // new state object
@@ -119,6 +144,11 @@ class CliService {
           console.log('cliService: updating existing state', currentState)
           currentState.cli = cli
           this.state = currentState
+        }
+        this.pushState()
+      }).catch(e => {
+        this.state = {
+          cliUrlError: e.message
         }
         this.pushState()
       })

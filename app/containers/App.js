@@ -29,13 +29,11 @@ import Tx0Modal from '../components/Modals/Tx0Modal';
 import DepositModal from '../components/Modals/DepositModal';
 import poolsService from '../services/poolsService';
 import cliService from '../services/cliService';
+import ConnectingPage from './ConnectingPage';
 
 type Props = {
   children: React.Node
 };
-
-const CLI_URL = 'http://127.0.0.1:8899'
-const API_KEY = 'foo'
 
 class App extends React.Component<Props> {
   props: Props;
@@ -52,7 +50,7 @@ class App extends React.Component<Props> {
     backendService.init(props.dispatch)
     cliService.init(props.cli, cliState =>
       props.cliActions.set(cliState)
-    , CLI_URL, API_KEY)
+    )
     mixService.init(props.mix, mixState =>
       props.mixActions.set(mixState)
     )
@@ -82,7 +80,7 @@ class App extends React.Component<Props> {
 
         </div>
         <div className='col-md-10'>
-          {mixService.isReady() ? <MixStatus mixState={this.props.mix} mixActions={this.props.mixActions}/> : <small>Fetching mix state...</small>}
+          {cliService.isCliStatusReady() && (mixService.isReady() ? <MixStatus mixState={this.props.mix} mixActions={this.props.mixActions}/> : <small>Fetching mix state...</small>)}
         </div>
       </nav>
 
@@ -90,14 +88,17 @@ class App extends React.Component<Props> {
 
         <div className="row">
           <nav className="col-md-2 d-none d-md-block bg-light sidebar">
-            <div className="sidebar-sticky">
-              <button className='btn btn-sm btn-primary btn-deposit' onClick={() => modalService.openDeposit()}><Icon.Plus size={12}/> Deposit</button>
+            {cliService.isCliStatusReady() && <div className="sidebar-sticky">
+              <button className='btn btn-sm btn-primary btn-deposit' onClick={() => modalService.openDeposit()}>
+                <Icon.Plus size={12}/> Deposit
+              </button>
               <ul className="nav flex-column">
                 {walletService.isReady() && <li className="nav-item">
                   <Link to={routes.DEPOSIT}>
                     <a className="nav-link">
                       <span data-feather="plus"></span>
-                      Deposit ({walletService.getUtxosDeposit().length} · {utils.toBtc(walletService.getBalanceDeposit(), true)})
+                      Deposit
+                      ({walletService.getUtxosDeposit().length} · {utils.toBtc(walletService.getBalanceDeposit(), true)})
                     </a>
                   </Link>
                 </li>}
@@ -105,7 +106,8 @@ class App extends React.Component<Props> {
                   <Link to={routes.PREMIX}>
                     <a className="nav-link">
                       <span data-feather="play"></span>
-                      Mixing ({walletService.getUtxosPremix().length} · {utils.toBtc(walletService.getBalancePremix(), true)})
+                      Mixing
+                      ({walletService.getUtxosPremix().length} · {utils.toBtc(walletService.getBalancePremix(), true)})
                     </a>
                   </Link>
                 </li>}
@@ -113,7 +115,8 @@ class App extends React.Component<Props> {
                   <Link to={routes.POSTMIX}>
                     <a className="nav-link">
                       <span data-feather="check"></span>
-                      Mixed ({walletService.getUtxosPostmix().length} · {utils.toBtc(walletService.getBalancePostmix(), true)})
+                      Mixed
+                      ({walletService.getUtxosPostmix().length} · {utils.toBtc(walletService.getBalancePostmix(), true)})
                     </a>
                   </Link>
                 </li>}
@@ -126,8 +129,10 @@ class App extends React.Component<Props> {
                   </Link>
                 </li>
               </ul>
-              {!walletService.isReady() && <div><small>Fetching wallet...</small></div>}
-            </div>
+              {!walletService.isReady() && <div>
+                <small>Fetching wallet...</small>
+              </div>}
+            </div>}
             <Status
               status={this.props.status}
               statusActions={this.props.statusActions}
@@ -143,8 +148,11 @@ class App extends React.Component<Props> {
               <Route path={routes.CONFIG} component={ConfigPage} />
               <Route path={routes.HOME} component={HomePage} />
             </Switch>}
-            {!cliService.isCliStatusReady() && <Switch>
+            {!cliService.isConfigured() && <Switch>
               <Route path={routes.HOME} component={InitPage} />
+            </Switch>}
+            {cliService.isConfigured() && !cliService.isCliStatusReady() && <Switch>
+              <Route path={routes.HOME} component={ConnectingPage} />
             </Switch>}
 
             {this.state.modalTx0 && <Tx0Modal utxo={this.state.modalTx0} onClose={modalService.close.bind(modalService)}/>}
