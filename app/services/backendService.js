@@ -48,6 +48,21 @@ class BackendService {
     )
   }
 
+  cli = {
+    status: () => {
+      return this.withStatus('CLI', 'Fetch status', () =>
+          this.fetchBackendAsJson('/rest/cli', 'GET')
+        , 'cli.status')
+    },
+    init: (encryptedSeedWords) => {
+      return this.withStatus('CLI', 'Initialize', () =>
+        this.fetchBackendAsJson('/rest/cli/init', 'POST', {
+          encryptedSeedWords: encryptedSeedWords
+        })
+        , 'cli.init')
+    }
+  };
+
   pools = {
     fetchPools: () => {
       return this.withStatus('Pools', 'Fetch pools', () =>
