@@ -23,10 +23,22 @@ class WalletService {
         console.log('walletState: already initialized')
       }
     })
+  }
+
+  start() {
     if (this.refreshTimeout === undefined) {
-      this.fetchState()
       this.refreshTimeout = setInterval(this.fetchState.bind(this), REFRESH_RATE)
+      return this.fetchState()
     }
+    return Promise.resolve()
+  }
+
+  stop() {
+    if (this.refreshTimeout) {
+      clearInterval(this.refreshTimeout)
+    }
+    this.refreshTimeout = undefined
+    this.state = {}
   }
 
   isReady() {

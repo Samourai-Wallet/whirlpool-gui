@@ -3,5 +3,5 @@
   "DEPOSIT": "/deposit",
   "PREMIX": "/premix",
   "POSTMIX": "/postmix",
-  "INIT": "/"
+  "HOME": "/"
 }

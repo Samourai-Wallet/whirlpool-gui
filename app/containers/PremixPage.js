@@ -2,11 +2,9 @@
 import React, { Component } from 'react';
 import './PremixPage.css';
 import * as Icon from 'react-feather';
-import moment from 'moment';
 import walletService from '../services/walletService';
 import utils from '../services/utils';
 import mixService from '../services/mixService';
-import modalService from '../services/modalService';
 import poolsService from '../services/poolsService';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import UtxoPoolSelector from '../components/Utxo/UtxoPoolSelector';

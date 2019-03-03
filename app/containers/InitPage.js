@@ -8,6 +8,8 @@ import SeedSelector from '../components/SeedSelector/seedSelector';
 import txt from 'raw-loader!../resources/en_US.txt';
 import encryptUtils from '../services/encryptUtils';
 import backendService from '../services/backendService';
+import cliService from '../services/cliService';
+import { statusActions } from '../services/statusActions';
 
 const STEP_LAST = 3
 const CLI_URL_LOCAL = 'LOCAL'
@@ -23,7 +25,11 @@ class InitPage extends Component<Props> {
     this.state = {
       step: 0,
       setupMode: SETUP_MODE.REMOTE,
-      cliUrl: undefined
+      cliUrl: undefined,
+      cliError: undefined,
+      hasPassphrase: false,
+      hasEncryptedSeedWords: false,
+      cliInitError: undefined
     }
     this.words = txt.trim().split('\n')
 
@@ -74,8 +80,9 @@ class InitPage extends Component<Props> {
           This will connect Whirlpool to your existing Samourai Wallet.</p>
 
         {this.state.cliUrl && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Connected to whirlpool-cli: {this.state.cliUrl}</div>}
-        {this.passphrase && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Passphrase set for seed encryption</div>}
-        {this.encryptedSeedWords && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Seed encrypted</div>}
+        {this.state.hasPassphrase && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Passphrase set for seed encryption</div>}
+        {this.state.hasEncryptedSeedWords && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Seed encrypted</div>}
+        {this.state.step === STEP_LAST && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Configuration saved</div>}
         <br/>
 
         <form onSubmit={this.goNextStep}>
@@ -99,23 +106,37 @@ class InitPage extends Component<Props> {
 
   onChangeSetupMode(e) {
     this.setState({
-      setupMode: e.target.value,
-      cliUrl: undefined
+      setupMode: e.target.value
     });
+    this.resetCliUrl()
+  }
+
+  resetCliUrl() {
+    this.setState({
+      cliUrl: undefined,
+      cliError: undefined
+    });
+    this.resetPassphrase()
   }
 
   onChangeInputCliHostPort(e) {
-    this.setState({
-      cliUrl: undefined
-    });
+    this.resetCliUrl()
   }
 
   connectCliRemote(host, port) {
     const cliUrl = host+':'+port
-    this.setState({
-      cliUrl: cliUrl
+
+    cliService.testCliUrl(cliUrl).then(() => {
+      this.setState({
+        cliUrl: cliUrl,
+        cliError: undefined
+      })
+      this.goNextStep()
+    }).catch(error => {
+      this.setState({
+        cliError: error.message
+      })
     })
-    this.goNextStep()
   }
 
   step0() {
@@ -136,7 +157,7 @@ class InitPage extends Component<Props> {
               {this.state.setupMode === SETUP_MODE.REMOTE &&
               <div className="row">
                 <div className="col-sm-6">
-                  <input type="text" className="form-control" id="inputEmail3" placeholder="host" defaultValue='localhost' ref={this.inputCliHost} onChange={this.onChangeInputCliHostPort} required/>
+                  <input type="text" className="form-control" id="inputEmail3" placeholder="host" defaultValue='http://localhost' ref={this.inputCliHost} onChange={this.onChangeInputCliHostPort} required/>
                 </div>
                 <div className="col-sm-3">
                   <input type="number" className="form-control" id="inputEmail3" placeholder="port" defaultValue={8899} ref={this.inputCliPort} onChange={this.onChangeInputCliHostPort} required/>
@@ -152,6 +173,11 @@ class InitPage extends Component<Props> {
           </div>
         </div>
       </div>
+      {this.state.cliError && <div className="row">
+        <div className="col-sm-12">
+          <Alert variant='danger'>Connection failed: {this.state.cliError}</Alert>
+        </div>
+      </div>}
       {this.navButtons(this.state.cliUrl ? true : false)}
     </div>
   }
@@ -160,7 +186,26 @@ class InitPage extends Component<Props> {
 
   onChangePassphrase(e) {
     this.passphrase = e.target.value
+    this.setState({
+      hasPassphrase: true
+    })
+    this.resetEncryptedSeedWords()
+  }
+
+  resetPassphrase() {
+    this.passphrase = undefined
+    this.setState({
+      hasPassphrase: false
+    })
+    this.resetEncryptedSeedWords()
+  }
+
+  resetEncryptedSeedWords() {
     this.encryptedSeedWords = undefined
+    this.setState({
+      hasEncryptedSeedWords: false,
+      cliInitError: undefined
+    })
   }
 
   step1() {
@@ -179,7 +224,7 @@ class InitPage extends Component<Props> {
           <input type="password" className="form-control" id="inputPassword3" placeholder="Enter your existing wallet's passphrase" required autoFocus onChange={this.onChangePassphrase}/>
         </div>
       </div>
-      {this.navButtons(this.passphrase ? true : false)}
+      {this.navButtons(this.state.hasPassphrase ? true : false)}
     </div>
   }
 
@@ -188,6 +233,9 @@ class InitPage extends Component<Props> {
   onSubmitEncryptedSeedWords(encryptedSeedWords) {
     console.log('encryptedSeedWords',encryptedSeedWords)
     this.encryptedSeedWords = encryptedSeedWords
+    this.setState({
+      hasEncryptedSeedWords: true
+    })
   }
 
   encryptSeedWords(seedWords) {
@@ -195,11 +243,13 @@ class InitPage extends Component<Props> {
   }
 
   onSubmitInitialize() {
-    backendService.cli.init(this.encryptedSeedWords).then(() => {
-      // save configuration
-
-
+    cliService.initializeCli(this.state.cliUrl, this.encryptedSeedWords).then(() => {
+      // success!
       this.goNextStep()
+    }).catch(error => {
+      this.setState({
+        cliInitError: error.message
+      })
     })
   }
 
@@ -229,13 +279,18 @@ class InitPage extends Component<Props> {
           {this.encryptedSeedWords && <button type="button" className="btn btn-primary" onClick={this.onSubmitInitialize}>Initialize whirlpool-cli</button>}
         </div>
       </div>
+      {this.state.cliInitError && <div className="row">
+        <div className="col-sm-12">
+          <Alert variant='danger'>Initialization failed: {this.state.cliInitError}</Alert>
+        </div>
+      </div>}
       {this.navButtons(false)}
     </div>
   }
 
   step3() {
     return <div>
-      <p>Configuration success. <b>whirlpool-gui</b> is now configured.</p>
+      <p>Success. <b>whirlpool-gui</b> is now configured.</p>
       <button type="button" className="btn btn-primary">Start Whirlpool</button>
     </div>
   }

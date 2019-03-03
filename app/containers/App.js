@@ -5,6 +5,7 @@ import backendService from '../services/backendService';
 import { connect } from 'react-redux';
 import walletService from '../services/walletService';
 import { bindActionCreators } from 'redux';
+import { cliActions } from '../actions/cliActions';
 import { walletActions } from '../actions/walletActions';
 import { poolsActions } from '../actions/poolsActions';
 import { mixActions } from '../actions/mixActions';
@@ -16,6 +17,7 @@ import ConfigPage from '../containers/ConfigPage';
 import InitPage from '../containers/InitPage';
 import PremixPage from './PremixPage';
 import DepositPage from '../containers/DepositPage';
+import HomePage from './HomePage';
 import Status from '../components/Status';
 import { statusActions } from '../services/statusActions';
 import PostmixPage from './PostmixPage';
@@ -26,10 +28,14 @@ import modalService from '../services/modalService';
 import Tx0Modal from '../components/Modals/Tx0Modal';
 import DepositModal from '../components/Modals/DepositModal';
 import poolsService from '../services/poolsService';
+import cliService from '../services/cliService';
 
 type Props = {
   children: React.Node
 };
+
+const CLI_URL = 'http://127.0.0.1:8899'
+const API_KEY = 'foo'
 
 class App extends React.Component<Props> {
   props: Props;
@@ -42,8 +48,11 @@ class App extends React.Component<Props> {
       modalTx0: false
     }
 
+    // init services
     backendService.init(props.dispatch)
-
+    cliService.init(props.cli, cliState =>
+      props.cliActions.set(cliState)
+    , CLI_URL, API_KEY)
     mixService.init(props.mix, mixState =>
       props.mixActions.set(mixState)
     )
@@ -54,6 +63,9 @@ class App extends React.Component<Props> {
       props.poolsActions.set(poolsState)
     )
     modalService.init(this.setState.bind(this))
+
+    // start cli
+    cliService.start()
   }
 
   render() {
@@ -124,13 +136,16 @@ class App extends React.Component<Props> {
 
           <main role="main" className="col-md-10 ml-sm-auto col-lg-10 px-4">
 
-            <Switch>
+            {cliService.isCliStatusReady() && <Switch>
               <Route path={routes.DEPOSIT} component={DepositPage} />
               <Route path={routes.PREMIX} component={PremixPage} />
               <Route path={routes.POSTMIX} component={PostmixPage} />
               <Route path={routes.CONFIG} component={ConfigPage} />
-              <Route path={routes.INIT} component={InitPage} />
-            </Switch>
+              <Route path={routes.HOME} component={HomePage} />
+            </Switch>}
+            {!cliService.isCliStatusReady() && <Switch>
+              <Route path={routes.HOME} component={InitPage} />
+            </Switch>}
 
             {this.state.modalTx0 && <Tx0Modal utxo={this.state.modalTx0} onClose={modalService.close.bind(modalService)}/>}
             {this.state.modalDeposit && <DepositModal onClose={modalService.close.bind(modalService)}/>}
@@ -147,6 +162,7 @@ class App extends React.Component<Props> {
 function mapStateToProps(state) {
   return {
     status: state.status,
+    cli: state.cli,
     wallet: state.wallet,
     mix: state.mix
   };
@@ -156,6 +172,7 @@ function mapDispatchToProps (dispatch) {
   return {
     dispatch,
     statusActions: bindActionCreators(statusActions, dispatch),
+    cliActions: bindActionCreators(cliActions, dispatch),
     walletActions: bindActionCreators(walletActions, dispatch),
     poolsActions: bindActionCreators(poolsActions, dispatch),
     mixActions: bindActionCreators(mixActions, dispatch)

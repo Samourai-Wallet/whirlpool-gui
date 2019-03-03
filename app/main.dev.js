@@ -14,7 +14,6 @@ import { app, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
-import {cliService} from './services/cliService';
 
 export default class AppUpdater {
   constructor() {
@@ -96,10 +95,6 @@ app.on('ready', async () => {
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
-
-  if(false) {
-    cliService.startLocal()
-  }
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line

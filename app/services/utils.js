@@ -9,6 +9,12 @@ export const WHIRLPOOL_ACCOUNTS = {
   POSTMIX: 'POSTMIX'
 }
 
+export const CLI_STATUS = {
+  NOT_INITIALIZED: 'NOT_INITIALIZED',
+  RESTART_NEEDED: 'RESTART_NEEDED',
+  READY: 'READY'
+}
+
 class Utils {
   constructor () {
   }

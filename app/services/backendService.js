@@ -1,9 +1,8 @@
 import utils from './utils';
 import status from './status';
+import cliService from './cliService';
 
-const HOST = 'http://127.0.0.1:8899'
 const API_VERSION = '0.5'
-const API_KEY = 'foo'
 const HEADER_API_VERSION = 'apiVersion'
 const HEADER_API_KEY = 'apiKey'
 
@@ -21,20 +20,23 @@ class BackendService {
       'Content-Type': 'application/json'
     }
     headers[HEADER_API_VERSION] = API_VERSION
-    headers[HEADER_API_KEY] = API_KEY
+    headers[HEADER_API_KEY] = cliService.getApiKey()
     return headers
   }
 
-  fetchBackend (url, method, jsonBody=undefined, parseJson=false) {
-    return utils.fetch(HOST + url, {
+  fetchBackend (url, method, jsonBody=undefined, parseJson=false, cliUrl=undefined) {
+    if (!cliUrl) {
+      cliUrl = cliService.getCliUrl()
+    }
+    return utils.fetch(cliUrl + url, {
       method,
       headers: this.computeHeaders(),
       body: jsonBody !== undefined ? JSON.stringify(jsonBody) : undefined
     }, parseJson)
   }
 
-  fetchBackendAsJson (url, method, jsonBody=undefined) {
-    return this.fetchBackend(url, method, jsonBody, true)
+  fetchBackendAsJson (url, method, jsonBody=undefined, cliUrl=undefined) {
+    return this.fetchBackend(url, method, jsonBody, true, cliUrl)
   }
 
   withStatus (mainLabel, label, executor, itemId) {
@@ -49,16 +51,16 @@ class BackendService {
   }
 
   cli = {
-    status: () => {
-      return this.withStatus('CLI', 'Fetch status', () =>
-          this.fetchBackendAsJson('/rest/cli', 'GET')
+    fetchState: (cliUrl=undefined) => {
+      return this.withStatus('CLI', 'Fetch state', () =>
+          this.fetchBackendAsJson('/rest/cli', 'GET', undefined, cliUrl)
         , 'cli.status')
     },
-    init: (encryptedSeedWords) => {
-      return this.withStatus('CLI', 'Initialize', () =>
+    init: (cliUrl, encryptedSeedWords) => {
+      return this.withStatus('CLI', 'Initialize configuration', () =>
         this.fetchBackendAsJson('/rest/cli/init', 'POST', {
           encryptedSeedWords: encryptedSeedWords
-        })
+        }, cliUrl)
         , 'cli.init')
     }
   };
