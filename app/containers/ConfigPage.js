@@ -1,11 +1,25 @@
 // @flow
 import React, { Component } from 'react';
 import * as Icon from 'react-feather';
+import cliService from '../services/cliService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as Icons from '@fortawesome/free-solid-svg-icons';
 
 type Props = {};
 
 export default class ConfigPage extends Component<Props> {
-  props: Props;
+
+  constructor(props) {
+    super(props)
+
+    this.onResetConfig = this.onResetConfig.bind(this)
+  }
+
+  onResetConfig() {
+    if (confirm('This will reset GUI configuration. Are you sure?')) {
+      cliService.resetConfig()
+    }
+  }
 
   render() {
     return (
@@ -13,6 +27,12 @@ export default class ConfigPage extends Component<Props> {
         <h1>Configuration</h1>
 
         <form>
+          <div className="form-group row">
+            <label className="col-sm-2 col-form-label">CLI</label>
+            <div className="col-sm-8">
+              <input type="text" className="form-control" disabled defaultValue={cliService.getCliUrl()}/>
+            </div>
+          </div>
           <div className="form-group row">
             <label htmlFor="inputPassword3" className="col-sm-2 col-form-label">Network</label>
             <div className="col-sm-8">
@@ -36,7 +56,7 @@ export default class ConfigPage extends Component<Props> {
           </div>
           <div className="form-group row">
             <div className="col-sm-5">
-              <button type="submit" className="btn btn-danger btn-xs">Reset configuration</button>
+              <button type='button' className='btn btn-danger' onClick={this.onResetConfig}><FontAwesomeIcon icon={Icons.faExclamationTriangle} /> Reset GUI configuration</button>
             </div>
             <div className="col-sm-5">
               <button type="submit" className="btn btn-primary">Save</button>

@@ -37,7 +37,7 @@ class SeedSelector extends React.PureComponent {
     })
 
     if (nbWords === NB_WORDS) {
-      const encryptedSeedWords = this.props.encrypt(this.state.selectedWords.join(' '))
+      const encryptedSeedWords = this.props.encrypt(this.words.join(' '))
       this.props.onSubmit(encryptedSeedWords)
     }
   }

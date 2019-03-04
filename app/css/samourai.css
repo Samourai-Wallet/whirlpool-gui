@@ -33,11 +33,16 @@
 }
 
 .cliStatus {
-  padding:0 0.5em;
   font-size:0.8em;
   text-align:right;
   margin-top:-0.5em;
   color:#CCC;
+  float:right;
+}
+
+.loginStatus {
+  float:left;
+  margin-top:-0.5em;
 }
 
 /* status */

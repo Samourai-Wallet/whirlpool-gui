@@ -51,10 +51,10 @@ export default class PremixPage extends Component<Props> {
             <th scope="col">Mixs</th>
             <th scope="col" colSpan={2}>Last activity</th>
             <th scope="col">
-              <div className="custom-control custom-switch">
+              {false && <div className="custom-control custom-switch">
                 <input type="checkbox" className="custom-control-input" defaultChecked={true} id="autoMix"/>
                 <label className="custom-control-label" htmlFor="autoMix">Auto-MIX</label>
-              </div>
+              </div>}
             </th>
           </tr>
           </thead>

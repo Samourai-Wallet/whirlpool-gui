@@ -23,6 +23,8 @@ class InitPage extends Component<Props> {
 
   constructor(props) {
     super(props)
+
+    console.log('***'+encryptUtils.encrypt('foo', 'bar') )
     this.state = {
       step: 0,
       setupMode: SETUP_MODE.REMOTE,
@@ -83,10 +85,9 @@ class InitPage extends Component<Props> {
   render() {
     return (
       <div>
-        <h1>First run</h1>
+        <h1>Whirlpool setup</h1>
 
-        <p>Welcome to Whirlpool setup.
-          This will connect Whirlpool to your existing Samourai Wallet.</p>
+        <p>This will connect Whirlpool to your existing Samourai Wallet.</p>
 
         {this.state.cliUrl && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Connected to whirlpool-cli: {this.state.cliUrl}</div>}
         {this.state.hasPassphrase && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Passphrase set for seed encryption</div>}

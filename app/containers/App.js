@@ -69,7 +69,67 @@ class App extends React.Component<Props> {
     cliService.start()
   }
 
+  getCliStatusIcon() {
+    if (cliService.isCliStatusReady()) {
+      // connected & ready
+      return <FontAwesomeIcon icon={Icons.faCircle} color='green' title='Connected' size='xs'/>
+    }
+    if (cliService.getCliUrlError()) {
+      // not connected
+      return <FontAwesomeIcon icon={Icons.faWifi} color='red' title='Disconnected' />
+    }
+    // connected & initialization required
+    if (cliService.isCliStatusNotInitialized()) {
+      return <FontAwesomeIcon icon={Icons.faUserCog} color='orange' title='Connected, cli initialization required'/>
+    }
+    // connected & not ready
+    if (cliService.isConnected()) {
+      return <FontAwesomeIcon icon={Icons.faCircle} color='orange' title={'Connected, not ready: '+cliService.getCliMessage()}/>
+    }
+  }
+
+  getLoginStatusIcon() {
+    if (cliService.isLoggedIn()) {
+      // logged in
+      return <FontAwesomeIcon icon={Icons.faUser} color='green' title='Logged in' />
+    }
+    return <FontAwesomeIcon icon={Icons.faUserSlash} color='grey' title='Logged out' />
+  }
+
+  routes() {
+    if (cliService.isLoggedIn()) {
+      // logged in
+      return <Switch>
+        <Route path={routes.DEPOSIT} component={DepositPage}/>
+        <Route path={routes.PREMIX} component={PremixPage}/>
+        <Route path={routes.POSTMIX} component={PostmixPage}/>
+        <Route path={routes.CONFIG} component={ConfigPage}/>
+        <Route path={routes.HOME} component={HomePage}/>
+      </Switch>
+    }
+
+    if (!cliService.isConfigured() || cliService.isCliStatusNotInitialized()) {
+      // not configured/initialized
+      return <Switch>
+        <Route path={routes.HOME} component={InitPage} />
+      </Switch>
+    }
+    if (!cliService.isCliStatusReady()) {
+      // not connected
+      return <Switch>
+        <Route path={routes.HOME} component={ConnectingPage} />
+      </Switch>
+    }
+    if (!cliService.isLoggedIn()) {
+      return <Switch>
+        <Route path={routes.HOME} component={LoginPage}/>
+      </Switch>
+    }
+  }
+
   render() {
+    const cliStatusIcon = this.getCliStatusIcon()
+    const loginStatusIcon = this.getLoginStatusIcon()
     return <div>
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
         <div className='col-sm-3 col-md-2 mr-0 navbar-brand-col'>
@@ -80,16 +140,10 @@ class App extends React.Component<Props> {
             </a>
             <a href='#' className='product-title'>Whirlpool</a>
           </div>
-          {cliService.isConfigured() && <div className='cliStatus'>
-            {cliService.isLoggedIn() && <FontAwesomeIcon icon={Icons.faCheck} color='green' />}
-            {!cliService.isLoggedIn() && cliService.isCliStatusReady() && <FontAwesomeIcon icon={Icons.faPause} color='orange' />}
-            {!cliService.isCliStatusReady() && <FontAwesomeIcon icon={Icons.faSquare} color='red' />}
-            &nbsp; {cliService.getCliUrl()}
-          </div>}
-          {!cliService.isLoggedIn() && cliService.isCliStatusReady() && <div className='cliStatus'><FontAwesomeIcon icon={Icons.faCheck} color='green' /> {cliService.getCliUrl()}</div>}
-          {cliService.isLoggedIn() && <div className='cliStatus'><FontAwesomeIcon icon={Icons.faCheck} color='green' /> {cliService.getCliUrl()}</div>}
-
-
+          <div>
+            {loginStatusIcon && <div className='loginStatus'>{loginStatusIcon}</div>}
+            {cliStatusIcon && <div className='cliStatus'>{cliStatusIcon} {cliService.getCliUrl()}</div>}
+          </div>
         </div>
         <div className='col-md-10'>
           {cliService.isLoggedIn() && (mixService.isReady() ? <MixStatus mixState={this.props.mix} mixActions={this.props.mixActions}/> : <small>Fetching mix state...</small>)}
@@ -153,22 +207,7 @@ class App extends React.Component<Props> {
 
           <main role="main" className="col-md-10 ml-sm-auto col-lg-10 px-4">
 
-            {cliService.isLoggedIn() && <Switch>
-              <Route path={routes.DEPOSIT} component={DepositPage} />
-              <Route path={routes.PREMIX} component={PremixPage} />
-              <Route path={routes.POSTMIX} component={PostmixPage} />
-              <Route path={routes.CONFIG} component={ConfigPage} />
-              <Route path={routes.HOME} component={HomePage} />
-            </Switch>}
-            {!cliService.isConfigured() && <Switch>
-              <Route path={routes.HOME} component={InitPage} />
-            </Switch>}
-            {cliService.isConfigured() && !cliService.isCliStatusReady() && <Switch>
-              <Route path={routes.HOME} component={ConnectingPage} />
-            </Switch>}
-            {cliService.isConfigured() && cliService.isCliStatusReady() && !cliService.isLoggedIn() && <Switch>
-              <Route path={routes.HOME} component={LoginPage} />
-            </Switch>}
+            {this.routes()}
 
             {this.state.modalTx0 && <Tx0Modal utxo={this.state.modalTx0} onClose={modalService.close.bind(modalService)}/>}
             {this.state.modalDeposit && <DepositModal onClose={modalService.close.bind(modalService)}/>}

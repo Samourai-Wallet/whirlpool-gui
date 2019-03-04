@@ -52,7 +52,7 @@ class CliService {
     poolsService.stop()
   }
 
-  isReady() {
+  isConnected() {
     return this.state && this.state.cli
   }
 
@@ -113,13 +113,19 @@ class CliService {
 
   login(seedPassphrase) {
     return backendService.cli.login(seedPassphrase).then(cliState => {
-      this.setState(cliState)
+      this.updateState({
+        cli: cliState,
+        cliUrlError: undefined
+      })
     })
   }
 
   logout() {
     return backendService.cli.logout().then(cliState => {
-      this.setState(cliState)
+      this.updateState({
+        cli: cliState,
+        cliUrlError: undefined
+      })
     })
   }
 
@@ -130,14 +136,25 @@ class CliService {
   }
 
   getCliStatus() {
-    if (!this.isReady()) {
+    if (!this.isConnected()) {
       return undefined
     }
     return this.state.cli.cliStatus;
   }
 
+  getCliMessage() {
+    if (!this.isConnected()) {
+      return undefined
+    }
+    return this.state.cli.cliMessage;
+  }
+
   isCliStatusReady() {
-    return this.isReady() && this.state.cli.cliStatus === CLI_STATUS.READY
+    return this.isConnected() && this.state.cli.cliStatus === CLI_STATUS.READY
+  }
+
+  isCliStatusNotInitialized() {
+    return this.isConnected() && this.state.cli.cliStatus === CLI_STATUS.NOT_INITIALIZED
   }
 
   isLoggedIn() {
@@ -151,29 +168,31 @@ class CliService {
     return ifNot.run('cliService:fetchState', () => {
       // fetchState backend
       return backendService.cli.fetchState().then(cliState => {
-        this.setState(cliState)
+        this.updateState({
+          cli: cliState,
+          cliUrlError: undefined
+        })
       }).catch(e => {
-        this.state = {
+        this.updateState({
           cliUrlError: e.message
-        }
+        })
         this.pushState()
       })
     })
   }
 
-  setState(cli) {
+  updateState(newState) {
     // set state
     if (this.state === undefined) {
       console.log('cliService: initializing new state')
-      this.state = {
-        cli: cli,
-        cliUrlError: undefined
-      }
+      this.state = newState
     } else {
       // new state object
       const currentState = Object.assign({}, this.state)
       console.log('cliService: updating existing state', currentState)
-      currentState.cli = cli
+      for (const key in newState) {
+        currentState[key] = newState[key]
+      }
       this.state = currentState
     }
     this.pushState()

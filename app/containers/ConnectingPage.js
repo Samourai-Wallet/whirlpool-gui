@@ -12,6 +12,7 @@ class ConnectingPage extends Component<Props> {
   constructor(props) {
     super(props)
 
+    this.reconnect = this.reconnect.bind(this)
     this.onResetConfig = this.onResetConfig.bind(this)
   }
 
@@ -25,12 +26,21 @@ class ConnectingPage extends Component<Props> {
 
   // connecting
 
+  reconnect() {
+    cliService.start()
+  }
+
   renderConnecting() {
     return (
-      <div>
-        <h1>Connecting...</h1>
-        <p>Connecting to whirlpool-cli: <strong>{cliService.getCliUrl()}</strong>...</p>
-      </div>
+      <form className="form-signin text-center" onSubmit={this.onSubmit}>
+        <h1 className="h3 mb-3 font-weight-normal">Connecting...</h1>
+        <div><FontAwesomeIcon icon={Icons.faCloud} size='3x' color='#343a40'/></div>
+        <p>Connecting to whirlpool-cli<br/>
+        <strong>{cliService.getCliUrl()}</strong></p>
+
+        {cliService.getCliMessage() && <Alert variant='info'>{cliService.getCliMessage()}</Alert>}
+        <button type='button' className='btn btn-primary' onClick={this.reconnect}><FontAwesomeIcon icon={Icons.faSync} /> Retry to connect</button>
+      </form>
     );
   }
 
@@ -44,24 +54,25 @@ class ConnectingPage extends Component<Props> {
 
   renderCliUrlError(cliUrlError) {
     return (
-      <div>
-        <h1>Connection failed</h1>
 
-        Unable to connect to whirlpool-cli: <strong>{cliService.getCliUrl()}</strong><br/>
-        Make sure it's running, or try restarting it.
+      <form className="form-signin text-center" onSubmit={this.onSubmit}>
+        <h1 className="h3 mb-3 font-weight-normal">Connection failed</h1>
+        <div><FontAwesomeIcon icon={Icons.faWifi} size='3x' color='#343a40'/></div>
+        <p>Unable to connect to whirlpool-cli.<br/>
+          <strong>{cliService.getCliUrl()}</strong><br/>
+          Make sure it's running, or try restarting it.</p>
+
         <Alert variant='danger'>Connection failed: {cliUrlError}</Alert>
+        <button type='button' className='btn btn-primary' onClick={this.reconnect}><FontAwesomeIcon icon={Icons.faSync} /> Retry to connect</button>
+        <br/>
 
-        <div className='text-center'>
-          <button type='button' className='btn btn-primary' onClick={() => cliService.start()}><FontAwesomeIcon icon={Icons.faSpinner} /> Retry to connect</button>
-        </div>
         <br/><br/><br/><br/>
 
-        <p>
-        You can reset GUI configuration if you wish to update url or apiKey.</p>
+        <p>You may want to reset GUI configuration for updating whirlpool-client url or apiKey.</p>
         <div className='text-center'>
-          <button type='button' className='btn btn-danger btn-sm' onClick={this.onResetConfig}>Reset GUI configuration</button>
+          <button type='button' className='btn btn-danger btn-sm' onClick={this.onResetConfig}><FontAwesomeIcon icon={Icons.faExclamationTriangle} /> Reset GUI configuration</button>
         </div>
-      </div>
+      </form>
     );
   }
 
