@@ -91,7 +91,7 @@ class App extends React.Component<Props> {
   getLoginStatusIcon() {
     if (cliService.isLoggedIn()) {
       // logged in
-      return <FontAwesomeIcon icon={Icons.faUser} color='green' title='Logged in' />
+      return <a href='#' onClick={()=>cliService.logout()}><FontAwesomeIcon icon={Icons.faUser} color='green' title='Logged in (click to logout)' /></a>
     }
     return <FontAwesomeIcon icon={Icons.faUserSlash} color='grey' title='Logged out' />
   }
