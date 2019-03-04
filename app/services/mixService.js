@@ -50,11 +50,11 @@ class MixService {
 
   // controls global
 
-  start() {
+  startMix() {
     return backendService.mix.start().then(() => this.fetchState())
   }
 
-  stop() {
+  stopMix() {
     return backendService.mix.stop().then(() => this.fetchState())
   }
 
@@ -89,12 +89,12 @@ class MixService {
     return backendService.utxo.tx0(utxo.hash, utxo.index).then(() => walletService.fetchState())
   }
 
-  startMix(utxo) {
-    return backendService.utxo.startMix(utxo.hash, utxo.index).then(() => Promise.all(walletService.fetchState(), this.fetchState()))
+  startMixUtxo(utxo) {
+    return backendService.utxo.startMixUtxo(utxo.hash, utxo.index).then(() => Promise.all(walletService.fetchState(), this.fetchState()))
   }
 
-  stopMix(utxo) {
-    return backendService.utxo.stopMix(utxo.hash, utxo.index).then(() => Promise.all(walletService.fetchState(), this.fetchState()))
+  stopMixUtxo(utxo) {
+    return backendService.utxo.stopMixUtxo(utxo.hash, utxo.index).then(() => Promise.all(walletService.fetchState(), this.fetchState()))
   }
 
   getPoolsForMix(utxo) {

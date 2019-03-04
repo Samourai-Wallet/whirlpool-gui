@@ -9,10 +9,14 @@ import poolsService from './poolsService';
 const STORE_CLIURL = "cli.url"
 const STORE_APIKEY = "cli.apiKey"
 
+const REFRESH_RATE = 15000;
 class CliService {
   constructor () {
     this.setState = undefined
     this.state = undefined
+    this.refreshTimeout = undefined
+    this.servicesStarted = false
+
     this.cliUrl = undefined
     this.apiKey = undefined
     this.store = new Store()
@@ -36,20 +40,28 @@ class CliService {
   }
 
   start() {
-    return this.fetchState().then(() => {
-      console.log('cliService.start, cliStatus='+this.getCliStatus())
-      if (this.isLoggedIn()) {
-        mixService.start()
-        walletService.start()
-        poolsService.start()
-      }
-    })
+    if (this.refreshTimeout === undefined) {
+      this.refreshTimeout = setInterval(this.fetchState.bind(this), REFRESH_RATE)
+      return this.fetchState()
+    }
   }
 
-  stop() {
-    mixService.stop()
-    walletService.stop()
-    poolsService.stop()
+  startServices() {
+    if (!this.servicesStarted) {
+      this.servicesStarted = true
+      mixService.start()
+      walletService.start()
+      poolsService.start()
+    }
+  }
+
+  stopServices() {
+    if (this.servicesStarted) {
+      this.servicesStarted = false
+      mixService.stop()
+      walletService.stop()
+      poolsService.stop()
+    }
   }
 
   isConnected() {
@@ -172,11 +184,20 @@ class CliService {
           cli: cliState,
           cliUrlError: undefined
         })
+
+        // notify services
+        if (this.isLoggedIn()) {
+          this.startServices()
+        } else {
+          this.stopServices()
+        }
       }).catch(e => {
+        // notify services
         this.updateState({
+          cli: undefined,
           cliUrlError: e.message
         })
-        this.pushState()
+        this.stopServices()
       })
     })
   }

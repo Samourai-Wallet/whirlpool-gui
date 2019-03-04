@@ -27,7 +27,7 @@ class ConnectingPage extends Component<Props> {
   // connecting
 
   reconnect() {
-    cliService.start()
+    cliService.fetchState()
   }
 
   renderConnecting() {

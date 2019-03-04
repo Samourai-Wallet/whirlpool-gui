@@ -18,8 +18,8 @@ class MixStatus extends React.PureComponent {
         <div className='row'>
           <div className='col-sm-2 mixStatus'>
             <div>{mixService.getNbMixing()} mixing, {mixService.getNbQueued()} queued</div>
-            {mixService.isStarted() && <button className='btn btn-sm btn-primary' onClick={() => mixService.stop()}><Icon.Square size={12}/> Stop mixing</button>}
-            {!mixService.isStarted() && <button className='btn btn-sm btn-primary' onClick={() => mixService.start()}><Icon.Play size={12}/> Start mixing</button>}
+            {mixService.isStarted() && <button className='btn btn-sm btn-primary' onClick={() => mixService.stopMix()}><Icon.Square size={12}/> Stop mixing</button>}
+            {!mixService.isStarted() && <button className='btn btn-sm btn-primary' onClick={() => mixService.startMix()}><Icon.Play size={12}/> Start mixing</button>}
           </div>
           <div className='col-sm-10 mixThreads'>
             <div className='row'>

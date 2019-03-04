@@ -289,7 +289,7 @@ class InitPage extends Component<Props> {
       <div className="row">
         <div className="col-sm-12">
           <Alert variant='info'>
-            Your seed will be encrypted in ./whirlpool-client-cli.conf. <b>whirlpool will never ask again for it.</b>
+            Your seed will be encrypted in ./whirlpool-client-cli.properties. <b>whirlpool will never ask again for it.</b>
           </Alert>
         </div>
       </div>
