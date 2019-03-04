@@ -32,6 +32,14 @@
   background-color: #700606 !important;
 }
 
+.cliStatus {
+  padding:0 0.5em;
+  font-size:0.8em;
+  text-align:right;
+  margin-top:-0.5em;
+  color:#CCC;
+}
+
 /* status */
 .status {
   position: absolute;
@@ -78,4 +86,29 @@
 .utxoPoolSelector .dropdown-item,
 .utxoMixsTargetSelector .dropdown-item {
   padding: 0 0.4em;
+}
+
+
+/* login */
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+.form-signin .checkbox {
+  font-weight: 400;
+}
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
 }

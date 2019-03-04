@@ -30,6 +30,9 @@ import DepositModal from '../components/Modals/DepositModal';
 import poolsService from '../services/poolsService';
 import cliService from '../services/cliService';
 import ConnectingPage from './ConnectingPage';
+import LoginPage from './LoginPage';
+import * as Icons from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type Props = {
   children: React.Node
@@ -77,10 +80,19 @@ class App extends React.Component<Props> {
             </a>
             <a href='#' className='product-title'>Whirlpool</a>
           </div>
+          {cliService.isConfigured() && <div className='cliStatus'>
+            {cliService.isLoggedIn() && <FontAwesomeIcon icon={Icons.faCheck} color='green' />}
+            {!cliService.isLoggedIn() && cliService.isCliStatusReady() && <FontAwesomeIcon icon={Icons.faPause} color='orange' />}
+            {!cliService.isCliStatusReady() && <FontAwesomeIcon icon={Icons.faSquare} color='red' />}
+            &nbsp; {cliService.getCliUrl()}
+          </div>}
+          {!cliService.isLoggedIn() && cliService.isCliStatusReady() && <div className='cliStatus'><FontAwesomeIcon icon={Icons.faCheck} color='green' /> {cliService.getCliUrl()}</div>}
+          {cliService.isLoggedIn() && <div className='cliStatus'><FontAwesomeIcon icon={Icons.faCheck} color='green' /> {cliService.getCliUrl()}</div>}
+
 
         </div>
         <div className='col-md-10'>
-          {cliService.isCliStatusReady() && (mixService.isReady() ? <MixStatus mixState={this.props.mix} mixActions={this.props.mixActions}/> : <small>Fetching mix state...</small>)}
+          {cliService.isLoggedIn() && (mixService.isReady() ? <MixStatus mixState={this.props.mix} mixActions={this.props.mixActions}/> : <small>Fetching mix state...</small>)}
         </div>
       </nav>
 
@@ -88,7 +100,7 @@ class App extends React.Component<Props> {
 
         <div className="row">
           <nav className="col-md-2 d-none d-md-block bg-light sidebar">
-            {cliService.isCliStatusReady() && <div className="sidebar-sticky">
+            {cliService.isLoggedIn() && <div className="sidebar-sticky">
               <button className='btn btn-sm btn-primary btn-deposit' onClick={() => modalService.openDeposit()}>
                 <Icon.Plus size={12}/> Deposit
               </button>
@@ -141,7 +153,7 @@ class App extends React.Component<Props> {
 
           <main role="main" className="col-md-10 ml-sm-auto col-lg-10 px-4">
 
-            {cliService.isCliStatusReady() && <Switch>
+            {cliService.isLoggedIn() && <Switch>
               <Route path={routes.DEPOSIT} component={DepositPage} />
               <Route path={routes.PREMIX} component={PremixPage} />
               <Route path={routes.POSTMIX} component={PostmixPage} />
@@ -153,6 +165,9 @@ class App extends React.Component<Props> {
             </Switch>}
             {cliService.isConfigured() && !cliService.isCliStatusReady() && <Switch>
               <Route path={routes.HOME} component={ConnectingPage} />
+            </Switch>}
+            {cliService.isConfigured() && cliService.isCliStatusReady() && !cliService.isLoggedIn() && <Switch>
+              <Route path={routes.HOME} component={LoginPage} />
             </Switch>}
 
             {this.state.modalTx0 && <Tx0Modal utxo={this.state.modalTx0} onClose={modalService.close.bind(modalService)}/>}

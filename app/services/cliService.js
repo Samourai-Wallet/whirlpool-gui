@@ -38,7 +38,7 @@ class CliService {
   start() {
     return this.fetchState().then(() => {
       console.log('cliService.start, cliStatus='+this.getCliStatus())
-      if (this.isCliStatusReady()) {
+      if (this.isLoggedIn()) {
         mixService.start()
         walletService.start()
         poolsService.start()
@@ -97,6 +97,8 @@ class CliService {
 
     this.cliUrl = cliUrl
     this.apiKey = apiKey
+
+    this.start()
   }
 
   resetConfig() {
@@ -105,6 +107,20 @@ class CliService {
 
     this.cliUrl = undefined
     this.apiKey = undefined
+
+    this.pushState() // force refresh
+  }
+
+  login(seedPassphrase) {
+    return backendService.cli.login(seedPassphrase).then(cliState => {
+      this.setState(cliState)
+    })
+  }
+
+  logout() {
+    return backendService.cli.logout().then(cliState => {
+      this.setState(cliState)
+    })
   }
 
   // state
@@ -124,28 +140,18 @@ class CliService {
     return this.isReady() && this.state.cli.cliStatus === CLI_STATUS.READY
   }
 
+  isLoggedIn() {
+    return this.isCliStatusReady() && this.state.cli.loggedIn
+  }
+
   fetchState () {
     if (!this.isConfigured()) {
       return Promise.reject("not configured")
     }
     return ifNot.run('cliService:fetchState', () => {
       // fetchState backend
-      return backendService.cli.fetchState().then(cli => {
-        // set state
-        if (this.state === undefined) {
-          console.log('cliService: initializing new state')
-          this.state = {
-            cli: cli,
-            cliUrlError: undefined
-          }
-        } else {
-          // new state object
-          const currentState = Object.assign({}, this.state)
-          console.log('cliService: updating existing state', currentState)
-          currentState.cli = cli
-          this.state = currentState
-        }
-        this.pushState()
+      return backendService.cli.fetchState().then(cliState => {
+        this.setState(cliState)
       }).catch(e => {
         this.state = {
           cliUrlError: e.message
@@ -153,6 +159,24 @@ class CliService {
         this.pushState()
       })
     })
+  }
+
+  setState(cli) {
+    // set state
+    if (this.state === undefined) {
+      console.log('cliService: initializing new state')
+      this.state = {
+        cli: cli,
+        cliUrlError: undefined
+      }
+    } else {
+      // new state object
+      const currentState = Object.assign({}, this.state)
+      console.log('cliService: updating existing state', currentState)
+      currentState.cli = cli
+      this.state = currentState
+    }
+    this.pushState()
   }
 
   pushState () {

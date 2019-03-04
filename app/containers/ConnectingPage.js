@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cliService from '../services/cliService';
 import { Alert } from 'react-bootstrap';
+import * as Icons from '@fortawesome/free-solid-svg-icons';
 
 class ConnectingPage extends Component<Props> {
   props: Props;
@@ -46,11 +47,19 @@ class ConnectingPage extends Component<Props> {
       <div>
         <h1>Connection failed</h1>
 
-        Unable to connect to whirlpool-cli: <strong>{cliService.getCliUrl()}</strong>
+        Unable to connect to whirlpool-cli: <strong>{cliService.getCliUrl()}</strong><br/>
+        Make sure it's running, or try restarting it.
         <Alert variant='danger'>Connection failed: {cliUrlError}</Alert>
 
         <div className='text-center'>
-          <button type='button' className='btn btn-danger' onClick={this.onResetConfig}>Reset GUI configuration</button>
+          <button type='button' className='btn btn-primary' onClick={() => cliService.start()}><FontAwesomeIcon icon={Icons.faSpinner} /> Retry to connect</button>
+        </div>
+        <br/><br/><br/><br/>
+
+        <p>
+        You can reset GUI configuration if you wish to update url or apiKey.</p>
+        <div className='text-center'>
+          <button type='button' className='btn btn-danger btn-sm' onClick={this.onResetConfig}>Reset GUI configuration</button>
         </div>
       </div>
     );

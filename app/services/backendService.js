@@ -66,6 +66,18 @@ class BackendService {
           encryptedSeedWords: encryptedSeedWords
         }, cliUrl, apiKey)
         , 'cli.init')
+    },
+    login: (seedPassphrase) => {
+      return this.withStatus('CLI', 'Authenticate', () =>
+          this.fetchBackendAsJson('/rest/cli/login', 'POST', {
+            seedPassphrase: seedPassphrase
+          })
+        , 'cli.login')
+    },
+    logout: () => {
+      return this.withStatus('CLI', 'Authenticate', () =>
+          this.fetchBackendAsJson('/rest/cli/logout', 'POST')
+        , 'cli.logout')
     }
   };
 
