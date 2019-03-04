@@ -8,6 +8,7 @@ import SeedSelector from '../components/SeedSelector/seedSelector';
 import txt from 'raw-loader!../resources/en_US.txt';
 import encryptUtils from '../services/encryptUtils';
 import cliService from '../services/cliService';
+import { CLI_CONFIG_FILENAME } from '../services/utils';
 
 const STEP_LAST = 3
 const CLI_URL_LOCAL = 'LOCAL'
@@ -289,7 +290,7 @@ class InitPage extends Component<Props> {
       <div className="row">
         <div className="col-sm-12">
           <Alert variant='info'>
-            Your seed will be encrypted in ./whirlpool-client-cli.properties. <b>whirlpool will never ask again for it.</b>
+            Your seed will be encrypted in ./{CLI_CONFIG_FILENAME}. <b>whirlpool will never ask again for it.</b>
           </Alert>
         </div>
       </div>
