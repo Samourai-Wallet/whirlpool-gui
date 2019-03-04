@@ -120,7 +120,11 @@ class CliService {
     this.cliUrl = undefined
     this.apiKey = undefined
 
-    this.pushState() // force refresh
+    // force refresh
+    this.updateState({
+      cli: undefined,
+      cliUrlError: undefined
+    })
   }
 
   login(seedPassphrase) {
