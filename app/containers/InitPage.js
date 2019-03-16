@@ -11,13 +11,13 @@ import cliService from '../services/cliService';
 import { CLI_CONFIG_FILENAME } from '../services/utils';
 
 const STEP_LAST = 3
-const CLI_URL_LOCAL = 'LOCAL'
 const SETUP_MODE = {
   LOCAL:'LOCAL',
   REMOTE:'REMOTE'
 }
 const DEFAULT_CLIHOST = 'http://localhost'
 const DEFAULT_CLIPORT = 8899
+export const CLI_URL_LOCAL = DEFAULT_CLIHOST+':'+DEFAULT_CLIPORT
 const DEFAULT_APIKEY = ''
 class InitPage extends Component<Props> {
   props: Props;

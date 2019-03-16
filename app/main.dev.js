@@ -10,10 +10,12 @@
  *
  * @flow
  */
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
+import { CliLocal } from './mainProcess/cliLocal';
+
 
 export default class AppUpdater {
   constructor() {
@@ -72,6 +74,9 @@ app.on('ready', async () => {
     width: 1280,
     height: 728
   });
+
+  // init cliLocal
+  new CliLocal(ipcMain, app.getPath('userData'), mainWindow.webContents)
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 

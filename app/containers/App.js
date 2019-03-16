@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { withRouter } from 'react-router'
+import { Route, Switch, withRouter } from 'react-router';
 import backendService from '../services/backendService';
 import { connect } from 'react-redux';
 import walletService from '../services/walletService';
@@ -10,7 +10,6 @@ import { walletActions } from '../actions/walletActions';
 import { poolsActions } from '../actions/poolsActions';
 import { mixActions } from '../actions/mixActions';
 import { Link } from 'react-router-dom';
-import { Route, Switch } from 'react-router';
 import * as Icon from 'react-feather';
 import routes from '../constants/routes';
 import ConfigPage from '../containers/ConfigPage';

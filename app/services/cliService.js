@@ -1,10 +1,12 @@
 import ifNot from 'if-not-running';
-import Store from'electron-store';
+import Store from 'electron-store';
 import backendService from './backendService';
 import { CLI_STATUS } from './utils';
 import mixService from './mixService';
 import walletService from './walletService';
 import poolsService from './poolsService';
+import { CLI_URL_LOCAL } from '../containers/InitPage';
+import { cliLocalService } from './cliLocalService';
 
 const STORE_CLIURL = "cli.url"
 const STORE_APIKEY = "cli.apiKey"
@@ -70,6 +72,10 @@ class CliService {
 
   isConfigured() {
     return this.cliUrl && this.apiKey
+  }
+
+  isCliLocal() {
+    return this.cliUrl === CLI_URL_LOCAL
   }
 
   // cli API
@@ -180,6 +186,12 @@ class CliService {
   fetchState () {
     if (!this.isConfigured()) {
       return Promise.reject("not configured")
+    }
+    if (this.isCliLocal()) {
+      if (!cliLocalService.isStarted()) {
+        cliLocalService.start()
+      }
+      return Promise.reject("local CLI not started yet: "+cliLocalService.getStatus())
     }
     return ifNot.run('cliService:fetchState', () => {
       // fetchState backend
