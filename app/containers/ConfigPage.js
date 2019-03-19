@@ -30,7 +30,11 @@ export default class ConfigPage extends Component<Props> {
           <div className="form-group row">
             <label className="col-sm-2 col-form-label">CLI</label>
             <div className="col-sm-8">
-              <input type="text" className="form-control" disabled defaultValue={cliService.getCliUrl()}/>
+              {cliService.isCliLocal() && <strong>Run CLI locally</strong>}
+              {!cliService.isCliLocal() && <div>
+                <strong>Remote Dojo/CLI</strong>
+                <input type="text" className="form-control" disabled defaultValue={cliService.getCliUrl()}/>
+              </div>}
             </div>
           </div>
           <div className="form-group row">
@@ -49,10 +53,6 @@ export default class ConfigPage extends Component<Props> {
                 <label className="form-check-label" htmlFor="inlineCheckbox1">Enable TOR (coming soon)</label>
               </div>
             </div>
-          </div>
-          <div className="form-group row">
-            <label htmlFor="inputPassword3" className="col-sm-2 col-form-label">Setup mode</label>
-            <label htmlFor="inputPassword3" className="col-sm-8 col-form-label"><Icon.CheckSquare /> Run whirlpool locally</label>
           </div>
           <div className="form-group row">
             <div className="col-sm-5">

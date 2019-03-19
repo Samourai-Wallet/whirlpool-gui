@@ -127,3 +127,13 @@
 .clearWord {
   cursor: not-allowed;
 }
+
+/* statusPage */
+.logs {
+  font-size:0.8em;
+  padding:1em;
+  border: 1px solid #000;
+  height: 30em;
+  overflow: auto;
+  white-space: pre-wrap;
+}

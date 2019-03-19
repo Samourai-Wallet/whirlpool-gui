@@ -1,3 +1,4 @@
+import * as React from 'react';
 import ifNot from 'if-not-running';
 import Store from 'electron-store';
 import backendService from './backendService';
@@ -7,6 +8,8 @@ import walletService from './walletService';
 import poolsService from './poolsService';
 import { cliLocalService } from './cliLocalService';
 import { STORE_CLILOCAL } from '../const';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as Icons from "@fortawesome/free-solid-svg-icons";
 
 const STORE_CLIURL = "cli.url"
 const STORE_APIKEY = "cli.apiKey"
@@ -249,6 +252,29 @@ class CliService {
 
   pushState () {
     this.setState(this.state)
+  }
+
+  getStatusIcon(format) {
+    if (cliService.isCliStatusReady()) {
+      // connected & ready
+      const status = 'Connected'
+      return format(<FontAwesomeIcon icon={Icons.faWifi} color='green' title={status} size='xs'/>, status)
+    }
+    if (cliService.getCliUrlError()) {
+      // not connected
+      const status = 'Disconnected'
+      return format(<FontAwesomeIcon icon={Icons.faWifi} color='red' title={status} />, status)
+    }
+    // connected & initialization required
+    if (cliService.isCliStatusNotInitialized()) {
+      const status = 'Connected, cli initialization required'
+      return format(<FontAwesomeIcon icon={Icons.faWifi} color='orange' title={status}/>, status)
+    }
+    // connected & not ready
+    if (cliService.isConnected()) {
+      const status = 'Connected, not ready: '+cliService.getCliMessage()
+      return format(<FontAwesomeIcon icon={Icons.faWifi} color='yellow' title={status}/>, status)
+    }
   }
 }
 

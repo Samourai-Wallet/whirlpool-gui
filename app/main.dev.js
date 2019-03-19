@@ -76,7 +76,7 @@ app.on('ready', async () => {
   });
 
   // init cliLocal
-  new CliLocal(ipcMain, app.getPath('userData'), mainWindow.webContents)
+  new CliLocal(ipcMain, mainWindow.webContents)
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 

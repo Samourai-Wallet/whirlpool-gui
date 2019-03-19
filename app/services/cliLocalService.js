@@ -1,6 +1,10 @@
+import * as React from 'react';
 import { ipcRenderer } from 'electron';
 import { CLILOCAL_STATUS, IPC_CLILOCAL } from '../const';
 import cliService from './cliService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as Icons from "@fortawesome/free-solid-svg-icons";
+import moment from "moment";
 
 class CliLocalService {
   constructor() {
@@ -52,6 +56,39 @@ class CliLocalService {
     return this.state !== undefined && this.state.status === CLILOCAL_STATUS.ERROR
   }
 
+  getStatusIcon(format) {
+    let infoError = ""
+    if (cliLocalService.getError() != undefined) {
+      infoError = cliLocalService.getError()+'. '
+    }
+    if (cliLocalService.getInfo() != undefined) {
+      infoError += cliLocalService.getInfo()
+    }
+
+    // downloading
+    if (cliLocalService.isStatusDownloading()) {
+      const status = 'local CLI is being downloaded... '+infoError
+      return format(<FontAwesomeIcon icon={Icons.faPlay} color='orange' title={status}/>, status)
+    }
+    // error
+    if (cliLocalService.isStatusError()) {
+      const status = 'local CLI error: '+infoError
+      return format(<FontAwesomeIcon icon={Icons.faCircle} color='red' title={status}/>, status)
+    }
+    if (cliLocalService.isStarted()) {
+      // started
+      const status = 'local CLI is running since '+moment(cliLocalService.getStartTime()).format()
+      return format(<FontAwesomeIcon icon={Icons.faPlay} color='green' title={status} size='xs'/>, status)
+    }
+    if (!cliLocalService.isValid()) {
+      // invalid
+      const status = 'local CLI executable is not valid. '+infoError
+      return format(<FontAwesomeIcon icon={Icons.faCircle} color='red' title={status} size='xs'/>, status)
+    }
+    // valid but stopped
+    const status = 'local CLI is not running. '+infoError
+    return format(<FontAwesomeIcon icon={Icons.faStop} color='orange' title={status} />, status)
+  }
 }
 export const cliLocalService = new CliLocalService()
 

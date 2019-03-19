@@ -181,7 +181,7 @@ class InitPage extends Component<Props> {
           <div className="form-check">
             <input className="form-check-input" type="radio" name="cliLocal" id="cliLocalTrue" value='true' checked={this.state.cliLocal} onChange={this.onChangeCliLocal}/>
             <label className="form-check-label" htmlFor="cliLocalTrue">
-              Run whirlpool locally
+              Run CLI locally
             </label>
             {this.state.cliLocal && <div className="col-sm-3">
               <button type='button' className='btn btn-primary' onClick={this.connectCli}>Connect</button>

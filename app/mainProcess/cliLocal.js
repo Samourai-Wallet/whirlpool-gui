@@ -1,10 +1,18 @@
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, app } from 'electron';
 import { download } from 'electron-dl';
 import md5ify from 'md5ify';
 import fs from 'fs';
 import { spawn } from 'child_process';
 import Store from 'electron-store';
-import { DEFAULT_CLI_LOCAL, CLILOCAL_STATUS, IPC_CLILOCAL, STORE_CLILOCAL } from '../const';
+import {
+  DEFAULT_CLI_LOCAL,
+  CLILOCAL_STATUS,
+  IPC_CLILOCAL,
+  STORE_CLILOCAL,
+  DL_PATH,
+  LOG_FILE,
+  getDlPath, getLogFile
+} from '../const';
 
 const CLI_FILENAME = "whirlpool-client-cli-develop-SNAPSHOT-run.jar";
 const CLI_URL = "https://file.io/7G4siX";
@@ -15,12 +23,12 @@ const STORE_CLI_URL = 'CLI_URL'
 const STORE_CLI_CHECKSUM = 'CLI_CHECKSUM'
 export class CliLocal {
 
-  constructor(ipcMain, dlPath, window) {
+  constructor(ipcMain, window) {
     this.state = {}
 
     this.ipcMain = ipcMain
-    this.dlPath = dlPath
     this.window = window
+    this.dlPath = getDlPath(app)
     this.store = new Store()
 
     this.ipcMain.on(IPC_CLILOCAL.RELOAD, this.reload.bind(this))
@@ -41,8 +49,8 @@ export class CliLocal {
     }
   }
 
-  reload() {
-    this.stop()
+  async reload() {
+    await this.stop()
 
     this.cliFilename = this.getCliFilename()
     this.cliUrl = this.getCliUrl()
@@ -136,7 +144,7 @@ export class CliLocal {
     const server = this.getCliServer()
     const args = ['-jar', this.dlPath+'/'+this.cliFilename, '--listen', '--debug', '--server='+server, '--pool=0.01btc']
     const cmd = 'java'
-    const logFile = this.dlPath+'/whirlpool-cli.log'
+    const logFile = getLogFile(app)
     this.startProc(cmd, args, logFile)
   }
 
@@ -171,7 +179,7 @@ export class CliLocal {
     });
   }
 
-  stop() {
+  async stop() {
     if (!this.state.started) {
       console.error("CliLocal: stop skipped: not started")
       return
@@ -183,6 +191,7 @@ export class CliLocal {
       this.cliProc.stdout.pause()
       this.cliProc.stderr.pause()
       this.cliProc.kill()
+      await sleep(2000)
     }
   }
 

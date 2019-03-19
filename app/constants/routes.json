@@ -1,5 +1,6 @@
 {
   "CONFIG": "/config",
+  "STATUS": "/status",
   "DEPOSIT": "/deposit",
   "PREMIX": "/premix",
   "POSTMIX": "/postmix",

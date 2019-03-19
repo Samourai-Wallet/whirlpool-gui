@@ -30,6 +30,7 @@ import DepositModal from '../components/Modals/DepositModal';
 import poolsService from '../services/poolsService';
 import cliService from '../services/cliService';
 import ConnectingPage from './ConnectingPage';
+import StatusPage from './StatusPage';
 import LoginPage from './LoginPage';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -70,53 +71,6 @@ class App extends React.Component<Props> {
     cliService.start()
   }
 
-  getCliStatusIcon() {
-    if (cliService.isCliStatusReady()) {
-      // connected & ready
-      return <FontAwesomeIcon icon={Icons.faWifi} color='green' title='Connected' size='xs'/>
-    }
-    if (cliService.getCliUrlError()) {
-      // not connected
-      return <FontAwesomeIcon icon={Icons.faWifi} color='red' title='Disconnected' />
-    }
-    // connected & initialization required
-    if (cliService.isCliStatusNotInitialized()) {
-      return <FontAwesomeIcon icon={Icons.faWifi} color='orange' title='Connected, cli initialization required'/>
-    }
-    // connected & not ready
-    if (cliService.isConnected()) {
-      return <FontAwesomeIcon icon={Icons.faWifi} color='yellow' title={'Connected, not ready: '+cliService.getCliMessage()}/>
-    }
-  }
-
-  getCliLocalStatusIcon() {
-    let infoError = ""
-    if (cliLocalService.getError() != undefined) {
-      infoError = cliLocalService.getError()+'. '
-    }
-    if (cliLocalService.getInfo() != undefined) {
-      infoError += cliLocalService.getInfo()
-    }
-    // downloading
-    if (cliLocalService.isStatusDownloading()) {
-      return <FontAwesomeIcon icon={Icons.faPlay} color='orange' title={'CLI.local is being downloaded... '+infoError}/>
-    }
-    // error
-    if (cliLocalService.isStatusError()) {
-      return <FontAwesomeIcon icon={Icons.faCircle} color='red' title={'CLI.local error: '+infoError}/>
-    }
-    if (cliLocalService.isStarted()) {
-      // started
-      return <FontAwesomeIcon icon={Icons.faPlay} color='green' title={'CLI.local is running since '+moment(cliLocalService.getStartTime()).format()} size='xs'/>
-    }
-    if (!cliLocalService.isValid()) {
-      // invalid
-      return <FontAwesomeIcon icon={Icons.faCircle} color='red' title={'CLI.local executable is not valid. '+infoError} size='xs'/>
-    }
-    // valid but stopped
-    return <FontAwesomeIcon icon={Icons.faStop} color='orange' title={'CLI.local is not running. '+infoError} />
-  }
-
   getLoginStatusIcon() {
     if (cliService.isLoggedIn()) {
       // logged in
@@ -129,6 +83,7 @@ class App extends React.Component<Props> {
     if (cliService.isLoggedIn()) {
       // logged in
       return <Switch>
+        <Route path={routes.STATUS} component={StatusPage}/>
         <Route path={routes.DEPOSIT} component={DepositPage}/>
         <Route path={routes.PREMIX} component={PremixPage}/>
         <Route path={routes.POSTMIX} component={PostmixPage}/>
@@ -140,25 +95,28 @@ class App extends React.Component<Props> {
     if (!cliService.isConfigured() || cliService.isCliStatusNotInitialized()) {
       // not configured/initialized
       return <Switch>
+        <Route path={routes.STATUS} component={StatusPage}/>
         <Route path={routes.HOME} component={InitPage} />
       </Switch>
     }
     if (!cliService.isCliStatusReady()) {
       // not connected
       return <Switch>
+        <Route path={routes.STATUS} component={StatusPage}/>
         <Route path={routes.HOME} component={ConnectingPage} />
       </Switch>
     }
     if (!cliService.isLoggedIn()) {
       return <Switch>
+        <Route path={routes.STATUS} component={StatusPage}/>
         <Route path={routes.HOME} component={LoginPage}/>
       </Switch>
     }
   }
 
   render() {
-    const cliLocalStatusIcon = cliService.isCliLocal() ? this.getCliLocalStatusIcon() : undefined
-    const cliStatusIcon = this.getCliStatusIcon()
+    const cliLocalStatusIcon = cliService.isCliLocal() ? cliLocalService.getStatusIcon((icon,text)=>icon) : undefined
+    const cliStatusIcon = cliService.getStatusIcon((icon,text)=>icon)
     const loginStatusIcon = this.getLoginStatusIcon()
     const cliUrl = cliService.isCliLocal() ? 'local CLI' : cliService.getCliUrl()
     return <div>
@@ -185,12 +143,12 @@ class App extends React.Component<Props> {
 
         <div className="row">
           <nav className="col-md-2 d-none d-md-block bg-light sidebar">
-            {cliService.isLoggedIn() && <div className="sidebar-sticky">
-              <button className='btn btn-sm btn-primary btn-deposit' onClick={() => modalService.openDeposit()}>
+            <div className="sidebar-sticky">
+              {cliService.isLoggedIn() && <button className='btn btn-sm btn-primary btn-deposit' onClick={() => modalService.openDeposit()}>
                 <Icon.Plus size={12}/> Deposit
-              </button>
+              </button>}
               <ul className="nav flex-column">
-                {walletService.isReady() && <li className="nav-item">
+                {cliService.isLoggedIn() && walletService.isReady() && <li className="nav-item">
                   <Link to={routes.DEPOSIT}>
                     <a className="nav-link">
                       <span data-feather="plus"></span>
@@ -199,7 +157,7 @@ class App extends React.Component<Props> {
                     </a>
                   </Link>
                 </li>}
-                {walletService.isReady() && <li className="nav-item">
+                {cliService.isLoggedIn() && walletService.isReady() && <li className="nav-item">
                   <Link to={routes.PREMIX}>
                     <a className="nav-link">
                       <span data-feather="play"></span>
@@ -208,7 +166,7 @@ class App extends React.Component<Props> {
                     </a>
                   </Link>
                 </li>}
-                {walletService.isReady() && <li className="nav-item">
+                {cliService.isLoggedIn() && walletService.isReady() && <li className="nav-item">
                   <Link to={routes.POSTMIX}>
                     <a className="nav-link">
                       <span data-feather="check"></span>
@@ -217,19 +175,27 @@ class App extends React.Component<Props> {
                     </a>
                   </Link>
                 </li>}
-                <li className="nav-item">
+                {cliService.isLoggedIn() && <li className="nav-item">
                   <Link to={routes.CONFIG}>
                     <a className="nav-link">
                       <span data-feather="settings"></span>
                       Configuration
                     </a>
                   </Link>
+                </li>}
+                <li className="nav-item">
+                  <Link to={routes.STATUS}>
+                    <a className="nav-link">
+                      <span data-feather="terminal"></span>
+                      Status
+                    </a>
+                  </Link>
                 </li>
               </ul>
-              {!walletService.isReady() && <div>
+              {cliService.isLoggedIn() && !walletService.isReady() && <div>
                 <small>Fetching wallet...</small>
               </div>}
-            </div>}
+            </div>
             <Status
               status={this.props.status}
               statusActions={this.props.statusActions}
