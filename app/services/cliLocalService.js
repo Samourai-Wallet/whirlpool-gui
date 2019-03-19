@@ -44,6 +44,10 @@ class CliLocalService {
     return this.state !== undefined && this.state.started
   }
 
+  getStartTime() {
+    return this.state ? this.state.started : undefined
+  }
+
   isStatusError() {
     return this.state !== undefined && this.state.status === CLILOCAL_STATUS.ERROR
   }

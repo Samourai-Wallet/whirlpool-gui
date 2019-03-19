@@ -1,7 +1,8 @@
 import { BrowserWindow, ipcRenderer } from 'electron';
 import {download} from 'electron-dl';
 import md5ify from 'md5ify'
-import { exec } from 'child_process'
+import fs from 'fs'
+import { spawn } from 'child_process'
 import Store from 'electron-store';
 
 export const IPC_CLILOCAL = {
@@ -124,29 +125,44 @@ export class CliLocal {
       return
     }
     console.log('CliLocal: starting...')
-    this.state.started = true
+    this.state.started = new Date().getTime()
 
-    const args = "--listen --debug --server=LOCAL_TEST --pool=0.01btc"
-    const cmd = 'java -jar '+this.dlPath+'/'+this.cliFilename+' '+args
-    console.log('cliLocal: exec '+cmd)
-    const backendProc = exec(cmd, undefined,
-      (error, stdout, stderr) => {
-        console.log('cliLocal stdout: ' + stdout);
-        console.log('cliLocal stderr: ' + stderr);
-        if(error !== null){
-          console.log('cliLocal exec error: ' + error);
-        }
-      }
-    )
-    backendProc.on('exit', (code, sig) => {
+    // start proc
+    const args = ['-jar', this.dlPath+'/'+this.cliFilename, '--listen', '--debug', '--server=LOCAL_TEST', '--pool=0.01btc']
+    const cmd = 'java'
+    const logFile = this.dlPath+'/whirlpool-cli.log'
+    this.startProc(cmd, args, logFile)
+  }
+
+  startProc(cmd, args, logFile) {
+    const log = fs.createWriteStream(logFile, {flags: 'a'})
+
+    const cmdStr = cmd+' '+args.join(' ')
+    console.log('cliLocal: exec '+cmdStr)
+    console.log('Log: '+logFile)
+    log.write('=> Starting: '+cmdStr+'\n')
+    const backendProc = spawn(cmd, args)
+    backendProc.on('error', function( err ) {
+      console.error('cli error:', err)
+      log.write('=> Error: '+err+'\n')
+    })
+    backendProc.on('exit', (code) => {
       // finishing
-      console.log('cliLocal exiting...',code,sig)
+      console.log('cliLocal exiting...',code)
+      log.write('=> Exit\n')
       this.state.started = false
     })
-    backendProc.on('error', (error) => {
-      // error handling
-      console.log('cliLocal error...',error)
-    })
+
+    backendProc.stdout.on('data', function (data) {
+      const dataStr = data.toString()
+      console.log('[cli] ' + dataStr.substring(0, (dataStr.length-1)));
+      log.write(data)
+    });
+    backendProc.stderr.on('data', function (data) {
+      const dataStr = data.toString()
+      console.log('[cli.err] ' + dataStr.substring(0, (dataStr.length-1)));
+      log.write('[ERR]'+data)
+    });
   }
 
   stop() {

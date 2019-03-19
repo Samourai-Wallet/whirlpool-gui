@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Route, Switch, withRouter } from 'react-router';
 import backendService from '../services/backendService';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import walletService from '../services/walletService';
 import { bindActionCreators } from 'redux';
 import { cliActions } from '../actions/cliActions';
@@ -98,22 +99,22 @@ class App extends React.Component<Props> {
     }
     // downloading
     if (cliLocalService.isStatusDownloading()) {
-      return <FontAwesomeIcon icon={Icons.faPlay} color='orange' title={'CLI is being downloaded... '+infoError}/>
+      return <FontAwesomeIcon icon={Icons.faPlay} color='orange' title={'CLI.local is being downloaded... '+infoError}/>
     }
     // error
     if (cliLocalService.isStatusError()) {
-      return <FontAwesomeIcon icon={Icons.faCircle} color='red' title={'CLI error: '+infoError}/>
+      return <FontAwesomeIcon icon={Icons.faCircle} color='red' title={'CLI.local error: '+infoError}/>
     }
     if (cliLocalService.isStarted()) {
       // started
-      return <FontAwesomeIcon icon={Icons.faPlay} color='green' title='CLI is running' size='xs'/>
+      return <FontAwesomeIcon icon={Icons.faPlay} color='green' title={'CLI.local is running since '+moment(cliLocalService.getStartTime()).format()} size='xs'/>
     }
     if (!cliLocalService.isValid()) {
       // invalid
-      return <FontAwesomeIcon icon={Icons.faCircle} color='red' title={'CLI executable is not valid. '+infoError} size='xs'/>
+      return <FontAwesomeIcon icon={Icons.faCircle} color='red' title={'CLI.local executable is not valid. '+infoError} size='xs'/>
     }
     // valid but stopped
-    return <FontAwesomeIcon icon={Icons.faStop} color='orange' title={'CLI is not running. '+infoError} />
+    return <FontAwesomeIcon icon={Icons.faStop} color='orange' title={'CLI.local is not running. '+infoError} />
   }
 
   getLoginStatusIcon() {
@@ -157,9 +158,9 @@ class App extends React.Component<Props> {
 
   render() {
     const cliLocalStatusIcon = cliService.isCliLocal() ? this.getCliLocalStatusIcon() : undefined
-    console.log('cliLocalStatusIcon='+cliLocalStatusIcon)
     const cliStatusIcon = this.getCliStatusIcon()
     const loginStatusIcon = this.getLoginStatusIcon()
+    const cliUrl = cliService.isCliLocal() ? 'CLI.local' : cliService.getCliUrl()
     return <div>
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
         <div className='col-sm-3 col-md-2 mr-0 navbar-brand-col'>
@@ -172,7 +173,7 @@ class App extends React.Component<Props> {
           </div>
           <div>
             {loginStatusIcon && <div className='loginStatus'>{loginStatusIcon}</div>}
-            {cliStatusIcon && <div className='cliStatus'>{cliStatusIcon} {cliLocalStatusIcon && <span>{cliLocalStatusIcon}</span>} {cliService.getCliUrl()}</div>}
+            {cliStatusIcon && <div className='cliStatus'>{cliLocalStatusIcon} {cliUrl} {cliStatusIcon}</div>}
           </div>
         </div>
         <div className='col-md-10'>
