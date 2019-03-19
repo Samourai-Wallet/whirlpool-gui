@@ -36,7 +36,8 @@ class ConnectingPage extends Component<Props> {
         <h1 className="h3 mb-3 font-weight-normal">Connecting...</h1>
         <div><FontAwesomeIcon icon={Icons.faCloud} size='3x' color='#343a40'/></div>
         <p>Connecting to whirlpool-cli<br/>
-        <strong>{cliService.getCliUrl()}</strong></p>
+          <strong>{cliService.getCliUrl()}</strong>
+        </p>
 
         {cliService.getCliMessage() && <Alert variant='info'>{cliService.getCliMessage()}</Alert>}
         <button type='button' className='btn btn-primary' onClick={this.reconnect}><FontAwesomeIcon icon={Icons.faSync} /> Retry to connect</button>

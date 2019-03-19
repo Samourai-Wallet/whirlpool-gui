@@ -5,8 +5,8 @@ import { CLI_STATUS } from './utils';
 import mixService from './mixService';
 import walletService from './walletService';
 import poolsService from './poolsService';
-import { CLI_URL_LOCAL } from '../containers/InitPage';
 import { cliLocalService } from './cliLocalService';
+import { STORE_CLILOCAL } from '../const';
 
 const STORE_CLIURL = "cli.url"
 const STORE_APIKEY = "cli.apiKey"
@@ -21,6 +21,7 @@ class CliService {
 
     this.cliUrl = undefined
     this.apiKey = undefined
+    this.cliLocal = undefined
     this.store = new Store()
   }
 
@@ -75,7 +76,7 @@ class CliService {
   }
 
   isCliLocal() {
-    return this.cliUrl === CLI_URL_LOCAL
+    return this.cliLocal
   }
 
   // cli API
@@ -106,15 +107,18 @@ class CliService {
   loadConfig() {
     this.cliUrl = this.store.get(STORE_CLIURL)
     this.apiKey = this.store.get(STORE_APIKEY)
+    this.cliLocal = this.store.get(STORE_CLILOCAL)
     console.log('cliService.loadConfig: cliUrl='+this.cliUrl)
   }
 
-  saveConfig(cliUrl, apiKey) {
+  saveConfig(cliUrl, apiKey, cliLocal) {
     this.store.set(STORE_CLIURL, cliUrl)
     this.store.set(STORE_APIKEY, apiKey)
+    this.store.set(STORE_CLILOCAL, cliLocal)
 
     this.cliUrl = cliUrl
     this.apiKey = apiKey
+    this.cliLocal = cliLocal
 
     this.start()
   }
@@ -125,6 +129,7 @@ class CliService {
 
     this.cliUrl = undefined
     this.apiKey = undefined
+    this.cliLocal = undefined
 
     // force refresh
     this.updateState({

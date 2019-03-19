@@ -5,7 +5,7 @@
 
 Desktop GUI for [Whirlpool](https://github.com/Samourai-Wallet/Whirlpool) by Samourai-Wallet.
 
-# Installation
+## Installation
 
 ### Requirements
 
@@ -19,7 +19,15 @@ cd whirlpool-gui
 yarn
 ```
 
-# Usage
+## Usage
+### Development
+
+```
+cd whirlpool-gui
+yarn dev
+```
+
+### Build
 
 ```
 cd whirlpool-gui

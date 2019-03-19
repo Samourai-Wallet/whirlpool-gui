@@ -24,22 +24,34 @@ class SeedSelector extends React.PureComponent {
     this.words = new Array(NB_WORDS)
 
     this.onChangeWord = this.onChangeWord.bind(this)
+    this.onClearWord = this.onClearWord.bind(this)
   }
 
   onChangeWord(word, i) {
     this.words[i] = word
     this.state.selectedWords[i] = true
-    const nbWords = this.state.selectedWords.filter(word => word ? true : false).length
 
-    this.setState({
-      selectedWords: this.state.selectedWords,
-      nbWords: nbWords
-    })
+    const nbWords = this.setWords()
 
     if (nbWords === NB_WORDS) {
       const encryptedSeedWords = this.props.encrypt(this.words.join(' '))
       this.props.onSubmit(encryptedSeedWords)
     }
+  }
+
+  onClearWord(i) {
+    this.words[i] = undefined
+    this.state.selectedWords[i] = false
+    this.setWords()
+  }
+
+  setWords() {
+    const nbWords = this.state.selectedWords.filter(word => word ? true : false).length
+    this.setState({
+      selectedWords: this.state.selectedWords,
+      nbWords: nbWords
+    })
+    return nbWords
   }
 
   render () {
@@ -49,7 +61,7 @@ class SeedSelector extends React.PureComponent {
           {Array.from(Array(NB_WORDS).keys()).map(i => {
             return <div className='col-sm-2' key={i}>
               {this.state.selectedWords[i] &&
-                <span><FontAwesomeIcon icon={Icons.faCheck} color='green' /> word #{(i+1)} selected</span>
+                <span className='clearWord' onClick={() => this.onClearWord(i)}><FontAwesomeIcon icon={Icons.faCheck} color='green' /> word #{(i+1)} selected</span>
               }
               {!this.state.selectedWords[i] &&
               <select className='form-control form-control-sm' onChange={(e) => this.onChangeWord(e.target.value, i)}>

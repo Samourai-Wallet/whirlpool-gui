@@ -160,7 +160,7 @@ class App extends React.Component<Props> {
     const cliLocalStatusIcon = cliService.isCliLocal() ? this.getCliLocalStatusIcon() : undefined
     const cliStatusIcon = this.getCliStatusIcon()
     const loginStatusIcon = this.getLoginStatusIcon()
-    const cliUrl = cliService.isCliLocal() ? 'CLI.local' : cliService.getCliUrl()
+    const cliUrl = cliService.isCliLocal() ? 'local CLI' : cliService.getCliUrl()
     return <div>
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
         <div className='col-sm-3 col-md-2 mr-0 navbar-brand-col'>

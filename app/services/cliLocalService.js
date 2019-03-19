@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import { CLILOCAL_STATUS, IPC_CLILOCAL } from '../mainProcess/cliLocal';
+import { CLILOCAL_STATUS, IPC_CLILOCAL } from '../const';
 import cliService from './cliService';
 
 class CliLocalService {

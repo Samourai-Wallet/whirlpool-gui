@@ -122,3 +122,8 @@
 .form-signin input[type="password"] {
   margin-bottom: 10px;
 }
+
+/* seedSelector */
+.clearWord {
+  cursor: not-allowed;
+}

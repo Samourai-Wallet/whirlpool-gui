@@ -1,20 +1,11 @@
-import { BrowserWindow, ipcRenderer } from 'electron';
-import {download} from 'electron-dl';
-import md5ify from 'md5ify'
-import fs from 'fs'
-import { spawn } from 'child_process'
+import { BrowserWindow } from 'electron';
+import { download } from 'electron-dl';
+import md5ify from 'md5ify';
+import fs from 'fs';
+import { spawn } from 'child_process';
 import Store from 'electron-store';
+import { DEFAULT_CLI_LOCAL, CLILOCAL_STATUS, IPC_CLILOCAL, STORE_CLILOCAL } from '../const';
 
-export const IPC_CLILOCAL = {
-  GET_STATE: 'cliLocal.getState',
-  STATE: 'cliLocal.state',
-  RELOAD: 'cliLocal.reload'
-}
-export const CLILOCAL_STATUS = {
-  DOWNLOADING: 'DOWNLOADING',
-  ERROR: 'ERROR',
-  READY: 'READY'
-}
 const CLI_FILENAME = "whirlpool-client-cli-develop-SNAPSHOT-run.jar";
 const CLI_URL = "https://file.io/7G4siX";
 const CLI_CHECKSUM = "4d5152a5b564cd3473be1874e0965044";
@@ -25,6 +16,8 @@ const STORE_CLI_CHECKSUM = 'CLI_CHECKSUM'
 export class CliLocal {
 
   constructor(ipcMain, dlPath, window) {
+    this.state = {}
+
     this.ipcMain = ipcMain
     this.dlPath = dlPath
     this.window = window
@@ -40,11 +33,17 @@ export class CliLocal {
   }
 
   onGetState() {
-    this.refreshState()
-    this.pushState()
+    if (this.isCliLocal()) {
+      this.refreshState()
+      this.pushState()
+    } else {
+      console.log('getState ignored: cliLocal=false')
+    }
   }
 
   reload() {
+    this.stop()
+
     this.cliFilename = this.getCliFilename()
     this.cliUrl = this.getCliUrl()
     this.cliChecksum = this.getCliChecksum()
@@ -76,6 +75,12 @@ export class CliLocal {
   }
   getCliChecksum() {
     return this.getStoreOrSetDefault(STORE_CLI_CHECKSUM, CLI_CHECKSUM)
+  }
+  isCliLocal() {
+    return this.getStoreOrSetDefault(STORE_CLILOCAL, DEFAULT_CLI_LOCAL)
+  }
+  getCliServer() {
+    return this.isCliLocal() ? 'LOCAL_TEST' : 'TEST'
   }
 
   refreshState(downloadIfMissing=true) {
@@ -128,7 +133,8 @@ export class CliLocal {
     this.state.started = new Date().getTime()
 
     // start proc
-    const args = ['-jar', this.dlPath+'/'+this.cliFilename, '--listen', '--debug', '--server=LOCAL_TEST', '--pool=0.01btc']
+    const server = this.getCliServer()
+    const args = ['-jar', this.dlPath+'/'+this.cliFilename, '--listen', '--debug', '--server='+server, '--pool=0.01btc']
     const cmd = 'java'
     const logFile = this.dlPath+'/whirlpool-cli.log'
     this.startProc(cmd, args, logFile)
@@ -141,24 +147,24 @@ export class CliLocal {
     console.log('cliLocal: exec '+cmdStr)
     console.log('Log: '+logFile)
     log.write('=> Starting: '+cmdStr+'\n')
-    const backendProc = spawn(cmd, args)
-    backendProc.on('error', function( err ) {
+    this.cliProc = spawn(cmd, args)
+    this.cliProc.on('error', function( err ) {
       console.error('cli error:', err)
       log.write('=> Error: '+err+'\n')
     })
-    backendProc.on('exit', (code) => {
+    this.cliProc.on('exit', (code) => {
       // finishing
       console.log('cliLocal exiting...',code)
       log.write('=> Exit\n')
       this.state.started = false
     })
 
-    backendProc.stdout.on('data', function (data) {
+    this.cliProc.stdout.on('data', function (data) {
       const dataStr = data.toString()
       console.log('[cli] ' + dataStr.substring(0, (dataStr.length-1)));
       log.write(data)
     });
-    backendProc.stderr.on('data', function (data) {
+    this.cliProc.stderr.on('data', function (data) {
       const dataStr = data.toString()
       console.log('[cli.err] ' + dataStr.substring(0, (dataStr.length-1)));
       log.write('[ERR]'+data)
@@ -171,8 +177,13 @@ export class CliLocal {
       return
     }
 
-    // TODO
     this.state.started = false
+
+    if (this.cliProc) {
+      this.cliProc.stdout.pause()
+      this.cliProc.stderr.pause()
+      this.cliProc.kill()
+    }
   }
 
   verifyChecksum() {

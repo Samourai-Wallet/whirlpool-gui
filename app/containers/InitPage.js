@@ -9,16 +9,13 @@ import txt from 'raw-loader!../resources/en_US.txt';
 import encryptUtils from '../services/encryptUtils';
 import cliService from '../services/cliService';
 import { CLI_CONFIG_FILENAME } from '../services/utils';
+import { DEFAULT_CLI_LOCAL } from '../const';
 
 const STEP_LAST = 3
-const SETUP_MODE = {
-  LOCAL:'LOCAL',
-  REMOTE:'REMOTE'
-}
-const DEFAULT_CLIHOST = 'http://localhost'
+const DEFAULT_CLIHOST = 'http://my-dojo-server'
 const DEFAULT_CLIPORT = 8899
-export const CLI_URL_LOCAL = DEFAULT_CLIHOST+':'+DEFAULT_CLIPORT
 const DEFAULT_APIKEY = ''
+const CLILOCAL_URL = 'http://localhost:'+DEFAULT_CLIPORT
 class InitPage extends Component<Props> {
   props: Props;
 
@@ -27,7 +24,7 @@ class InitPage extends Component<Props> {
 
     this.state = {
       step: 0,
-      setupMode: SETUP_MODE.REMOTE,
+      cliLocal: DEFAULT_CLI_LOCAL,
       cliUrl: undefined,
       currentCliHost: DEFAULT_CLIHOST,
       currentCliPort: DEFAULT_CLIPORT,
@@ -49,9 +46,9 @@ class InitPage extends Component<Props> {
 
     this.goNextStep = this.goNextStep.bind(this)
     this.goPrevStep = this.goPrevStep.bind(this)
-    this.onChangeSetupMode = this.onChangeSetupMode.bind(this)
+    this.onChangeCliLocal = this.onChangeCliLocal.bind(this)
     this.onChangeInputCliHostPort = this.onChangeInputCliHostPort.bind(this)
-    this.connectCliRemote = this.connectCliRemote.bind(this)
+    this.connectCli = this.connectCli.bind(this)
     this.onChangePassphrase = this.onChangePassphrase.bind(this)
     this.onSubmitEncryptedSeedWords = this.onSubmitEncryptedSeedWords.bind(this)
     this.encryptSeedWords = this.encryptSeedWords.bind(this)
@@ -95,7 +92,7 @@ class InitPage extends Component<Props> {
         {this.state.step === STEP_LAST && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Configuration saved</div>}
         <br/>
 
-        <form onSubmit={this.goNextStep}>
+        <form onSubmit={(e) => {this.goNextStep();e.preventDefault()}}>
 
         {this.state.step === 0 && this.step0()}
 
@@ -114,9 +111,10 @@ class InitPage extends Component<Props> {
 
   // cli instance selection
 
-  onChangeSetupMode(e) {
+  onChangeCliLocal(e) {
+    const valueBool = e.target.value === 'true'
     this.setState({
-      setupMode: e.target.value
+      cliLocal: valueBool
     });
     this.resetCliUrl()
   }
@@ -141,9 +139,16 @@ class InitPage extends Component<Props> {
     })
   }
 
-  connectCliRemote() {
-    const cliUrl = this.state.currentCliHost+':'+this.state.currentCliPort
+  computeCliUrl() {
+    const cliUrlRemote = this.state.currentCliHost+':'+this.state.currentCliPort
+    const cliUrl = (this.state.cliLocal ? CLILOCAL_URL:cliUrlRemote)
+    return cliUrl
+  }
+
+  connectCli() {
+    const cliUrl = this.computeCliUrl()
     const apiKey = this.state.currentApiKey
+    const cliLocal = this.state.cliLocal
 
     cliService.testCliUrl(cliUrl, apiKey).then(cliStatusReady => {
       // connection success
@@ -154,7 +159,7 @@ class InitPage extends Component<Props> {
 
       if (cliStatusReady) {
         // CLI already initialized => save configuration & finish
-        cliService.saveConfig(cliUrl, apiKey)
+        cliService.saveConfig(cliUrl, apiKey, cliLocal)
         this.goStep(STEP_LAST)
       }
       else {
@@ -173,17 +178,20 @@ class InitPage extends Component<Props> {
       <div className="form-group row">
         <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Setup mode</label>
         <div className="col-sm-10">
-          {false && <div className="form-check">
-            <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={SETUP_MODE.LOCAL} checked={this.state.setupMode === SETUP_MODE.LOCAL} onChange={this.onChangeSetupMode}/>
-            <label className="form-check-label" htmlFor="exampleRadios1">
+          <div className="form-check">
+            <input className="form-check-input" type="radio" name="cliLocal" id="cliLocalTrue" value='true' checked={this.state.cliLocal} onChange={this.onChangeCliLocal}/>
+            <label className="form-check-label" htmlFor="cliLocalTrue">
               Run whirlpool locally
             </label>
-          </div>}
+            {this.state.cliLocal && <div className="col-sm-3">
+              <button type='button' className='btn btn-primary' onClick={this.connectCli}>Connect</button>
+            </div>}
+          </div>
           <div className="form-check">
-            <input className="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value={SETUP_MODE.REMOTE} checked={this.state.setupMode === SETUP_MODE.REMOTE} onChange={this.onChangeSetupMode} />
-            <label className="form-check-label" htmlFor="exampleRadios2">
-              Connect to your existing DOJO / whirlpool-client-cli<br/>
-              {this.state.setupMode === SETUP_MODE.REMOTE &&
+            <input className="form-check-input" type="radio" name="cliLocal" id="cliLocalFalse" value='false' checked={!this.state.cliLocal} onChange={this.onChangeCliLocal} />
+            <label className="form-check-label" htmlFor="cliLocalFalse">
+              Connect to your existing DOJO / CLI<br/>
+              {!this.state.cliLocal &&
               <div className="row">
                 <div className="col-sm-5">
                   <input type="text" className="form-control" placeholder="host" defaultValue={this.state.currentCliHost} ref={this.inputCliHost} onChange={this.onChangeInputCliHostPort} required/>
@@ -196,7 +204,7 @@ class InitPage extends Component<Props> {
                 </div>
                 <div className="col-sm-3">
                   {this.state.currentCliHost && this.state.currentCliPort
-                  && !this.state.cliUrl && <button type='button' className='btn btn-default' onClick={this.connectCliRemote}>Connect</button>}
+                  && !this.state.cliUrl && <button type='button' className='btn btn-primary' onClick={this.connectCli}>Connect</button>}
                 </div>
               </div>
               }
@@ -322,6 +330,7 @@ class InitPage extends Component<Props> {
   step3() {
     return <div>
       <p>Success. <b>whirlpool-gui</b> is now configured.</p>
+      {cliService.isCliLocal() && <p>Restarting local CLI... This will take a few seconds</p>}
       <button type="button" className="btn btn-primary">Start Whirlpool</button>
     </div>
   }
