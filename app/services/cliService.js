@@ -129,8 +129,11 @@ class CliService {
     // force refresh
     this.updateState({
       cli: undefined,
-      cliUrlError: undefined
+      cliUrlError: undefined,
+      cliLocalState: undefined
     })
+
+    cliLocalService.reload()
   }
 
   login(seedPassphrase) {
@@ -183,15 +186,19 @@ class CliService {
     return this.isCliStatusReady() && this.state.cli.loggedIn
   }
 
+  setCliLocalState(cliLocalState) {
+    this.updateState({cliLocalState: cliLocalState})
+  }
+
   fetchState () {
     if (!this.isConfigured()) {
       return Promise.reject("not configured")
     }
+    cliLocalService.fetchState()
     if (this.isCliLocal()) {
       if (!cliLocalService.isStarted()) {
-        cliLocalService.start()
+        return Promise.reject("local CLI not started yet")
       }
-      return Promise.reject("local CLI not started yet: "+cliLocalService.getStatus())
     }
     return ifNot.run('cliService:fetchState', () => {
       // fetchState backend

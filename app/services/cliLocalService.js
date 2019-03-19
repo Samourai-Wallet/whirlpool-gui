@@ -1,51 +1,51 @@
 import { ipcRenderer } from 'electron';
-import {
-  CLILOCAL_STATUS,
-  IPC_CLILOCAL
-} from '../mainProcess/cliLocal';
+import { CLILOCAL_STATUS, IPC_CLILOCAL } from '../mainProcess/cliLocal';
+import cliService from './cliService';
 
-const CLI_DOWNLOAD_FILENAME = "whirlpool-client-cli-develop-SNAPSHOT-run.jar";
-const CLI_DOWNLOAD_URL = "https://file.io/7G4siX";
-const CLI_DOWNLOAD_MD5 = "4d5152a5b564cd3473be1874e0965044";
 class CliLocalService {
   constructor() {
     this.state = undefined
-
-    ipcRenderer.on(IPC_CLILOCAL.STATE, function(event, cliLocalState){
-      console.log('cliLocalService.state', cliLocalState)
-      this.state = cliLocalState
-    })
-
-    // init
-    console.log('CliLocalService: init...')
-    ipcRenderer.send(IPC_CLILOCAL.INIT, {filename:CLI_DOWNLOAD_FILENAME, url:CLI_DOWNLOAD_URL, md5: CLI_DOWNLOAD_MD5})
+    ipcRenderer.on(IPC_CLILOCAL.STATE, this.onState.bind(this))
   }
 
-  start() {
-    if (this.isStarted()) {
-      // already started
-      console.log('CliLocalService: start skipped, already started')
-      return
-    }
-    if (!this.isReady()) {
-      // not ready
-      console.log('CliLocalService: start skipped, not ready')
-      return
-    }
-    console.log('CliLocalService: start')
-    ipcRenderer.send(IPC_CLILOCAL.START)
+  onState(event, cliLocalState) {
+    console.log('cliLocalService.onState', cliLocalState)
+    this.state = cliLocalState
+    cliService.setCliLocalState(cliLocalState)
   }
 
-  isReady() {
-    return this.state !== undefined && this.state.status === CLILOCAL_STATUS.READY
+  fetchState() {
+    console.log('CliLocalService: fetchState')
+    ipcRenderer.send(IPC_CLILOCAL.GET_STATE)
+  }
+
+  reload() {
+    console.log('CliLocalService: reload')
+    ipcRenderer.send(IPC_CLILOCAL.RELOAD)
+  }
+
+  isValid() {
+    return this.state !== undefined && this.state.valid
+  }
+
+  getInfo() {
+    return this.state !== undefined && this.state.info
+  }
+
+  getError() {
+    return this.state !== undefined && this.state.error
+  }
+
+  isStatusDownloading() {
+    return this.state !== undefined && this.state.status === CLILOCAL_STATUS.DOWNLOADING
   }
 
   isStarted() {
-    return this.state !== undefined && this.state.status === CLILOCAL_STATUS.STARTED
+    return this.state !== undefined && this.state.started
   }
 
-  getStatus() {
-    return this.state ? this.state.status : undefined
+  isStatusError() {
+    return this.state !== undefined && this.state.status === CLILOCAL_STATUS.ERROR
   }
 
 }

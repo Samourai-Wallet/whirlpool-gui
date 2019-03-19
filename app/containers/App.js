@@ -32,6 +32,7 @@ import ConnectingPage from './ConnectingPage';
 import LoginPage from './LoginPage';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { cliLocalService } from '../services/cliLocalService';
 
 type Props = {
   children: React.Node
@@ -71,7 +72,7 @@ class App extends React.Component<Props> {
   getCliStatusIcon() {
     if (cliService.isCliStatusReady()) {
       // connected & ready
-      return <FontAwesomeIcon icon={Icons.faCircle} color='green' title='Connected' size='xs'/>
+      return <FontAwesomeIcon icon={Icons.faWifi} color='green' title='Connected' size='xs'/>
     }
     if (cliService.getCliUrlError()) {
       // not connected
@@ -79,12 +80,40 @@ class App extends React.Component<Props> {
     }
     // connected & initialization required
     if (cliService.isCliStatusNotInitialized()) {
-      return <FontAwesomeIcon icon={Icons.faUserCog} color='orange' title='Connected, cli initialization required'/>
+      return <FontAwesomeIcon icon={Icons.faWifi} color='orange' title='Connected, cli initialization required'/>
     }
     // connected & not ready
     if (cliService.isConnected()) {
-      return <FontAwesomeIcon icon={Icons.faCircle} color='orange' title={'Connected, not ready: '+cliService.getCliMessage()}/>
+      return <FontAwesomeIcon icon={Icons.faWifi} color='yellow' title={'Connected, not ready: '+cliService.getCliMessage()}/>
     }
+  }
+
+  getCliLocalStatusIcon() {
+    let infoError = ""
+    if (cliLocalService.getError() != undefined) {
+      infoError = cliLocalService.getError()+'. '
+    }
+    if (cliLocalService.getInfo() != undefined) {
+      infoError += cliLocalService.getInfo()
+    }
+    // downloading
+    if (cliLocalService.isStatusDownloading()) {
+      return <FontAwesomeIcon icon={Icons.faPlay} color='orange' title={'CLI is being downloaded... '+infoError}/>
+    }
+    // error
+    if (cliLocalService.isStatusError()) {
+      return <FontAwesomeIcon icon={Icons.faCircle} color='red' title={'CLI error: '+infoError}/>
+    }
+    if (cliLocalService.isStarted()) {
+      // started
+      return <FontAwesomeIcon icon={Icons.faPlay} color='green' title='CLI is running' size='xs'/>
+    }
+    if (!cliLocalService.isValid()) {
+      // invalid
+      return <FontAwesomeIcon icon={Icons.faCircle} color='red' title={'CLI executable is not valid. '+infoError} size='xs'/>
+    }
+    // valid but stopped
+    return <FontAwesomeIcon icon={Icons.faStop} color='orange' title={'CLI is not running. '+infoError} />
   }
 
   getLoginStatusIcon() {
@@ -127,6 +156,8 @@ class App extends React.Component<Props> {
   }
 
   render() {
+    const cliLocalStatusIcon = cliService.isCliLocal() ? this.getCliLocalStatusIcon() : undefined
+    console.log('cliLocalStatusIcon='+cliLocalStatusIcon)
     const cliStatusIcon = this.getCliStatusIcon()
     const loginStatusIcon = this.getLoginStatusIcon()
     return <div>
@@ -141,7 +172,7 @@ class App extends React.Component<Props> {
           </div>
           <div>
             {loginStatusIcon && <div className='loginStatus'>{loginStatusIcon}</div>}
-            {cliStatusIcon && <div className='cliStatus'>{cliStatusIcon} {cliService.getCliUrl()}</div>}
+            {cliStatusIcon && <div className='cliStatus'>{cliStatusIcon} {cliLocalStatusIcon && <span>{cliLocalStatusIcon}</span>} {cliService.getCliUrl()}</div>}
           </div>
         </div>
         <div className='col-md-10'>

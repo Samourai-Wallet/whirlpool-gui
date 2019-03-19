@@ -25,7 +25,6 @@ class InitPage extends Component<Props> {
   constructor(props) {
     super(props)
 
-    console.log('***'+encryptUtils.encrypt('foo', 'bar') )
     this.state = {
       step: 0,
       setupMode: SETUP_MODE.REMOTE,

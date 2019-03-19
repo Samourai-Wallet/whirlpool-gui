@@ -45,6 +45,11 @@
   margin-top:-0.5em;
 }
 
+.loginLocalStatus {
+  float:left;
+  margin-top:-0.5em;
+}
+
 /* status */
 .status {
   position: absolute;
