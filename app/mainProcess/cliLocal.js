@@ -1,11 +1,20 @@
 import { BrowserWindow } from 'electron';
 import { download } from 'electron-dl';
+import tcpPortUsed from 'tcp-port-used'
 
 import md5ify from 'md5ify';
 import fs from 'fs';
 import { spawn } from 'child_process';
 import Store from 'electron-store';
-import { CLI_LOG_FILE, CLILOCAL_STATUS, DEFAULT_CLI_LOCAL, DL_PATH, IPC_CLILOCAL, STORE_CLILOCAL } from '../const';
+import {
+  CLI_LOG_FILE,
+  CLILOCAL_STATUS,
+  DEFAULT_CLI_LOCAL,
+  DEFAULT_CLIPORT,
+  DL_PATH,
+  IPC_CLILOCAL,
+  STORE_CLILOCAL
+} from '../const';
 import { logger } from '../utils/logger';
 
 const CLI_FILENAME = "whirlpool-client-cli-develop-SNAPSHOT-run.jar";
@@ -86,7 +95,7 @@ export class CliLocal {
   }
 
   refreshState(downloadIfMissing=true) {
-    console.log('CliLocal: refreshState')
+    const myThis = this
     this.state.valid = this.verifyChecksum()
     if (!this.state.valid) {
       if (this.state.started) {
@@ -100,19 +109,20 @@ export class CliLocal {
         // download
         this.download(url).then(() => {
           logger.info('CLI: download success')
-          this.state.info = undefined
-          this.state.error = undefined
-          this.refreshState(false)
+          myThis.state.info = undefined
+          myThis.state.error = undefined
+          myThis.refreshState(false)
         }).catch(e => {
           logger.error('CLI: Download error', e)
-          this.state.info = undefined
-          this.state.error = 'Download error'
-          this.updateState(CLILOCAL_STATUS.ERROR)
+          myThis.state.info = undefined
+          myThis.state.error = 'Download error'
+          myThis.updateState(CLILOCAL_STATUS.ERROR)
         })
       } else {
-        this.updateState(CLILOCAL_STATUS.ERROR)
+        logger.error('CLI: download failed')
         this.state.info = undefined
         this.state.error = 'Could not download CLI'
+        this.updateState(CLILOCAL_STATUS.ERROR)
       }
     } else {
       this.updateState(CLILOCAL_STATUS.READY)
@@ -131,17 +141,27 @@ export class CliLocal {
       console.error("CliLocal: start skipped: already started")
       return
     }
-    this.state.started = new Date().getTime()
-
-    // start proc
-    const cmd = 'java'
-    const server = this.getCliServer()
-    const args = ['-jar', this.cliFilename, '--listen', '--debug', '--server='+server, '--pool=0.01btc']
-    this.startProc(cmd, args, this.dlPath, CLI_LOG_FILE)
+    const myThis = this
+    tcpPortUsed.check(DEFAULT_CLIPORT, 'localhost')
+      .then(function() {
+        // port in use => cannot start proc
+        logger.error("CLI cannot start: port "+DEFAULT_CLIPORT+" already in use (another instance is running)")
+        myThis.state.error = 'CLI cannot start: port '+DEFAULT_CLIPORT+' already in use'
+        myThis.updateState(CLILOCAL_STATUS.ERROR)
+      }, function() {
+        // port is available => start proc
+        myThis.state.started = new Date().getTime()
+        myThis.pushState()
+        const cmd = 'java'
+        const server = this.getCliServer()
+        const args = ['-jar', this.cliFilename, '--listen', '--debug', '--server='+server, '--pool=0.01btc']
+        myThis.startProc(cmd, args, this.dlPath, CLI_LOG_FILE)
+      });
   }
 
   startProc(cmd, args, cwd, logFile) {
     const log = fs.createWriteStream(logFile, {flags: 'a'})
+    const myThis = this
 
     const cmdStr = cmd+' '+args.join(' ')
     logger.info('CLI start: '+cmdStr+' (cwd='+cwd+')')
@@ -155,7 +175,8 @@ export class CliLocal {
       // finishing
       log.write('=> CLI ended: code='+code+'\n')
       logger.warn('CLI ended: code='+code)
-      this.state.started = false
+      myThis.state.started = false
+      myThis.pushState()
     })
 
     this.cliProc.stdout.on('data', function (data) {
@@ -177,6 +198,7 @@ export class CliLocal {
     }
 
     this.state.started = false
+    this.pushState()
 
     if (this.cliProc) {
       logger.info('CLI stop')
@@ -200,8 +222,10 @@ export class CliLocal {
         return false;
       }
     } catch(e) {
+      logger.error('CLI not found: '+dlPathFile)
       return false;
     }
+    logger.debug('CLI is valid: '+dlPathFile)
     return true
   }
 
@@ -211,20 +235,15 @@ export class CliLocal {
 
     const onProgress = progress => {
       logger.verbose('CLI downloading, progress='+progress)
-      this.updateState(CLILOCAL_STATUS.DOWNLOADING, 'Progress: '+progress)
+      this.state.info = 'Downloading progress: '+progress
+      this.updateState(CLILOCAL_STATUS.DOWNLOADING)
     }
     logger.info('CLI downloading: '+url+', checksum='+this.cliChecksum)
-    return download(win, url, {directory: this.dlPath, onProgress: onProgress})
+    return download(win, url, {directory: this.dlPath, onProgress: onProgress.bind(this)})
   }
 
-  updateState(status, info=undefined, error=undefined) {
-    this.state = {
-      valid: this.state.valid,
-      started: this.state.started,
-      status: status,
-      info: info,
-      error: error,
-    }
+  updateState(status) {
+    this.state.status = status
     this.pushState()
   }
 

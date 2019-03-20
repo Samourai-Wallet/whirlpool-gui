@@ -4,6 +4,7 @@ import { computeLogPath, logger } from './utils/logger';
 /* shared with mainProcess */
 
 export const DEFAULT_CLI_LOCAL = true
+export const DEFAULT_CLIPORT = 8899
 
 export const IPC_CLILOCAL = {
   GET_STATE: 'cliLocal.getState',

@@ -9,11 +9,10 @@ import txt from 'raw-loader!../resources/en_US.txt';
 import encryptUtils from '../services/encryptUtils';
 import cliService from '../services/cliService';
 import { CLI_CONFIG_FILENAME } from '../services/utils';
-import { DEFAULT_CLI_LOCAL } from '../const';
+import { DEFAULT_CLI_LOCAL, DEFAULT_CLIPORT } from '../const';
 
 const STEP_LAST = 3
 const DEFAULT_CLIHOST = 'http://my-dojo-server'
-const DEFAULT_CLIPORT = 8899
 const DEFAULT_APIKEY = ''
 const CLILOCAL_URL = 'http://localhost:'+DEFAULT_CLIPORT
 class InitPage extends Component<Props> {
