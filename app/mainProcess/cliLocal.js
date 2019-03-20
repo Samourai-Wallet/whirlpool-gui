@@ -40,7 +40,34 @@ export class CliLocal {
     this.cliFilename = undefined
     this.cliUrl = undefined
     this.cliChecksum = undefined
+
+    this.handleExit()
+
     this.reload()
+  }
+
+  handleExit() {
+
+    // kill CLI on exit
+    process.stdin.resume();//so the program will not close instantly
+
+    const exitHandler = () => {
+      logger.info("whirlpool-gui is terminating.")
+      this.stop()
+      process.exit()
+    }
+    //do something when app is closing
+    process.on('exit', exitHandler);
+
+    //catches ctrl+c event
+    process.on('SIGINT', exitHandler);
+
+    // catches "kill pid" (for example: nodemon restart)
+    process.on('SIGUSR1', exitHandler);
+    process.on('SIGUSR2', exitHandler);
+
+    //catches uncaught exceptions
+    process.on('uncaughtException', exitHandler);
   }
 
   onGetState() {
@@ -52,8 +79,8 @@ export class CliLocal {
     }
   }
 
-  async reload() {
-    await this.stop()
+  reload() {
+    this.stop()
 
     this.cliFilename = this.getCliFilename()
     this.cliUrl = this.getCliUrl()
@@ -144,18 +171,18 @@ export class CliLocal {
     const myThis = this
     tcpPortUsed.check(DEFAULT_CLIPORT, 'localhost')
       .then(function() {
-        // port in use => cannot start proc
-        logger.error("CLI cannot start: port "+DEFAULT_CLIPORT+" already in use (another instance is running)")
-        myThis.state.error = 'CLI cannot start: port '+DEFAULT_CLIPORT+' already in use'
-        myThis.updateState(CLILOCAL_STATUS.ERROR)
-      }, function() {
         // port is available => start proc
         myThis.state.started = new Date().getTime()
         myThis.pushState()
         const cmd = 'java'
-        const server = this.getCliServer()
-        const args = ['-jar', this.cliFilename, '--listen', '--debug', '--server='+server, '--pool=0.01btc']
-        myThis.startProc(cmd, args, this.dlPath, CLI_LOG_FILE)
+        const server = myThis.getCliServer()
+        const args = ['-jar', myThis.cliFilename, '--listen', '--debug', '--server='+server, '--pool=0.01btc']
+        myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE)
+      }, function() {
+        // port in use => cannot start proc
+        logger.error("CLI cannot start: port "+DEFAULT_CLIPORT+" already in use (another instance is running)")
+        myThis.state.error = 'CLI cannot start: port '+DEFAULT_CLIPORT+' already in use'
+        myThis.updateState(CLILOCAL_STATUS.ERROR)
       });
   }
 
@@ -191,7 +218,7 @@ export class CliLocal {
     });
   }
 
-  async stop() {
+  stop() {
     if (!this.state.started) {
       console.error("CliLocal: stop skipped: not started")
       return
@@ -205,7 +232,6 @@ export class CliLocal {
       this.cliProc.stdout.pause()
       this.cliProc.stderr.pause()
       this.cliProc.kill()
-      await sleep(5000)
     }
   }
 
@@ -252,4 +278,3 @@ export class CliLocal {
     this.window.send(IPC_CLILOCAL.STATE, this.state)
   }
 }
-
