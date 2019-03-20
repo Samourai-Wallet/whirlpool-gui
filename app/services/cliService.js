@@ -267,14 +267,24 @@ class CliService {
     }
     // connected & initialization required
     if (cliService.isCliStatusNotInitialized()) {
-      const status = 'Connected, cli initialization required'
+      const status = 'Connected, CLI initialization required'
       return format(<FontAwesomeIcon icon={Icons.faWifi} color='orange' title={status}/>, status)
     }
     // connected & not ready
     if (cliService.isConnected()) {
-      const status = 'Connected, not ready: '+cliService.getCliMessage()
+      const status = 'Connected, CLI not ready: '+cliService.getCliMessage()
       return format(<FontAwesomeIcon icon={Icons.faWifi} color='yellow' title={status}/>, status)
     }
+  }
+
+  getLoginStatusIcon(format) {
+    if (cliService.isLoggedIn()) {
+      // logged in
+      const status = 'Logged in (click to logout)'
+      return format(<a href='#' onClick={()=>cliService.logout()}><FontAwesomeIcon icon={Icons.faUser} color='green' title={status} /></a>, status)
+    }
+    const status = 'Logged out'
+    return format(<FontAwesomeIcon icon={Icons.faUserSlash} color='grey' title={status} />, status)
   }
 }
 

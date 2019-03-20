@@ -61,14 +61,15 @@ export default class StatusPage extends Component<Props> {
         <h1>Status</h1>
 
         <div className='row'>
-          <div className='col-sm-5'>
-            <strong>CLI status</strong><br/>
-            {cliService.getStatusIcon((icon,text)=><p>{icon} {text}</p>)}
+          <div className='col-sm-6'>
+            <strong>GUI status</strong>
+            {cliService.getStatusIcon((icon,text)=><div>{icon} {text}</div>)}
+            {cliService.getLoginStatusIcon((icon,text)=><div>{icon} {text}</div>)}
           </div>
-          <div className='col-sm-5'>
+          <div className='col-sm-6'>
             {cliService.isCliLocal() && <div>
               <strong>Running CLI locally</strong>
-              <div>{cliLocalService.getStatusIcon((icon,text)=><p>{icon} {text}</p>)}</div>
+              {cliLocalService.getStatusIcon((icon,text)=><div>{icon} {text}</div>)}
             </div>}
 
             {!cliService.isCliLocal() && <div>
@@ -78,15 +79,16 @@ export default class StatusPage extends Component<Props> {
           </div>
         </div>
 
+        <br/><br/>
         <div className='row'>
-          <div className='col-sm-10'>
+          <div className='col-sm-12'>
             <strong>GUI logs: <a href={this.guiLogFile} target='_blank'>{this.guiLogFile}</a></strong>
             <pre className='logs' ref={this.divGuiLog}>{this.state.guiLog}</pre>
           </div>
         </div>
 
         {cliService.isCliLocal() && <div className='row'>
-          <div className='col-sm-10'>
+          <div className='col-sm-12'>
             <strong>CLI logs: <a href={this.cliLogFile} target='_blank'>{this.cliLogFile}</a></strong>
             <pre className='logs' ref={this.divCliLog}>{this.state.cliLog}</pre>
           </div>

@@ -67,26 +67,26 @@ class CliLocalService {
 
     // downloading
     if (cliLocalService.isStatusDownloading()) {
-      const status = 'local CLI is being downloaded... '+infoError
+      const status = 'CLI is being downloaded... '+infoError
       return format(<FontAwesomeIcon icon={Icons.faPlay} color='orange' title={status}/>, status)
     }
     // error
     if (cliLocalService.isStatusError()) {
-      const status = 'local CLI error: '+infoError
+      const status = 'CLI error: '+infoError
       return format(<FontAwesomeIcon icon={Icons.faCircle} color='red' title={status}/>, status)
     }
     if (cliLocalService.isStarted()) {
       // started
-      const status = 'local CLI is running since '+moment(cliLocalService.getStartTime()).format()
+      const status = 'CLI is running since '+moment(cliLocalService.getStartTime()).format()
       return format(<FontAwesomeIcon icon={Icons.faPlay} color='green' title={status} size='xs'/>, status)
     }
     if (!cliLocalService.isValid()) {
       // invalid
-      const status = 'local CLI executable is not valid. '+infoError
+      const status = 'CLI executable is not valid. '+infoError
       return format(<FontAwesomeIcon icon={Icons.faCircle} color='red' title={status} size='xs'/>, status)
     }
     // valid but stopped
-    const status = 'local CLI is not running. '+infoError
+    const status = 'CLI is not running. '+infoError
     return format(<FontAwesomeIcon icon={Icons.faStop} color='orange' title={status} />, status)
   }
 }

@@ -71,14 +71,6 @@ class App extends React.Component<Props> {
     cliService.start()
   }
 
-  getLoginStatusIcon() {
-    if (cliService.isLoggedIn()) {
-      // logged in
-      return <a href='#' onClick={()=>cliService.logout()}><FontAwesomeIcon icon={Icons.faUser} color='green' title='Logged in (click to logout)' /></a>
-    }
-    return <FontAwesomeIcon icon={Icons.faUserSlash} color='grey' title='Logged out' />
-  }
-
   routes() {
     if (cliService.isLoggedIn()) {
       // logged in
@@ -117,8 +109,8 @@ class App extends React.Component<Props> {
   render() {
     const cliLocalStatusIcon = cliService.isCliLocal() ? cliLocalService.getStatusIcon((icon,text)=>icon) : undefined
     const cliStatusIcon = cliService.getStatusIcon((icon,text)=>icon)
-    const loginStatusIcon = this.getLoginStatusIcon()
-    const cliUrl = cliService.isCliLocal() ? 'local CLI' : cliService.getCliUrl()
+    const loginStatusIcon = cliService.getLoginStatusIcon((icon,text)=>icon)
+    const cliUrl = cliService.isCliLocal() ? 'local' : cliService.getCliUrl()
     return <div>
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
         <div className='col-sm-3 col-md-2 mr-0 navbar-brand-col'>
