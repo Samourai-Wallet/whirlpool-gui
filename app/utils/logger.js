@@ -37,6 +37,7 @@ class Logger {
 
   setLevel(level) {
     log.transports.file.level = level;
+    log.transports.console.level = level;
   }
 
   getFile() {
@@ -45,3 +46,4 @@ class Logger {
 }
 
 export const logger = new Logger(GUI_LOG_FILENAME)
+logger.setLevel('debug')

@@ -69,7 +69,7 @@ class ConnectingPage extends Component<Props> {
 
         <br/><br/><br/><br/>
 
-        <p>You may want to reset GUI configuration for updating whirlpool-client url or apiKey.</p>
+        <p>You may want to reset GUI configuration.</p>
         <div className='text-center'>
           <button type='button' className='btn btn-danger btn-sm' onClick={this.onResetConfig}><FontAwesomeIcon icon={Icons.faExclamationTriangle} /> Reset GUI configuration</button>
         </div>

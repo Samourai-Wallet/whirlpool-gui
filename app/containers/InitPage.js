@@ -281,10 +281,11 @@ class InitPage extends Component<Props> {
   }
 
   onSubmitInitialize() {
-    cliService.initializeCli(this.state.cliUrl, this.state.currentApiKey, this.encryptedSeedWords).then(() => {
+    cliService.initializeCli(this.state.cliUrl, this.state.currentApiKey, this.state.cliLocal, this.encryptedSeedWords).then(() => {
       // success!
       this.goNextStep()
     }).catch(error => {
+      console.error('initialization failed', error)
       this.setState({
         cliInitError: error.message
       })

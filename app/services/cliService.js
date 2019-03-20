@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ifNot from 'if-not-running';
 import Store from 'electron-store';
+import { logger } from '../utils/logger';
 import backendService from './backendService';
 import { CLI_STATUS } from './utils';
 import mixService from './mixService';
@@ -98,12 +99,12 @@ class CliService {
     })
   }
 
-  initializeCli(cliUrl, apiKey, encryptedSeedWords) {
+  initializeCli(cliUrl, apiKey, cliLocal, encryptedSeedWords) {
     return backendService.cli.init(cliUrl, apiKey, encryptedSeedWords).then(result => {
       const apiKey = result.apiKey
 
       // save configuration
-      this.saveConfig(cliUrl, apiKey)
+      this.saveConfig(cliUrl, apiKey, cliLocal)
     })
   }
 
@@ -115,6 +116,7 @@ class CliService {
   }
 
   saveConfig(cliUrl, apiKey, cliLocal) {
+    logger.debug('cliService.saveConfig: cliUrl='+cliUrl+', cliLocal='+cliLocal)
     this.store.set(STORE_CLIURL, cliUrl)
     this.store.set(STORE_APIKEY, apiKey)
     this.store.set(STORE_CLILOCAL, cliLocal)
@@ -122,6 +124,8 @@ class CliService {
     this.cliUrl = cliUrl
     this.apiKey = apiKey
     this.cliLocal = cliLocal
+
+    cliLocalService.reload()
 
     this.start()
   }

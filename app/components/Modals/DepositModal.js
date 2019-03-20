@@ -43,7 +43,7 @@ export default class DepositPage extends AbstractModal {
 
   renderButtons() {
     return <div>
-      {!this.isLoading() && <Button onClick={this.handleNextDepositAddress}>Generate another address <FontAwesomeIcon icon={Icons.faRedo} /></Button>}
+      {!this.isLoading() && <Button onClick={this.handleNextDepositAddress}>Renew address <FontAwesomeIcon icon={Icons.faRedo} /></Button>}
     </div>
   }
 

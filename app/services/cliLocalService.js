@@ -5,6 +5,7 @@ import cliService from './cliService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Icons from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
+import { DATETIME_FORMAT } from './utils';
 
 class CliLocalService {
   constructor() {
@@ -77,7 +78,7 @@ class CliLocalService {
     }
     if (cliLocalService.isStarted()) {
       // started
-      const status = 'CLI is running since '+moment(cliLocalService.getStartTime()).format()
+      const status = 'CLI is running since '+moment(cliLocalService.getStartTime()).format(DATETIME_FORMAT)
       return format(<FontAwesomeIcon icon={Icons.faPlay} color='green' title={status} size='xs'/>, status)
     }
     if (!cliLocalService.isValid()) {

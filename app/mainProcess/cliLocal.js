@@ -19,7 +19,7 @@ import { logger } from '../utils/logger';
 
 const CLI_FILENAME = "whirlpool-client-cli-develop-SNAPSHOT-run.jar";
 const CLI_URL = "https://file.io/7G4siX";
-const CLI_CHECKSUM = "e4652928f9129ebcc96ec60412153241";
+const CLI_CHECKSUM = "63a6603f34a550c4122d10ea012f2fd5";
 
 //const STORE_CLI_FILENAME = 'CLI_FILENAME'
 //const STORE_CLI_URL = 'CLI_URL'
@@ -176,7 +176,7 @@ export class CliLocal {
         myThis.pushState()
         const cmd = 'java'
         const server = myThis.getCliServer()
-        const args = ['-jar', myThis.cliFilename, '--listen', '--debug', '--server='+server, '--pool=0.01btc']
+        const args = ['-jar', myThis.cliFilename, '--listen', '--debug', '--server='+server, '--pool=0.01btc', '--auto-mix', '--auto-aggregate-postmix']
         myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE)
       }, function() {
         // port in use => cannot start proc
