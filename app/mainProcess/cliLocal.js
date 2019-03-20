@@ -1,38 +1,28 @@
-import { app, BrowserWindow } from 'electron';
+import { BrowserWindow } from 'electron';
 import { download } from 'electron-dl';
-import moment from 'moment';
 
 import md5ify from 'md5ify';
 import fs from 'fs';
 import { spawn } from 'child_process';
 import Store from 'electron-store';
-import {
-  CLILOCAL_STATUS,
-  DEFAULT_CLI_LOCAL,
-  DL_PATH,
-  getCliLogFile,
-  getDlPath,
-  IPC_CLILOCAL,
-  LOG_FILE,
-  STORE_CLILOCAL
-} from '../const';
+import { CLI_LOG_FILE, CLILOCAL_STATUS, DEFAULT_CLI_LOCAL, DL_PATH, IPC_CLILOCAL, STORE_CLILOCAL } from '../const';
+import { logger } from '../utils/logger';
 
 const CLI_FILENAME = "whirlpool-client-cli-develop-SNAPSHOT-run.jar";
 const CLI_URL = "https://file.io/7G4siX";
-const CLI_CHECKSUM = "de46d6beb186492cac02169b69f61630";
+const CLI_CHECKSUM = "e4652928f9129ebcc96ec60412153241";
 
-const STORE_CLI_FILENAME = 'CLI_FILENAME'
-const STORE_CLI_URL = 'CLI_URL'
-const STORE_CLI_CHECKSUM = 'CLI_CHECKSUM'
+//const STORE_CLI_FILENAME = 'CLI_FILENAME'
+//const STORE_CLI_URL = 'CLI_URL'
+//const STORE_CLI_CHECKSUM = 'CLI_CHECKSUM'
 export class CliLocal {
 
-  constructor(ipcMain, window, guiLogStream) {
+  constructor(ipcMain, window) {
     this.state = {}
 
     this.ipcMain = ipcMain
     this.window = window
-    this.guiLogStream = guiLogStream
-    this.dlPath = getDlPath(app)
+    this.dlPath = DL_PATH
     this.store = new Store()
 
     this.ipcMain.on(IPC_CLILOCAL.RELOAD, this.reload.bind(this))
@@ -80,13 +70,13 @@ export class CliLocal {
   }
 
   getCliFilename() {
-    return this.getStoreOrSetDefault(STORE_CLI_FILENAME, CLI_FILENAME)
+    return CLI_FILENAME//this.getStoreOrSetDefault(STORE_CLI_FILENAME, CLI_FILENAME)
   }
   getCliUrl() {
-    return this.getStoreOrSetDefault(STORE_CLI_URL, CLI_URL)
+    return CLI_URL//this.getStoreOrSetDefault(STORE_CLI_URL, CLI_URL)
   }
   getCliChecksum() {
-    return this.getStoreOrSetDefault(STORE_CLI_CHECKSUM, CLI_CHECKSUM)
+    return CLI_CHECKSUM//this.getStoreOrSetDefault(STORE_CLI_CHECKSUM, CLI_CHECKSUM)
   }
   isCliLocal() {
     return this.getStoreOrSetDefault(STORE_CLILOCAL, DEFAULT_CLI_LOCAL)
@@ -109,12 +99,12 @@ export class CliLocal {
         }
         // download
         this.download(url).then(() => {
-          this.guiLog('CLI: download success')
+          logger.info('CLI: download success')
           this.state.info = undefined
           this.state.error = undefined
           this.refreshState(false)
         }).catch(e => {
-          this.guiLog('CLI: Download error', e)
+          logger.error('CLI: Download error', e)
           this.state.info = undefined
           this.state.error = 'Download error'
           this.updateState(CLILOCAL_STATUS.ERROR)
@@ -144,31 +134,27 @@ export class CliLocal {
     this.state.started = new Date().getTime()
 
     // start proc
-    const server = this.getCliServer()
-    const args = ['-jar', this.dlPath+'/'+this.cliFilename, '--listen', '--debug', '--server='+server, '--pool=0.01btc']
     const cmd = 'java'
-    const logFile = getCliLogFile(app)
-    this.startProc(cmd, args, logFile)
+    const server = this.getCliServer()
+    const args = ['-jar', this.cliFilename, '--listen', '--debug', '--server='+server, '--pool=0.01btc']
+    this.startProc(cmd, args, this.dlPath, CLI_LOG_FILE)
   }
 
-  startProc(cmd, args, logFile) {
+  startProc(cmd, args, cwd, logFile) {
     const log = fs.createWriteStream(logFile, {flags: 'a'})
 
     const cmdStr = cmd+' '+args.join(' ')
-    console.log('Log: '+logFile)
-    this.guiLog('CLI starting: '+cmdStr)
-    log.write('=> Starting: '+cmdStr+'\n')
-    this.cliProc = spawn(cmd, args)
+    logger.info('CLI start: '+cmdStr+' (cwd='+cwd+')')
+    log.write('=> CLI start: '+cmdStr+' (cwd='+cwd+')\n')
+    this.cliProc = spawn(cmd, args, {cwd: cwd})
     this.cliProc.on('error', function( err ) {
-      console.error('cli error:', err)
-      this.guiLog('CLI error: ', err)
+      logger.error('CLI error: ', err)
       log.write('=> Error: '+err+'\n')
     })
     this.cliProc.on('exit', (code) => {
       // finishing
-      console.log('cliLocal exiting...',code)
-      log.write('=> Exit\n')
-      this.guiLog('CLI exit, code='+code)
+      log.write('=> CLI ended: code='+code+'\n')
+      logger.warn('CLI ended: code='+code)
       this.state.started = false
     })
 
@@ -193,7 +179,7 @@ export class CliLocal {
     this.state.started = false
 
     if (this.cliProc) {
-      this.guiLog('CLI stopping')
+      logger.info('CLI stopping')
       this.cliProc.stdout.pause()
       this.cliProc.stderr.pause()
       this.cliProc.kill()
@@ -205,9 +191,12 @@ export class CliLocal {
     const dlPathFile = this.dlPath+'/'+this.cliFilename
     try {
       const md5sum = md5ify(dlPathFile)
+      if (!md5sum) {
+        logger.error('CLI not found: '+dlPathFile)
+        return false;
+      }
       if (md5sum !== this.cliChecksum) {
-        console.log('CliLocal: md5 mismatch: ' + md5sum + ' vs ' + this.cliChecksum)
-        this.guiLog('CLI is invalid: '+dlPathFile+', '+md5sum+' vs '+this.cliChecksum)
+        logger.error('CLI is invalid: '+dlPathFile+', '+md5sum+' vs '+this.cliChecksum)
         return false;
       }
     } catch(e) {
@@ -221,10 +210,10 @@ export class CliLocal {
     const win = BrowserWindow.getFocusedWindow();
 
     const onProgress = progress => {
-      this.guiLog('CLI downloading, progress='+progress)
+      logger.info('CLI downloading, progress='+progress)
       this.updateState(CLILOCAL_STATUS.DOWNLOADING, 'Progress: '+progress)
     }
-    this.guiLog('CLI downloading: '+url+', checksum='+this.cliChecksum)
+    logger.info('CLI downloading: '+url+', checksum='+this.cliChecksum)
     return download(win, url, {directory: this.dlPath, onProgress: onProgress})
   }
 
@@ -242,14 +231,6 @@ export class CliLocal {
   pushState () {
     console.log('cliLocal: pushState',this.state)
     this.window.send(IPC_CLILOCAL.STATE, this.state)
-  }
-
-  guiLog(data, e=undefined) {
-    let line = moment().format('YYYY-MM-DD HH:mm:ss')+' - '+data
-    if (e) {
-      line += e
-    }
-    this.guiLogStream.write(line +"\n")
   }
 }
 

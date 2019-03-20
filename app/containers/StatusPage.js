@@ -3,9 +3,8 @@ import React, { Component } from 'react';
 import { Tail } from 'tail';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cliLocalService } from '../services/cliLocalService';
-import { remote } from 'electron';
 import cliService from '../services/cliService';
-import { getCliLogFile, getGuiLogFile, LOG_FILE } from '../const';
+import { CLI_LOG_FILE, GUI_LOG_FILE } from '../const';
 
 type Props = {};
 
@@ -20,8 +19,8 @@ export default class StatusPage extends Component<Props> {
 
     this.divCliLog = React.createRef()
     this.divGuiLog = React.createRef()
-    this.cliLogFile = getCliLogFile(remote.app)
-    this.guiLogFile = getGuiLogFile(remote.app)
+    this.cliLogFile = CLI_LOG_FILE
+    this.guiLogFile = GUI_LOG_FILE
 
 
     const truncate = (log,limit) => log.substring(Math.max(0, log.length-limit))

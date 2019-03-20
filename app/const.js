@@ -1,3 +1,6 @@
+import electron from 'electron';
+import { computeLogPath, logger } from './utils/logger';
+
 /* shared with mainProcess */
 
 export const DEFAULT_CLI_LOCAL = true
@@ -15,10 +18,9 @@ export const CLILOCAL_STATUS = {
 
 export const STORE_CLILOCAL = "cli.local"
 
-export const getDlPath = (app) => app.getPath('userData')
-export const getCliLogFile = (app) => {
-  return getDlPath(app)+'/whirlpool-cli.log'
-}
-export const getGuiLogFile = (app) => {
-  return getDlPath(app)+'/whirlpool-gui.log'
-}
+const app = (electron.app || electron.remote.app)
+
+export const DL_PATH = app.getPath('userData')
+
+export const CLI_LOG_FILE = computeLogPath('whirlpool-cli.log')
+export const GUI_LOG_FILE = logger.getFile()
