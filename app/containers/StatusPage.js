@@ -32,7 +32,7 @@ export default class StatusPage extends Component<Props> {
           cliLog: truncate(log, 5000)+'\n'
         })
       }
-      const cliTail = new Tail(this.cliLogFile, { fromBeginning: true });
+      const cliTail = new Tail(this.cliLogFile, { fromBeginning: true, fsWatchOptions: {interval: 10077}});
       cliTail.on("line", onCliLine.bind(this))
     }
 
@@ -43,7 +43,7 @@ export default class StatusPage extends Component<Props> {
         guiLog: truncate(log, 5000)+'\n'
       })
     }
-    const guiTail = new Tail(this.guiLogFile, { fromBeginning: true });
+    const guiTail = new Tail(this.guiLogFile, { fromBeginning: true, fsWatchOptions: {interval: 5007} });
     guiTail.on("line", onGuiLine.bind(this))
   }
 

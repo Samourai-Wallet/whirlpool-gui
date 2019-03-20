@@ -179,11 +179,11 @@ export class CliLocal {
     this.state.started = false
 
     if (this.cliProc) {
-      logger.info('CLI stopping')
+      logger.info('CLI stop')
       this.cliProc.stdout.pause()
       this.cliProc.stderr.pause()
       this.cliProc.kill()
-      await sleep(2000)
+      await sleep(5000)
     }
   }
 
@@ -210,7 +210,7 @@ export class CliLocal {
     const win = BrowserWindow.getFocusedWindow();
 
     const onProgress = progress => {
-      logger.info('CLI downloading, progress='+progress)
+      logger.verbose('CLI downloading, progress='+progress)
       this.updateState(CLILOCAL_STATUS.DOWNLOADING, 'Progress: '+progress)
     }
     logger.info('CLI downloading: '+url+', checksum='+this.cliChecksum)

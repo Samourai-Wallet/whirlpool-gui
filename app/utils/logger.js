@@ -16,23 +16,23 @@ class Logger {
   }
 
   error(...args) {
-    return log.error(args)
+    return log.error(...args)
   }
 
   warn(...args) {
-    return log.warn(args)
+    return log.warn(...args)
   }
 
   info(...args) {
-    return log.info(args)
+    return log.info(...args)
   }
 
   verbose(...args) {
-    return log.verbose(args)
+    return log.verbose(...args)
   }
 
   debug(...args) {
-    return log.debug(args)
+    return log.debug(...args)
   }
 
   setLevel(level) {
