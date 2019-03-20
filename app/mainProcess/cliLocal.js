@@ -1,5 +1,7 @@
 import { BrowserWindow, app } from 'electron';
 import { download } from 'electron-dl';
+import moment from 'moment';
+
 import md5ify from 'md5ify';
 import fs from 'fs';
 import { spawn } from 'child_process';
@@ -11,7 +13,7 @@ import {
   STORE_CLILOCAL,
   DL_PATH,
   LOG_FILE,
-  getDlPath, getLogFile
+  getDlPath, getCliLogFile
 } from '../const';
 
 const CLI_FILENAME = "whirlpool-client-cli-develop-SNAPSHOT-run.jar";
@@ -23,11 +25,12 @@ const STORE_CLI_URL = 'CLI_URL'
 const STORE_CLI_CHECKSUM = 'CLI_CHECKSUM'
 export class CliLocal {
 
-  constructor(ipcMain, window) {
+  constructor(ipcMain, window, guiLogStream) {
     this.state = {}
 
     this.ipcMain = ipcMain
     this.window = window
+    this.guiLogStream = guiLogStream
     this.dlPath = getDlPath(app)
     this.store = new Store()
 
@@ -105,12 +108,12 @@ export class CliLocal {
         }
         // download
         this.download(url).then(() => {
-          console.log('CliLocal: download success!')
+          this.guiLog('CLI: download success')
           this.state.info = undefined
           this.state.error = undefined
           this.refreshState(false)
         }).catch(e => {
-          console.error('CliLocal: Download error', e)
+          this.guiLog('CLI: Download error', e)
           this.state.info = undefined
           this.state.error = 'Download error'
           this.updateState(CLILOCAL_STATUS.ERROR)
@@ -137,14 +140,13 @@ export class CliLocal {
       console.error("CliLocal: start skipped: already started")
       return
     }
-    console.log('CliLocal: starting...')
     this.state.started = new Date().getTime()
 
     // start proc
     const server = this.getCliServer()
     const args = ['-jar', this.dlPath+'/'+this.cliFilename, '--listen', '--debug', '--server='+server, '--pool=0.01btc']
     const cmd = 'java'
-    const logFile = getLogFile(app)
+    const logFile = getCliLogFile(app)
     this.startProc(cmd, args, logFile)
   }
 
@@ -152,18 +154,20 @@ export class CliLocal {
     const log = fs.createWriteStream(logFile, {flags: 'a'})
 
     const cmdStr = cmd+' '+args.join(' ')
-    console.log('cliLocal: exec '+cmdStr)
     console.log('Log: '+logFile)
+    this.guiLog('CLI starting: '+cmdStr)
     log.write('=> Starting: '+cmdStr+'\n')
     this.cliProc = spawn(cmd, args)
     this.cliProc.on('error', function( err ) {
       console.error('cli error:', err)
+      this.guiLog('CLI error: ', err)
       log.write('=> Error: '+err+'\n')
     })
     this.cliProc.on('exit', (code) => {
       // finishing
       console.log('cliLocal exiting...',code)
       log.write('=> Exit\n')
+      this.guiLog('CLI exit, code='+code)
       this.state.started = false
     })
 
@@ -188,6 +192,7 @@ export class CliLocal {
     this.state.started = false
 
     if (this.cliProc) {
+      this.guiLog('CLI stopping')
       this.cliProc.stdout.pause()
       this.cliProc.stderr.pause()
       this.cliProc.kill()
@@ -201,6 +206,7 @@ export class CliLocal {
       const md5sum = md5ify(dlPathFile)
       if (md5sum !== this.cliChecksum) {
         console.log('CliLocal: md5 mismatch: ' + md5sum + ' vs ' + this.cliChecksum)
+        this.guiLog('CLI is invalid: '+dlPathFile+', '+md5sum+' vs '+this.cliChecksum)
         return false;
       }
     } catch(e) {
@@ -214,8 +220,10 @@ export class CliLocal {
     const win = BrowserWindow.getFocusedWindow();
 
     const onProgress = progress => {
+      this.guiLog('CLI downloading, progress='+progress)
       this.updateState(CLILOCAL_STATUS.DOWNLOADING, 'Progress: '+progress)
     }
+    this.guiLog('CLI downloading: '+url+', checksum='+this.cliChecksum)
     return download(win, url, {directory: this.dlPath, onProgress: onProgress})
   }
 
@@ -233,6 +241,14 @@ export class CliLocal {
   pushState () {
     console.log('cliLocal: pushState',this.state)
     this.window.send(IPC_CLILOCAL.STATE, this.state)
+  }
+
+  guiLog(data, e=undefined) {
+    let line = moment().format()+' - '+data
+    if (e) {
+      line += e
+    }
+    this.guiLogStream.write(line +'\n')
   }
 }
 

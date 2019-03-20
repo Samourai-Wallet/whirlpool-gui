@@ -15,6 +15,8 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { CliLocal } from './mainProcess/cliLocal';
+import fs from "fs";
+import { getGuiLogFile } from './const';
 
 
 export default class AppUpdater {
@@ -76,7 +78,9 @@ app.on('ready', async () => {
   });
 
   // init cliLocal
-  new CliLocal(ipcMain, mainWindow.webContents)
+  const guiLogFile = getGuiLogFile(app)
+  const guiLogStream = fs.createWriteStream(guiLogFile, {flags: 'a'})
+  new CliLocal(ipcMain, mainWindow.webContents, guiLogStream)
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 

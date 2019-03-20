@@ -16,6 +16,9 @@ export const CLILOCAL_STATUS = {
 export const STORE_CLILOCAL = "cli.local"
 
 export const getDlPath = (app) => app.getPath('userData')
-export const getLogFile = (app) => {
+export const getCliLogFile = (app) => {
   return getDlPath(app)+'/whirlpool-cli.log'
+}
+export const getGuiLogFile = (app) => {
+  return getDlPath(app)+'/whirlpool-gui.log'
 }

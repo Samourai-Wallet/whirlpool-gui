@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cliLocalService } from '../services/cliLocalService';
 import { remote } from 'electron';
 import cliService from '../services/cliService';
-import { getLogFile, LOG_FILE } from '../const';
+import { getCliLogFile, getGuiLogFile, LOG_FILE } from '../const';
 
 type Props = {};
 
@@ -14,49 +14,83 @@ export default class StatusPage extends Component<Props> {
   constructor(props) {
     super(props)
     this.state = {
-      logs: ''
+      cliLog: '',
+      guiLog: ''
     }
 
-    this.divLogs = React.createRef()
-    this.logFile = getLogFile(remote.app)
+    this.divCliLog = React.createRef()
+    this.divGuiLog = React.createRef()
+    this.cliLogFile = getCliLogFile(remote.app)
+    this.guiLogFile = getGuiLogFile(remote.app)
 
-    const onLine = (data) => {
+
+    const truncate = (log,limit) => log.substring(Math.max(0, log.length-limit))
+    if (cliService.isCliLocal()) {
+      // cliLog
+      const onCliLine = (data) => {
+        const log = this.state.cliLog + data
+        this.setState({
+          cliLog: truncate(log, 5000)
+        })
+      }
+      const cliTail = new Tail(this.cliLogFile, { fromBeginning: true });
+      cliTail.on("line", onCliLine.bind(this))
+    }
+
+    // guiLog
+    const onGuiLine = (data) => {
+      const log = this.state.guiLog + data
+      console.log('onGuiLine',log)
       this.setState({
-        logs: data+this.state.logs
+        guiLog: truncate(log, 5000)
       })
     }
-    const tail = new Tail(this.logFile, {fromBeginning: true});
-    tail.on("line", onLine.bind(this))
-
-    tail.on("error", function(error) {
-      console.error('tail error',error)
-    });
+    const guiTail = new Tail(this.guiLogFile, { fromBeginning: true });
+    guiTail.on("line", onGuiLine.bind(this))
   }
 
   render() {
-    if (this.divLogs && this.divLogs.current) {
-      this.divLogs.current.scrollIntoView({ behavior: "smooth" });
+    if (this.divCliLog && this.divCliLog.current) {
+      this.divCliLog.current.scrollIntoView(false);
+    }
+    if (this.divGuiLog && this.divGuiLog.current) {
+      this.divGuiLog.current.scrollIntoView(false);
     }
     return (
       <div>
         <h1>Status</h1>
 
-        <div>
-          <strong>CLI status</strong><br/>
-          {cliService.getStatusIcon((icon,text)=><p>{icon} {text}</p>)}
+        <div className='row'>
+          <div className='col-sm-5'>
+            <strong>CLI status</strong><br/>
+            {cliService.getStatusIcon((icon,text)=><p>{icon} {text}</p>)}
+          </div>
+          <div className='col-sm-5'>
+            {cliService.isCliLocal() && <div>
+              <strong>Running CLI locally</strong>
+              <div>{cliLocalService.getStatusIcon((icon,text)=><p>{icon} {text}</p>)}</div>
+            </div>}
+
+            {!cliService.isCliLocal() && <div>
+              <strong>Remote DOJO / CLI</strong><br/>{cliService.getCliUrl()}
+            </div>}
+            <br/>
+          </div>
         </div>
 
-        {cliService.isCliLocal() && <div>
-          <strong>Running CLI locally</strong>
-          <div>{cliLocalService.getStatusIcon((icon,text)=><p>{icon} {text}</p>)}</div>
-          <strong>{this.logFile}</strong>
-          <div className='logs' ref={this.divLogs}>{this.state.logs}</div>
-        </div>}
+        <div className='row'>
+          <div className='col-sm-10'>
+            <strong>GUI logs: <a href={this.guiLogFile} target='_blank'>{this.guiLogFile}</a></strong>
+            <pre className='logs' ref={this.divGuiLog}>{this.state.guiLog}</pre>
+          </div>
+        </div>
 
-        {!cliService.isCliLocal() && <div>
-          <strong>Remote DOJO / CLI</strong><br/>{cliService.getCliUrl()}
+        {cliService.isCliLocal() && <div className='row'>
+          <div className='col-sm-10'>
+            <strong>CLI logs: <a href={this.cliLogFile} target='_blank'>{this.cliLogFile}</a></strong>
+            <pre className='logs' ref={this.divCliLog}>{this.state.cliLog}</pre>
+          </div>
         </div>}
-        <br/>
       </div>
     );
   }
