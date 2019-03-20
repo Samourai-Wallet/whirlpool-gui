@@ -30,7 +30,7 @@ export default class StatusPage extends Component<Props> {
       const onCliLine = (data) => {
         const log = this.state.cliLog + data
         this.setState({
-          cliLog: truncate(log, 5000)
+          cliLog: truncate(log, 5000)+'\n'
         })
       }
       const cliTail = new Tail(this.cliLogFile, { fromBeginning: true });
@@ -40,9 +40,8 @@ export default class StatusPage extends Component<Props> {
     // guiLog
     const onGuiLine = (data) => {
       const log = this.state.guiLog + data
-      console.log('onGuiLine',log)
       this.setState({
-        guiLog: truncate(log, 5000)
+        guiLog: truncate(log, 5000)+'\n'
       })
     }
     const guiTail = new Tail(this.guiLogFile, { fromBeginning: true });
@@ -79,7 +78,7 @@ export default class StatusPage extends Component<Props> {
           </div>
         </div>
 
-        <br/><br/>
+        <br/>
         <div className='row'>
           <div className='col-sm-12'>
             <strong>GUI logs: <a href={this.guiLogFile} target='_blank'>{this.guiLogFile}</a></strong>

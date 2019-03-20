@@ -1,4 +1,4 @@
-import { BrowserWindow, app } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import { download } from 'electron-dl';
 import moment from 'moment';
 
@@ -7,18 +7,19 @@ import fs from 'fs';
 import { spawn } from 'child_process';
 import Store from 'electron-store';
 import {
-  DEFAULT_CLI_LOCAL,
   CLILOCAL_STATUS,
-  IPC_CLILOCAL,
-  STORE_CLILOCAL,
+  DEFAULT_CLI_LOCAL,
   DL_PATH,
+  getCliLogFile,
+  getDlPath,
+  IPC_CLILOCAL,
   LOG_FILE,
-  getDlPath, getCliLogFile
+  STORE_CLILOCAL
 } from '../const';
 
 const CLI_FILENAME = "whirlpool-client-cli-develop-SNAPSHOT-run.jar";
 const CLI_URL = "https://file.io/7G4siX";
-const CLI_CHECKSUM = "4d5152a5b564cd3473be1874e0965044";
+const CLI_CHECKSUM = "de46d6beb186492cac02169b69f61630";
 
 const STORE_CLI_FILENAME = 'CLI_FILENAME'
 const STORE_CLI_URL = 'CLI_URL'
@@ -244,11 +245,11 @@ export class CliLocal {
   }
 
   guiLog(data, e=undefined) {
-    let line = moment().format()+' - '+data
+    let line = moment().format('YYYY-MM-DD HH:mm:ss')+' - '+data
     if (e) {
       line += e
     }
-    this.guiLogStream.write(line +'\n')
+    this.guiLogStream.write(line +"\n")
   }
 }
 
