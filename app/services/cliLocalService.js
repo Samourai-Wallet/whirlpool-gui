@@ -59,10 +59,10 @@ class CliLocalService {
 
   getStatusIcon(format) {
     let infoError = ""
-    if (cliLocalService.getError() != undefined) {
+    if (cliLocalService.getError()) {
       infoError = cliLocalService.getError()+'. '
     }
-    if (cliLocalService.getInfo() != undefined) {
+    if (cliLocalService.getInfo()) {
       infoError += cliLocalService.getInfo()
     }
 

@@ -72,8 +72,10 @@ export class CliLocal {
 
   onGetState() {
     if (this.isCliLocal()) {
-      this.refreshState()
-      this.pushState()
+      if (this.state.status !== CLILOCAL_STATUS.DOWNLOADING) {
+        this.refreshState()
+        this.pushState()
+      }
     } else {
       console.log('getState ignored: cliLocal=false')
     }
@@ -117,10 +119,6 @@ export class CliLocal {
   isCliLocal() {
     return this.getStoreOrSetDefault(STORE_CLILOCAL, DEFAULT_CLI_LOCAL)
   }
-  getCliServer() {
-    //return 'LOCAL_TEST'
-    return 'TEST'
-  }
 
   refreshState(downloadIfMissing=true) {
     const myThis = this
@@ -135,7 +133,7 @@ export class CliLocal {
           return
         }
         // download
-        this.download(url).then(() => {
+        this.download(CLI_URL).then(() => {
           logger.info('CLI: download success')
           myThis.state.info = undefined
           myThis.state.error = undefined
@@ -176,8 +174,7 @@ export class CliLocal {
         myThis.state.started = new Date().getTime()
         myThis.pushState()
         const cmd = 'java'
-        const server = myThis.getCliServer()
-        const args = ['-jar', myThis.cliFilename, '--listen', '--debug', '--server='+server, '--pool=0.01btc', '--auto-mix', '--auto-aggregate-postmix']
+        const args = ['-jar', myThis.cliFilename, '--listen', '--debug', '--pool=0.01btc', '--auto-mix', '--auto-aggregate-postmix']
         myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE)
       }, function() {
         // port in use => cannot start proc
@@ -258,7 +255,6 @@ export class CliLocal {
 
   download(url) {
     this.updateState(CLILOCAL_STATUS.DOWNLOADING)
-    const win = BrowserWindow.getFocusedWindow();
 
     const onProgress = progress => {
       logger.verbose('CLI downloading, progress='+progress)
@@ -266,7 +262,7 @@ export class CliLocal {
       this.updateState(CLILOCAL_STATUS.DOWNLOADING)
     }
     logger.info('CLI downloading: '+url+', checksum='+this.cliChecksum)
-    return download(win, url, {directory: this.dlPath, onProgress: onProgress.bind(this)})
+    return download(this.window, url, {directory: this.dlPath, onProgress: onProgress.bind(this)})
   }
 
   updateState(status) {
