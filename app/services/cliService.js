@@ -261,22 +261,22 @@ class CliService {
   getStatusIcon(format) {
     if (cliService.isCliStatusReady()) {
       // connected & ready
-      const status = 'Connected'
+      const status = 'Connected to CLI'
       return format(<FontAwesomeIcon icon={Icons.faWifi} color='green' title={status} size='xs'/>, status)
     }
     if (cliService.getCliUrlError()) {
       // not connected
-      const status = 'Disconnected'
+      const status = 'Disconnected from CLI'
       return format(<FontAwesomeIcon icon={Icons.faWifi} color='red' title={status} />, status)
     }
     // connected & initialization required
     if (cliService.isCliStatusNotInitialized()) {
-      const status = 'Connected, CLI initialization required'
+      const status = 'Connected to CLI, initialization required'
       return format(<FontAwesomeIcon icon={Icons.faWifi} color='orange' title={status}/>, status)
     }
     // connected & not ready
     if (cliService.isConnected()) {
-      const status = 'Connected, CLI not ready: '+cliService.getCliMessage()
+      const status = 'Connected to CLI, which is not ready: '+cliService.getCliMessage()
       return format(<FontAwesomeIcon icon={Icons.faWifi} color='yellow' title={status}/>, status)
     }
   }

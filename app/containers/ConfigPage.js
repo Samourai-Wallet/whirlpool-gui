@@ -4,6 +4,8 @@ import * as Icon from 'react-feather';
 import cliService from '../services/cliService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
+import { CLI_CHECKSUM, CLI_FILENAME } from '../const';
+import { API_VERSION } from '../services/backendService';
 
 type Props = {};
 
@@ -30,7 +32,9 @@ export default class ConfigPage extends Component<Props> {
           <div className="form-group row">
             <label className="col-sm-2 col-form-label">CLI</label>
             <div className="col-sm-8">
-              {cliService.isCliLocal() && <strong>Run CLI locally</strong>}
+              {cliService.isCliLocal() && <div>
+                <strong>Run CLI locally</strong>
+              </div>}
               {!cliService.isCliLocal() && <div>
                 <strong>Remote Dojo/CLI</strong>
                 <input type="text" className="form-control" disabled defaultValue={cliService.getCliUrl()}/>

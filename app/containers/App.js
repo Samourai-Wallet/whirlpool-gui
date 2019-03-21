@@ -95,12 +95,14 @@ class App extends React.Component<Props> {
       // not connected
       return <Switch>
         <Route path={routes.STATUS} component={StatusPage}/>
+        <Route path={routes.CONFIG} component={ConfigPage}/>
         <Route path={routes.HOME} component={ConnectingPage} />
       </Switch>
     }
     if (!cliService.isLoggedIn()) {
       return <Switch>
         <Route path={routes.STATUS} component={StatusPage}/>
+        <Route path={routes.CONFIG} component={ConfigPage}/>
         <Route path={routes.HOME} component={LoginPage}/>
       </Switch>
     }
@@ -167,7 +169,7 @@ class App extends React.Component<Props> {
                     </a>
                   </Link>
                 </li>}
-                {cliService.isLoggedIn() && <li className="nav-item">
+                {cliService.isConfigured() && !cliService.isCliStatusNotInitialized() && <li className="nav-item">
                   <Link to={routes.CONFIG}>
                     <a className="nav-link">
                       <span data-feather="settings"></span>

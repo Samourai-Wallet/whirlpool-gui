@@ -4,7 +4,8 @@ import { Tail } from 'tail';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cliLocalService } from '../services/cliLocalService';
 import cliService from '../services/cliService';
-import { CLI_LOG_FILE, GUI_LOG_FILE } from '../const';
+import { CLI_CHECKSUM, CLI_FILENAME, CLI_LOG_FILE, CLI_URL, GUI_LOG_FILE } from '../const';
+import { API_VERSION } from '../services/backendService';
 
 type Props = {};
 
@@ -59,21 +60,26 @@ export default class StatusPage extends Component<Props> {
         <h1>Status</h1>
 
         <div className='row'>
-          <div className='col-sm-6'>
+          <div className='col-sm-4'>
             <strong>GUI status</strong>
             {cliService.getStatusIcon((icon,text)=><div>{icon} {text}</div>)}
             {cliService.getLoginStatusIcon((icon,text)=><div>{icon} {text}</div>)}
           </div>
-          <div className='col-sm-6'>
+          <div className='col-sm-4'>
             {cliService.isCliLocal() && <div>
-              <strong>Running CLI locally</strong>
+              <strong>Using local CLI</strong>
               {cliLocalService.getStatusIcon((icon,text)=><div>{icon} {text}</div>)}
             </div>}
-
             {!cliService.isCliLocal() && <div>
-              <strong>Remote DOJO / CLI</strong><br/>{cliService.getCliUrl()}
+              <strong>Using remote DOJO / CLI</strong><br/>{cliService.getCliUrl()}
             </div>}
-            <br/>
+          </div>
+          <div className='col-sm-4'>
+            <strong>Expected CLI</strong>
+            <div>
+              <small><a href={CLI_URL} target='_blank'>{CLI_FILENAME}</a><br/>
+              Checksum: {CLI_CHECKSUM}, API {API_VERSION}</small>
+            </div>
           </div>
         </div>
 

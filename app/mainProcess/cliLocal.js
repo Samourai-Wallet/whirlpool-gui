@@ -13,13 +13,13 @@ import {
   DEFAULT_CLIPORT,
   DL_PATH,
   IPC_CLILOCAL,
-  STORE_CLILOCAL
+  STORE_CLILOCAL,
+  CLI_FILENAME,
+  CLI_URL,
+  CLI_CHECKSUM
 } from '../const';
 import { logger } from '../utils/logger';
 
-const CLI_FILENAME = "whirlpool-client-cli-develop-SNAPSHOT-run.jar";
-const CLI_URL = "https://file.io/7G4siX";
-const CLI_CHECKSUM = "63a6603f34a550c4122d10ea012f2fd5";
 
 //const STORE_CLI_FILENAME = 'CLI_FILENAME'
 //const STORE_CLI_URL = 'CLI_URL'
@@ -118,7 +118,8 @@ export class CliLocal {
     return this.getStoreOrSetDefault(STORE_CLILOCAL, DEFAULT_CLI_LOCAL)
   }
   getCliServer() {
-    return this.isCliLocal() ? 'LOCAL_TEST' : 'TEST'
+    //return 'LOCAL_TEST'
+    return 'TEST'
   }
 
   refreshState(downloadIfMissing=true) {
