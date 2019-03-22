@@ -30,14 +30,13 @@ export default class ConfigPage extends Component<Props> {
 
         <form>
           <div className="form-group row">
-            <label className="col-sm-2 col-form-label">CLI</label>
+            <label className="col-sm-2 col-form-label">Setup mode</label>
             <div className="col-sm-8">
               {cliService.isCliLocal() && <div>
-                <strong>Run CLI locally</strong>
+                <strong>Standalone (run CLI from GUI)</strong>
               </div>}
               {!cliService.isCliLocal() && <div>
-                <strong>Remote Dojo/CLI</strong>
-                <input type="text" className="form-control" disabled defaultValue={cliService.getCliUrl()}/>
+                <strong>Remote DOJO / CLI</strong> - {cliService.getCliUrl()}
               </div>}
             </div>
           </div>

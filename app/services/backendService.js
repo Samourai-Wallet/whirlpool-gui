@@ -78,6 +78,18 @@ class BackendService {
       return this.withStatus('CLI', 'Authenticate', () =>
           this.fetchBackendAsJson('/rest/cli/logout', 'POST')
         , 'cli.logout')
+    },
+    getConfig: () => {
+      return this.withStatus('CLI', 'Fetch configuration', () =>
+          this.fetchBackendAsJson('/rest/cli/config', 'GET')
+        , 'cli.getConfig')
+    },
+    setConfig: (config) => {
+      return this.withStatus('CLI', 'Update configuration', () =>
+          this.fetchBackendAsJson('/rest/cli/login', 'POST', {
+            config: config
+          })
+        , 'cli.setConfig')
     }
   };
 

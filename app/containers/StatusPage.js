@@ -67,11 +67,11 @@ export default class StatusPage extends Component<Props> {
           </div>
           <div className='col-sm-4'>
             {cliService.isCliLocal() && <div>
-              <strong>Using local CLI</strong>
+              <strong>Standalone (run CLI from GUI)</strong>
               {cliLocalService.getStatusIcon((icon,text)=><div>{icon} {text}</div>)}
             </div>}
             {!cliService.isCliLocal() && <div>
-              <strong>Using remote DOJO / CLI</strong><br/>{cliService.getCliUrl()}
+              <strong>Remote DOJO / CLI</strong><br/>{cliService.getCliUrl()}
             </div>}
           </div>
           <div className='col-sm-4'>
