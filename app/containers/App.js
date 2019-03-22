@@ -138,9 +138,12 @@ class App extends React.Component<Props> {
         <div className="row">
           <nav className="col-md-2 d-none d-md-block bg-light sidebar">
             <div className="sidebar-sticky">
-              {cliService.isLoggedIn() && <button className='btn btn-sm btn-primary btn-deposit' onClick={() => modalService.openDeposit()}>
-                <Icon.Plus size={12}/> Deposit
-              </button>}
+
+              {cliService.isLoggedIn() && walletService.isReady() &&  <div>
+                <button className='btn btn-sm btn-primary btn-deposit' onClick={() => modalService.openDeposit()}><Icon.Plus size={12}/> Deposit</button>
+                <div><small>Balance: {utils.toBtc(walletService.getBalanceDeposit()+walletService.getBalancePremix()+walletService.getBalancePostmix(), true)}</small></div>
+              </div>}
+
               <ul className="nav flex-column">
                 {cliService.isLoggedIn() && walletService.isReady() && <li className="nav-item">
                   <Link to={routes.DEPOSIT}>
@@ -186,6 +189,7 @@ class App extends React.Component<Props> {
                   </Link>
                 </li>
               </ul>
+
               {cliService.isLoggedIn() && !walletService.isReady() && <div>
                 <small>Fetching wallet...</small>
               </div>}

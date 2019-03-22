@@ -57,8 +57,7 @@ export default class StatusPage extends Component<Props> {
               CLI: {cliService.getCliUrl()}
             </div>}
             {cliService.isConnected() && <div>
-              Server: {cliService.getServerUrl()}<br/>
-              Network: {cliService.getNetwork()}<br/>
+              Server: {cliService.getServerUrl()}
             </div>}
           </div>
           <div className='col-sm-4'>
