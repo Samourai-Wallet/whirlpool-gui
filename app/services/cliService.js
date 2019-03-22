@@ -186,6 +186,20 @@ class CliService {
     return this.state.cli.cliMessage;
   }
 
+  getNetwork() {
+    if (!this.isConnected()) {
+      return undefined
+    }
+    return this.state.cli.network;
+  }
+
+  getServerUrl() {
+    if (!this.isConnected()) {
+      return undefined
+    }
+    return this.state.cli.serverUrl;
+  }
+
   isCliStatusReady() {
     return this.isConnected() && this.state.cli.cliStatus === CLI_STATUS.READY
   }

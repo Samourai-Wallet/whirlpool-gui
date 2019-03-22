@@ -14,30 +14,15 @@ export default class StatusPage extends Component<Props> {
   constructor(props) {
     super(props)
     this.state = {
-      cliLog: '',
       guiLog: ''
     }
 
-    this.divCliLog = React.createRef()
     this.divGuiLog = React.createRef()
     this.cliLogFile = CLI_LOG_FILE
     this.guiLogFile = GUI_LOG_FILE
 
-
-    const truncate = (log,limit) => log.substring(Math.max(0, log.length-limit))
-    if (cliService.isCliLocal()) {
-      // cliLog
-      const onCliLine = (data) => {
-        const log = this.state.cliLog + data
-        this.setState({
-          cliLog: truncate(log, 5000)+'\n'
-        })
-      }
-      const cliTail = new Tail(this.cliLogFile, { fromBeginning: true, fsWatchOptions: {interval: 10077}});
-      cliTail.on("line", onCliLine.bind(this))
-    }
-
     // guiLog
+    const truncate = (log,limit) => log.substring(Math.max(0, log.length-limit))
     const onGuiLine = (data) => {
       const log = this.state.guiLog + data
       this.setState({
@@ -49,9 +34,6 @@ export default class StatusPage extends Component<Props> {
   }
 
   render() {
-    if (this.divCliLog && this.divCliLog.current) {
-      this.divCliLog.current.scrollIntoView(false);
-    }
     if (this.divGuiLog && this.divGuiLog.current) {
       this.divGuiLog.current.scrollIntoView(false);
     }
@@ -71,7 +53,12 @@ export default class StatusPage extends Component<Props> {
               {cliLocalService.getStatusIcon((icon,text)=><div>{icon} {text}</div>)}
             </div>}
             {!cliService.isCliLocal() && <div>
-              <strong>Remote DOJO / CLI</strong><br/>{cliService.getCliUrl()}
+              <strong>Remote DOJO / CLI</strong><br/>
+              CLI: {cliService.getCliUrl()}
+            </div>}
+            {cliService.isConnected() && <div>
+              Server: {cliService.getServerUrl()}<br/>
+              Network: {cliService.getNetwork()}<br/>
             </div>}
           </div>
           <div className='col-sm-4'>
@@ -94,7 +81,6 @@ export default class StatusPage extends Component<Props> {
         {cliService.isCliLocal() && <div className='row'>
           <div className='col-sm-12'>
             <strong>CLI logs: <a href={this.cliLogFile} target='_blank'>{this.cliLogFile}</a></strong>
-            <pre className='logs' ref={this.divCliLog}>{this.state.cliLog}</pre>
           </div>
         </div>}
       </div>
