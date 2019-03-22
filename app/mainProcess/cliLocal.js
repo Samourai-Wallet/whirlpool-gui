@@ -1,22 +1,21 @@
-import { BrowserWindow } from 'electron';
 import { download } from 'electron-dl';
-import tcpPortUsed from 'tcp-port-used'
+import tcpPortUsed from 'tcp-port-used';
 
 import md5ify from 'md5ify';
 import fs from 'fs';
 import { spawn } from 'child_process';
 import Store from 'electron-store';
 import {
+  CLI_CHECKSUM,
+  CLI_FILENAME,
   CLI_LOG_FILE,
+  CLI_URL,
   CLILOCAL_STATUS,
   DEFAULT_CLI_LOCAL,
   DEFAULT_CLIPORT,
   DL_PATH,
   IPC_CLILOCAL,
-  STORE_CLILOCAL,
-  CLI_FILENAME,
-  CLI_URL,
-  CLI_CHECKSUM
+  STORE_CLILOCAL
 } from '../const';
 import { logger } from '../utils/logger';
 
@@ -71,17 +70,14 @@ export class CliLocal {
   }
 
   onGetState() {
-    if (this.isCliLocal()) {
-      if (this.state.status !== CLILOCAL_STATUS.DOWNLOADING) {
-        this.refreshState()
-        this.pushState()
-      }
-    } else {
-      console.log('getState ignored: cliLocal=false')
+    if (this.state.status !== CLILOCAL_STATUS.DOWNLOADING) {
+      this.refreshState()
+      this.pushState()
     }
   }
 
   reload() {
+    logger.info("CLI reloading...")
     this.stop()
 
     this.cliFilename = this.getCliFilename()
@@ -93,9 +89,9 @@ export class CliLocal {
       started: undefined,
       status: undefined,
       info: undefined,
-      error: undefined
+      error: undefined,
+      progress: undefined
     }
-    this.refreshState()
   }
 
   getStoreOrSetDefault(key, defaultValue) {
@@ -125,6 +121,7 @@ export class CliLocal {
     this.state.valid = this.verifyChecksum()
     if (!this.state.valid) {
       if (this.state.started) {
+        logger.info("CLI is invalid, stopping.")
         this.stop()
       }
       if (downloadIfMissing) {
@@ -137,22 +134,25 @@ export class CliLocal {
           logger.info('CLI: download success')
           myThis.state.info = undefined
           myThis.state.error = undefined
+          myThis.state.progress = undefined
           myThis.refreshState(false)
         }).catch(e => {
           logger.error('CLI: Download error', e)
           myThis.state.info = undefined
           myThis.state.error = 'Download error'
+          myThis.state.progress = undefined
           myThis.updateState(CLILOCAL_STATUS.ERROR)
         })
       } else {
         logger.error('CLI: download failed')
         this.state.info = undefined
         this.state.error = 'Could not download CLI'
+        myThis.state.progress = undefined
         this.updateState(CLILOCAL_STATUS.ERROR)
       }
     } else {
       this.updateState(CLILOCAL_STATUS.READY)
-      if (!this.state.started) {
+      if (!this.state.started && this.isCliLocal()) {
         this.start()
       }
     }
@@ -200,8 +200,7 @@ export class CliLocal {
       // finishing
       log.write('=> CLI ended: code='+code+'\n')
       logger.warn('CLI ended: code='+code)
-      myThis.state.started = false
-      myThis.pushState()
+      myThis.stop()
     })
 
     this.cliProc.stdout.on('data', function (data) {
@@ -258,7 +257,8 @@ export class CliLocal {
 
     const onProgress = progress => {
       logger.verbose('CLI downloading, progress='+progress)
-      this.state.info = 'Downloading progress: '+progress
+      const progressPercent = parseInt(progress * 100)
+      this.state.progress = progressPercent
       this.updateState(CLILOCAL_STATUS.DOWNLOADING)
     }
     logger.info('CLI downloading: '+url+', checksum='+this.cliChecksum)

@@ -1,3 +1,5 @@
+import cliService from './cliService';
+
 const AMOUNT_PRECISION = 4
 const BTC_TO_SAT = 100000000
 export const TX0_MIN_CONFIRMATIONS = 1
@@ -66,7 +68,10 @@ class Utils {
   }
 
   linkExplorer(utxo) {
-    return 'https://blockstream.info/testnet/tx/'+utxo.hash
+    if (cliService.isTestnet()) {
+      return 'https://blockstream.info/testnet/tx/'+utxo.hash
+    }
+    return 'https://oxt.me/transaction/'+utxo.hash
   }
 
   statusLabel(status) {

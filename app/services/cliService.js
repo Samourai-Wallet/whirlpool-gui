@@ -8,7 +8,7 @@ import mixService from './mixService';
 import walletService from './walletService';
 import poolsService from './poolsService';
 import { cliLocalService } from './cliLocalService';
-import { STORE_CLILOCAL } from '../const';
+import { DEFAULT_CLI_LOCAL, STORE_CLILOCAL } from '../const';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Icons from "@fortawesome/free-solid-svg-icons";
 
@@ -27,6 +27,10 @@ class CliService {
     this.apiKey = undefined
     this.cliLocal = undefined
     this.store = new Store()
+
+    if (!this.isConfigured()) {
+      this.setCliLocal(DEFAULT_CLI_LOCAL)
+    }
   }
 
   init (state, setState) {
@@ -115,17 +119,21 @@ class CliService {
     console.log('cliService.loadConfig: cliUrl='+this.cliUrl)
   }
 
-  saveConfig(cliUrl, apiKey, cliLocal) {
-    logger.debug('cliService.saveConfig: cliUrl='+cliUrl+', cliLocal='+cliLocal)
-    this.store.set(STORE_CLIURL, cliUrl)
-    this.store.set(STORE_APIKEY, apiKey)
+  setCliLocal(cliLocal) {
+    this.cliLocal = cliLocal
     this.store.set(STORE_CLILOCAL, cliLocal)
+    logger.info("cliService.setCliLocal: "+cliLocal)
+    cliLocalService.reload()
+  }
 
+  saveConfig(cliUrl, apiKey, cliLocal) {
     this.cliUrl = cliUrl
     this.apiKey = apiKey
-    this.cliLocal = cliLocal
 
-    cliLocalService.reload()
+    logger.info('cliService.saveConfig: cliUrl='+cliUrl+', cliLocal='+cliLocal)
+    this.store.set(STORE_CLIURL, cliUrl)
+    this.store.set(STORE_APIKEY, apiKey)
+    this.setCliLocal(cliLocal)
 
     this.start()
   }
@@ -200,6 +208,10 @@ class CliService {
     return this.state.cli.serverUrl;
   }
 
+  isTestnet() {
+    return this.getNetwork() === 'test'
+  }
+
   isCliStatusReady() {
     return this.isConnected() && this.state.cli.cliStatus === CLI_STATUS.READY
   }
@@ -217,9 +229,6 @@ class CliService {
   }
 
   fetchState () {
-    if (!this.isConfigured()) {
-      return Promise.reject("not configured")
-    }
     if (this.isCliLocal()) {
       cliLocalService.fetchState()
       if (!cliLocalService.isStarted()) {

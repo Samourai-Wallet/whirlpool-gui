@@ -54,7 +54,7 @@ export default class StatusPage extends Component<Props> {
             </div>}
             {!cliService.isCliLocal() && <div>
               <strong>Remote DOJO / CLI</strong><br/>
-              CLI: {cliService.getCliUrl()}
+              {cliService.isConfigured() && <span>CLI: {cliService.getCliUrl()}</span>}
             </div>}
             {cliService.isConnected() && <div>
               Server: {cliService.getServerUrl()}

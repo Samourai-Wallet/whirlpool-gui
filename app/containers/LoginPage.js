@@ -33,7 +33,7 @@ class LoginPage extends Component<Props> {
 
   render() {
     return (
-      <form className="form-signin text-center" onSubmit={this.onSubmit}>
+      <form className="form-signin text-center" onSubmit={(e) => {this.onSubmit();e.preventDefault()}}>
         <h1 className="h3 mb-3 font-weight-normal">Authentication</h1>
         <p>Your passphrase is required<br/>for Whirlpool startup.</p>
         <input type="password" id="seedPassphrase" className="form-control" placeholder="Wallet passphrase" ref={this.inputPassphrase} required autoFocus/>

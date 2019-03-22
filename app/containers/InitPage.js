@@ -9,7 +9,8 @@ import txt from 'raw-loader!../resources/en_US.txt';
 import encryptUtils from '../services/encryptUtils';
 import cliService from '../services/cliService';
 import { CLI_CONFIG_FILENAME } from '../services/utils';
-import { DEFAULT_CLI_LOCAL, DEFAULT_CLIPORT } from '../const';
+import { DEFAULT_CLIPORT } from '../const';
+import { cliLocalService } from '../services/cliLocalService';
 
 const STEP_LAST = 3
 const DEFAULT_CLIHOST = 'http://my-dojo-server'
@@ -23,7 +24,7 @@ class InitPage extends Component<Props> {
 
     this.state = {
       step: 0,
-      cliLocal: DEFAULT_CLI_LOCAL,
+      cliLocal: cliService.isCliLocal(),
       cliUrl: undefined,
       currentCliHost: DEFAULT_CLIHOST,
       currentCliPort: DEFAULT_CLIPORT,
@@ -112,6 +113,7 @@ class InitPage extends Component<Props> {
 
   onChangeCliLocal(e) {
     const valueBool = e.target.value === 'true'
+    cliService.setCliLocal(valueBool)
     this.setState({
       cliLocal: valueBool
     });
@@ -182,8 +184,10 @@ class InitPage extends Component<Props> {
             <label className="form-check-label" htmlFor="cliLocalTrue">
               Standalone (run CLI from GUI)
             </label>
-            {this.state.cliLocal && <div className="col-sm-3">
-              <button type='button' className='btn btn-primary' onClick={this.connectCli}>Connect</button>
+            {this.state.cliLocal && <div className="col-sm-12">
+              {cliLocalService.getStatusIcon((icon,text)=><div>{icon} {text}</div>)}
+              {cliLocalService.isValid() && <button type='button' className='btn btn-primary' onClick={this.connectCli} disabled={!cliLocalService.isValid()}>Connect</button>}
+              {!cliLocalService.isStatusDownloading() && !cliLocalService.isValid() && <Alert variant='danger'>No valid CLI found. Please reinstall GUI.</Alert>}
             </div>}
           </div>
           <div className="form-check">
