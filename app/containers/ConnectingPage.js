@@ -38,7 +38,7 @@ class ConnectingPage extends Component<Props> {
         <div><FontAwesomeIcon icon={Icons.faCloud} size='3x' color='#343a40'/></div>
         <p>Connecting to whirlpool-cli<br/>
           <strong>{cliService.getCliUrl()}</strong>
-          {cliService.isCliLocal() && <div>{cliLocalService.getStatusIcon((icon,text)=><span>{icon} {text}</span>)}</div>}
+          {cliService.isCliLocal() && <div>{cliLocalService.getStatusIcon((icon,text)=><span>{icon} {text}<br/>might take a minute to start...</span>)}</div>}
         </p>
 
         {cliService.getCliMessage() && <Alert variant='info'>{cliService.getCliMessage()}</Alert>}
