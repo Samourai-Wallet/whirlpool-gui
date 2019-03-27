@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import './PremixPage.css';
 import * as Icon from 'react-feather';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as Icons from '@fortawesome/free-solid-svg-icons';
 import {Dropdown,DropdownButton} from 'react-bootstrap'
 import moment from 'moment';
 import { bindActionCreators } from 'redux';
@@ -40,10 +42,10 @@ class LastActivityPage extends Component {
     const utxosPostmix = walletService.getUtxosPostmix().filter(a =>  a.lastActivityElapsed ? true : false)
     let utxos = utxosDeposit.concat(utxosPremix).concat(utxosPostmix).sort((a,b) => a.lastActivityElapsed - b.lastActivityElapsed)
     return (
-      <div className='depositPage'>
+      <div className='lastActivityPage'>
         <div className='row'>
           <div className='col-sm-12'>
-            <h2>Last activity</h2>
+            <h2>Last activity <FontAwesomeIcon icon={Icons.faCircleNotch} spin size='xs' /></h2>
           </div>
         </div>
         <div className="tablescroll">
