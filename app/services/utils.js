@@ -74,13 +74,17 @@ class Utils {
     return 'https://oxt.me/transaction/'+utxo.hash
   }
 
-  statusLabel(status) {
-    switch(status) {
-      case 'READY': return 'READY'
+  statusLabel(utxo) {
+    switch(utxo.status) {
+      case 'READY':
+        if (utxo.account === WHIRLPOOL_ACCOUNTS.POSTMIX) {
+          return 'MIXED'
+        }
+        return 'READY'
       case 'TX0': return 'TX0...'
       case 'TX0_SUCCESS': return 'TX0:SUCCESS'
       case 'TX0_FAILED': return 'TX0:ERROR'
-      case 'MIX_QUEUE': return 'MIX:QUEUED'
+      case 'MIX_QUEUE': return 'QUEUED'
       case 'MIX_STARTED': return 'MIXING...'
       case 'MIX_SUCCESS': return 'MIX:SUCCESS'
       case 'MIX_FAILED': return 'MIX:ERROR'

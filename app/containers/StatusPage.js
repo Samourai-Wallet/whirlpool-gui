@@ -39,7 +39,7 @@ export default class StatusPage extends Component<Props> {
     }
     return (
       <div>
-        <h1>Status</h1>
+        <h1>System</h1>
 
         <div className='row'>
           <div className='col-sm-4'>

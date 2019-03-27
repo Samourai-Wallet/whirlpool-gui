@@ -17,7 +17,7 @@ import ConfigPage from '../containers/ConfigPage';
 import InitPage from '../containers/InitPage';
 import PremixPage from './PremixPage';
 import DepositPage from '../containers/DepositPage';
-import HomePage from './HomePage';
+import LastActivityPage from './LastActivityPage';
 import Status from '../components/Status';
 import { statusActions } from '../services/statusActions';
 import PostmixPage from './PostmixPage';
@@ -80,7 +80,7 @@ class App extends React.Component<Props> {
         <Route path={routes.PREMIX} component={PremixPage}/>
         <Route path={routes.POSTMIX} component={PostmixPage}/>
         <Route path={routes.CONFIG} component={ConfigPage}/>
-        <Route path={routes.HOME} component={HomePage}/>
+        <Route path={routes.HOME} component={LastActivityPage}/>
       </Switch>
     }
 
@@ -146,6 +146,14 @@ class App extends React.Component<Props> {
 
               <ul className="nav flex-column">
                 {cliService.isLoggedIn() && walletService.isReady() && <li className="nav-item">
+                  <Link to={routes.LAST_ACTIVITY}>
+                    <a className="nav-link">
+                      <span data-feather="terminal"></span>
+                      Last activity
+                    </a>
+                  </Link>
+                </li>}
+                {cliService.isLoggedIn() && walletService.isReady() && <li className="nav-item">
                   <Link to={routes.DEPOSIT}>
                     <a className="nav-link">
                       <span data-feather="plus"></span>
@@ -158,7 +166,7 @@ class App extends React.Component<Props> {
                   <Link to={routes.PREMIX}>
                     <a className="nav-link">
                       <span data-feather="play"></span>
-                      Mixing
+                      Premix
                       ({walletService.getUtxosPremix().length} · {utils.toBtc(walletService.getBalancePremix(), true)})
                     </a>
                   </Link>
@@ -167,7 +175,7 @@ class App extends React.Component<Props> {
                   <Link to={routes.POSTMIX}>
                     <a className="nav-link">
                       <span data-feather="check"></span>
-                      Mixed
+                      Postmix
                       ({walletService.getUtxosPostmix().length} · {utils.toBtc(walletService.getBalancePostmix(), true)})
                     </a>
                   </Link>
@@ -184,7 +192,7 @@ class App extends React.Component<Props> {
                   <Link to={routes.STATUS}>
                     <a className="nav-link">
                       <span data-feather="terminal"></span>
-                      Status
+                      System
                     </a>
                   </Link>
                 </li>

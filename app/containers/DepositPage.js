@@ -77,7 +77,7 @@ class DepositPage extends Component {
               <td>
                 <UtxoPoolSelector utxo={utxo}/>
               </td>
-              <td><span className='text-primary'>{utils.statusLabel(utxo.status)}</span></td>
+              <td><span className='text-primary'>{utils.statusLabel(utxo)}</span></td>
               <td></td>
               <td>
                 <UtxoMixsTargetSelector utxo={utxo}/>

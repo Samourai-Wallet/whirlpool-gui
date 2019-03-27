@@ -80,22 +80,24 @@
   padding-top: 0.3em;
   overflow: auto;
   height: 5em;
+  color: #222;
 }
 .mixThreads .progress-bar {
   font-weight: normal;
 }
 .mixThreads .item {
   position: relative;
+  margin-bottom: 0.1em;
 }
 .mixThreads .item .label {
   position: absolute;
   top: 0.1em;
   text-align:center;
   width: 100%;
-  line-height: 1.1em;
+  line-height: 1em;
 }
 .mixThreads .item .progress {
-  height: 2.4em;
+  height: 2.3em;
 }
 
 /* DepositPage */

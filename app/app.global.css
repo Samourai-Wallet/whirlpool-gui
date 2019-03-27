@@ -7,9 +7,6 @@
 @import './css/samourai.css';
 @import './css/dashboard.css';
 
-.premixPage {
-  font-size: 0.9em;
-}
 .premixPage .btn-sm {
   line-height: 1em !important;
 }
