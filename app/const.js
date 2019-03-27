@@ -20,6 +20,10 @@ export const CLILOCAL_STATUS = {
   ERROR: 'ERROR',
   READY: 'READY'
 }
+export const WHIRLPOOL_SERVER = {
+  TEST: 'Whirlpool TESTNET',
+  MAIN: 'Whirlpool MAINNET'
+}
 
 export const STORE_CLILOCAL = "cli.local"
 

@@ -85,8 +85,8 @@ class BackendService {
         , 'cli.getConfig')
     },
     setConfig: (config) => {
-      return this.withStatus('CLI', 'Update configuration', () =>
-          this.fetchBackendAsJson('/rest/cli/login', 'POST', {
+      return this.withStatus('CLI', 'Save configuration', () =>
+          this.fetchBackend('/rest/cli/config', 'POST', {
             config: config
           })
         , 'cli.setConfig')

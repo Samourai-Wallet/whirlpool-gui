@@ -35,6 +35,7 @@ import LoginPage from './LoginPage';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cliLocalService } from '../services/cliLocalService';
+import cliConfigService from '../services/cliConfigService';
 
 type Props = {
   children: React.Node
@@ -95,7 +96,6 @@ class App extends React.Component<Props> {
       // not connected
       return <Switch>
         <Route path={routes.STATUS} component={StatusPage}/>
-        <Route path={routes.CONFIG} component={ConfigPage}/>
         <Route path={routes.HOME} component={ConnectingPage} />
       </Switch>
     }
@@ -180,7 +180,7 @@ class App extends React.Component<Props> {
                     </a>
                   </Link>
                 </li>}
-                {cliService.isConfigured() && !cliService.isCliStatusNotInitialized() && <li className="nav-item">
+                {cliService.isConfigured() && cliService.isCliStatusReady() && <li className="nav-item">
                   <Link to={routes.CONFIG}>
                     <a className="nav-link">
                       <span data-feather="settings"></span>
