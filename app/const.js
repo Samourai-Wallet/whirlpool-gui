@@ -4,7 +4,7 @@ import { computeLogPath, logger } from './utils/logger';
 /* shared with mainProcess */
 
 export const CLI_FILENAME = "whirlpool-client-cli-0.0.4-run.jar";
-export const CLI_URL = "https://srv-file1.gofile.io/download/piGSWy/e6713b99599edd2ed91d65f8c065d421/whirlpool-client-cli-0.0.3-run.jar";
+export const CLI_URL = "https://github.com/Samourai-Wallet/whirlpool-runtimes/releases/download/cli-0.0.4/whirlpool-client-cli-0.0.4-run.jar";
 export const CLI_CHECKSUM = "2a8a3aba69721d2b0fbbb0c103639cb5";
 
 export const DEFAULT_CLI_LOCAL = true
