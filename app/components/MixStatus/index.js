@@ -24,16 +24,17 @@ class MixStatus extends React.PureComponent {
           <div className='col-sm-10 mixThreads'>
             <div className='row'>
             {mixService.getThreads().map((utxo,i) => {
-              const progressLabel = utxo.progressLabel ? utxo.progressLabel : ''
-              return <div className='col-sm-6' key={i}>
+              let progressLabel = <div>{utils.toBtc(utxo.value)} {utils.statusLabel(utxo.status)}<br/>
+                {utxo.progressLabel && ' '+utxo.progressLabel}
+              </div>
+              const progressPercent = utxo.progressPercent ? utxo.progressPercent : 0
+              const progressVariant = utxo.progressPercent ? undefined : 'info'
+              return <div className='col-sm-3' key={i}>
                 <div className='row no-gutters'>
-                  <div className='col-sm-2'>#{(i+1)}: <small>{utxo.poolId}</small></div>
-                  <div className='col-sm-2'>{utils.statusLabel(utxo.status)}</div>
-                  <div className='col-sm-5'>
-                    {utxo.progressPercent && <div className='col-sm-11'><ProgressBar animated now={utxo.progressPercent} label={progressLabel} /></div>}
-                    {!utxo.progressPercent && <small>{progressLabel}</small>}
+                  <div className='col-sm-12 item'>
+                    <div className='label' title={mixService.computeLastActivity(utxo)}>{progressLabel}</div>
+                    <ProgressBar animated now={progressPercent} variant={progressVariant} />
                   </div>
-                  <div className='col-sm-3'><small>{mixService.computeLastActivity(utxo)}</small></div>
                 </div>
               </div>
             })}

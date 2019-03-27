@@ -84,6 +84,19 @@
 .mixThreads .progress-bar {
   font-weight: normal;
 }
+.mixThreads .item {
+  position: relative;
+}
+.mixThreads .item .label {
+  position: absolute;
+  top: 0.1em;
+  text-align:center;
+  width: 100%;
+  line-height: 1.1em;
+}
+.mixThreads .item .progress {
+  height: 2.4em;
+}
 
 /* DepositPage */
 .modal-tx0 {

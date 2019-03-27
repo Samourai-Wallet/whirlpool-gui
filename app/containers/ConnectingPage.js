@@ -64,7 +64,7 @@ class ConnectingPage extends Component<Props> {
         <p>Unable to connect to whirlpool-cli.<br/>
           <strong>{cliService.getCliUrl()}</strong><br/>
           {cliService.isCliLocal() && <div>{cliLocalService.getStatusIcon((icon,text)=><span>{icon} {text}</span>)}</div>}
-          It may take a minute to start...</p>
+        </p>
 
         <Alert variant='danger'>Connection failed: {cliUrlError}</Alert>
         <button type='button' className='btn btn-primary' onClick={this.reconnect}><FontAwesomeIcon icon={Icons.faSync} /> Retry to connect</button>

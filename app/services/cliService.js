@@ -308,11 +308,11 @@ class CliService {
   getLoginStatusIcon(format) {
     if (cliService.isLoggedIn()) {
       // logged in
-      const status = 'Logged in (click to logout)'
-      return format(<a href='#' onClick={()=>cliService.logout()}><FontAwesomeIcon icon={Icons.faUser} color='green' title={status} /></a>, status)
+      const status = 'Wallet opened (click to logout)'
+      return format(<a href='#' onClick={()=>cliService.logout()}><FontAwesomeIcon icon={Icons.faLockOpen} color='green' title={status} /></a>, status)
     }
-    const status = 'Logged out'
-    return format(<FontAwesomeIcon icon={Icons.faUserSlash} color='grey' title={status} />, status)
+    const status = 'Wallet closed'
+    return format(<FontAwesomeIcon icon={Icons.faLock} color='grey' title={status} />, status)
   }
 }
 
