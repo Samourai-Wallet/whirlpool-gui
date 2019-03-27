@@ -168,6 +168,7 @@ class InitPage extends Component<Props> {
         this.goNextStep()
       }
     }).catch(error => {
+      console.error('testCliUrl failed',error)
       this.setState({
         cliError: error.message
       })
@@ -334,8 +335,7 @@ class InitPage extends Component<Props> {
   step3() {
     return <div>
       <p>Success. <b>whirlpool-gui</b> is now configured.</p>
-      {cliService.isCliLocal() && <p>Restarting local CLI... This will take a few seconds</p>}
-      <button type="button" className="btn btn-primary">Start Whirlpool</button>
+      <p>Reconnecting to CLI...</p>
     </div>
   }
 }

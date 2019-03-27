@@ -28,14 +28,10 @@ class CliService {
     this.cliLocal = undefined
     this.store = new Store()
 
-    if (!this.isConfigured()) {
-      this.setCliLocal(DEFAULT_CLI_LOCAL)
-    }
+    this.loadConfig()
   }
 
   init (state, setState) {
-    this.loadConfig()
-
     ifNot.run('cliService:init', () => {
       this.setState = setState
       if (this.state === undefined) {
@@ -112,30 +108,35 @@ class CliService {
     })
   }
 
+  saveConfig(cliUrl, apiKey, cliLocal) {
+    this.cliUrl = cliUrl
+    this.apiKey = apiKey
+
+    logger.info('cliService.saveConfig: cliUrl='+cliUrl)
+    this.store.set(STORE_CLIURL, cliUrl)
+    this.store.set(STORE_APIKEY, apiKey)
+
+    this.setCliLocal(cliLocal)
+    this.start()
+  }
+
   loadConfig() {
     this.cliUrl = this.store.get(STORE_CLIURL)
     this.apiKey = this.store.get(STORE_APIKEY)
     this.cliLocal = this.store.get(STORE_CLILOCAL)
     console.log('cliService.loadConfig: cliUrl='+this.cliUrl)
+
+    if (!this.isConfigured()) {
+      logger.info('cliService is not configured.')
+      this.setCliLocal(DEFAULT_CLI_LOCAL)
+    }
   }
 
   setCliLocal(cliLocal) {
+    logger.info("cliService.setCliLocal: "+cliLocal)
     this.cliLocal = cliLocal
     this.store.set(STORE_CLILOCAL, cliLocal)
-    logger.info("cliService.setCliLocal: "+cliLocal)
     cliLocalService.reload()
-  }
-
-  saveConfig(cliUrl, apiKey, cliLocal) {
-    this.cliUrl = cliUrl
-    this.apiKey = apiKey
-
-    logger.info('cliService.saveConfig: cliUrl='+cliUrl+', cliLocal='+cliLocal)
-    this.store.set(STORE_CLIURL, cliUrl)
-    this.store.set(STORE_APIKEY, apiKey)
-    this.setCliLocal(cliLocal)
-
-    this.start()
   }
 
   resetConfig() {
@@ -144,7 +145,7 @@ class CliService {
 
     this.cliUrl = undefined
     this.apiKey = undefined
-    this.cliLocal = undefined
+    this.setCliLocal(DEFAULT_CLI_LOCAL)
 
     // force refresh
     this.updateState({
