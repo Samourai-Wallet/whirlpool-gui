@@ -32,8 +32,8 @@ export default class ConfigPage extends Component<Props> {
   }
 
   onResetConfig() {
-    if (confirm('This will reset GUI configuration. Are you sure?')) {
-      cliService.resetConfig()
+    if (confirm('This will reset CLI configuration. Are you sure?')) {
+      this.cliConfigService.resetConfiguration()
     }
   }
 
@@ -68,7 +68,7 @@ export default class ConfigPage extends Component<Props> {
     }
     return (
       <div>
-        <h1>Configuration</h1>
+        <h1>CLI configuration</h1>
 
         <form onSubmit={(e) => {this.onSubmit(e);e.preventDefault()}}>
           <div className="form-group row">
@@ -96,7 +96,7 @@ export default class ConfigPage extends Component<Props> {
           </div>
           <div className="form-group row">
             <div className="col-sm-5">
-              <button type='button' className='btn btn-danger' onClick={this.onResetConfig}><FontAwesomeIcon icon={Icons.faExclamationTriangle} /> Reset GUI configuration</button>
+              <button type='button' className='btn btn-danger' onClick={this.onResetConfig}><FontAwesomeIcon icon={Icons.faExclamationTriangle} /> Reset CLI configuration</button>
             </div>
             <div className="col-sm-5">
               <button type="submit" className="btn btn-primary">Save</button>

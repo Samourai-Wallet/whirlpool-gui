@@ -2,7 +2,7 @@ import utils from './utils';
 import status from './status';
 import cliService from './cliService';
 
-export const API_VERSION = '0.6'
+export const API_VERSION = '0.7'
 const HEADER_API_VERSION = 'apiVersion'
 const HEADER_API_KEY = 'apiKey'
 
@@ -90,6 +90,11 @@ class BackendService {
             config: config
           })
         , 'cli.setConfig')
+    },
+    resetConfig: () => {
+      return this.withStatus('CLI', 'Reset configuration', () =>
+          this.fetchBackend('/rest/cli/config', 'DELETE')
+        , 'cli.resetConfig')
     }
   };
 

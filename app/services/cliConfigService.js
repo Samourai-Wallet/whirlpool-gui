@@ -1,9 +1,11 @@
 import ifNot from 'if-not-running';
 import backendService from './backendService';
 import { logger } from '../utils/logger';
+import cliService from './cliService';
+import { cliLocalService } from './cliLocalService';
 
 export class CliConfigService {
-  constructor (setState) {
+  constructor (setState=()=>{}) {
     this.setState = setState
     this.state = {
       cliConfig: undefined
@@ -27,9 +29,21 @@ export class CliConfigService {
 
   save (cliConfig) {
     return backendService.cli.setConfig(cliConfig).then(() => {
-      logger.info('Save configuration: success')
+      logger.info('Save CLI configuration: success')
+      cliLocalService.reload()
+      cliService.fetchState()
     }).catch(e => {
-      logger.error('Save configuration: failed', e)
+      logger.error('Save CLI configuration: failed', e)
+    })
+  }
+
+  resetConfiguration() {
+    return backendService.cli.resetConfig().then(() => {
+      logger.info('Reset CLI configuration: success')
+      cliLocalService.reload()
+      cliService.fetchState()
+    }).catch(e => {
+      logger.error('Reset CLI configuration: failed', e)
     })
   }
 

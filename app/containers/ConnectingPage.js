@@ -50,7 +50,7 @@ class ConnectingPage extends Component<Props> {
   // connection failed
 
   onResetConfig() {
-    if (confirm('This will reset GUI configuration. Are you sure?')) {
+    if (confirm('This will reset '+cliService.getResetLabel()+'. Are you sure?')) {
       cliService.resetConfig()
     }
   }
@@ -63,7 +63,7 @@ class ConnectingPage extends Component<Props> {
         <div><FontAwesomeIcon icon={Icons.faWifi} size='3x' color='#343a40'/></div>
         <p>Unable to connect to whirlpool-cli.<br/>
           <strong>{cliService.getCliUrl()}</strong><br/>
-          {cliService.isCliLocal() && <div>{cliLocalService.getStatusIcon((icon,text)=><span>{icon} {text}</span>)}</div>}
+          {cliService.isCliLocal() && <div>{cliLocalService.getStatusIcon((icon,text)=><span>{icon} {text}<br/>might take a minute to start...</span>)}</div>}
         </p>
 
         <Alert variant='danger'>Connection failed: {cliUrlError}</Alert>
@@ -72,9 +72,9 @@ class ConnectingPage extends Component<Props> {
 
         <br/><br/><br/><br/>
 
-        <p>You may want to reset GUI configuration.</p>
+        <p>You may want to reset GUI settings.</p>
         <div className='text-center'>
-          <button type='button' className='btn btn-danger btn-sm' onClick={this.onResetConfig}><FontAwesomeIcon icon={Icons.faExclamationTriangle} /> Reset GUI configuration</button>
+          <button type='button' className='btn btn-danger btn-sm' onClick={this.onResetConfig}><FontAwesomeIcon icon={Icons.faExclamationTriangle} /> Reset {cliService.getResetLabel()}</button>
         </div>
       </form>
     );

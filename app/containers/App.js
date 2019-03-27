@@ -184,7 +184,7 @@ class App extends React.Component<Props> {
                   <Link to={routes.CONFIG}>
                     <a className="nav-link">
                       <span data-feather="settings"></span>
-                      Configuration
+                      CLI Configuration
                     </a>
                   </Link>
                 </li>}
@@ -192,7 +192,7 @@ class App extends React.Component<Props> {
                   <Link to={routes.STATUS}>
                     <a className="nav-link">
                       <span data-feather="terminal"></span>
-                      System
+                      GUI settings
                     </a>
                   </Link>
                 </li>

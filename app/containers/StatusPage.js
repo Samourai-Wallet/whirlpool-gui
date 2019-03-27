@@ -6,6 +6,7 @@ import { cliLocalService } from '../services/cliLocalService';
 import cliService from '../services/cliService';
 import { CLI_CHECKSUM, CLI_FILENAME, CLI_LOG_FILE, CLI_URL, GUI_LOG_FILE } from '../const';
 import { API_VERSION } from '../services/backendService';
+import * as Icons from "@fortawesome/free-solid-svg-icons";
 
 type Props = {};
 
@@ -16,6 +17,8 @@ export default class StatusPage extends Component<Props> {
     this.state = {
       guiLog: ''
     }
+
+    this.onResetConfig = this.onResetConfig.bind(this)
 
     this.divGuiLog = React.createRef()
     this.cliLogFile = CLI_LOG_FILE
@@ -33,13 +36,19 @@ export default class StatusPage extends Component<Props> {
     guiTail.on("line", onGuiLine.bind(this))
   }
 
+  onResetConfig() {
+    if (confirm('This will reset '+cliService.getResetLabel()+'. Are you sure?')) {
+      cliService.resetConfig()
+    }
+  }
+
   render() {
     if (this.divGuiLog && this.divGuiLog.current) {
       this.divGuiLog.current.scrollIntoView(false);
     }
     return (
       <div>
-        <h1>System</h1>
+        <h1>GUI settings</h1>
 
         <div className='row'>
           <div className='col-sm-4'>
@@ -82,6 +91,10 @@ export default class StatusPage extends Component<Props> {
             <strong>CLI logs: <a href={this.cliLogFile} target='_blank'>{this.cliLogFile}</a></strong>
           </div>
         </div>}
+
+        <div className="col-sm-12">
+          <button type='button' className='btn btn-danger' onClick={this.onResetConfig}><FontAwesomeIcon icon={Icons.faExclamationTriangle} /> Reset {cliService.getResetLabel()}</button>
+        </div>
       </div>
     );
   }
