@@ -141,7 +141,7 @@ class CliService {
   }
 
   getResetLabel() {
-    let resetLabel = 'GUI settings'
+    let resetLabel = 'GUI'
     if (this.isCliLocal() && this.isConnected()) {
       resetLabel += ' + CLI configuration'
     }

@@ -84,7 +84,7 @@ class CliLocalService {
     }
     if (cliLocalService.isStarted()) {
       // started
-      const status = 'CLI is running since '+moment(cliLocalService.getStartTime()).format(DATETIME_FORMAT)
+      const status = 'CLI running for '+moment.duration(new Date().getTime()-cliLocalService.getStartTime()).humanize()
       return format(<FontAwesomeIcon icon={Icons.faPlay} color='green' title={status} size='xs'/>, status)
     }
     if (!cliLocalService.isValid()) {

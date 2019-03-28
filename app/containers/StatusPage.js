@@ -48,7 +48,7 @@ export default class StatusPage extends Component<Props> {
     }
     return (
       <div>
-        <h1>GUI settings</h1>
+        <h1>System</h1>
 
         <div className='row'>
           <div className='col-sm-4'>
@@ -91,7 +91,7 @@ export default class StatusPage extends Component<Props> {
             <strong>CLI logs: <a href={this.cliLogFile} target='_blank'>{this.cliLogFile}</a></strong>
           </div>
         </div>}
-
+        <br/>
         <div className="col-sm-12">
           <button type='button' className='btn btn-danger' onClick={this.onResetConfig}><FontAwesomeIcon icon={Icons.faExclamationTriangle} /> Reset {cliService.getResetLabel()}</button>
         </div>

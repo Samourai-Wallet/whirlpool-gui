@@ -192,7 +192,7 @@ class App extends React.Component<Props> {
                   <Link to={routes.STATUS}>
                     <a className="nav-link">
                       <span data-feather="terminal"></span>
-                      GUI settings
+                      System
                     </a>
                   </Link>
                 </li>
