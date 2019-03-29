@@ -185,33 +185,42 @@ export class CliLocal {
   }
 
   startProc(cmd, args, cwd, logFile) {
-    const log = fs.createWriteStream(logFile, {flags: 'a'})
+    const cliLog = fs.createWriteStream(logFile, {flags: 'a'})
     const myThis = this
 
     const cmdStr = cmd+' '+args.join(' ')
-    logger.info('CLI start: '+cmdStr+' (cwd='+cwd+')')
-    log.write('=> CLI start: '+cmdStr+' (cwd='+cwd+')\n')
+    cliLog.write('[CLI_LOCAL] => start: '+cmdStr+' (cwd='+cwd+')\n')
+    logger.info('[CLI_LOCAL] => start: '+cmdStr+' (cwd='+cwd+')')
     this.cliProc = spawn(cmd, args, {cwd: cwd})
     this.cliProc.on('error', function( err ) {
-      logger.error('CLI error: ', err)
-      log.write('=> Error: '+err+'\n')
+      cliLog.write('[CLI_LOCAL][ERROR] => '+err+'\n')
+      logger.error('[CLI_LOCAL] => ', err)
     })
     this.cliProc.on('exit', (code) => {
-      // finishing
-      log.write('=> CLI ended: code='+code+'\n')
-      logger.warn('CLI ended: code='+code)
+      if (code == 0) {
+        // finishing normal
+        cliLog.write('[CLI_LOCAL] => terminated without error.\n')
+        logger.info('[CLI_LOCAL] => terminated without error.')
+      } else {
+        // finishing with error
+        cliLog.write('[CLI_LOCAL][ERROR] => terminated with error: '+code+'\n')
+        logger.error('[CLI_LOCAL] => terminated with error: '+code)
+      }
       myThis.stop()
     })
 
     this.cliProc.stdout.on('data', function (data) {
       const dataStr = data.toString()
-      console.log('[cli] ' + dataStr.substring(0, (dataStr.length-1)));
-      log.write(data)
+      const dataLine = dataStr.substring(0, (dataStr.length-1))
+      console.log('[CLI_LOCAL] ' + dataLine);
+      cliLog.write(data)
     });
     this.cliProc.stderr.on('data', function (data) {
       const dataStr = data.toString()
-      console.log('[cli.err] ' + dataStr.substring(0, (dataStr.length-1)));
-      log.write('[ERR]'+data)
+      const dataLine = dataStr.substring(0, (dataStr.length-1))
+      console.error('[CLI_LOCAL] ' + dataLine);
+      logger.error('[CLI_LOCAL] '+dataLine)
+      cliLog.write('[ERROR]'+data)
     });
   }
 

@@ -32,7 +32,7 @@ class MixStatus extends React.PureComponent {
               return <div className='col-sm-3' key={i}>
                 <div className='row no-gutters'>
                   <div className='col-sm-12 item'>
-                    <div className='label' title={utxo.hash+':'+utxo.index+' ('+utxo.account+')\n'+'since '+mixService.computeLastActivity(utxo)}>{progressLabel}</div>
+                    <div className='label' title={utxo.hash+':'+utxo.index+' ('+utxo.account+') ('+mixService.computeLastActivity(utxo)+')'}>{progressLabel}</div>
                     <ProgressBar animated now={progressPercent} variant={progressVariant} />
                   </div>
                 </div>
