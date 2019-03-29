@@ -51,56 +51,72 @@ const installExtensions = async () => {
   ).catch(console.log);
 };
 
-/**
- * Add event listeners...
- */
-
-app.on('window-all-closed', () => {
-  app.quit();
-});
-
-app.on('ready', async () => {
-  if (
-    process.env.NODE_ENV === 'development' ||
-    process.env.DEBUG_PROD === 'true'
-  ) {
-    await installExtensions();
-  }
-
-  mainWindow = new BrowserWindow({
-    show: false,
-    width: 1280,
-    height: 728
-  });
-
-  // init cliLocal
-  const guiLogStream = fs.createWriteStream(GUI_LOG_FILE, {flags: 'a'})
-  new CliLocal(ipcMain, mainWindow.webContents, guiLogStream)
-
-  mainWindow.loadURL(`file://${__dirname}/app.html`);
-
-  // @TODO: Use 'ready-to-show' event
-  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
-  mainWindow.webContents.on('did-finish-load', () => {
-    if (!mainWindow) {
-      throw new Error('"mainWindow" is not defined');
+// prevent multiple processes
+const gotTheLock = app.requestSingleInstanceLock()
+if (!gotTheLock) {
+  console.error("Already running => exit")
+  app.quit()
+}
+else {
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    // Someone tried to run a second instance, we should focus our window.
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore()
+      mainWindow.focus()
     }
-    if (process.env.START_MINIMIZED) {
-      mainWindow.minimize();
-    } else {
-      mainWindow.show();
-      mainWindow.focus();
+  })
+
+  /**
+   * Add event listeners...
+   */
+
+  app.on('window-all-closed', () => {
+    app.quit();
+  });
+
+  app.on('ready', async () => {
+    if (
+      process.env.NODE_ENV === 'development' ||
+      process.env.DEBUG_PROD === 'true'
+    ) {
+      await installExtensions();
     }
+
+    mainWindow = new BrowserWindow({
+      show: false,
+      width: 1280,
+      height: 728
+    });
+
+    // init cliLocal
+    const guiLogStream = fs.createWriteStream(GUI_LOG_FILE, { flags: 'a' })
+    new CliLocal(ipcMain, mainWindow.webContents, guiLogStream)
+
+    mainWindow.loadURL(`file://${__dirname}/app.html`);
+
+    // @TODO: Use 'ready-to-show' event
+    //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
+    mainWindow.webContents.on('did-finish-load', () => {
+      if (!mainWindow) {
+        throw new Error('"mainWindow" is not defined');
+      }
+      if (process.env.START_MINIMIZED) {
+        mainWindow.minimize();
+      } else {
+        mainWindow.show();
+        mainWindow.focus();
+      }
+    });
+
+    mainWindow.on('closed', () => {
+      mainWindow = null;
+    });
+
+    const menuBuilder = new MenuBuilder(mainWindow);
+    menuBuilder.buildMenu();
+
+    // Remove this if your app does not use auto updates
+    // eslint-disable-next-line
+    //new AppUpdater();
   });
-
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
-
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
-
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
-  new AppUpdater();
-});
+}
