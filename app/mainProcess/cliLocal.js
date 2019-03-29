@@ -13,7 +13,7 @@ import {
   CLILOCAL_STATUS,
   DEFAULT_CLI_LOCAL,
   DEFAULT_CLIPORT,
-  DL_PATH,
+  DL_PATH, GUI_LOG_FILE,
   IPC_CLILOCAL,
   STORE_CLILOCAL
 } from '../const';
@@ -204,7 +204,7 @@ export class CliLocal {
       } else {
         // finishing with error
         cliLog.write('[CLI_LOCAL][ERROR] => terminated with error: '+code+'\n')
-        logger.error('[CLI_LOCAL] => terminated with error: '+code)
+        logger.error('[CLI_LOCAL] => terminated with error: '+code+'. Check logs for details ('+GUI_LOG_FILE+')')
       }
       myThis.stop()
     })
