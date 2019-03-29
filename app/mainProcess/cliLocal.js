@@ -160,27 +160,31 @@ export class CliLocal {
 
   start() {
     if (!this.state.valid) {
-      console.error("CliLocal: start skipped: not valid")
+      console.error("[CLI_LOCAL] start skipped: not valid")
       return
     }
     if (this.state.started) {
-      console.error("CliLocal: start skipped: already started")
+      console.error("[CLI_LOCAL] start skipped: already started")
       return
     }
     const myThis = this
     tcpPortUsed.check(DEFAULT_CLIPORT, 'localhost')
-      .then(function() {
-        // port is available => start proc
-        myThis.state.started = new Date().getTime()
-        myThis.pushState()
-        const cmd = 'java'
-        const args = ['-jar', myThis.cliFilename, '--listen', '--debug', '--pool=0.01btc', '--auto-tx0', '--auto-mix', '--auto-aggregate-postmix']
-        myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE)
-      }, function() {
-        // port in use => cannot start proc
-        logger.error("CLI cannot start: port "+DEFAULT_CLIPORT+" already in use (another instance is running)")
-        myThis.state.error = 'CLI cannot start: port '+DEFAULT_CLIPORT+' already in use'
-        myThis.updateState(CLILOCAL_STATUS.ERROR)
+      .then((inUse) => {
+        if (!inUse) {
+          // port is available => start proc
+          myThis.state.started = new Date().getTime()
+          myThis.pushState()
+          const cmd = 'java'
+          const args = ['-jar', myThis.cliFilename, '--listen', '--debug', '--pool=0.01btc', '--auto-tx0', '--auto-mix', '--auto-aggregate-postmix']
+          myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE)
+        } else {
+          // port in use => cannot start proc
+          logger.error("[CLI_LOCAL] cannot start: port "+DEFAULT_CLIPORT+" already in use")
+          myThis.state.error = 'CLI cannot start: port '+DEFAULT_CLIPORT+' already in use'
+          myThis.updateState(CLILOCAL_STATUS.ERROR)
+        }
+      }, (e) => {
+          console.error('checkPort failed', e)
       });
   }
 
