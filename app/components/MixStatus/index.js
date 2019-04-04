@@ -27,14 +27,12 @@ class MixStatus extends React.PureComponent {
               const pool = poolsService.findPool(utxo.poolId)
               const poolInfo = pool ? <span> • {pool.nbConfirmed}/{pool.mixAnonymitySet} peers</span> : undefined
 
-              let progressLabel = <div><small>{utils.toBtc(utxo.value)}</small> <strong>{utils.statusLabel(utxo)}</strong><br/>
-                  {utxo.message && <small>{utxo.message}{poolInfo?poolInfo:''}</small>}
+              let progressLabel = <div><small>{utils.toBtc(utxo.value)}</small> <strong>{utils.statusLabel(utxo)}</strong>{poolInfo?poolInfo:''}<br/>
+                  {utxo.message && <small>{utxo.message}</small>}
               </div>
               const progressPercent = utxo.progressPercent ? utxo.progressPercent : 0
               const progressVariant = utxo.progressPercent ? undefined : 'info'
               const poolProgress = pool ? (100-progressPercent)*poolsService.computePoolProgress(pool)/100: undefined
-
-              console.log('poolProgress',poolProgress)
 
               return <div className='col-sm-3 align-self-center' key={i}>
                 <div className='row no-gutters'>

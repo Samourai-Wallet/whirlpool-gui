@@ -2,7 +2,7 @@ import utils from './utils';
 import status from './status';
 import cliService from './cliService';
 
-export const API_VERSION = '0.7'
+export const API_VERSION = '0.8'
 const HEADER_API_VERSION = 'apiVersion'
 const HEADER_API_KEY = 'apiKey'
 
