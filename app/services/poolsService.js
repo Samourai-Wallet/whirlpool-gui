@@ -48,6 +48,9 @@ class PoolsService {
   // pools
 
   getPools () {
+    if (!this.isReady()) {
+      return []
+    }
     return this.state.pools.pools;
   }
 
@@ -60,6 +63,18 @@ class PoolsService {
       return this.getPools().filter(pool => utxoBalance == pool.denomination)
     }
     return this.getPools().filter(pool => utxoBalance >= pool.mustMixBalanceMin && utxoBalance <= pool.mustMixBalanceMax)
+  }
+
+  findPool(poolId) {
+    const results = this.getPools().filter(pool => poolId === pool.poolId)
+    return (results.length > 0 ? results[0] : undefined)
+  }
+
+  computePoolProgress(pool) {
+    if (!pool) {
+      return undefined
+    }
+    return pool.nbConfirmed / pool.mixAnonymitySet * 100
   }
 
   fetchState () {

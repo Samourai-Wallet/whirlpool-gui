@@ -9,6 +9,7 @@ import {ProgressBar} from 'react-bootstrap';
 import mixService from '../../services/mixService';
 import utils from '../../services/utils';
 import * as Icon from 'react-feather';
+import poolsService from '../../services/poolsService';
 
 /* eslint-disable react/prefer-stateless-function */
 class MixStatus extends React.PureComponent {
@@ -22,16 +23,27 @@ class MixStatus extends React.PureComponent {
           <div className='col-sm-10 mixThreads'>
             <div className='row no-gutters justify-content-center'>
             {mixService.getThreads().map((utxo,i) => {
+
+              const pool = poolsService.findPool(utxo.poolId)
+              const poolInfo = pool ? <span> • {pool.nbConfirmed}/{pool.mixAnonymitySet} peers</span> : undefined
+
               let progressLabel = <div><small>{utils.toBtc(utxo.value)}</small> <strong>{utils.statusLabel(utxo)}</strong><br/>
-                  {utxo.message && <small>{utxo.message}</small>}
+                  {utxo.message && <small>{utxo.message}{poolInfo?poolInfo:''}</small>}
               </div>
               const progressPercent = utxo.progressPercent ? utxo.progressPercent : 0
               const progressVariant = utxo.progressPercent ? undefined : 'info'
+              const poolProgress = pool ? (100-progressPercent)*poolsService.computePoolProgress(pool)/100: undefined
+
+              console.log('poolProgress',poolProgress)
+
               return <div className='col-sm-3 align-self-center' key={i}>
                 <div className='row no-gutters'>
                   <div className='col-sm-12 item'>
                     <div className='label' title={utxo.hash+':'+utxo.index+' ('+utxo.account+') ('+mixService.computeLastActivity(utxo)+')'}>{progressLabel}</div>
-                    <ProgressBar animated now={progressPercent} variant={progressVariant} />
+                    <ProgressBar>
+                      <ProgressBar animated now={progressPercent} variant={progressVariant} key={1} className={'progressBarSamourai'} />
+                      {poolProgress && <ProgressBar variant="warning" now={poolProgress} key={2} />}
+                    </ProgressBar>;
                   </div>
                 </div>
               </div>
