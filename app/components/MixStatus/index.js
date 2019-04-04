@@ -25,7 +25,7 @@ class MixStatus extends React.PureComponent {
             {mixService.getThreads().map((utxo,i) => {
 
               const pool = poolsService.findPool(utxo.poolId)
-              const poolInfo = pool ? <span> • {pool.nbConfirmed}/{pool.mixAnonymitySet} peers</span> : undefined
+              const poolInfo = pool ? <small> • {pool.nbConfirmed}/{pool.mixAnonymitySet} peers</small> : undefined
 
               let progressLabel = <div><small>{utils.toBtc(utxo.value)}</small> <strong>{utils.statusLabel(utxo)}</strong>{poolInfo?poolInfo:''}<br/>
                   {utxo.message && <small>{utxo.message}</small>}

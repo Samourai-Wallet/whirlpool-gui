@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ipcRenderer } from 'electron';
 import { ProgressBar } from 'react-bootstrap';
-import { CLILOCAL_STATUS, IPC_CLILOCAL } from '../const';
+import { CLI_VERSION, CLILOCAL_STATUS, IPC_CLILOCAL } from '../const';
 import cliService from './cliService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Icons from "@fortawesome/free-solid-svg-icons";
@@ -74,8 +74,9 @@ class CliLocalService {
     // downloading
     if (cliLocalService.isStatusDownloading()) {
       const progress = this.getProgress()
-      const status = 'CLI is being downloaded... '+progress+'%'
-      return format(<ProgressBar animated now={progress} label={progress+'%'} title={status}/>, status)
+      const status = 'CLI '+CLI_VERSION+' is being downloaded... '+(progress?progress+'%':'')
+      const progressBar = progress ? <ProgressBar animated now={progress} label={progress+'%'} title={status}/> : <span></span>
+      return format(progressBar, status)
     }
     // error
     if (cliLocalService.isStatusError()) {
