@@ -1,4 +1,7 @@
 import cliService from './cliService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as Icons from '@fortawesome/free-solid-svg-icons';
+import * as React from 'react';
 
 const AMOUNT_PRECISION = 4
 const BTC_TO_SAT = 100000000
@@ -11,6 +14,26 @@ export const WHIRLPOOL_ACCOUNTS = {
   DEPOSIT: 'DEPOSIT',
   PREMIX: 'PREMIX',
   POSTMIX: 'POSTMIX'
+}
+
+export const UTXO_STATUS = {
+  READY: 'READY',
+
+  TX0: 'TX0',
+  TX0_FAILED: 'TX0_FAILED',
+  TX0_SUCCESS: 'TX0_SUCCESS',
+
+  MIX_QUEUE: 'MIX_QUEUE',
+  MIX_STARTED: 'MIX_STARTED',
+  MIX_SUCCESS: 'MIX_SUCCESS',
+  MIX_FAILED: 'MIX_FAILED'
+}
+
+export const MIXABLE_STATUS = {
+  MIXABLE: 'MIXABLE',
+  UNCONFIRMED: 'UNCONFIRMED',
+  HASH_MIXING: 'HASH_MIXING',
+  NO_POOL: 'NO_POOL'
 }
 
 export const CLI_STATUS = {
@@ -74,20 +97,56 @@ class Utils {
     return 'https://oxt.me/transaction/'+utxo.hash
   }
 
+  statusIcon(utxo) {
+
+    if (utxo.status === UTXO_STATUS.MIX_STARTED) {
+      return <FontAwesomeIcon icon={Icons.faPlay} size='xs' color='green' title='MIXING'/>
+    }
+    if (utxo.status === UTXO_STATUS.TX0) {
+      return <FontAwesomeIcon icon={Icons.faPlay} size='xs' color='green' title='TX0'/>
+    }
+    if (utxo.status === UTXO_STATUS.TX0_FAILED) {
+      return <FontAwesomeIcon icon={Icons.faSquare} size='xs' color='red' title='TX0 FAILED'/>
+    }
+    if (utxo.status === UTXO_STATUS.MIX_FAILED) {
+      return <FontAwesomeIcon icon={Icons.faSquare} size='xs' color='red' title='MIX FAILED'/>
+    }
+    if (utxo.account === WHIRLPOOL_ACCOUNTS.POSTMIX && utxo.mixsDone >= utxo.mixsTarget) {
+      return <FontAwesomeIcon icon={Icons.faCheck} size='xs' color='green' title='MIXED'/>
+    }
+
+    switch(utxo.mixableStatus) {
+      case MIXABLE_STATUS.MIXABLE:
+        return <FontAwesomeIcon icon={Icons.faCircle} size='xs' color='green' title='Ready to mix'/>
+      case MIXABLE_STATUS.HASH_MIXING:
+        return <FontAwesomeIcon icon={Icons.faEllipsisH} size='xs' color='orange' title='Another utxo from same hash is currently mixing'/>
+      case MIXABLE_STATUS.NO_POOL:
+        return <FontAwesomeIcon icon={Icons.faExclamation} size='xs' color='red' title='No pool'/>
+      case MIXABLE_STATUS.UNCONFIRMED:
+        return <FontAwesomeIcon icon={Icons.faClock} size='xs' color='orange' title='Unconfirmed'/>
+    }
+    return undefined
+  }
+
   statusLabel(utxo) {
+    let icon = this.statusIcon(utxo)
+    return <span>{icon?icon:''} {this.statusLabelText(utxo)}</span>
+  }
+
+  statusLabelText(utxo) {
     switch(utxo.status) {
-      case 'READY':
-        if (utxo.account === WHIRLPOOL_ACCOUNTS.POSTMIX) {
+      case UTXO_STATUS.READY:
+        if (utxo.account === WHIRLPOOL_ACCOUNTS.POSTMIX && utxo.mixsDone >= utxo.mixsTarget) {
           return 'MIXED'
         }
         return 'READY'
-      case 'TX0': return 'TX0...'
-      case 'TX0_SUCCESS': return 'TX0:SUCCESS'
-      case 'TX0_FAILED': return 'TX0:ERROR'
-      case 'MIX_QUEUE': return 'QUEUED'
-      case 'MIX_STARTED': return 'MIXING...'
-      case 'MIX_SUCCESS': return 'MIX:SUCCESS'
-      case 'MIX_FAILED': return 'MIX:ERROR'
+      case UTXO_STATUS.TX0: return 'TX0'
+      case UTXO_STATUS.TX0_SUCCESS: return 'TX0:SUCCESS'
+      case UTXO_STATUS.TX0_FAILED: return 'TX0:ERROR'
+      case UTXO_STATUS.MIX_QUEUE: return 'QUEUE'
+      case UTXO_STATUS.MIX_STARTED: return 'MIXING'
+      case UTXO_STATUS.MIX_SUCCESS: return 'MIXED'
+      case UTXO_STATUS.MIX_FAILED: return 'MIX:ERROR'
       default: return '?'
     }
   }

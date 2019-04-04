@@ -47,7 +47,7 @@ export default class PostmixPage extends Component<Props> {
             <th scope="col">UTXO</th>
             <th scope="col">Amount</th>
             <th scope="col">Pool</th>
-            <th scope="col" colSpan={2}>Status</th>
+            <th scope="col" className='utxoStatus' colSpan={2}>Status</th>
             <th scope="col">Mixs</th>
             <th scope="col" colSpan={2}>Last activity</th>
             <th scope="col">

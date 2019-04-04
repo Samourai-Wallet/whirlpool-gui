@@ -55,7 +55,7 @@ class LastActivityPage extends Component {
               <th scope="col">UTXO</th>
               <th scope="col">Amount</th>
               <th scope="col">Pool</th>
-              <th scope="col">Status</th>
+              <th scope="col" className='utxoStatus'>Status</th>
               <th scope="col"></th>
               <th scope="col">Mixs</th>
               <th scope="col" colSpan={2}>Last activity</th>

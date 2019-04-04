@@ -11,6 +11,10 @@
   line-height: 1em !important;
 }
 
+th.utxoStatus {
+  min-width: 80px;
+}
+
 .progress-bar {
   font-weight: bold;
 }
@@ -38,8 +42,8 @@
 }
 
 .sidebar-sticky {
-  text-align:center;
+  text-align: center;
 }
 .sidebar-sticky .nav {
-  text-align:left;
+  text-align: left;
 }
