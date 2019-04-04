@@ -3,11 +3,11 @@ import { computeLogPath, logger } from './utils/logger';
 
 /* shared with mainProcess */
 
-export const CLI_VERSION = '0.0.6'
+export const CLI_VERSION = '0.0.9'
 export const CLI_FILENAME = 'whirlpool-client-cli-'+CLI_VERSION+'-run.jar';
 export const CLI_URL =
   'https://github.com/Samourai-Wallet/whirlpool-runtimes/releases/download/cli-'+CLI_VERSION+'/whirlpool-client-cli-'+CLI_VERSION+'-run.jar';
-export const CLI_CHECKSUM = '96d495a4322f542af170ce16787174fd';
+export const CLI_CHECKSUM = '3a3986a20efd609897f0d3a327bb829b';
 
 export const DEFAULT_CLI_LOCAL = true;
 export const DEFAULT_CLIPORT = 8899;
