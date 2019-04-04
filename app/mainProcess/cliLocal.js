@@ -261,7 +261,9 @@ export class CliLocal {
       logger.error('CLI not found: '+dlPathFile)
       return false;
     }
-    logger.debug('CLI is valid: '+dlPathFile)
+    if (!this.state.valid) { // avoid log repetition
+      logger.debug('CLI is valid: ' + dlPathFile)
+    }
     return true
   }
 
