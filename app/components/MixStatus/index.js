@@ -15,21 +15,19 @@ class MixStatus extends React.PureComponent {
   render () {
     return (
       <div>
-        <div className='row'>
-          <div className='col-sm-2 mixStatus'>
-            <div>{mixService.getNbMixing()} mixing, {mixService.getNbQueued()} queued</div>
-            {mixService.isStarted() && <button className='btn btn-sm btn-primary' onClick={() => mixService.stopMix()}><Icon.Square size={12}/> Stop mixing</button>}
-            {!mixService.isStarted() && <button className='btn btn-sm btn-primary' onClick={() => mixService.startMix()}><Icon.Play size={12}/> Start mixing</button>}
+        <div className='row no-gutters'>
+          <div className='col-sm-1 mixStatus align-self-center'>
+            <div><strong>{mixService.getNbMixing()}</strong> mixing<br/> <strong>{mixService.getNbQueued()}</strong> queued</div>
           </div>
           <div className='col-sm-10 mixThreads'>
-            <div className='row'>
+            <div className='row no-gutters justify-content-center'>
             {mixService.getThreads().map((utxo,i) => {
               let progressLabel = <div><small>{utils.toBtc(utxo.value)}</small> <strong>{utils.statusLabel(utxo)}</strong><br/>
                   {utxo.message && <small>{utxo.message}</small>}
               </div>
               const progressPercent = utxo.progressPercent ? utxo.progressPercent : 0
               const progressVariant = utxo.progressPercent ? undefined : 'info'
-              return <div className='col-sm-3' key={i}>
+              return <div className='col-sm-3 align-self-center' key={i}>
                 <div className='row no-gutters'>
                   <div className='col-sm-12 item'>
                     <div className='label' title={utxo.hash+':'+utxo.index+' ('+utxo.account+') ('+mixService.computeLastActivity(utxo)+')'}>{progressLabel}</div>
@@ -39,6 +37,10 @@ class MixStatus extends React.PureComponent {
               </div>
             })}
             </div>
+          </div>
+          <div className='col-sm-1 mixStatus align-self-center text-center'>
+            {mixService.isStarted() && <button className='btn btn-sm btn-primary' onClick={() => mixService.stopMix()}><Icon.Square size={12}/> Stop</button>}
+            {!mixService.isStarted() && <button className='btn btn-sm btn-primary' onClick={() => mixService.startMix()}><Icon.Play size={12}/> Start</button>}
           </div>
         </div>
       </div>

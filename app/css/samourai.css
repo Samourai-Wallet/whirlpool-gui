@@ -73,14 +73,22 @@
 }
 
 .mixStatus {
-  text-align: center;
+  text-align: left;
+}
+.mixStatus strong {
+  font-size: 1.1em;
 }
 .mixThreads {
   font-size: 0.9em;
   padding-top: 0.3em;
   overflow: auto;
-  height: 5em;
   color: #222;
+}
+.mixThreads > .row {
+  height: 5em;
+}
+.mixThreads > .row > .col-sm-3, .mixThreads .item .progress {
+  height: 2.1em;
 }
 .mixThreads .progress-bar {
   font-weight: normal;
@@ -88,6 +96,7 @@
 .mixThreads .item {
   position: relative;
   margin-bottom: 0.1em;
+  padding: 0 8px;
 }
 .mixThreads .item .label {
   position: absolute;
@@ -95,9 +104,6 @@
   text-align:center;
   width: 100%;
   line-height: 1em;
-}
-.mixThreads .item .progress {
-  height: 2.3em;
 }
 
 /* DepositPage */
