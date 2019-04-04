@@ -188,6 +188,14 @@ class App extends React.Component<Props> {
                     </a>
                   </Link>
                 </li>}
+                {!cliService.isConfigured() && <li className="nav-item">
+                  <Link to={routes.HOME}>
+                    <a className="nav-link">
+                      <span data-feather="settings"></span>
+                      <strong>Setup</strong>
+                    </a>
+                  </Link>
+                </li>}
                 <li className="nav-item">
                   <Link to={routes.STATUS}>
                     <a className="nav-link">
