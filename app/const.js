@@ -1,8 +1,11 @@
 import electron from 'electron';
+import {version} from '../package.json';
 import { computeLogPath, logger } from './utils/logger';
 
 /* shared with mainProcess */
 
+export const API_VERSION = '0.8'
+export const GUI_VERSION = version
 export const CLI_VERSION = '0.0.9'
 export const CLI_FILENAME = 'whirlpool-client-cli-'+CLI_VERSION+'-run.jar';
 export const CLI_URL =

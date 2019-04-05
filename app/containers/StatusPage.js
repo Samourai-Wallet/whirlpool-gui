@@ -4,8 +4,16 @@ import { Tail } from 'tail';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cliLocalService } from '../services/cliLocalService';
 import cliService from '../services/cliService';
-import { CLI_CHECKSUM, CLI_FILENAME, CLI_LOG_FILE, CLI_URL, GUI_LOG_FILE } from '../const';
-import { API_VERSION } from '../services/backendService';
+import {
+  API_VERSION,
+  CLI_CHECKSUM,
+  CLI_FILENAME,
+  CLI_LOG_FILE,
+  CLI_URL,
+  CLI_VERSION,
+  GUI_LOG_FILE,
+  GUI_VERSION
+} from '../const';
 import * as Icons from "@fortawesome/free-solid-svg-icons";
 
 type Props = {};
@@ -70,10 +78,10 @@ export default class StatusPage extends Component<Props> {
             </div>}
           </div>
           <div className='col-sm-4'>
-            <strong>Expected CLI</strong>
+            GUI <strong>{GUI_VERSION}</strong>, CLI <strong>{CLI_VERSION}</strong>
             <div>
-              <small><a href={CLI_URL} target='_blank'>{CLI_FILENAME}</a><br/>
-              Checksum: {CLI_CHECKSUM}, API {API_VERSION}</small>
+              <small><a href={CLI_URL} target='_blank'>{CLI_FILENAME}</a> - API {API_VERSION}<br/>
+              {CLI_CHECKSUM}</small>
             </div>
           </div>
         </div>

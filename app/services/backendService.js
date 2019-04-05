@@ -1,8 +1,8 @@
 import utils from './utils';
 import status from './status';
 import cliService from './cliService';
+import { API_VERSION } from '../const';
 
-export const API_VERSION = '0.8'
 const HEADER_API_VERSION = 'apiVersion'
 const HEADER_API_KEY = 'apiKey'
 

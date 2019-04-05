@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Route, Switch, withRouter } from 'react-router';
 import backendService from '../services/backendService';
 import { connect } from 'react-redux';
-import moment from 'moment';
+import { Helmet } from 'react-helmet';
 import walletService from '../services/walletService';
 import { bindActionCreators } from 'redux';
 import { cliActions } from '../actions/cliActions';
@@ -32,10 +32,9 @@ import cliService from '../services/cliService';
 import ConnectingPage from './ConnectingPage';
 import StatusPage from './StatusPage';
 import LoginPage from './LoginPage';
-import * as Icons from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cliLocalService } from '../services/cliLocalService';
-import cliConfigService from '../services/cliConfigService';
+import { CLI_VERSION, GUI_VERSION } from '../const';
 
 type Props = {
   children: React.Node
@@ -114,6 +113,9 @@ class App extends React.Component<Props> {
     const loginStatusIcon = cliService.getLoginStatusIcon((icon,text)=>icon)
     const cliUrl = cliService.isCliLocal() ? 'local' : cliService.getCliUrl()
     return <div>
+      <Helmet>
+        <title>Whirlpool - Samourai Wallet - GUI {GUI_VERSION}, CLI {CLI_VERSION}</title>
+      </Helmet>
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
         <div className='col-sm-3 col-md-2 mr-0 navbar-brand-col'>
 
