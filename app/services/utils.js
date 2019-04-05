@@ -154,7 +154,6 @@ class Utils {
   mixsTargetLabel(mixsTarget) {
     return mixsTarget !== MIXSTARGET_UNLIMITED ? mixsTarget : '∞'
   }
-
 }
 
 const utils = new Utils()

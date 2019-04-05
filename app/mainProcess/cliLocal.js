@@ -1,7 +1,5 @@
 import { download } from 'electron-dl';
 import tcpPortUsed from 'tcp-port-used';
-
-import md5ify from 'md5ify';
 import fs from 'fs';
 import { spawn } from 'child_process';
 import Store from 'electron-store';
@@ -18,6 +16,7 @@ import {
   STORE_CLILOCAL
 } from '../const';
 import { logger } from '../utils/logger';
+import crypto from "crypto";
 
 
 //const STORE_CLI_FILENAME = 'CLI_FILENAME'
@@ -71,12 +70,11 @@ export class CliLocal {
 
   onGetState() {
     if (this.state.status !== CLILOCAL_STATUS.DOWNLOADING) {
-      this.refreshState()
       this.pushState()
     }
   }
 
-  reload() {
+  async reload() {
     logger.info("CLI reloading...")
     this.stop()
 
@@ -92,6 +90,8 @@ export class CliLocal {
       error: undefined,
       progress: undefined
     }
+
+    await this.refreshState()
   }
 
   getStoreOrSetDefault(key, defaultValue) {
@@ -116,9 +116,9 @@ export class CliLocal {
     return this.getStoreOrSetDefault(STORE_CLILOCAL, DEFAULT_CLI_LOCAL)
   }
 
-  refreshState(downloadIfMissing=true) {
+  async refreshState(downloadIfMissing=true) {
     const myThis = this
-    this.state.valid = this.verifyChecksum()
+    this.state.valid = await this.verifyChecksum()
     if (!this.state.valid) {
       if (this.state.started) {
         logger.info("CLI is invalid, stopping.")
@@ -245,20 +245,20 @@ export class CliLocal {
     }
   }
 
-  verifyChecksum() {
+  async verifyChecksum() {
     const dlPathFile = this.dlPath+'/'+this.cliFilename
     try {
-      const md5sum = md5ify(dlPathFile)
-      if (!md5sum) {
+      const checksum = await this.sha256File(dlPathFile)
+      if (!checksum) {
         logger.error('CLI not found: '+dlPathFile)
         return false;
       }
-      if (md5sum !== this.cliChecksum) {
-        logger.error('CLI is invalid: '+dlPathFile+', '+md5sum+' vs '+this.cliChecksum)
+      if (checksum !== this.cliChecksum) {
+        logger.error('CLI is invalid: '+dlPathFile+', '+checksum+' vs '+this.cliChecksum)
         return false;
       }
     } catch(e) {
-      logger.error('CLI not found: '+dlPathFile)
+      logger.error('CLI not found: '+dlPathFile, e)
       return false;
     }
     if (!this.state.valid) { // avoid log repetition
@@ -288,5 +288,24 @@ export class CliLocal {
   pushState () {
     console.log('cliLocal: pushState',this.state)
     this.window.send(IPC_CLILOCAL.STATE, this.state)
+  }
+
+  sha256File(filename, algorithm = 'sha256') {
+    return new Promise((resolve, reject) => {
+      let shasum = crypto.createHash(algorithm);
+      try {
+        let s = fs.ReadStream(filename)
+        s.on('data', function (data) {
+          shasum.update(data)
+        })
+        // making digest
+        s.on('end', function () {
+          const hash = shasum.digest('hex')
+          return resolve(hash);
+        })
+      } catch (error) {
+        return reject('calc fail');
+      }
+    });
   }
 }

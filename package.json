@@ -268,6 +268,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.6.3",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "bootstrap": "^4.3.1",
+    "crypto": "^1.0.1",
     "devtron": "^1.4.0",
     "electron-debug": "^2.0.0",
     "electron-dl": "^1.13.0",
