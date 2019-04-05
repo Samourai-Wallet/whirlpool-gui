@@ -34,7 +34,7 @@ import StatusPage from './StatusPage';
 import LoginPage from './LoginPage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cliLocalService } from '../services/cliLocalService';
-import { CLI_VERSION, GUI_VERSION } from '../const';
+import { API_VERSION, GUI_VERSION } from '../const';
 
 type Props = {
   children: React.Node
@@ -112,9 +112,11 @@ class App extends React.Component<Props> {
     const cliStatusIcon = cliService.getStatusIcon((icon,text)=>icon)
     const loginStatusIcon = cliService.getLoginStatusIcon((icon,text)=>icon)
     const cliUrl = cliService.isCliLocal() ? 'local' : cliService.getCliUrl()
+    const cliInfo = cliService.isCliLocal() ? 'CLI '+cliLocalService.getCliVersionStr():'CLI_API '+API_VERSION
+
     return <div>
       <Helmet>
-        <title>Whirlpool - Samourai Wallet - GUI {GUI_VERSION}, CLI {CLI_VERSION}</title>
+        <title>Whirlpool - Samourai Wallet - GUI {GUI_VERSION}, {cliInfo}</title>
       </Helmet>
       <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
         <div className='col-sm-3 col-md-2 mr-0 navbar-brand-col'>

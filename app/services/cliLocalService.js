@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { ipcRenderer } from 'electron';
 import { ProgressBar } from 'react-bootstrap';
-import { CLI_VERSION, CLILOCAL_STATUS, IPC_CLILOCAL } from '../const';
+import { CLILOCAL_STATUS, IPC_CLILOCAL } from '../const';
 import cliService from './cliService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import * as Icons from "@fortawesome/free-solid-svg-icons";
-import moment from "moment";
-import { DATETIME_FORMAT } from './utils';
+import * as Icons from '@fortawesome/free-solid-svg-icons';
+import moment from 'moment';
 
 class CliLocalService {
   constructor() {
@@ -74,7 +73,7 @@ class CliLocalService {
     // downloading
     if (cliLocalService.isStatusDownloading()) {
       const progress = this.getProgress()
-      const status = 'CLI '+CLI_VERSION+' is being downloaded... '+(progress?progress+'%':'')
+      const status = 'CLI '+cliLocalService.getCliVersionStr()+' is being downloaded... '+(progress?progress+'%':'')
       const progressBar = progress ? <ProgressBar animated now={progress} label={progress+'%'} title={status}/> : <span></span>
       return format(progressBar, status)
     }
@@ -96,6 +95,42 @@ class CliLocalService {
     // valid but stopped
     const status = 'CLI is not running. '+infoError
     return format(<FontAwesomeIcon icon={Icons.faStop} color='orange' title={status} />, status)
+  }
+
+  hasCliApi() {
+    return this.state && this.state.cliApi
+  }
+
+  getCliVersion() {
+    if (!this.hasCliApi()) {
+      return undefined
+    }
+    return this.state.cliApi.cliVersion
+  }
+
+  getCliVersionStr() {
+    return this.getCliVersion() ? this.getCliVersion() : '?'
+  }
+
+  getCliFilename() {
+    if (!this.hasCliApi()) {
+      return undefined
+    }
+    return this.state.cliApi.filename
+  }
+
+  getCliUrl() {
+    if (!this.hasCliApi()) {
+      return undefined
+    }
+    return this.state.cliApi.url
+  }
+
+  getCliChecksum() {
+    if (!this.hasCliApi()) {
+      return undefined
+    }
+    return this.state.cliApi.cliChecksum
   }
 }
 export const cliLocalService = new CliLocalService()

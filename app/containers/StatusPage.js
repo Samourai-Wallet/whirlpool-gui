@@ -6,11 +6,7 @@ import { cliLocalService } from '../services/cliLocalService';
 import cliService from '../services/cliService';
 import {
   API_VERSION,
-  CLI_CHECKSUM,
-  CLI_FILENAME,
   CLI_LOG_FILE,
-  CLI_URL,
-  CLI_VERSION,
   GUI_LOG_FILE,
   GUI_VERSION
 } from '../const';
@@ -37,7 +33,7 @@ export default class StatusPage extends Component<Props> {
     const onGuiLine = (data) => {
       const log = this.state.guiLog + data
       this.setState({
-        guiLog: truncate(log, 5000)+'\n'
+        guiLog: truncate(log, 2000)+'\n'
       })
     }
     const guiTail = new Tail(this.guiLogFile, { fromBeginning: true, fsWatchOptions: {interval: 5007} });
@@ -76,13 +72,19 @@ export default class StatusPage extends Component<Props> {
             {cliService.isConnected() && <div>
               Server: {cliService.getServerUrl()}
             </div>}
+
           </div>
           <div className='col-sm-4'>
-            GUI <strong>{GUI_VERSION}</strong>, CLI <strong>{CLI_VERSION}</strong>
-            <div>
-              <small><a href={CLI_URL} target='_blank'>{CLI_FILENAME}</a> - API {API_VERSION}<br/>
-              {CLI_CHECKSUM}</small>
-            </div>
+            GUI <strong>{GUI_VERSION}</strong>, CLI API <strong>{API_VERSION}</strong>
+            {cliService.isCliLocal() && <div>
+              {cliLocalService.hasCliApi() &&
+              <small>CLI {cliLocalService.getCliVersionStr()} - <a href={cliLocalService.getCliUrl()} target='_blank'>{cliLocalService.getCliFilename()}</a><br/>
+                {cliLocalService.getCliChecksum()}</small>
+              }
+              {!cliLocalService.hasCliApi() &&
+              <small><strong>CLI_API {API_VERSION} could not be resolved</strong></small>
+              }
+            </div>}
           </div>
         </div>
 

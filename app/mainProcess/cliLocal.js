@@ -4,24 +4,20 @@ import fs from 'fs';
 import { spawn } from 'child_process';
 import Store from 'electron-store';
 import {
-  CLI_CHECKSUM,
-  CLI_FILENAME,
+  API_VERSION,
   CLI_LOG_FILE,
-  CLI_URL,
   CLILOCAL_STATUS,
   DEFAULT_CLI_LOCAL,
   DEFAULT_CLIPORT,
-  DL_PATH, GUI_LOG_FILE,
+  DL_PATH,
+  GUI_LOG_FILE,
   IPC_CLILOCAL,
   STORE_CLILOCAL
 } from '../const';
 import { logger } from '../utils/logger';
-import crypto from "crypto";
+import crypto from 'crypto';
+import cliVersion from './cliVersion';
 
-
-//const STORE_CLI_FILENAME = 'CLI_FILENAME'
-//const STORE_CLI_URL = 'CLI_URL'
-//const STORE_CLI_CHECKSUM = 'CLI_CHECKSUM'
 export class CliLocal {
 
   constructor(ipcMain, window) {
@@ -34,10 +30,6 @@ export class CliLocal {
 
     this.ipcMain.on(IPC_CLILOCAL.RELOAD, this.reload.bind(this))
     this.ipcMain.on(IPC_CLILOCAL.GET_STATE, this.onGetState.bind(this));
-
-    this.cliFilename = undefined
-    this.cliUrl = undefined
-    this.cliChecksum = undefined
 
     this.handleExit()
 
@@ -76,17 +68,14 @@ export class CliLocal {
     logger.info("CLI reloading...")
     this.stop()
 
-    this.cliFilename = this.getCliFilename()
-    this.cliUrl = this.getCliUrl()
-    this.cliChecksum = this.getCliChecksum()
-
     this.state = {
       valid: undefined,
       started: undefined,
       status: undefined,
       info: undefined,
       error: undefined,
-      progress: undefined
+      progress: undefined,
+      cliApi: undefined
     }
 
     await this.refreshState()
@@ -102,19 +91,38 @@ export class CliLocal {
   }
 
   getCliFilename() {
-    return CLI_FILENAME//this.getStoreOrSetDefault(STORE_CLI_FILENAME, CLI_FILENAME)
+    return this.state.cliApi.filename
   }
   getCliUrl() {
-    return CLI_URL//this.getStoreOrSetDefault(STORE_CLI_URL, CLI_URL)
+    return this.state.cliApi.url
   }
   getCliChecksum() {
-    return CLI_CHECKSUM//this.getStoreOrSetDefault(STORE_CLI_CHECKSUM, CLI_CHECKSUM)
+    return this.state.cliApi.checksum
   }
   isCliLocal() {
     return this.getStoreOrSetDefault(STORE_CLILOCAL, DEFAULT_CLI_LOCAL)
   }
 
   async refreshState(downloadIfMissing=true) {
+
+    try {
+      const cliApi = await cliVersion.fetchCliApi(API_VERSION)
+      logger.info('using CLI_API ' + API_VERSION, cliApi)
+      this.state.cliApi = {
+        cliVersion: cliApi.CLI_VERSION,
+        filename: 'whirlpool-client-cli-' + cliApi.CLI_VERSION + '-run.jar',
+        url: 'https://github.com/Samourai-Wallet/whirlpool-runtimes/releases/download/cli-' + cliApi.CLI_VERSION + '/whirlpool-client-cli-' + cliApi.CLI_VERSION + '-run.jar',
+        checksum: cliApi.CLI_CHECKSUM
+      }
+    } catch(e) {
+      logger.error("Could not fetch CLI_API "+API_VERSION, e)
+      this.state.valid = false
+      this.state.error = 'Could not fetch CLI_API '+API_VERSION
+      this.updateState(CLILOCAL_STATUS.ERROR)
+      this.stop()
+      return
+    }
+
     const myThis = this
     this.state.valid = await this.verifyChecksum()
     if (!this.state.valid) {
@@ -128,7 +136,7 @@ export class CliLocal {
           return
         }
         // download
-        this.download(CLI_URL).then(() => {
+        this.download(this.getCliUrl()).then(() => {
           logger.info('CLI: download success')
           myThis.state.info = undefined
           myThis.state.error = undefined
@@ -173,7 +181,7 @@ export class CliLocal {
           myThis.state.started = new Date().getTime()
           myThis.pushState()
           const cmd = 'java'
-          const args = ['-jar', myThis.cliFilename, '--listen', '--debug', '--pool=0.01btc', '--auto-tx0', '--auto-mix', '--auto-aggregate-postmix']
+          const args = ['-jar', myThis.getCliFilename(), '--listen', '--debug', '--pool=0.01btc', '--auto-tx0', '--auto-mix', '--auto-aggregate-postmix']
           myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE)
         } else {
           // port in use => cannot start proc
@@ -244,15 +252,16 @@ export class CliLocal {
   }
 
   async verifyChecksum() {
-    const dlPathFile = this.dlPath+'/'+this.cliFilename
+    const dlPathFile = this.dlPath+'/'+this.getCliFilename()
+    const expectedChecksum = this.getCliChecksum()
     try {
       const checksum = await this.sha256File(dlPathFile)
       if (!checksum) {
         logger.error('CLI not found: '+dlPathFile)
         return false;
       }
-      if (checksum !== this.cliChecksum) {
-        logger.error('CLI is invalid: '+dlPathFile+', '+checksum+' vs '+this.cliChecksum)
+      if (checksum !== expectedChecksum) {
+        logger.error('CLI is invalid: '+dlPathFile+', '+checksum+' vs '+expectedChecksum)
         return false;
       }
       logger.debug('CLI is valid: ' + dlPathFile)
@@ -272,7 +281,7 @@ export class CliLocal {
       this.state.progress = progressPercent
       this.updateState(CLILOCAL_STATUS.DOWNLOADING)
     }
-    logger.info('CLI downloading: '+url+', checksum='+this.cliChecksum)
+    logger.info('CLI downloading: '+url)
     return download(this.window, url, {directory: this.dlPath, onProgress: onProgress.bind(this)})
   }
 
