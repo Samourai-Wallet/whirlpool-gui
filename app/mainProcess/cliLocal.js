@@ -69,9 +69,7 @@ export class CliLocal {
   }
 
   onGetState() {
-    if (this.state.status !== CLILOCAL_STATUS.DOWNLOADING) {
-      this.pushState()
-    }
+    this.pushState()
   }
 
   async reload() {
@@ -257,14 +255,12 @@ export class CliLocal {
         logger.error('CLI is invalid: '+dlPathFile+', '+checksum+' vs '+this.cliChecksum)
         return false;
       }
+      logger.debug('CLI is valid: ' + dlPathFile)
+      return true
     } catch(e) {
-      logger.error('CLI not found: '+dlPathFile, e)
+      logger.error('CLI not found: '+dlPathFile)
       return false;
     }
-    if (!this.state.valid) { // avoid log repetition
-      logger.debug('CLI is valid: ' + dlPathFile)
-    }
-    return true
   }
 
   download(url) {
@@ -303,8 +299,11 @@ export class CliLocal {
           const hash = shasum.digest('hex')
           return resolve(hash);
         })
+        s.on('error', function () {
+          return reject('file read error: '+filename);
+        })
       } catch (error) {
-        return reject('calc fail');
+        return reject('checksum failed');
       }
     });
   }
