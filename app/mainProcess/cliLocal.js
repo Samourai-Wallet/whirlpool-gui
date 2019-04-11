@@ -18,6 +18,7 @@ import { logger } from '../utils/logger';
 import crypto from 'crypto';
 import cliVersion from './cliVersion';
 
+const START_TIMEOUT = 20000
 export class CliLocal {
 
   constructor(ipcMain, window) {
@@ -174,23 +175,19 @@ export class CliLocal {
       return
     }
     const myThis = this
-    tcpPortUsed.check(DEFAULT_CLIPORT, 'localhost')
-      .then((inUse) => {
-        if (!inUse) {
-          // port is available => start proc
-          myThis.state.started = new Date().getTime()
-          myThis.pushState()
-          const cmd = 'java'
-          const args = ['-jar', myThis.getCliFilename(), '--listen', '--debug']
-          myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE)
-        } else {
-          // port in use => cannot start proc
-          logger.error("[CLI_LOCAL] cannot start: port "+DEFAULT_CLIPORT+" already in use")
-          myThis.state.error = 'CLI cannot start: port '+DEFAULT_CLIPORT+' already in use'
-          myThis.updateState(CLILOCAL_STATUS.ERROR)
-        }
+    tcpPortUsed.waitUntilFreeOnHost(DEFAULT_CLIPORT, 'localhost', 1000, START_TIMEOUT)
+      .then(() => {
+        // port is available => start proc
+        myThis.state.started = new Date().getTime()
+        myThis.pushState()
+        const cmd = 'java'
+        const args = ['-jar', myThis.getCliFilename(), '--listen', '--debug']
+        myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE)
       }, (e) => {
-          console.error('checkPort failed', e)
+        // port in use => cannot start proc
+        logger.error("[CLI_LOCAL] cannot start: port "+DEFAULT_CLIPORT+" already in use")
+        myThis.state.error = 'CLI cannot start: port '+DEFAULT_CLIPORT+' already in use'
+        myThis.updateState(CLILOCAL_STATUS.ERROR)
       });
   }
 
