@@ -16,7 +16,7 @@ import { CliConfigService } from './cliConfigService';
 const STORE_CLIURL = "cli.url"
 const STORE_APIKEY = "cli.apiKey"
 
-const REFRESH_RATE = 15000;
+const REFRESH_RATE = 8000;
 class CliService {
   constructor () {
     this.setState = undefined

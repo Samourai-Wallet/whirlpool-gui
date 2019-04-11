@@ -36,6 +36,7 @@
   text-align:right;
   margin-top:-0.5em;
   float:right;
+  white-space: nowrap;
 }
 .cliStatus, .cliNetwork {
   font-size:0.8em;
