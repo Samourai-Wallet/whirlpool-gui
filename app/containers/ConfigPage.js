@@ -130,6 +130,14 @@ export default class ConfigPage extends Component<Props> {
                 </div>
 
                 <div className="form-group row">
+                  <label htmlFor="autoMix" className="col-sm-2 col-form-label">Auto-MIX</label>
+                  <div className="col-sm-10 custom-control custom-switch">
+                    <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeCliConfig(cliConfig => cliConfig.mix.autoMix = checked(e))} defaultChecked={cliConfig.mix.autoMix} id="autoMix"/>
+                    <label className="custom-control-label" htmlFor="autoMix">Automatically QUEUE unmixed premix & postmix</label>
+                  </div>
+                </div>
+
+                <div className="form-group row">
                   <label htmlFor="autoTx0" className="col-sm-2 col-form-label">Auto-TX0</label>
                   <div className="col-sm-10 custom-control custom-switch">
                     <input type="checkbox" className="custom-control-input" onChange={e => {
@@ -139,15 +147,7 @@ export default class ConfigPage extends Component<Props> {
                         myThis.onChangeCliConfig(cliConfig => cliConfig.mix.autoAggregatePostmix = false)
                       }
                     }} defaultChecked={cliConfig.mix.autoTx0} id="autoTx0"/>
-                    <label className="custom-control-label" htmlFor="autoTx0">Automatically TX0 whole deposit account (when disabled, you can click "TX0" on deposit UTXO)</label>
-                  </div>
-                </div>
-
-                <div className="form-group row">
-                  <label htmlFor="autoMix" className="col-sm-2 col-form-label">Auto-MIX</label>
-                  <div className="col-sm-10 custom-control custom-switch">
-                    <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeCliConfig(cliConfig => cliConfig.mix.autoMix = checked(e))} defaultChecked={cliConfig.mix.autoMix} id="autoMix"/>
-                    <label className="custom-control-label" htmlFor="autoMix">Add to MIX queue unmixed premix & postmix</label>
+                    <label className="custom-control-label" htmlFor="autoTx0">Automatically TX0 whole deposit account (otherwise, you can click "TX0" on deposit UTXOs)</label>
                   </div>
                 </div>
 
