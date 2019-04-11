@@ -54,6 +54,13 @@ class PoolsService {
     return this.state.pools.pools;
   }
 
+  getPoolsAvailable () {
+    if (!this.isReady()) {
+      return []
+    }
+    return this.state.pools.poolsAvailable;
+  }
+
   getPoolsForTx0(utxoBalance) {
     return this.getPools().filter(pool => utxoBalance >= pool.tx0BalanceMin)
   }
