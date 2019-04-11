@@ -15,16 +15,18 @@ export class CliConfigService {
 
   // state
 
+  getCliConfig() {
+    if (!this.state.cliConfig) {
+      return undefined
+    }
+    return this.state.cliConfig;
+  }
+
   getServer() {
     if (!this.state.cliConfig) {
       return undefined
     }
     return this.state.cliConfig.server;
-  }
-
-  setServer(cliConfig, server) {
-    cliConfig.server = server
-    return cliConfig
   }
 
   save (cliConfig) {
@@ -34,6 +36,7 @@ export class CliConfigService {
       cliService.fetchState()
     }).catch(e => {
       logger.error('Save CLI configuration: failed', e)
+      throw e
     })
   }
 

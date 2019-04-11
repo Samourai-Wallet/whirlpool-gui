@@ -181,7 +181,7 @@ export class CliLocal {
           myThis.state.started = new Date().getTime()
           myThis.pushState()
           const cmd = 'java'
-          const args = ['-jar', myThis.getCliFilename(), '--listen', '--debug', '--pool=0.01btc', '--auto-tx0', '--auto-mix', '--auto-aggregate-postmix']
+          const args = ['-jar', myThis.getCliFilename(), '--listen', '--debug']
           myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE)
         } else {
           // port in use => cannot start proc
