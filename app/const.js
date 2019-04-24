@@ -1,11 +1,11 @@
 import electron from 'electron';
-import {version} from '../package.json';
+import { version } from '../package.json';
 import { computeLogPath, logger } from './utils/logger';
 
 /* shared with mainProcess */
 
-export const API_VERSION = '0.3'
-export const GUI_VERSION = version
+export const API_VERSION = '0.3';
+export const GUI_VERSION = version;
 
 export const DEFAULT_CLI_LOCAL = true;
 export const DEFAULT_CLIPORT = 8899;
@@ -22,7 +22,8 @@ export const CLILOCAL_STATUS = {
 };
 export const WHIRLPOOL_SERVER = {
   TEST: 'Whirlpool TESTNET',
-  MAIN: 'Whirlpool MAINNET'
+  MAIN: 'Whirlpool MAINNET',
+  INTEGRATION: 'Whirlpool INTEGRATION'
 };
 
 export const STORE_CLILOCAL = 'cli.local';
