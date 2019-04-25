@@ -8,7 +8,7 @@ import cliService from '../services/cliService';
 import { CLI_CONFIG_FILENAME, DEFAULT_CLIPORT } from '../const';
 import { cliLocalService } from '../services/cliLocalService';
 
-const STEP_LAST = 3
+const STEP_LAST = 2
 const DEFAULT_CLIHOST = 'http://my-dojo-server'
 const DEFAULT_APIKEY = ''
 const CLILOCAL_URL = 'http://localhost:'+DEFAULT_CLIPORT
@@ -27,17 +27,14 @@ class InitPage extends Component<Props> {
       currentCliPort: DEFAULT_CLIPORT,
       currentApiKey: DEFAULT_APIKEY,
       cliError: undefined,
-      hasPassphrase: false,
-      hasEncryptedSeed: false,
+      hasPairingPayload: false,
       pairingError: undefined,
       cliInitError: undefined
     }
 
     // configuration data
-    this.passphrase = undefined
-    this.hasEncryptedSeed = undefined
-    this.encryptedSeed = undefined
-    this.server = undefined
+    this.hasPairingPayload = undefined
+    this.pairingPayload = undefined
 
     this.inputCliHost = React.createRef()
     this.inputCliPort = React.createRef()
@@ -48,7 +45,6 @@ class InitPage extends Component<Props> {
     this.onChangeCliLocal = this.onChangeCliLocal.bind(this)
     this.onChangeInputCliHostPort = this.onChangeInputCliHostPort.bind(this)
     this.connectCli = this.connectCli.bind(this)
-    this.onChangePassphrase = this.onChangePassphrase.bind(this)
     this.onChangePairingPayload = this.onChangePairingPayload.bind(this)
     this.onSubmitInitialize = this.onSubmitInitialize.bind(this)
   }
@@ -83,11 +79,10 @@ class InitPage extends Component<Props> {
       <div>
         <h1>Whirlpool setup</h1>
 
-        <p>This will connect Whirlpool to your existing Samourai Wallet.</p>
+        <p>This will connect Whirlpool to Samourai Wallet.</p>
 
-        {this.state.cliUrl && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Connected to whirlpool-cli: {this.state.cliUrl}</div>}
-        {this.state.hasPassphrase && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Passphrase set for seed encryption</div>}
-        {this.state.hasEncryptedSeed && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Seed encrypted</div>}
+        {this.state.cliUrl && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Connected to whirlpool-cli: <strong>{this.state.cliLocal ? 'standalone' : this.state.cliUrl}</strong></div>}
+        {this.state.hasPairingPayload && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Ready to pair with Samourai Wallet</div>}
         {this.state.step === STEP_LAST && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Configuration saved</div>}
         <br/>
 
@@ -103,11 +98,10 @@ class InitPage extends Component<Props> {
         {(this.state.step === 1 || this.state.step === 2) &&
           <div>
             {this.state.step === 1 && this.step1()}
-            {this.state.step === 2 && this.step2()}
           </div>
         }
 
-        {this.state.step === STEP_LAST && this.step3()}
+        {this.state.step === STEP_LAST && this.step2()}
         </form>
       </div>
     );
@@ -132,7 +126,7 @@ class InitPage extends Component<Props> {
       currentCliPort: DEFAULT_CLIPORT,
       currentApiKey: DEFAULT_APIKEY,
     });
-    this.resetPassphrase()
+    this.resetPairingPayload()
   }
 
   onChangeInputCliHostPort(e) {
@@ -182,23 +176,28 @@ class InitPage extends Component<Props> {
   step0() {
     return <div>
       <div className="form-group row">
-        <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Setup mode</label>
-        <div className="col-sm-10">
+        <div className="col-sm-12">
+          How do you want to use this GUI?
+        </div>
+      </div>
+      <div className="form-group row">
+        <label htmlFor="inputEmail3" className="col-sm-1 col-form-label"></label>
+        <div className="col-sm-11">
           <div className="form-check">
             <input className="form-check-input" type="radio" name="cliLocal" id="cliLocalTrue" value='true' checked={this.state.cliLocal} onChange={this.onChangeCliLocal}/>
             <label className="form-check-label" htmlFor="cliLocalTrue">
-              Standalone (run CLI from GUI)
+              <strong>Standalone GUI</strong>
             </label>
-            {this.state.cliLocal && <div className="col-sm-12">
-              {cliLocalService.getStatusIcon((icon,text)=><div>{icon} {text}</div>)}
-              {cliLocalService.isValid() && <button type='button' className='btn btn-primary' onClick={this.connectCli} disabled={!cliLocalService.isValid()}>Connect</button>}
-              {!cliLocalService.isStatusDownloading() && !cliLocalService.isValid() && <Alert variant='danger'>No valid CLI found. Please reinstall GUI.</Alert>}
-            </div>}
+            {this.state.cliLocal && <div className="col-sm-12"><div className="row">
+              {cliLocalService.getStatusIcon((icon,text)=><div className='col-sm-8'><Alert variant='success'>{icon} {text}</Alert></div>)}
+              {cliLocalService.isValid() && <div className='col-sm-2'><button type='button' className='btn btn-primary' onClick={this.connectCli} disabled={!cliLocalService.isValid()}>Connect</button></div>}
+              {!cliLocalService.isStatusDownloading() && !cliLocalService.isValid() && <div className='col-sm-12'><Alert variant='danger'>No valid CLI found. Please reinstall GUI.</Alert></div>}
+            </div></div>}
           </div>
           <div className="form-check">
             <input className="form-check-input" type="radio" name="cliLocal" id="cliLocalFalse" value='false' checked={!this.state.cliLocal} onChange={this.onChangeCliLocal} />
             <label className="form-check-label" htmlFor="cliLocalFalse">
-              Connect to your existing DOJO / CLI<br/>
+              <strong>Connect to existing DOJO / CLI</strong><br/>
               {!this.state.cliLocal &&
               <div className="row">
                 <div className="col-sm-5">
@@ -229,77 +228,41 @@ class InitPage extends Component<Props> {
     </div>
   }
 
-  // passphrase selection
+  // pairing
 
-  onChangePassphrase(e) {
-    this.passphrase = e.target.value
+  resetPairingPayload() {
+    this.pairingPayload = undefined
     this.setState({
-      hasPassphrase: true
-    })
-    this.resetEncryptedSeed()
-  }
-
-  resetPassphrase() {
-    this.passphrase = undefined
-    this.setState({
-      hasPassphrase: false
-    })
-    this.resetEncryptedSeed()
-  }
-
-  resetEncryptedSeed() {
-    this.encryptedSeed = undefined
-    this.server = undefined
-    this.setState({
-      hasEncryptedSeed: false,
+      hasPairingPayload: false,
       pairingError: undefined,
       cliInitError: undefined
     })
   }
 
-  step1() {
-    return <div>
-      <div className="row">
-        <div className="col-sm-12">
-          <Alert variant='info'>
-            Your passphrase is used to encrypt your wallet seed, but won't be stored.<br/>
-            Your passphrase is required for each whirlpool startup.
-          </Alert>
-        </div>
-      </div>
-      <div className="form-group row">
-        <label htmlFor="inputPassword3" className="col-sm-2 col-form-label">Passphrase</label>
-        <div className="col-sm-10">
-          <input type="password" className="form-control" id="inputPassword3" placeholder="Enter your existing wallet's passphrase" required autoFocus onChange={this.onChangePassphrase}/>
-        </div>
-      </div>
-      {this.navButtons(this.state.hasPassphrase ? true : false)}
-    </div>
-  }
-
-  // seed selection
-
   onChangePairingPayload(payloadStr) {
     let payload = undefined
     try {
       payload = JSON.parse(payloadStr)
+      console.log('payload', payload)
     } catch(e) {}
-    if (!payload || !payload.pairing || payload.pairing.type !== 'whirlpool.gui' || payload.pairing.version !== '1.0.0' || (payload.pairing.network != 'mainnet' && payload.pairing.network != 'testnet') || !payload.pairing.mnemonic) {
-      console.error('Invalid encryptedSeedPayload: '+payload)
+    if (payload && payload.pairing && Object.keys(payload.pairing).length > 0) {
+      // seems valid
+      this.pairingPayload = payloadStr
       this.setState({
-        pairingError: 'Invalid pairing payload'
+        hasPairingPayload: true,
+        pairingError: undefined
+      })
+    } else {
+      // invalid payload
+      console.error('Invalid payload: '+payloadStr)
+      this.setState({
+        pairingError: 'Invalid payload'
       })
     }
-    this.encryptedSeed = payload.pairing.mnemonic
-    this.server = payload.pairing.network
-    this.setState({
-      hasEncryptedSeed: true,
-      pairingError: undefined
-    })
   }
 
   onSubmitInitialize() {
-    cliService.initializeCli(this.state.cliUrl, this.state.currentApiKey, this.state.cliLocal, this.encryptedSeed, this.server).then(() => {
+    cliService.initializeCli(this.state.cliUrl, this.state.currentApiKey, this.state.cliLocal, this.pairingPayload).then(() => {
       // success!
       this.goNextStep()
     }).catch(error => {
@@ -310,40 +273,33 @@ class InitPage extends Component<Props> {
     })
   }
 
-  step2() {
+  step1() {
     return <div>
-      <div className="row">
-        <div className="col-sm-12">
-          <Alert variant='info'>
-            Your seed will be encrypted in ./{CLI_CONFIG_FILENAME}. <b>whirlpool will never ask again for it.</b>
-          </Alert>
-        </div>
-      </div>
       <div className="form-group row">
-        <div className="col-sm-12">
-          {!this.state.hasEncryptedSeed && <div className="card">
-            <div className="card-header">
-              Pairing with Samourai Wallet
-            </div>
-            <div className="card-body">
-              <input type="text" className='form-control col-sm-12' onChange={e => {
+        <div className="col-sm-1 text-right">
+          <FontAwesomeIcon icon={Icons.faMobileAlt} size='6x'/>
+        </div>
+        <div className="col-sm-11">
+          <div className="row">
+            <div className="col-sm-12">
+              Get your <strong>pairing payload</strong> in Samourai Wallet, go to <strong>Settings/Transactions/Experimental</strong><br/><br/>
+              <input type="text" className='form-control' required autoFocus onChange={e => {
                   const myValue = e.target.value
                   this.onChangePairingPayload(myValue)
-                }} defaultValue='' id="pairingPayload" placeholder='Paste your pairing payload here · Copy it from Samourai Wallet: Settings/Transactions/Experimental'/>
-
-              {this.state.pairingError && <div className="row">
-                <div className="col-sm-12">
-                  <Alert variant='danger'>{this.state.pairingError}</Alert>
-                </div>
-              </div>}
+                }} onClick={e => {
+                  e.target.value = ''
+                  this.resetPairingPayload()
+              }} defaultValue='' id="pairingPayload" placeholder='Paste your pairing payload here'/>
             </div>
-          </div>}
-          {this.state.hasEncryptedSeed && <Alert variant='success'><strong>Pairing SUCCESS</strong> · Server: <strong>{this.server}</strong></Alert>}
+            {this.state.pairingError && <div className="col-sm-12"><br/>
+              <Alert variant='danger'>{this.state.pairingError}</Alert>
+            </div>}
+          </div>
         </div>
       </div>
       <div className="row">
         <div className="col-sm-12 text-center">
-          {this.state.hasEncryptedSeed && <button type="button" className="btn btn-primary" onClick={this.onSubmitInitialize}>Initialize whirlpool-cli</button>}
+          {this.state.hasPairingPayload && <button type="button" className="btn btn-primary btn-lg" onClick={this.onSubmitInitialize}>Initialize GUI</button>}
         </div>
       </div>
       {this.state.cliInitError && <div className="row">
@@ -355,7 +311,7 @@ class InitPage extends Component<Props> {
     </div>
   }
 
-  step3() {
+  step2() {
     return <div>
       <p>Success. <b>whirlpool-gui</b> is now configured.</p>
       <p>Reconnecting to CLI...</p>

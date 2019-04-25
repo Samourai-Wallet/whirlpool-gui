@@ -94,9 +94,13 @@ export class CliLocal {
     this.stop()
 
     // delete local config
-    try {
-      await fs.unlink(cliConfigPath)
-    } catch(e) {}
+    if (fs.existsSync(cliConfigPath)) {
+      try {
+        await fs.unlinkSync(cliConfigPath)
+      } catch (e) {
+        logger.error("unable to unlink " + cliConfigPath, e)
+      }
+    }
 
     this.resetState()
   }

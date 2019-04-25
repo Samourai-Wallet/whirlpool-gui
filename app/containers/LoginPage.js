@@ -36,7 +36,7 @@ class LoginPage extends Component<Props> {
   render() {
     return (
       <form className="form-signin text-center" onSubmit={(e) => {this.onSubmit();e.preventDefault()}}>
-        <h1 className="h3 mb-3 font-weight-normal">Wallet is locked</h1>
+        <h1 className="h3 mb-3 font-weight-normal">Authentication</h1>
         <div><FontAwesomeIcon icon={Icons.faLock} size='3x' color='#343a40'/></div><br/>
         <p>Your passphrase is required<br/>for opening Whirlpool wallet.</p>
         <input type="password" id="seedPassphrase" className="form-control" placeholder="Wallet passphrase" ref={this.inputPassphrase} required autoFocus/>

@@ -99,8 +99,8 @@ class CliService {
     })
   }
 
-  initializeCli(cliUrl, apiKey, cliLocal, encryptedSeedWords, server) {
-    return backendService.cli.init(cliUrl, apiKey, encryptedSeedWords, server).then(result => {
+  initializeCli(cliUrl, apiKey, cliLocal, pairingPayload) {
+    return backendService.cli.init(cliUrl, apiKey, pairingPayload).then(result => {
       const apiKey = result.apiKey
 
       // save configuration
@@ -153,7 +153,7 @@ class CliService {
   resetConfig() {
     if (this.isCliLocal()) {
       // reset CLI first
-      new cliLocalService.deleteConfig()
+      cliLocalService.deleteConfig()
     }
     this.doResetGUIConfig()
   }

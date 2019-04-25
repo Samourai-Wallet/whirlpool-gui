@@ -4,7 +4,7 @@ import { computeLogPath, logger } from './utils/logger';
 
 /* shared with mainProcess */
 
-export const API_VERSION = '0.3';
+export const API_VERSION = '0.4';
 export const GUI_VERSION = version;
 
 export const DEFAULT_CLI_LOCAL = true;
@@ -41,3 +41,5 @@ export const DL_PATH = app.getPath('userData');
 export const CLI_LOG_FILE = computeLogPath('whirlpool-cli.log');
 export const GUI_LOG_FILE = logger.getFile();
 export const CLI_CONFIG_FILENAME = 'whirlpool-cli-config.properties';
+
+export const IS_DEV = (process.env.NODE_ENV === 'development')
