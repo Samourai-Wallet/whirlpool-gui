@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Alert, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
-import { WHIRLPOOL_SERVER } from '../const';
+import { TOR_MODE, WHIRLPOOL_SERVER } from '../const';
 import { logger } from '../utils/logger';
 import { CliConfigService } from '../services/cliConfigService';
 import utils from '../services/utils';
@@ -165,11 +165,13 @@ export default class ConfigPage extends Component<Props> {
                 </div>
 
                 <div className="form-group row">
-                  <label htmlFor="inputPassword3" className="col-sm-2 col-form-label">TOR</label>
-                  <div className="col-sm-8 form-check form-check-inline">
-                    <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" disabled/>
-                    <label className="form-check-label" htmlFor="inlineCheckbox1">Enable TOR (coming soon)</label>
-                  </div>
+                  <label htmlFor="tor" className="col-sm-2 col-form-label">TOR</label>
+                  <select className="col-sm-8 form-control" id="tor" onChange={e => {
+                    const myValue = e.target.value
+                    myThis.onChangeCliConfig(cliConfig => cliConfig.tor = myValue)
+                  }} defaultValue={cliConfig.tor}>
+                    {Object.keys(TOR_MODE).map((value) => <option value={value} key={value}>{TOR_MODE[value]}</option>)}
+                  </select>
                 </div>
               </Card.Text>
             </Card.Body>

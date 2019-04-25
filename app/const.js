@@ -4,7 +4,7 @@ import { computeLogPath, logger } from './utils/logger';
 
 /* shared with mainProcess */
 
-export const API_VERSION = '0.3';
+export const API_VERSION = '0.4';
 export const GUI_VERSION = version;
 
 export const DEFAULT_CLI_LOCAL = true;
@@ -24,6 +24,11 @@ export const WHIRLPOOL_SERVER = {
   TEST: 'Whirlpool TESTNET',
   MAIN: 'Whirlpool MAINNET',
   INTEGRATION: 'Whirlpool INTEGRATION'
+};
+export const TOR_MODE = {
+  REGISTER_OUTPUT: 'Use TOR for REGISTER_OUTPUT (faster)',
+  ALL: 'Use TOR for ALL TRAFFIC (slower)',
+  FALSE: 'DISABLE TOR'
 };
 
 export const STORE_CLILOCAL = 'cli.local';
