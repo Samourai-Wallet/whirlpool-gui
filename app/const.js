@@ -13,7 +13,8 @@ export const DEFAULT_CLIPORT = 8899;
 export const IPC_CLILOCAL = {
   GET_STATE: 'cliLocal.getState',
   STATE: 'cliLocal.state',
-  RELOAD: 'cliLocal.reload'
+  RELOAD: 'cliLocal.reload',
+  DELETE_CONFIG: 'cliLocal.deleteConfig'
 };
 export const CLILOCAL_STATUS = {
   DOWNLOADING: 'DOWNLOADING',
@@ -39,3 +40,4 @@ export const DL_PATH = app.getPath('userData');
 
 export const CLI_LOG_FILE = computeLogPath('whirlpool-cli.log');
 export const GUI_LOG_FILE = logger.getFile();
+export const CLI_CONFIG_FILENAME = 'whirlpool-cli-config.properties';

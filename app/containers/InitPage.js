@@ -8,7 +8,7 @@ import SeedSelector from '../components/SeedSelector/seedSelector';
 import txt from 'raw-loader!../resources/en_US.txt';
 import encryptUtils from '../services/encryptUtils';
 import cliService from '../services/cliService';
-import { CLI_CONFIG_FILENAME } from '../services/utils';
+import { CLI_CONFIG_FILENAME } from '../const';
 import { DEFAULT_CLIPORT } from '../const';
 import { cliLocalService } from '../services/cliLocalService';
 

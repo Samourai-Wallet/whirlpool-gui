@@ -4,7 +4,7 @@ import fs from 'fs';
 import { spawn } from 'child_process';
 import Store from 'electron-store';
 import {
-  API_VERSION,
+  API_VERSION, CLI_CONFIG_FILENAME,
   CLI_LOG_FILE,
   CLILOCAL_STATUS,
   DEFAULT_CLI_LOCAL,
@@ -31,6 +31,7 @@ export class CliLocal {
 
     this.ipcMain.on(IPC_CLILOCAL.RELOAD, this.reload.bind(this))
     this.ipcMain.on(IPC_CLILOCAL.GET_STATE, this.onGetState.bind(this));
+    this.ipcMain.on(IPC_CLILOCAL.DELETE_CONFIG, this.onDeleteConfig.bind(this));
 
     this.handleExit()
 
@@ -65,10 +66,7 @@ export class CliLocal {
     this.pushState()
   }
 
-  async reload() {
-    logger.info("CLI reloading...")
-    this.stop()
-
+  resetState() {
     this.state = {
       valid: undefined,
       started: undefined,
@@ -78,8 +76,29 @@ export class CliLocal {
       progress: undefined,
       cliApi: undefined
     }
+  }
+
+  async reload() {
+    logger.info("CLI reloading...")
+    this.stop()
+
+    this.resetState()
 
     await this.refreshState()
+  }
+
+  async onDeleteConfig() {
+    const cliConfigPath = this.dlPath+'/'+CLI_CONFIG_FILENAME
+    logger.info("CLI deleting local config... "+cliConfigPath)
+
+    this.stop()
+
+    // delete local config
+    try {
+      await fs.unlink(cliConfigPath)
+    } catch(e) {}
+
+    this.resetState()
   }
 
   getStoreOrSetDefault(key, defaultValue) {

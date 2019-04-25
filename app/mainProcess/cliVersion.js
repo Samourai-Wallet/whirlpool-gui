@@ -7,12 +7,15 @@ class CliVersion {
   }
 
   fetchVersions() {
-    return fetch(VERSIONS_URL)
+    return fetch(VERSIONS_URL, {cache: "no-store"})
       .then(res => res.json())
   }
 
   fetchCliApi(cliApi) {
-    return this.fetchVersions().then(json => json.CLI_API[cliApi])
+    return this.fetchVersions().then(json => {
+      console.log('cliVersions',json)
+      return json.CLI_API[cliApi]
+    })
   }
 
 }

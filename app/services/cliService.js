@@ -10,8 +10,7 @@ import poolsService from './poolsService';
 import { cliLocalService } from './cliLocalService';
 import { DEFAULT_CLI_LOCAL, STORE_CLILOCAL } from '../const';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import * as Icons from "@fortawesome/free-solid-svg-icons";
-import { CliConfigService } from './cliConfigService';
+import * as Icons from '@fortawesome/free-solid-svg-icons';
 
 const STORE_CLIURL = "cli.url"
 const STORE_APIKEY = "cli.apiKey"
@@ -137,30 +136,26 @@ class CliService {
     logger.info("cliService.setCliLocal: "+cliLocal)
     this.cliLocal = cliLocal
     this.store.set(STORE_CLILOCAL, cliLocal)
+    if (!cliLocal) {
+      cliLocalService.deleteConfig()
+    }
     cliLocalService.reload()
   }
 
   getResetLabel() {
     let resetLabel = 'GUI'
-    if (this.isCliLocal() && this.isConnected()) {
+    if (this.isCliLocal()) {
       resetLabel += ' + CLI configuration'
     }
     return resetLabel
   }
 
   resetConfig() {
-    if (this.isCliLocal() && this.isConnected()) {
-      const myThis = this
-      // reset CLI first (or we may be stuck with invalid API key)
-      new CliConfigService().resetConfiguration().then(() => {
-        myThis.doResetGUIConfig()
-      }).catch(e => {
-        myThis.doResetGUIConfig()
-      })
+    if (this.isCliLocal()) {
+      // reset CLI first
+      new cliLocalService.deleteConfig()
     }
-    else {
-      this.doResetGUIConfig()
-    }
+    this.doResetGUIConfig()
   }
 
   doResetGUIConfig() {

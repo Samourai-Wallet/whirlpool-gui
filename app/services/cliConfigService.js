@@ -40,16 +40,6 @@ export class CliConfigService {
     })
   }
 
-  resetConfiguration() {
-    return backendService.cli.resetConfig().then(() => {
-      logger.info('Reset CLI configuration: success')
-      cliLocalService.reload()
-      cliService.fetchState()
-    }).catch(e => {
-      logger.error('Reset CLI configuration: failed', e)
-    })
-  }
-
   load () {
     return ifNot.run('cliConfigService:fetchState', () => {
       // fetchState backend

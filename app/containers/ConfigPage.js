@@ -8,6 +8,7 @@ import { logger } from '../utils/logger';
 import { CliConfigService } from '../services/cliConfigService';
 import utils from '../services/utils';
 import poolsService from '../services/poolsService';
+import cliService from '../services/cliService';
 
 type Props = {};
 
@@ -35,8 +36,8 @@ export default class ConfigPage extends Component<Props> {
   }
 
   onResetConfig() {
-    if (confirm('This will reset CLI configuration. Are you sure?')) {
-      this.cliConfigService.resetConfiguration()
+    if (confirm('This will reset '+cliService.getResetLabel()+'. Are you sure?')) {
+      cliService.resetConfig()
     }
   }
 
@@ -268,7 +269,7 @@ export default class ConfigPage extends Component<Props> {
 
           <div className="form-group row">
             <div className="col-sm-5">
-              <button type='button' className='btn btn-danger' onClick={this.onResetConfig}><FontAwesomeIcon icon={Icons.faExclamationTriangle} /> Reset CLI configuration</button>
+              <button type='button' className='btn btn-danger' onClick={this.onResetConfig}><FontAwesomeIcon icon={Icons.faExclamationTriangle} /> Reset {cliService.getResetLabel()}</button>
             </div>
             <div className="col-sm-5">
               <button type="submit" className="btn btn-primary">Save</button>
