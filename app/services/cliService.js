@@ -99,8 +99,8 @@ class CliService {
     })
   }
 
-  initializeCli(cliUrl, apiKey, cliLocal, encryptedSeedWords) {
-    return backendService.cli.init(cliUrl, apiKey, encryptedSeedWords).then(result => {
+  initializeCli(cliUrl, apiKey, cliLocal, encryptedSeedWords, server) {
+    return backendService.cli.init(cliUrl, apiKey, encryptedSeedWords, server).then(result => {
       const apiKey = result.apiKey
 
       // save configuration

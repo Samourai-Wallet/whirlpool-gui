@@ -60,10 +60,11 @@ class BackendService {
           this.fetchBackendAsJson('/rest/cli', 'GET', undefined, cliUrl, apiKey)
         , 'cli.status')
     },
-    init: (cliUrl, apiKey, encryptedSeedWords) => {
+    init: (cliUrl, apiKey, encryptedSeedWords, server) => {
       return this.withStatus('CLI', 'Initialize configuration', () =>
         this.fetchBackendAsJson('/rest/cli/init', 'POST', {
-          encryptedSeedWords: encryptedSeedWords
+          encryptedSeedWords: encryptedSeedWords,
+          server: server
         }, cliUrl, apiKey)
         , 'cli.init')
     },

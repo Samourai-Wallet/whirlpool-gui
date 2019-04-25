@@ -4,12 +4,8 @@ import { Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import SeedSelector from '../components/SeedSelector/seedSelector';
-import txt from 'raw-loader!../resources/en_US.txt';
-import encryptUtils from '../services/encryptUtils';
 import cliService from '../services/cliService';
-import { CLI_CONFIG_FILENAME } from '../const';
-import { DEFAULT_CLIPORT } from '../const';
+import { CLI_CONFIG_FILENAME, DEFAULT_CLIPORT } from '../const';
 import { cliLocalService } from '../services/cliLocalService';
 
 const STEP_LAST = 3
@@ -24,6 +20,7 @@ class InitPage extends Component<Props> {
 
     this.state = {
       step: 0,
+      navNextStep: false,
       cliLocal: cliService.isCliLocal(),
       cliUrl: undefined,
       currentCliHost: DEFAULT_CLIHOST,
@@ -31,14 +28,16 @@ class InitPage extends Component<Props> {
       currentApiKey: DEFAULT_APIKEY,
       cliError: undefined,
       hasPassphrase: false,
-      hasEncryptedSeedWords: false,
+      hasEncryptedSeed: false,
+      pairingError: undefined,
       cliInitError: undefined
     }
-    this.words = txt.trim().split('\n')
 
     // configuration data
     this.passphrase = undefined
-    this.encryptedSeedWords = undefined
+    this.hasEncryptedSeed = undefined
+    this.encryptedSeed = undefined
+    this.server = undefined
 
     this.inputCliHost = React.createRef()
     this.inputCliPort = React.createRef()
@@ -50,8 +49,7 @@ class InitPage extends Component<Props> {
     this.onChangeInputCliHostPort = this.onChangeInputCliHostPort.bind(this)
     this.connectCli = this.connectCli.bind(this)
     this.onChangePassphrase = this.onChangePassphrase.bind(this)
-    this.onSubmitEncryptedSeedWords = this.onSubmitEncryptedSeedWords.bind(this)
-    this.encryptSeedWords = this.encryptSeedWords.bind(this)
+    this.onChangePairingPayload = this.onChangePairingPayload.bind(this)
     this.onSubmitInitialize = this.onSubmitInitialize.bind(this)
   }
 
@@ -68,6 +66,7 @@ class InitPage extends Component<Props> {
   }
 
   navButtons(next=true,previous=true) {
+    this.navNextStep = next
 
     return <div className="form-group row">
       <div className="col-sm-5">
@@ -88,11 +87,16 @@ class InitPage extends Component<Props> {
 
         {this.state.cliUrl && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Connected to whirlpool-cli: {this.state.cliUrl}</div>}
         {this.state.hasPassphrase && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Passphrase set for seed encryption</div>}
-        {this.state.hasEncryptedSeedWords && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Seed encrypted</div>}
+        {this.state.hasEncryptedSeed && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Seed encrypted</div>}
         {this.state.step === STEP_LAST && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Configuration saved</div>}
         <br/>
 
-        <form onSubmit={(e) => {this.goNextStep();e.preventDefault()}}>
+        <form onSubmit={(e) => {
+          if (this.navNextStep) {
+            this.goNextStep();
+          }
+          e.preventDefault()
+        }}>
 
         {this.state.step === 0 && this.step0()}
 
@@ -232,7 +236,7 @@ class InitPage extends Component<Props> {
     this.setState({
       hasPassphrase: true
     })
-    this.resetEncryptedSeedWords()
+    this.resetEncryptedSeed()
   }
 
   resetPassphrase() {
@@ -240,13 +244,15 @@ class InitPage extends Component<Props> {
     this.setState({
       hasPassphrase: false
     })
-    this.resetEncryptedSeedWords()
+    this.resetEncryptedSeed()
   }
 
-  resetEncryptedSeedWords() {
-    this.encryptedSeedWords = undefined
+  resetEncryptedSeed() {
+    this.encryptedSeed = undefined
+    this.server = undefined
     this.setState({
-      hasEncryptedSeedWords: false,
+      hasEncryptedSeed: false,
+      pairingError: undefined,
       cliInitError: undefined
     })
   }
@@ -271,22 +277,29 @@ class InitPage extends Component<Props> {
     </div>
   }
 
-  // seed words selection
+  // seed selection
 
-  onSubmitEncryptedSeedWords(encryptedSeedWords) {
-    console.log('encryptedSeedWords',encryptedSeedWords)
-    this.encryptedSeedWords = encryptedSeedWords
+  onChangePairingPayload(payloadStr) {
+    let payload = undefined
+    try {
+      payload = JSON.parse(payloadStr)
+    } catch(e) {}
+    if (!payload || !payload.pairing || payload.pairing.type !== 'whirlpool.gui' || payload.pairing.version !== '1.0.0' || (payload.pairing.network != 'mainnet' && payload.pairing.network != 'testnet') || !payload.pairing.mnemonic) {
+      console.error('Invalid encryptedSeedPayload: '+payload)
+      this.setState({
+        pairingError: 'Invalid pairing payload'
+      })
+    }
+    this.encryptedSeed = payload.pairing.mnemonic
+    this.server = payload.pairing.network
     this.setState({
-      hasEncryptedSeedWords: true
+      hasEncryptedSeed: true,
+      pairingError: undefined
     })
   }
 
-  encryptSeedWords(seedWords) {
-    return encryptUtils.encrypt(this.passphrase,seedWords)
-  }
-
   onSubmitInitialize() {
-    cliService.initializeCli(this.state.cliUrl, this.state.currentApiKey, this.state.cliLocal, this.encryptedSeedWords).then(() => {
+    cliService.initializeCli(this.state.cliUrl, this.state.currentApiKey, this.state.cliLocal, this.encryptedSeed, this.server).then(() => {
       // success!
       this.goNextStep()
     }).catch(error => {
@@ -308,19 +321,29 @@ class InitPage extends Component<Props> {
       </div>
       <div className="form-group row">
         <div className="col-sm-12">
-          <div className="card">
+          {!this.state.hasEncryptedSeed && <div className="card">
             <div className="card-header">
-              Seed selection
+              Pairing with Samourai Wallet
             </div>
             <div className="card-body">
-              <SeedSelector words={this.words} encrypt={this.encryptSeedWords} onSubmit={this.onSubmitEncryptedSeedWords}/>
+              <input type="text" className='form-control col-sm-12' onChange={e => {
+                  const myValue = e.target.value
+                  this.onChangePairingPayload(myValue)
+                }} defaultValue='' id="pairingPayload" placeholder='Paste your pairing payload here · Copy it from Samourai Wallet: Settings/Transactions/Experimental'/>
+
+              {this.state.pairingError && <div className="row">
+                <div className="col-sm-12">
+                  <Alert variant='danger'>{this.state.pairingError}</Alert>
+                </div>
+              </div>}
             </div>
-          </div>
+          </div>}
+          {this.state.hasEncryptedSeed && <Alert variant='success'><strong>Pairing SUCCESS</strong> · Server: <strong>{this.server}</strong></Alert>}
         </div>
       </div>
       <div className="row">
         <div className="col-sm-12 text-center">
-          {this.encryptedSeedWords && <button type="button" className="btn btn-primary" onClick={this.onSubmitInitialize}>Initialize whirlpool-cli</button>}
+          {this.state.hasEncryptedSeed && <button type="button" className="btn btn-primary" onClick={this.onSubmitInitialize}>Initialize whirlpool-cli</button>}
         </div>
       </div>
       {this.state.cliInitError && <div className="row">
