@@ -173,6 +173,24 @@ export default class ConfigPage extends Component<Props> {
                     {Object.keys(TOR_MODE).map((value) => <option value={value} key={value}>{TOR_MODE[value]}</option>)}
                   </select>
                 </div>
+
+                <div className="form-group row">
+                  <label htmlFor="proxy" className="col-sm-2 col-form-label">Proxy</label>
+                  <div className="col-sm-10">
+                    <div className='row'>
+                      <input type="text" className='form-control col-sm-4' onChange={e => {
+                        const myValue = e.target.value
+                        myThis.onChangeCliConfig(cliConfig => cliConfig.proxy = myValue)
+                      }} defaultValue={cliConfig.proxy} id="proxy"/>
+                      <label className='col-form-label col-sm-8'>
+                        Connect through SOCKS/HTTP proxy.<br/>
+                        <small>Tor proxy: socks://localhost:9050<br/>
+                        Tor Browser: socks://localhost:9150<br/>
+                        HTTP proxy: http://your-proxy:8080</small>
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </Card.Text>
             </Card.Body>
           </Card>
