@@ -21,6 +21,7 @@ import crypto from 'crypto';
 import cliVersion from './cliVersion';
 
 const START_TIMEOUT = 4000
+const ARG_GUI = '--whirlpool-gui'
 
 export class CliLocal {
 
@@ -241,7 +242,7 @@ export class CliLocal {
           myThis.state.started = new Date().getTime()
           myThis.pushState()
           const cmd = 'java'
-          const args = ['-jar', myThis.getCliFilename(), '--listen', '--debug']
+          const args = ['-jar', myThis.getCliFilename(), '--listen', '--debug', ARG_GUI]
           myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE)
         }, (e) => {
           // port in use => cannot start proc
@@ -284,7 +285,7 @@ export class CliLocal {
       }
       resultList.forEach(function( process ){
         if( process ){
-          if (process.arguments && process.arguments.indexOf('-jar') !== -1  && process.arguments.indexOf(cliFileName) !== -1) {
+          if (process.arguments && process.arguments.indexOf('-jar') !== -1  && process.arguments.indexOf(cliFileName) !== -1 && process.arguments.indexOf(ARG_GUI) !== -1) {
             callbackEachProcess(process)
           }
         }
