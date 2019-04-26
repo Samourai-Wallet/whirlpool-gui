@@ -15,7 +15,7 @@ import * as Icons from '@fortawesome/free-solid-svg-icons';
 const STORE_CLIURL = "cli.url"
 const STORE_APIKEY = "cli.apiKey"
 
-const REFRESH_RATE = 8000;
+const REFRESH_RATE = 6000;
 class CliService {
   constructor () {
     this.setState = undefined

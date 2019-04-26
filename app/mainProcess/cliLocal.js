@@ -4,6 +4,7 @@ import fs from 'fs';
 import { spawn } from 'child_process';
 import Store from 'electron-store';
 import AwaitLock from 'await-lock';
+import ps from 'ps-node'
 import {
   API_VERSION, CLI_CONFIG_FILENAME,
   CLI_LOG_FILE,
@@ -19,7 +20,7 @@ import { logger } from '../utils/logger';
 import crypto from 'crypto';
 import cliVersion from './cliVersion';
 
-const START_TIMEOUT = 10000
+const START_TIMEOUT = 4000
 
 export class CliLocal {
 
@@ -36,6 +37,8 @@ export class CliLocal {
     this.ipcMain.on(IPC_CLILOCAL.RELOAD, () => this.onIpcMain(IPC_CLILOCAL.RELOAD))
     this.ipcMain.on(IPC_CLILOCAL.GET_STATE, () => this.onIpcMain(IPC_CLILOCAL.GET_STATE));
     this.ipcMain.on(IPC_CLILOCAL.DELETE_CONFIG, () => this.onIpcMain(IPC_CLILOCAL.DELETE_CONFIG));
+
+    this.findCliProcesses = this.findCliProcesses.bind(this)
 
     this.handleExit()
 
@@ -65,7 +68,7 @@ export class CliLocal {
 
     const exitHandler = () => {
       logger.info("whirlpool-gui is terminating.")
-      this.stop()
+      this.stop(true) // kill immediately
       process.exit()
     }
     //do something when app is closing
@@ -243,6 +246,20 @@ export class CliLocal {
         }, (e) => {
           // port in use => cannot start proc
           logger.error("[CLI_LOCAL] cannot start: port "+DEFAULT_CLIPORT+" already in use")
+
+          // lookup running processes
+          myThis.findCliProcesses(cliProcess => {
+            logger.debug( 'Foud CLI proces => killing', cliProcess);
+            ps.kill(cliProcess.pid, err => {
+              if (err) {
+                logger.error('Kill '+cliProcess.pid+' FAILED', err)
+              }
+              else {
+                logger.debug( 'Kill '+cliProcess.pid+' SUCCESS');
+              }
+            });
+          })
+
           myThis.state.error = 'CLI cannot start: port '+DEFAULT_CLIPORT+' already in use'
           myThis.updateState(CLILOCAL_STATUS.ERROR)
         });
@@ -254,6 +271,27 @@ export class CliLocal {
     }
   }
 
+  findCliProcesses(callbackEachProcess) {
+    const cliFileName = this.getCliFilename()
+    callbackEachProcess = callbackEachProcess.bind(this)
+
+    return ps.lookup({
+      command: 'java',
+      psargs: 'ux'
+    }, function(err, resultList ) {
+      if (err) {
+        throw new Error( err );
+      }
+      resultList.forEach(function( process ){
+        if( process ){
+          if (process.arguments && process.arguments.indexOf('-jar') !== -1  && process.arguments.indexOf(cliFileName) !== -1) {
+            callbackEachProcess(process)
+          }
+        }
+      });
+    });
+  }
+
   startProc(cmd, args, cwd, logFile) {
     const cliLog = fs.createWriteStream(logFile, {flags: 'a'})
     const myThis = this
@@ -261,37 +299,41 @@ export class CliLocal {
     const cmdStr = cmd+' '+args.join(' ')
     cliLog.write('[CLI_LOCAL] => start: '+cmdStr+' (cwd='+cwd+')\n')
     logger.info('[CLI_LOCAL] => start: '+cmdStr+' (cwd='+cwd+')')
-    this.cliProc = spawn(cmd, args, {cwd: cwd})
-    this.cliProc.on('error', function( err ) {
-      cliLog.write('[CLI_LOCAL][ERROR] => '+err+'\n')
-      logger.error('[CLI_LOCAL] => ', err)
-    })
-    this.cliProc.on('exit', (code) => {
-      if (code == 0) {
-        // finishing normal
-        cliLog.write('[CLI_LOCAL] => terminated without error.\n')
-        logger.info('[CLI_LOCAL] => terminated without error.')
-      } else {
-        // finishing with error
-        cliLog.write('[CLI_LOCAL][ERROR] => terminated with error: '+code+'\n')
-        logger.error('[CLI_LOCAL] => terminated with error: '+code+'. Check logs for details ('+GUI_LOG_FILE+' & '+CLI_LOG_FILE+')')
-      }
-      myThis.stop(true, false) // just update state
-    })
+    try {
+      this.cliProc = spawn(cmd, args, { cwd: cwd })
+      this.cliProc.on('error', function(err) {
+        cliLog.write('[CLI_LOCAL][ERROR] => ' + err + '\n')
+        logger.error('[CLI_LOCAL] => ', err)
+      })
+      this.cliProc.on('exit', (code) => {
+        if (code == 0) {
+          // finishing normal
+          cliLog.write('[CLI_LOCAL] => terminated without error.\n')
+          logger.info('[CLI_LOCAL] => terminated without error.')
+        } else {
+          // finishing with error
+          cliLog.write('[CLI_LOCAL][ERROR] => terminated with error: ' + code + '\n')
+          logger.error('[CLI_LOCAL] => terminated with error: ' + code + '. Check logs for details (' + GUI_LOG_FILE + ' & ' + CLI_LOG_FILE + ')')
+        }
+        myThis.stop(true, false) // just update state
+      })
 
-    this.cliProc.stdout.on('data', function (data) {
-      const dataStr = data.toString()
-      const dataLine = dataStr.substring(0, (dataStr.length-1))
-      console.log('[CLI_LOCAL] ' + dataLine);
-      cliLog.write(data)
-    });
-    this.cliProc.stderr.on('data', function (data) {
-      const dataStr = data.toString()
-      const dataLine = dataStr.substring(0, (dataStr.length-1))
-      console.error('[CLI_LOCAL] ' + dataLine);
-      logger.error('[CLI_LOCAL] '+dataLine)
-      cliLog.write('[ERROR]'+data)
-    });
+      this.cliProc.stdout.on('data', function(data) {
+        const dataStr = data.toString()
+        const dataLine = dataStr.substring(0, (dataStr.length - 1))
+        console.log('[CLI_LOCAL] ' + dataLine);
+        cliLog.write(data)
+      });
+      this.cliProc.stderr.on('data', function(data) {
+        const dataStr = data.toString()
+        const dataLine = dataStr.substring(0, (dataStr.length - 1))
+        console.error('[CLI_LOCAL] ' + dataLine);
+        logger.error('[CLI_LOCAL] ' + dataLine)
+        cliLog.write('[ERROR]' + data)
+      });
+    } catch(e) {
+      myThis.stop(true)
+    }
   }
 
   async stop(gotMutex=false, kill=true) {
