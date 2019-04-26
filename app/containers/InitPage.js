@@ -283,7 +283,7 @@ class InitPage extends Component<Props> {
           <div className="row">
             <div className="col-sm-12">
               Get your <strong>pairing payload</strong> in Samourai Wallet, go to <strong>Settings/Transactions/Experimental</strong><br/><br/>
-              <input type="text" className='form-control' required autoFocus onChange={e => {
+              <input type="text" className='form-control input-lg' required autoFocus onChange={e => {
                   const myValue = e.target.value
                   this.onChangePairingPayload(myValue)
                 }} onClick={e => {

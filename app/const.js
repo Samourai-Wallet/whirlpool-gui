@@ -36,10 +36,11 @@ export const STORE_CLILOCAL = 'cli.local';
 
 const app = electron.app || electron.remote.app;
 
-export const DL_PATH = app.getPath('userData');
+export const IS_DEV = (process.env.NODE_ENV === 'development')
+const DL_PATH_DEV = '/zl/workspaces/whirlpool/whirlpool-client-cli4/target/'
+export const DL_PATH = IS_DEV ? DL_PATH_DEV : app.getPath('userData');
 
 export const CLI_LOG_FILE = computeLogPath('whirlpool-cli.log');
 export const GUI_LOG_FILE = logger.getFile();
 export const CLI_CONFIG_FILENAME = 'whirlpool-cli-config.properties';
 
-export const IS_DEV = (process.env.NODE_ENV === 'development')

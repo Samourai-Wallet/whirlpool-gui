@@ -27,8 +27,8 @@ The following files are stored in ```userData``` which varies depending on your 
 
 ## Development
 ### Install
-- npm (sudo apt install npm)
-- yarn (sudo npm install -g yarn) or see www.yarnpkg.com
+- npm: sudo apt install npm
+- yarn: sudo npm install -g yarn (or see www.yarnpkg.com)
 
 
 ```
@@ -47,7 +47,7 @@ yarn dev
 
 ```
 cd whirlpool-gui
-yarn dev
+yarn package
 ```
 
 ## Resources

@@ -17,7 +17,7 @@ class CliVersion {
       // mock for DEV
       return {
         CLI_VERSION: 'develop-SNAPSHOT',
-        CLI_CHECKSUM: 'e6dbe3d037fbbe88bfde62794317e1fd654412dd3effc3f3c8eceef0d9b4418c'
+        CLI_CHECKSUM: 'dev'
       }
     }
     return this.fetchVersions().then(json => {
