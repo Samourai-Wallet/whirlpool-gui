@@ -149,6 +149,14 @@ class App extends React.Component<Props> {
               </div>}
 
               <ul className="nav flex-column">
+                {cliService.isCliStatusReady() && !cliService.isLoggedIn() && <li className="nav-item">
+                  <Link to={routes.HOME}>
+                    <a className="nav-link">
+                      <span data-feather="terminal"></span>
+                      <strong>Authentication</strong>
+                    </a>
+                  </Link>
+                </li>}
                 {cliService.isLoggedIn() && walletService.isReady() && <li className="nav-item">
                   <Link to={routes.LAST_ACTIVITY}>
                     <a className="nav-link">
@@ -184,6 +192,7 @@ class App extends React.Component<Props> {
                     </a>
                   </Link>
                 </li>}
+                {cliService.isLoggedIn() && walletService.isReady() && <br/>}
                 {cliService.isConfigured() && cliService.isCliStatusReady() && <li className="nav-item">
                   <Link to={routes.CONFIG}>
                     <a className="nav-link">
@@ -192,7 +201,7 @@ class App extends React.Component<Props> {
                     </a>
                   </Link>
                 </li>}
-                {!cliService.isConfigured() && <li className="nav-item">
+                {(!cliService.isConfigured() || cliService.isCliStatusNotInitialized()) && <li className="nav-item">
                   <Link to={routes.HOME}>
                     <a className="nav-link">
                       <span data-feather="settings"></span>

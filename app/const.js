@@ -26,11 +26,6 @@ export const WHIRLPOOL_SERVER = {
   MAIN: 'Whirlpool MAINNET',
   INTEGRATION: 'Whirlpool INTEGRATION'
 };
-export const TOR_MODE = {
-  REGISTER_OUTPUT: 'Use TOR for REGISTER_OUTPUT (faster)',
-  ALL: 'Use TOR for ALL TRAFFIC (slower)',
-  FALSE: 'DISABLE TOR'
-};
 
 export const STORE_CLILOCAL = 'cli.local';
 

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Alert, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
-import { TOR_MODE, WHIRLPOOL_SERVER } from '../const';
+import { WHIRLPOOL_SERVER } from '../const';
 import { logger } from '../utils/logger';
 import { CliConfigService } from '../services/cliConfigService';
 import utils from '../services/utils';
@@ -167,12 +167,12 @@ export default class ConfigPage extends Component<Props> {
 
                 <div className="form-group row">
                   <label htmlFor="tor" className="col-sm-2 col-form-label">TOR</label>
-                  <select className="col-sm-8 form-control" id="tor" onChange={e => {
-                    const myValue = e.target.value
-                    myThis.onChangeCliConfig(cliConfig => cliConfig.tor = myValue)
-                  }} defaultValue={cliConfig.tor}>
-                    {Object.keys(TOR_MODE).map((value) => <option value={value} key={value}>{TOR_MODE[value]}</option>)}
-                  </select>
+                  <div className="col-sm-10">
+                    <div className="custom-control custom-switch">
+                      <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeCliConfig(cliConfig => cliConfig.tor = checked(e))} defaultChecked={cliConfig.tor} id="tor"/>
+                      <label className="custom-control-label" htmlFor="tor">Route all traffic through TOR</label>
+                    </div>}
+                  </div>
                 </div>
 
                 <div className="form-group row">

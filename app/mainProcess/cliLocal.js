@@ -21,7 +21,7 @@ import crypto from 'crypto';
 import cliVersion from './cliVersion';
 
 const START_TIMEOUT = 4000
-const ARG_GUI = '--whirlpool-gui'
+const ARG_CLI_GUI = '--whirlpool-cli-gui'
 
 export class CliLocal {
 
@@ -242,23 +242,31 @@ export class CliLocal {
           myThis.state.started = new Date().getTime()
           myThis.pushState()
           const cmd = 'java'
-          const args = ['-jar', myThis.getCliFilename(), '--listen', '--debug', ARG_GUI]
+          const args = ['-jar', myThis.getCliFilename(), '--listen', '--debug', ARG_CLI_GUI]
           myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE)
         }, (e) => {
           // port in use => cannot start proc
           logger.error("[CLI_LOCAL] cannot start: port "+DEFAULT_CLIPORT+" already in use")
 
           // lookup running processes
-          myThis.findCliProcesses(cliProcess => {
-            logger.debug( 'Foud CLI proces => killing', cliProcess);
-            ps.kill(cliProcess.pid, err => {
-              if (err) {
-                logger.error('Kill '+cliProcess.pid+' FAILED', err)
-              }
-              else {
-                logger.debug( 'Kill '+cliProcess.pid+' SUCCESS');
-              }
-            });
+          myThis.findCliProcesses(cliProcesses => {
+            for (const i in cliProcesses) {
+              const cliProcess = cliProcesses[i]
+
+              logger.debug('Foud CLI proces => killing', cliProcess);
+              ps.kill(cliProcess.pid, err => {
+                if (err) {
+                  logger.error('Kill ' + cliProcess.pid + ' FAILED', err)
+                } else {
+                  logger.debug('Kill ' + cliProcess.pid + ' SUCCESS');
+                }
+                const isLastProcess = (i === (cliProcesses.length - 1))
+                if (isLastProcess) {
+                  // retry start
+                  myThis.start(true)
+                }
+              });
+            }
           })
 
           myThis.state.error = 'CLI cannot start: port '+DEFAULT_CLIPORT+' already in use'
@@ -272,9 +280,8 @@ export class CliLocal {
     }
   }
 
-  findCliProcesses(callbackEachProcess) {
-    const cliFileName = this.getCliFilename()
-    callbackEachProcess = callbackEachProcess.bind(this)
+  findCliProcesses(callback) {
+    callback = callback.bind(this)
 
     return ps.lookup({
       command: 'java',
@@ -283,13 +290,15 @@ export class CliLocal {
       if (err) {
         throw new Error( err );
       }
+      const processes = []
       resultList.forEach(function( process ){
         if( process ){
-          if (process.arguments && process.arguments.indexOf('-jar') !== -1  && process.arguments.indexOf(cliFileName) !== -1 && process.arguments.indexOf(ARG_GUI) !== -1) {
-            callbackEachProcess(process)
+          if (process.arguments && process.arguments.indexOf('-jar') !== -1  && process.arguments.indexOf(ARG_CLI_GUI) !== -1) {
+            processes.push(process)
           }
         }
       });
+      callback(processes)
     });
   }
 
@@ -307,16 +316,26 @@ export class CliLocal {
         logger.error('[CLI_LOCAL] => ', err)
       })
       this.cliProc.on('exit', (code) => {
+        let reloading = false
         if (code == 0) {
           // finishing normal
           cliLog.write('[CLI_LOCAL] => terminated without error.\n')
           logger.info('[CLI_LOCAL] => terminated without error.')
         } else {
           // finishing with error
-          cliLog.write('[CLI_LOCAL][ERROR] => terminated with error: ' + code + '\n')
-          logger.error('[CLI_LOCAL] => terminated with error: ' + code + '. Check logs for details (' + GUI_LOG_FILE + ' & ' + CLI_LOG_FILE + ')')
+          if (code === 143) {
+            // reloading? TODO
+            reloading = true
+            cliLog.write('[CLI_LOCAL] => terminated for reloading...\n')
+            logger.error('[CLI_LOCAL] => terminated for reloading...')
+          } else {
+            cliLog.write('[CLI_LOCAL][ERROR] => terminated with error: ' + code + '\n')
+            logger.error('[CLI_LOCAL] => terminated with error: ' + code + '. Check logs for details (' + GUI_LOG_FILE + ' & ' + CLI_LOG_FILE + ')')
+          }
         }
-        myThis.stop(true, false) // just update state
+        if (!reloading) {
+          myThis.stop(true, false) // just update state
+        }
       })
 
       this.cliProc.stdout.on('data', function(data) {
