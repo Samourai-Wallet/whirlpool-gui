@@ -3,6 +3,7 @@ import tcpPortUsed from 'tcp-port-used';
 import fs from 'fs';
 import { spawn } from 'child_process';
 import Store from 'electron-store';
+import AwaitLock from 'await-lock';
 import {
   API_VERSION, CLI_CONFIG_FILENAME,
   CLI_LOG_FILE,
@@ -18,7 +19,8 @@ import { logger } from '../utils/logger';
 import crypto from 'crypto';
 import cliVersion from './cliVersion';
 
-const START_TIMEOUT = 20000
+const START_TIMEOUT = 10000
+
 export class CliLocal {
 
   constructor(ipcMain, window) {
@@ -28,14 +30,32 @@ export class CliLocal {
     this.window = window
     this.dlPath = DL_PATH
     this.store = new Store()
+    this.ipcMutex = new AwaitLock()
 
-    this.ipcMain.on(IPC_CLILOCAL.RELOAD, this.reload.bind(this))
-    this.ipcMain.on(IPC_CLILOCAL.GET_STATE, this.onGetState.bind(this));
-    this.ipcMain.on(IPC_CLILOCAL.DELETE_CONFIG, this.onDeleteConfig.bind(this));
+    this.onIpcMain = this.onIpcMain.bind(this)
+    this.ipcMain.on(IPC_CLILOCAL.RELOAD, () => this.onIpcMain(IPC_CLILOCAL.RELOAD))
+    this.ipcMain.on(IPC_CLILOCAL.GET_STATE, () => this.onIpcMain(IPC_CLILOCAL.GET_STATE));
+    this.ipcMain.on(IPC_CLILOCAL.DELETE_CONFIG, () => this.onIpcMain(IPC_CLILOCAL.DELETE_CONFIG));
 
     this.handleExit()
 
     this.reload()
+  }
+
+  async onIpcMain(id) {
+    logger.debug('### onIpcMain: '+id+' ###')
+    await this.ipcMutex.acquireAsync();
+    try {
+      logger.debug('### onIpcMain: '+id+' ### =>')
+      switch(id) {
+        case IPC_CLILOCAL.RELOAD: await this.reload(true); break
+        case IPC_CLILOCAL.GET_STATE: await this.onGetState(true); break
+        case IPC_CLILOCAL.DELETE_CONFIG: await this.onDeleteConfig(true); break
+      }
+    } finally {
+      logger.debug('### onIpcMain: '+id+' ### <=')
+      this.ipcMutex.release();
+    }
   }
 
   handleExit() {
@@ -62,8 +82,17 @@ export class CliLocal {
     process.on('uncaughtException', exitHandler);
   }
 
-  onGetState() {
-    this.pushState()
+  async onGetState(gotMutex=false) {
+    if (!gotMutex) {
+      await this.ipcMutex.acquireAsync();
+    }
+    try {
+      this.pushState()
+    } finally {
+      if (!gotMutex) {
+        this.ipcMutex.release();
+      }
+    }
   }
 
   resetState() {
@@ -78,20 +107,20 @@ export class CliLocal {
     }
   }
 
-  async reload() {
+  async reload(gotMutex=false) {
     logger.info("CLI reloading...")
-    this.stop()
+    await this.stop(gotMutex)
 
     this.resetState()
 
-    await this.refreshState()
+    await this.refreshState(true, gotMutex)
   }
 
-  async onDeleteConfig() {
+  async onDeleteConfig(gotMutex=false) {
     const cliConfigPath = this.dlPath+'/'+CLI_CONFIG_FILENAME
     logger.info("CLI deleting local config... "+cliConfigPath)
 
-    this.stop()
+    await this.stop(gotMutex)
 
     // delete local config
     if (fs.existsSync(cliConfigPath)) {
@@ -127,8 +156,7 @@ export class CliLocal {
     return this.getStoreOrSetDefault(STORE_CLILOCAL, DEFAULT_CLI_LOCAL)
   }
 
-  async refreshState(downloadIfMissing=true) {
-
+  async refreshState(downloadIfMissing=true, gotMutex=false) {
     try {
       const cliApi = await cliVersion.fetchCliApi(API_VERSION)
       logger.info('using CLI_API ' + API_VERSION, cliApi)
@@ -143,7 +171,7 @@ export class CliLocal {
       this.state.valid = false
       this.state.error = 'Could not fetch CLI_API '+API_VERSION
       this.updateState(CLILOCAL_STATUS.ERROR)
-      this.stop()
+      await this.stop(gotMutex)
       return
     }
 
@@ -152,7 +180,7 @@ export class CliLocal {
     if (!this.state.valid) {
       if (this.state.started) {
         logger.info("CLI is invalid, stopping.")
-        this.stop()
+        await this.stop(gotMutex)
       }
       if (downloadIfMissing) {
         if (this.state.status === CLILOCAL_STATUS.DOWNLOADING || this.state.status === CLILOCAL_STATUS.ERROR) {
@@ -183,35 +211,47 @@ export class CliLocal {
     } else {
       this.updateState(CLILOCAL_STATUS.READY)
       if (!this.state.started && this.isCliLocal()) {
-        this.start()
+        await this.start(gotMutex)
       }
     }
   }
 
-  start() {
-    if (!this.state.valid) {
-      console.error("[CLI_LOCAL] start skipped: not valid")
-      return
+  async start(gotMutex=false) {
+    logger.debug('# start #'+gotMutex)
+    if (!gotMutex) {
+      await this.ipcMutex.acquireAsync();
     }
-    if (this.state.started) {
-      console.error("[CLI_LOCAL] start skipped: already started")
-      return
+    try {
+      logger.debug('# start # =>')
+      if (!this.state.valid) {
+        console.error("[CLI_LOCAL] start skipped: not valid")
+        return
+      }
+      if (this.state.started) {
+        console.error("[CLI_LOCAL] start skipped: already started")
+        return
+      }
+      const myThis = this
+      await tcpPortUsed.waitUntilFreeOnHost(DEFAULT_CLIPORT, 'localhost', 1000, START_TIMEOUT)
+        .then(() => {
+          // port is available => start proc
+          myThis.state.started = new Date().getTime()
+          myThis.pushState()
+          const cmd = 'java'
+          const args = ['-jar', myThis.getCliFilename(), '--listen', '--debug']
+          myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE)
+        }, (e) => {
+          // port in use => cannot start proc
+          logger.error("[CLI_LOCAL] cannot start: port "+DEFAULT_CLIPORT+" already in use")
+          myThis.state.error = 'CLI cannot start: port '+DEFAULT_CLIPORT+' already in use'
+          myThis.updateState(CLILOCAL_STATUS.ERROR)
+        });
+    } finally {
+      logger.debug('# start # <='+gotMutex)
+      if (!gotMutex) {
+        this.ipcMutex.release();
+      }
     }
-    const myThis = this
-    tcpPortUsed.waitUntilFreeOnHost(DEFAULT_CLIPORT, 'localhost', 1000, START_TIMEOUT)
-      .then(() => {
-        // port is available => start proc
-        myThis.state.started = new Date().getTime()
-        myThis.pushState()
-        const cmd = 'java'
-        const args = ['-jar', myThis.getCliFilename(), '--listen', '--debug']
-        myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE)
-      }, (e) => {
-        // port in use => cannot start proc
-        logger.error("[CLI_LOCAL] cannot start: port "+DEFAULT_CLIPORT+" already in use")
-        myThis.state.error = 'CLI cannot start: port '+DEFAULT_CLIPORT+' already in use'
-        myThis.updateState(CLILOCAL_STATUS.ERROR)
-      });
   }
 
   startProc(cmd, args, cwd, logFile) {
@@ -234,9 +274,9 @@ export class CliLocal {
       } else {
         // finishing with error
         cliLog.write('[CLI_LOCAL][ERROR] => terminated with error: '+code+'\n')
-        logger.error('[CLI_LOCAL] => terminated with error: '+code+'. Check logs for details ('+GUI_LOG_FILE+')')
+        logger.error('[CLI_LOCAL] => terminated with error: '+code+'. Check logs for details ('+GUI_LOG_FILE+' & '+CLI_LOG_FILE+')')
       }
-      myThis.stop()
+      myThis.stop(true, false) // just update state
     })
 
     this.cliProc.stdout.on('data', function (data) {
@@ -254,20 +294,32 @@ export class CliLocal {
     });
   }
 
-  stop() {
-    if (!this.state.started) {
-      console.error("CliLocal: stop skipped: not started")
-      return
+  async stop(gotMutex=false, kill=true) {
+    logger.debug('# stop # '+gotMutex)
+    if (!gotMutex) {
+      await this.ipcMutex.acquireAsync();
     }
+    try {
+      logger.debug('# stop # =>'+gotMutex)
+      if (!this.state.started) {
+        console.error("CliLocal: stop skipped: not started")
+        return
+      }
 
-    this.state.started = false
-    this.pushState()
+      this.state.started = false
+      this.pushState()
 
-    if (this.cliProc) {
-      logger.info('CLI stop')
-      this.cliProc.stdout.pause()
-      this.cliProc.stderr.pause()
-      this.cliProc.kill()
+      if (this.cliProc && kill) {
+        logger.info('CLI stop')
+        this.cliProc.stdout.pause()
+        this.cliProc.stderr.pause()
+        this.cliProc.kill()
+      }
+    } finally {
+      logger.debug('# stop # <='+gotMutex)
+      if (!gotMutex) {
+        this.ipcMutex.release();
+      }
     }
   }
 
