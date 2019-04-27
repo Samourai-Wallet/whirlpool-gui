@@ -33,14 +33,17 @@
 }
 
 .cliStatus {
-  text-align:right;
-  margin-top:-0.5em;
-  float:right;
-  white-space: nowrap;
-}
-.cliStatus, .serverName {
+  text-align:center;
+  margin-top:-1em;
+  margin-left:3em;
   font-size:0.8em;
   color:#CCC;
+}
+.footerNav {
+  position:absolute;
+  bottom:2.5em;
+  left:1em;
+  color:#AAA;
 }
 .navbar .torIcon svg {
   width:12px;
@@ -51,11 +54,6 @@
 }
 .torIconDisabled svg path {
   fill: #CCC
-}
-
-.loginStatus {
-  float:left;
-  margin-top:-0.5em;
 }
 
 .loginLocalStatus {

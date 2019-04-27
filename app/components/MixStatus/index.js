@@ -65,8 +65,8 @@ class MixStatus extends React.PureComponent {
             </div>
           </div>
           <div className='col-sm-1 mixStatus align-self-center text-center'>
-            {mixService.isStarted() && <button className='btn btn-sm btn-primary' onClick={() => mixService.stopMix()}><Icon.Square size={12}/> Stop</button>}
-            {!mixService.isStarted() && <button className='btn btn-sm btn-primary' onClick={() => mixService.startMix()}><Icon.Play size={12}/> Start</button>}
+            {mixService.isStarted() && <button className='btn btn-primary' onClick={() => mixService.stopMix()}><Icon.Square size={12}/> Stop</button>}
+            {!mixService.isStarted() && <button className='btn btn-primary' onClick={() => mixService.startMix()}><Icon.Play size={12}/> Start</button>}
           </div>
         </div>
       </div>

@@ -132,8 +132,7 @@ class App extends React.Component<Props> {
             <a href='#' className='product-title'>Whirlpool</a>
           </div>
           <div>
-            {loginStatusIcon && <div className='loginStatus'>{loginStatusIcon} {cliService.isConnected() && <small className='serverName'>{cliService.getServerName()}</small>}</div>}
-            {cliStatusIcon && <div className='cliStatus'>{cliLocalStatusIcon} <small>{cliUrl}</small> {cliStatusIcon} {torIcon}</div>}
+            {cliStatusIcon && <div className='cliStatus'>{loginStatusIcon && <span>{loginStatusIcon}</span>}&nbsp;&nbsp;&nbsp;{cliStatusIcon}&nbsp;&nbsp;&nbsp;{torIcon}</div>}
           </div>
         </div>
         <div className='col-md-10'>
@@ -226,6 +225,10 @@ class App extends React.Component<Props> {
               {cliService.isLoggedIn() && !walletService.isReady() && <div>
                 <small>Fetching wallet...</small>
               </div>}
+              <div className="footerNav">
+                  {cliService.isConnected() && <small>{cliService.getServerName()}</small>}
+                  {cliStatusIcon && <small> | {cliLocalStatusIcon} {cliUrl}</small>}
+              </div>
             </div>
             <Status
               status={this.props.status}
