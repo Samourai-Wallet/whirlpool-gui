@@ -347,7 +347,7 @@ class CliService {
       return format(<a href='#' onClick={()=>cliService.logout()}><FontAwesomeIcon icon={Icons.faLockOpen} color='grey' title={status} /></a>, status)
     }
     const status = 'Wallet closed'
-    return format(<FontAwesomeIcon icon={Icons.faLock} color='red' title={status} />, status)
+    return format(<FontAwesomeIcon icon={Icons.faLock} color='#CCC' title={status} />, status)
   }
 }
 
