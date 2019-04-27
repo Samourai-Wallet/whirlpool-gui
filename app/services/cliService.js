@@ -99,6 +99,13 @@ class CliService {
     })
   }
 
+  fetchStateError(error) {
+    if (error.message === 'Failed to fetch') {
+      error = Error('Could not connect to CLI (starting up?)')
+    }
+    return error
+  }
+
   initializeCli(cliUrl, apiKey, cliLocal, pairingPayload) {
     return backendService.cli.init(cliUrl, apiKey, pairingPayload).then(result => {
       const apiKey = result.apiKey
@@ -289,7 +296,7 @@ class CliService {
         // notify services
         this.updateState({
           cli: undefined,
-          cliUrlError: e.message
+          cliUrlError: this.fetchStateError(error).message
         })
         this.stopServices()
       })

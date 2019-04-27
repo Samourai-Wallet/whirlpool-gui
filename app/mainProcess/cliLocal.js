@@ -20,7 +20,7 @@ import { logger } from '../utils/logger';
 import crypto from 'crypto';
 import cliVersion from './cliVersion';
 
-const START_TIMEOUT = 6000
+const START_TIMEOUT = 10000
 const ARG_CLI_GUI = '--whirlpool-cli-gui'
 
 export class CliLocal {
@@ -213,6 +213,7 @@ export class CliLocal {
         this.updateState(CLILOCAL_STATUS.ERROR)
       }
     } else {
+      this.state.error = undefined
       this.updateState(CLILOCAL_STATUS.READY)
       if (!this.state.started && this.isCliLocal()) {
         await this.start(gotMutex)
@@ -250,22 +251,24 @@ export class CliLocal {
 
           // lookup running processes
           myThis.findCliProcesses(cliProcesses => {
-            for (const i in cliProcesses) {
-              const cliProcess = cliProcesses[i]
+            if (cliProcesses.length > 0) {
+              for (const i in cliProcesses) {
+                const cliProcess = cliProcesses[i]
 
-              logger.debug('Foud CLI proces => killing', cliProcess);
-              ps.kill(cliProcess.pid, err => {
-                if (err) {
-                  logger.error('Kill ' + cliProcess.pid + ' FAILED', err)
-                } else {
-                  logger.debug('Kill ' + cliProcess.pid + ' SUCCESS');
-                }
-                const isLastProcess = (i === (cliProcesses.length - 1))
-                if (isLastProcess) {
-                  // retry start
-                  myThis.start(true)
-                }
-              });
+                logger.debug('Foud CLI proces => killing', cliProcess);
+                ps.kill(cliProcess.pid, err => {
+                  if (err) {
+                    logger.error('Kill ' + cliProcess.pid + ' FAILED', err)
+                  } else {
+                    logger.debug('Kill ' + cliProcess.pid + ' SUCCESS');
+                  }
+                });
+              }
+
+              // retry start
+              this.state.error = undefined
+              this.updateState(CLILOCAL_STATUS.READY)
+              myThis.start(true)
             }
           })
 

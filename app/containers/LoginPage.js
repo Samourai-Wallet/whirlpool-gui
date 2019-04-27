@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cliService from '../services/cliService';
 import { Alert } from 'react-bootstrap';
 import * as Icons from "@fortawesome/free-solid-svg-icons";
+import utils from '../services/utils';
 
 class LoginPage extends Component<Props> {
   props: Props;
@@ -42,6 +43,8 @@ class LoginPage extends Component<Props> {
         <input type="password" id="seedPassphrase" className="form-control" placeholder="Wallet passphrase" ref={this.inputPassphrase} required autoFocus/>
         <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         <br/>
+        {cliService.isTor() && <div>
+          {utils.torIcon()} Please be patient signing in with TOR</div>}
         {this.state.loginError && <Alert variant='danger'>Authentication failed: {this.state.loginError}</Alert>}
       </form>
     )

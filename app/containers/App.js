@@ -114,7 +114,7 @@ class App extends React.Component<Props> {
     const cliLocalStatusIcon = cliService.isCliLocal() ? cliLocalService.getStatusIcon((icon,text)=>icon) : undefined
     const cliStatusIcon = cliService.getStatusIcon((icon,text)=>icon)
     const loginStatusIcon = cliService.getLoginStatusIcon((icon,text)=>icon)
-    const cliUrl = cliService.isCliLocal() ? 'local' : cliService.getCliUrl()
+    const cliUrl = cliService.isCliLocal() ? 'standalone' : cliService.getCliUrl()
     const cliInfo = cliService.isCliLocal() ? 'CLI '+cliLocalService.getCliVersionStr():'CLI_API '+API_VERSION
     const torIcon = cliService.isConnected() ? <span className={'torIcon torIcon'+(cliService.isTor() ? 'Enabled':'Disabled')} title={'TOR is '+(cliService.isTor() ?'ENABLED':'DISABLED')}>{utils.torIcon()}</span> : undefined
 
@@ -133,7 +133,7 @@ class App extends React.Component<Props> {
           </div>
           <div>
             {loginStatusIcon && <div className='loginStatus'>{loginStatusIcon} {cliService.isConnected() && <small className='serverName'>{cliService.getServerName()}</small>}</div>}
-            {cliStatusIcon && <div className='cliStatus'>{cliLocalStatusIcon} {cliUrl} {cliStatusIcon} {torIcon}</div>}
+            {cliStatusIcon && <div className='cliStatus'>{cliLocalStatusIcon} <small>{cliUrl}</small> {cliStatusIcon} {torIcon}</div>}
           </div>
         </div>
         <div className='col-md-10'>

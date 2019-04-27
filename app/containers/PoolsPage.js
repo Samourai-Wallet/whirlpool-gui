@@ -36,7 +36,7 @@ class PoolsPage extends Component {
             <th>Max. deposit</th>
             <th>Max. mixs</th>
             <th>Anonymity set per mix</th>
-            <th>Flat fee</th>
+            <th>Whirlpool fee</th>
           </tr>
           </thead>
           <tbody>
