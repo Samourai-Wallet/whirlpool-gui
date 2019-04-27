@@ -38,7 +38,7 @@ class ConnectingPage extends Component<Props> {
         <div><FontAwesomeIcon icon={Icons.faCloud} size='3x' color='#343a40'/></div><br/>
         <p>Connecting to whirlpool-cli<br/>
           <strong>{cliService.getCliUrl()}</strong></p>
-        {cliService.isCliLocal() && <div>{cliLocalService.getStatusIcon((icon,text)=><span>{icon} {text}<br/>(might take a minute to start...)</span>)}<br/><br/></div>}
+        {cliService.isCliLocal() && <div>{cliLocalService.getStatusIcon((icon,text)=><span>{icon} {text}<br/>(might take a minute to start... restart if longer)</span>)}<br/><br/></div>}
 
         {cliService.getCliMessage() && <Alert variant='info'>{cliService.getCliMessage()}</Alert>}
         <button type='button' className='btn btn-primary' onClick={this.reconnect}><FontAwesomeIcon icon={Icons.faSync} /> Retry to connect</button>
@@ -62,7 +62,7 @@ class ConnectingPage extends Component<Props> {
         <div><FontAwesomeIcon icon={Icons.faWifi} size='3x' color='#343a40'/></div>
         <p>Unable to connect to whirlpool-cli.<br/>
           <strong>{cliService.getCliUrl()}</strong><br/>
-          {cliService.isCliLocal() && <div>{cliLocalService.getStatusIcon((icon,text)=><span>{icon} {text}<br/>(might take a minute to start...)</span>)}</div>}
+          {cliService.isCliLocal() && <div>{cliLocalService.getStatusIcon((icon,text)=><span>{icon} {text}<br/>(might take a minute to start... restart if longer)</span>)}</div>}
         </p>
 
         <Alert variant='danger'>Connection failed: {cliUrlError}</Alert>

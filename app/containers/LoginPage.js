@@ -44,7 +44,7 @@ class LoginPage extends Component<Props> {
         <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         <br/>
         {cliService.isTor() && <div>
-          {utils.torIcon()} Please be patient signing in with TOR</div>}
+          {utils.torIcon()} Please be patient signing in with TOR<br/><br/></div>}
         {this.state.loginError && <Alert variant='danger'>Authentication failed: {this.state.loginError}</Alert>}
       </form>
     )
