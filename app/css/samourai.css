@@ -38,7 +38,7 @@
   float:right;
   white-space: nowrap;
 }
-.cliStatus, .cliNetwork {
+.cliStatus, .serverName {
   font-size:0.8em;
   color:#CCC;
 }

@@ -230,6 +230,13 @@ class CliService {
     return this.state.cli.serverUrl;
   }
 
+  getServerName() {
+    if (!this.isConnected()) {
+      return undefined
+    }
+    return this.state.cli.serverName;
+  }
+
   isTestnet() {
     return this.getNetwork() === 'test'
   }
