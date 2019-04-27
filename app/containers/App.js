@@ -150,71 +150,55 @@ class App extends React.Component<Props> {
 
               <ul className="nav flex-column">
                 {cliService.isCliStatusReady() && !cliService.isLoggedIn() && <li className="nav-item">
-                  <Link to={routes.HOME}>
-                    <a className="nav-link">
-                      <span data-feather="terminal"></span>
-                      <strong>Authentication</strong>
-                    </a>
+                  <Link to={routes.HOME} className="nav-link">
+                    <span data-feather="terminal"></span>
+                    <strong>Authentication</strong>
                   </Link>
                 </li>}
                 {cliService.isLoggedIn() && walletService.isReady() && <li className="nav-item">
-                  <Link to={routes.LAST_ACTIVITY}>
-                    <a className="nav-link">
+                  <Link to={routes.LAST_ACTIVITY} className="nav-link">
                       <span data-feather="terminal"></span>
                       Last activity
-                    </a>
                   </Link>
                 </li>}
                 {cliService.isLoggedIn() && walletService.isReady() && <li className="nav-item">
-                  <Link to={routes.DEPOSIT}>
-                    <a className="nav-link">
+                  <Link to={routes.DEPOSIT} className="nav-link">
                       <span data-feather="plus"></span>
                       Deposit
                       ({walletService.getUtxosDeposit().length} · {utils.toBtc(walletService.getBalanceDeposit(), true)})
-                    </a>
                   </Link>
                 </li>}
                 {cliService.isLoggedIn() && walletService.isReady() && <li className="nav-item">
-                  <Link to={routes.PREMIX}>
-                    <a className="nav-link">
-                      <span data-feather="play"></span>
-                      Premix
-                      ({walletService.getUtxosPremix().length} · {utils.toBtc(walletService.getBalancePremix(), true)})
-                    </a>
+                  <Link to={routes.PREMIX} className="nav-link">
+                    <span data-feather="play"></span>
+                    Premix
+                    ({walletService.getUtxosPremix().length} · {utils.toBtc(walletService.getBalancePremix(), true)})
                   </Link>
                 </li>}
                 {cliService.isLoggedIn() && walletService.isReady() && <li className="nav-item">
-                  <Link to={routes.POSTMIX}>
-                    <a className="nav-link">
-                      <span data-feather="check"></span>
-                      Postmix
-                      ({walletService.getUtxosPostmix().length} · {utils.toBtc(walletService.getBalancePostmix(), true)})
-                    </a>
+                  <Link to={routes.POSTMIX} className="nav-link">
+                    <span data-feather="check"></span>
+                    Postmix
+                    ({walletService.getUtxosPostmix().length} · {utils.toBtc(walletService.getBalancePostmix(), true)})
                   </Link>
                 </li>}
                 {cliService.isLoggedIn() && walletService.isReady() && <br/>}
                 {cliService.isConfigured() && cliService.isCliStatusReady() && <li className="nav-item">
-                  <Link to={routes.CONFIG}>
-                    <a className="nav-link">
-                      <span data-feather="settings"></span>
-                      CLI Configuration
-                    </a>
+                  <Link to={routes.CONFIG} className="nav-link">
+                    <span data-feather="settings"></span>
+                    Configuration
                   </Link>
                 </li>}
                 {(!cliService.isConfigured() || cliService.isCliStatusNotInitialized()) && <li className="nav-item">
-                  <Link to={routes.HOME}>
-                    <a className="nav-link">
-                      <span data-feather="settings"></span>
-                      <strong>Setup</strong>
-                    </a>
+                  <Link to={routes.HOME} className="nav-link">
+                    <span data-feather="settings"></span>
+                    <strong>Setup</strong>
                   </Link>
                 </li>}
                 <li className="nav-item">
-                  <Link to={routes.STATUS}>
-                    <a className="nav-link">
-                      <span data-feather="terminal"></span>
-                      System
-                    </a>
+                  <Link to={routes.STATUS} className="nav-link">
+                    <span data-feather="terminal"></span>
+                    System
                   </Link>
                 </li>
               </ul>

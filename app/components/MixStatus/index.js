@@ -29,8 +29,7 @@ class MixStatus extends React.PureComponent {
                 const poolInfo = pool ? <small> • {pool.nbConfirmed}/{pool.mixAnonymitySet} peers</small> : undefined
 
                 let progressLabel = <div>
-                  <small>{utils.toBtc(utxo.value)}</small>
-                  <strong>{utils.statusLabel(utxo)}</strong>{poolInfo ? poolInfo : ''}<br/>
+                  <small>{utils.toBtc(utxo.value)}</small> <strong>{utils.statusLabel(utxo)}</strong>{poolInfo ? poolInfo : ''}<br/>
                   {utxo.message && <small>{utxo.message}</small>}
                 </div>
                 const progressPercent = utxo.progressPercent ? utxo.progressPercent : 0

@@ -20,7 +20,7 @@ import { logger } from '../utils/logger';
 import crypto from 'crypto';
 import cliVersion from './cliVersion';
 
-const START_TIMEOUT = 4000
+const START_TIMEOUT = 6000
 const ARG_CLI_GUI = '--whirlpool-cli-gui'
 
 export class CliLocal {

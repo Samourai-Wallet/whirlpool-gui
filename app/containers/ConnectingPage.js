@@ -35,11 +35,10 @@ class ConnectingPage extends Component<Props> {
     return (
       <form className="form-signin text-center" onSubmit={(e) => {this.onSubmit();e.preventDefault()}}>
         <h1 className="h3 mb-3 font-weight-normal">Connecting...</h1>
-        <div><FontAwesomeIcon icon={Icons.faCloud} size='3x' color='#343a40'/></div>
+        <div><FontAwesomeIcon icon={Icons.faCloud} size='3x' color='#343a40'/></div><br/>
         <p>Connecting to whirlpool-cli<br/>
-          <strong>{cliService.getCliUrl()}</strong>
-          {cliService.isCliLocal() && <div>{cliLocalService.getStatusIcon((icon,text)=><span>{icon} {text}<br/>might take a minute to start...</span>)}</div>}
-        </p>
+          <strong>{cliService.getCliUrl()}</strong></p>
+        {cliService.isCliLocal() && <div>{cliLocalService.getStatusIcon((icon,text)=><span>{icon} {text}<br/>might take a minute to start...</span>)}<br/><br/></div>}
 
         {cliService.getCliMessage() && <Alert variant='info'>{cliService.getCliMessage()}</Alert>}
         <button type='button' className='btn btn-primary' onClick={this.reconnect}><FontAwesomeIcon icon={Icons.faSync} /> Retry to connect</button>
