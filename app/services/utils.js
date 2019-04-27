@@ -2,6 +2,7 @@ import cliService from './cliService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import * as React from 'react';
+import poolsService from './poolsService';
 
 const AMOUNT_PRECISION = 4
 const BTC_TO_SAT = 100000000

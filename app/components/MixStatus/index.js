@@ -18,7 +18,7 @@ class MixStatus extends React.PureComponent {
       <div>
         <div className='row no-gutters'>
           <div className='col-sm-1 mixStatus align-self-center'>
-            <div><strong>{mixService.getNbMixing()}</strong> mixing<br/> <strong>{mixService.getNbQueued()}</strong> queuedFOO</div>
+            <div><strong>{mixService.getNbMixing()}</strong> mixing<br/> <strong>{mixService.getNbQueued()}</strong> queued</div>
           </div>
           <div className='col-sm-10 mixThreads'>
             <div className='row no-gutters justify-content-center'>

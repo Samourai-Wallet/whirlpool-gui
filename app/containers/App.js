@@ -36,6 +36,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cliLocalService } from '../services/cliLocalService';
 import { API_VERSION, GUI_VERSION } from '../const';
 import * as Icons from "@fortawesome/free-solid-svg-icons";
+import PoolsPage from './PoolsPage';
 
 type Props = {
   children: React.Node
@@ -80,6 +81,7 @@ class App extends React.Component<Props> {
         <Route path={routes.DEPOSIT} component={DepositPage}/>
         <Route path={routes.PREMIX} component={PremixPage}/>
         <Route path={routes.POSTMIX} component={PostmixPage}/>
+        <Route path={routes.POOLS} component={PoolsPage}/>
         <Route path={routes.CONFIG} component={ConfigPage}/>
         <Route path={routes.HOME} component={LastActivityPage}/>
       </Switch>
@@ -185,6 +187,12 @@ class App extends React.Component<Props> {
                   </Link>
                 </li>}
                 {cliService.isLoggedIn() && walletService.isReady() && <br/>}
+                {cliService.isLoggedIn() && walletService.isReady() && <li className="nav-item">
+                  <Link to={routes.POOLS} className="nav-link">
+                    <span data-feather="check"></span>
+                    Pools
+                  </Link>
+                </li>}
                 {cliService.isConfigured() && cliService.isCliStatusReady() && <li className="nav-item">
                   <Link to={routes.CONFIG} className="nav-link">
                     <span data-feather="settings"></span>

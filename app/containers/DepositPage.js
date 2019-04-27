@@ -1,15 +1,12 @@
 // @flow
 import React, { Component } from 'react';
 import './PremixPage.css';
-import * as Icon from 'react-feather';
-import {Dropdown,DropdownButton} from 'react-bootstrap'
-import moment from 'moment';
+import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { walletActions } from '../actions/walletActions';
 import { connect } from 'react-redux';
 import walletService from '../services/walletService';
-import modalService from '../services/modalService';
-import utils, { TX0_MIN_CONFIRMATIONS } from '../services/utils';
+import utils from '../services/utils';
 import mixService from '../services/mixService';
 import poolsService from '../services/poolsService';
 import UtxoPoolSelector from '../components/Utxo/UtxoPoolSelector';
@@ -92,7 +89,6 @@ class DepositPage extends Component {
           </tbody>
         </table>
         </div>
-
       </div>
     );
   }

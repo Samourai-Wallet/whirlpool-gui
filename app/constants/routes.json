@@ -4,6 +4,7 @@
   "DEPOSIT": "/deposit",
   "PREMIX": "/premix",
   "POSTMIX": "/postmix",
+  "POOLS": "/pools",
   "LAST_ACTIVITY": "/last",
   "HOME": "/"
 }

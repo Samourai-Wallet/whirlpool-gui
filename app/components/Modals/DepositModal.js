@@ -6,6 +6,8 @@ import QRCode from 'qrcode.react';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import AbstractModal from './AbstractModal';
 import { Button } from 'react-bootstrap';
+import poolsService from '../../services/poolsService';
+import utils from '../../services/utils';
 
 export default class DepositPage extends AbstractModal {
   constructor(props) {
@@ -51,11 +53,37 @@ export default class DepositPage extends AbstractModal {
     return <div>
       {!this.isLoading() && !this.isError() && (
         <div>
-          Deposit funds to your deposit wallet:
-          <div className='depositAddress'>
-            <QRCode value={this.state.depositAddress} /><br/>
-            <b>{this.state.depositAddress}</b>
+          <div className='row'>
+            <div className='col-sm-12'>
+              Deposit funds to your deposit wallet:
+              <div className='depositAddress'>
+                <QRCode value={this.state.depositAddress} /><br/>
+                <b>{this.state.depositAddress}</b>
+              </div><br/>
+            </div>
           </div>
+          <div className='row'>
+            <div className='col-sm-2'></div>
+            <div className='col-sm-8'>
+              <table className='pools table table-sm text-center'>
+                <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Denomination</th>
+                  <th>Min. deposit</th>
+                </tr>
+                </thead>
+                <tbody>
+                {poolsService.getPoolsAvailable().map((pool,i) => <tr key={i}>
+                  <td>{pool.poolId}</td>
+                  <td>{utils.toBtc(pool.denomination)}</td>
+                  <td>{utils.toBtc(pool.tx0BalanceMin)}</td>
+                </tr>)}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div className='col-sm-2'></div>
         </div>
       )}
     </div>
