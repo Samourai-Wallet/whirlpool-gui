@@ -94,7 +94,7 @@ class Utils {
     if (cliService.isTestnet()) {
       return 'https://blockstream.info/testnet/tx/'+utxo.hash
     }
-    return 'https://m.oxt.me/transaction/'+utxo.hash
+    return 'https://oxt.me/transaction/'+utxo.hash
   }
 
   statusIcon(utxo) {
