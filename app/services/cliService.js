@@ -237,6 +237,13 @@ class CliService {
     return this.state.cli.serverName;
   }
 
+  isTor() {
+    if (!this.isConnected()) {
+      return undefined
+    }
+    return this.state.cli.tor;
+  }
+
   isTestnet() {
     return this.getNetwork() === 'test'
   }
