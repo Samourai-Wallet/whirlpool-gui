@@ -43,8 +43,8 @@
   color:#CCC;
 }
 .navbar .torIcon svg {
-  width:14px;
-  height:14px;
+  width:12px;
+  height:12px;
 }
 .torIconEnabled svg path {
   fill: green;

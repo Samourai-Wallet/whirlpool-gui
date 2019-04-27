@@ -132,8 +132,8 @@ class App extends React.Component<Props> {
             <a href='#' className='product-title'>Whirlpool</a>
           </div>
           <div>
-            {loginStatusIcon && <div className='loginStatus'>{loginStatusIcon} {cliService.isConnected() && <span>{torIcon} <small className='serverName'>{cliService.getServerName()}</small></span>}</div>}
-            {cliStatusIcon && <div className='cliStatus'>{cliLocalStatusIcon} {cliUrl} {cliStatusIcon}</div>}
+            {loginStatusIcon && <div className='loginStatus'>{loginStatusIcon} {cliService.isConnected() && <small className='serverName'>{cliService.getServerName()}</small>}</div>}
+            {cliStatusIcon && <div className='cliStatus'>{cliLocalStatusIcon} {cliUrl} {cliStatusIcon} {torIcon}</div>}
           </div>
         </div>
         <div className='col-md-10'>

@@ -169,7 +169,7 @@ export default class ConfigPage extends Component<Props> {
                 <div className="col-sm-10">
                   <div className="custom-control custom-switch">
                     <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeCliConfig(cliConfig => cliConfig.tor = checked(e))} defaultChecked={cliConfig.tor} id="tor"/>
-                    <label className="custom-control-label" htmlFor="tor">Route all traffic through TOR</label>
+                    <label className="custom-control-label" htmlFor="tor">Route all traffic to TOR</label>
                   </div>
                 </div>
               </div>
