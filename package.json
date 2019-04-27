@@ -301,7 +301,6 @@
     "redux-thunk": "^2.3.0",
     "sjcl": "^1.0.8",
     "source-map-support": "^0.5.9",
-    "tail": "^2.0.2",
     "tcp-port-used": "^1.0.1"
   },
   "devEngines": {

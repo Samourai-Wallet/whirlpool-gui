@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react';
-import { Tail } from 'tail';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cliLocalService } from '../services/cliLocalService';
 import cliService from '../services/cliService';
@@ -18,26 +17,11 @@ export default class StatusPage extends Component<Props> {
 
   constructor(props) {
     super(props)
-    this.state = {
-      guiLog: ''
-    }
 
     this.onResetConfig = this.onResetConfig.bind(this)
 
-    this.divGuiLog = React.createRef()
     this.cliLogFile = CLI_LOG_FILE
     this.guiLogFile = GUI_LOG_FILE
-
-    // guiLog
-    const truncate = (log,limit) => log.substring(Math.max(0, log.length-limit))
-    const onGuiLine = (data) => {
-      const log = this.state.guiLog + data
-      this.setState({
-        guiLog: truncate(log, 2000)+'\n'
-      })
-    }
-    const guiTail = new Tail(this.guiLogFile, { fromBeginning: true, fsWatchOptions: {interval: 5007} });
-    guiTail.on("line", onGuiLine.bind(this))
   }
 
   onResetConfig() {
@@ -47,9 +31,6 @@ export default class StatusPage extends Component<Props> {
   }
 
   render() {
-    if (this.divGuiLog && this.divGuiLog.current) {
-      this.divGuiLog.current.scrollIntoView(false);
-    }
     return (
       <div>
         <h1>System</h1>
@@ -92,7 +73,6 @@ export default class StatusPage extends Component<Props> {
         <div className='row'>
           <div className='col-sm-12'>
             <strong>GUI logs: <a href={this.guiLogFile} target='_blank'>{this.guiLogFile}</a></strong>
-            <pre className='logs' ref={this.divGuiLog}>{this.state.guiLog}</pre>
           </div>
         </div>
 
