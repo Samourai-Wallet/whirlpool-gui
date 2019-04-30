@@ -12,7 +12,7 @@ import cliService from '../services/cliService';
 
 type Props = {};
 
-const SERVER_MAIN = 'MAIN'
+const SERVER_MAIN = 'MAINNET'
 export default class ConfigPage extends Component<Props> {
 
   constructor(props) {

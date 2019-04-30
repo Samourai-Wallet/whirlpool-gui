@@ -22,8 +22,8 @@ export const CLILOCAL_STATUS = {
   READY: 'READY'
 };
 export const WHIRLPOOL_SERVER = {
-  TEST: 'Whirlpool TESTNET',
-  MAIN: 'Whirlpool MAINNET',
+  TESTNET: 'Whirlpool TESTNET',
+  MAINNET: 'Whirlpool MAINNET',
   INTEGRATION: 'Whirlpool INTEGRATION'
 };
 
