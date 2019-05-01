@@ -27,10 +27,10 @@ class MixStatus extends React.PureComponent {
               if (utxo !== undefined) {
                 const pool = poolsService.findPool(utxo.poolId)
                 const poolInfo = pool ? <small> • {pool.nbConfirmed}/{pool.mixAnonymitySet} peers</small> : undefined
-
+                const message = utils.utxoMessage(utxo)
                 let progressLabel = <div>
                   <small>{utils.toBtc(utxo.value)}</small> <strong>{utils.statusLabel(utxo)}</strong>{poolInfo ? poolInfo : ''}<br/>
-                  {utxo.message && <small>{utxo.message}</small>}
+                  {message && <small>{message}</small>}
                 </div>
                 const progressPercent = utxo.progressPercent ? utxo.progressPercent : 0
                 const progressVariant = utxo.progressPercent ? undefined : 'info'

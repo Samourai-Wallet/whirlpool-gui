@@ -74,7 +74,7 @@ export default class PremixPage extends Component<Props> {
               <td>
                 <UtxoMixsTargetSelector utxo={utxo}/>
               </td>
-              <td><small>{utxo.message}</small></td>
+              <td><small>{utils.utxoMessage(utxo)}</small></td>
               <td><small>{lastActivity ? lastActivity : '-'}</small></td>
               <td>
                 <UtxoControls utxo={utxo}/>

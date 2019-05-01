@@ -78,7 +78,7 @@ class LastActivityPage extends Component {
                 <td>
                   <UtxoMixsTargetSelector utxo={utxo}/>
                 </td>
-                <td><small>{utxo.message}</small></td>
+                <td><small>{utils.utxoMessage(utxo)}</small></td>
                 <td><small>{lastActivity ? lastActivity : '-'}</small></td>
               </tr>
             })}

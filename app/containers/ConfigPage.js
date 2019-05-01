@@ -146,7 +146,7 @@ export default class ConfigPage extends Component<Props> {
                 <label htmlFor="autoMix" className="col-sm-2 col-form-label">Auto-MIX</label>
                 <div className="col-sm-10 custom-control custom-switch">
                   <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeCliConfig(cliConfig => cliConfig.mix.autoMix = checked(e))} defaultChecked={cliConfig.mix.autoMix} id="autoMix"/>
-                  <label className="custom-control-label" htmlFor="autoMix">Automatically QUEUE unmixed premix & postmix</label>
+                  <label className="custom-control-label" htmlFor="autoMix">Automatically QUEUE premix & postmix</label>
                 </div>
               </div>
 
