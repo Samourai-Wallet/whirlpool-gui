@@ -244,6 +244,9 @@ export class CliLocal {
           myThis.pushState()
           const cmd = 'java'
           const args = ['-jar', myThis.getCliFilename(), '--listen', '--debug', ARG_CLI_GUI]
+          if (IS_DEV) {
+            args.push('--debug-client')
+          }
           myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE)
         }, (e) => {
           // port in use => cannot start proc

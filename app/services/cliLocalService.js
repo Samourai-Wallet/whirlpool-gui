@@ -50,6 +50,10 @@ class CliLocalService {
     return this.state !== undefined && this.state.progress
   }
 
+  isStatusUnknown() {
+    return this.state !== undefined && this.state.status === undefined
+  }
+
   isStatusDownloading() {
     return this.state !== undefined && this.state.status === CLILOCAL_STATUS.DOWNLOADING
   }
@@ -91,6 +95,11 @@ class CliLocalService {
       // started
       const status = 'CLI running for '+moment.duration(new Date().getTime()-cliLocalService.getStartTime()).humanize()
       return format(<FontAwesomeIcon icon={Icons.faPlay} color='green' title={status} size='xs'/>, status)
+    }
+    if (cliLocalService.isStatusUnknown()) {
+      // unknown
+      const status = 'CLI is initializing. '+infoError
+      return format(<FontAwesomeIcon icon={Icons.faCircle} color='red' title={status} size='xs'/>, status)
     }
     if (!cliLocalService.isValid()) {
       // invalid
