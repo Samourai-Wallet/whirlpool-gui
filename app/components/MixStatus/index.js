@@ -41,7 +41,7 @@ class MixStatus extends React.PureComponent {
                            title={utxo.hash + ':' + utxo.index + ' (' + utxo.account + ') (' + mixService.computeLastActivity(utxo) + ')'}>{progressLabel}</div>
                       <ProgressBar>
                         <ProgressBar animated now={progressPercent} variant={progressVariant} key={1}
-                                     className={'progressBarSamourai'}/>
+                                     className={'progressBarSamourai'+(utxo.mixStep === 'CONNECTING'?' connecting':'')}/>
                         {poolProgress && <ProgressBar variant="warning" now={poolProgress} key={2}/>}
                       </ProgressBar>
                 </div>

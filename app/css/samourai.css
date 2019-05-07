@@ -31,6 +31,9 @@
 .progress-bar.progressBarSamourai {
   background-color: #700606 !important;
 }
+.progress-bar.progressBarSamourai.connecting {
+  background-color: #888 !important;
+}
 
 .cliStatus {
   text-align:center;
