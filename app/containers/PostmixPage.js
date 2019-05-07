@@ -59,7 +59,7 @@ export default class PostmixPage extends Component<Props> {
             const lastActivity = mixService.computeLastActivity(utxo)
             return <tr key={i}>
               <td>
-                <small><a href={utils.linkExplorer(utxo)} target='_blank'>{utxo.hash}:{utxo.index}</a><br/>
+                <small><a href='#' onClick={e => {utils.openExternal(utils.linkExplorer(utxo));e.preventDefault()}}>{utxo.hash}:{utxo.index}</a><br/>
                   {utxo.account} · {utxo.path} · {utxo.confirmations>0?<span>{utxo.confirmations} confirms</span>:<strong>unconfirmed</strong>}</small>
               </td>
               <td>{utils.toBtc(utxo.value)}</td>

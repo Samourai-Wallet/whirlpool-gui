@@ -2,7 +2,7 @@ import cliService from './cliService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import * as React from 'react';
-import poolsService from './poolsService';
+import { shell } from 'electron';
 
 const AMOUNT_PRECISION = 4
 const BTC_TO_SAT = 100000000
@@ -173,6 +173,10 @@ class Utils {
         <rect x="73.07" y="312.8" width="1" height="22"/>
       </g>
     </svg>
+  }
+
+  openExternal(url) {
+    shell.openExternal(url)
   }
 }
 
