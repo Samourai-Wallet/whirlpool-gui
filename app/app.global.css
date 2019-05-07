@@ -33,12 +33,12 @@ th.utxoStatus {
   max-height: 500px;
 }
 
-.modal-deposit .depositAddress {
-  text-align: center;
+.modal-body canvas.qr {
+  margin: 0.6em 0 0.2em 0;
 }
 
-.modal-deposit .depositAddress canvas {
-  margin: 0.6em 0 0.2em 0;
+.modal-zpub {
+  word-break: break-word;
 }
 
 .sidebar-sticky {
@@ -46,4 +46,10 @@ th.utxoStatus {
 }
 .sidebar-sticky .nav {
   text-align: left;
+}
+
+.zpubLink {
+  float:right;
+  font-size:0.9em;
+  font-weight: bold;
 }

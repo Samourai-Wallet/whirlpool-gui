@@ -6,12 +6,13 @@ import { bindActionCreators } from 'redux';
 import { walletActions } from '../actions/walletActions';
 import { connect } from 'react-redux';
 import walletService from '../services/walletService';
-import utils from '../services/utils';
+import utils, { WHIRLPOOL_ACCOUNTS } from '../services/utils';
 import mixService from '../services/mixService';
 import poolsService from '../services/poolsService';
 import UtxoPoolSelector from '../components/Utxo/UtxoPoolSelector';
 import UtxoMixsTargetSelector from '../components/Utxo/UtxoMixsTargetSelector';
 import UtxoControls from '../components/Utxo/UtxoControls';
+import modalService from '../services/modalService';
 
 class DepositPage extends Component {
 
@@ -40,6 +41,7 @@ class DepositPage extends Component {
             <h2>Deposit</h2>
           </div>
           <div className='col-sm-10 stats'>
+            <a className='zpubLink' href='#' onClick={e => {modalService.openZpub(WHIRLPOOL_ACCOUNTS.DEPOSIT, walletService.getZpubDeposit());e.preventDefault()}}>ZPUB</a>
             <span className='text-primary'>{utxosDeposit.length} utxos ({utils.toBtc(walletService.getBalanceDeposit())}btc)</span>
           </div>
         </div>

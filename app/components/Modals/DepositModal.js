@@ -9,7 +9,7 @@ import { Button } from 'react-bootstrap';
 import poolsService from '../../services/poolsService';
 import utils from '../../services/utils';
 
-export default class DepositPage extends AbstractModal {
+export default class DepositModal extends AbstractModal {
   constructor(props) {
     const initialState = {
       depositAddress: undefined
@@ -56,8 +56,8 @@ export default class DepositPage extends AbstractModal {
           <div className='row'>
             <div className='col-sm-12'>
               Deposit funds to your deposit wallet:
-              <div className='depositAddress'>
-                <QRCode value={this.state.depositAddress} /><br/>
+              <div className='text-center'>
+                <QRCode className='qr' value={this.state.depositAddress} /><br/>
                 <b>{this.state.depositAddress}</b>
               </div><br/>
             </div>

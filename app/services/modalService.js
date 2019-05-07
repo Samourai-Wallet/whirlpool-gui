@@ -19,10 +19,20 @@ class ModalService {
     })
   }
 
+  openZpub(account, zpub) {
+    this.setState({
+      modalZpub: {
+        account,
+        zpub
+      }
+    })
+  }
+
   close() {
     this.setState({
       modalTx0: false,
-      modalDeposit: false
+      modalDeposit: false,
+      modalZpub: false
     });
   }
 }

@@ -79,6 +79,18 @@ class WalletService {
     return this.state.wallet.postmix.balance
   }
 
+  getZpubDeposit() {
+    return this.state.wallet.deposit.zpub
+  }
+
+  getZpubPremix() {
+    return this.state.wallet.premix.zpub
+  }
+
+  getZpubPostmix() {
+    return this.state.wallet.postmix.zpub
+  }
+
   fetchState () {
     return ifNot.run('walletService:fetchState', () => {
       // fetchState backend

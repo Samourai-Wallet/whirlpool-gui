@@ -4,7 +4,7 @@ import './PostmixPage.css';
 import * as Icon from 'react-feather';
 import moment from 'moment';
 import walletService from '../services/walletService';
-import utils from '../services/utils';
+import utils, { WHIRLPOOL_ACCOUNTS } from '../services/utils';
 import mixService from '../services/mixService';
 import modalService from '../services/modalService';
 import poolsService from '../services/poolsService';
@@ -36,7 +36,8 @@ export default class PostmixPage extends Component<Props> {
           <div className='col-sm-2'>
             <h2>Postmix</h2>
           </div>
-          <div className='col-sm-8 stats'>
+          <div className='col-sm-10 stats'>
+            <a className='zpubLink' href='#' onClick={e => {modalService.openZpub(WHIRLPOOL_ACCOUNTS.POSTMIX, walletService.getZpubPostmix());e.preventDefault()}}>ZPUB</a>
             <span className='text-primary'>{utxosPostmix.length} utxos ({utils.toBtc(walletService.getBalancePostmix())}btc)</span>
           </div>
         </div>

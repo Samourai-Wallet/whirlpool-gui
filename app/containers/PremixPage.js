@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 import './PremixPage.css';
 import * as Icon from 'react-feather';
 import walletService from '../services/walletService';
-import utils from '../services/utils';
+import utils, { WHIRLPOOL_ACCOUNTS } from '../services/utils';
 import mixService from '../services/mixService';
 import poolsService from '../services/poolsService';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
 import UtxoPoolSelector from '../components/Utxo/UtxoPoolSelector';
 import UtxoMixsTargetSelector from '../components/Utxo/UtxoMixsTargetSelector';
 import UtxoControls from '../components/Utxo/UtxoControls';
+import modalService from '../services/modalService';
 
 type Props = {};
 
@@ -35,6 +36,7 @@ export default class PremixPage extends Component<Props> {
             <h2>Premix</h2>
           </div>
           <div className='col-sm-10 stats'>
+            <a className='zpubLink' href='#' onClick={e => {modalService.openZpub(WHIRLPOOL_ACCOUNTS.PREMIX, walletService.getZpubPremix());e.preventDefault()}}>ZPUB</a>
             <span className='text-primary'>{utxosPremix.length} utxos ({utils.toBtc(walletService.getBalancePremix())}btc)</span>
           </div>
         </div>

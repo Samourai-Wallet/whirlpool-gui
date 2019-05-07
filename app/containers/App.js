@@ -27,6 +27,7 @@ import mixService from '../services/mixService';
 import modalService from '../services/modalService';
 import Tx0Modal from '../components/Modals/Tx0Modal';
 import DepositModal from '../components/Modals/DepositModal';
+import ZpubModal from '../components/Modals/ZpubModal';
 import poolsService from '../services/poolsService';
 import cliService from '../services/cliService';
 import ConnectingPage from './ConnectingPage';
@@ -50,7 +51,6 @@ class App extends React.Component<Props> {
 
     this.state = {
       // managed by modalService
-      modalTx0: false
     }
 
     // init services
@@ -242,6 +242,7 @@ class App extends React.Component<Props> {
 
             {this.state.modalTx0 && <Tx0Modal utxo={this.state.modalTx0} onClose={modalService.close.bind(modalService)}/>}
             {this.state.modalDeposit && <DepositModal onClose={modalService.close.bind(modalService)}/>}
+            {this.state.modalZpub && <ZpubModal zpub={this.state.modalZpub.zpub} account={this.state.modalZpub.account} onClose={modalService.close.bind(modalService)}/>}
 
           </main>
         </div>
