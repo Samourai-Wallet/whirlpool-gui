@@ -36,7 +36,7 @@ import LoginPage from './LoginPage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cliLocalService } from '../services/cliLocalService';
 import { API_VERSION, GUI_VERSION } from '../const';
-import * as Icons from "@fortawesome/free-solid-svg-icons";
+import * as Icons from '@fortawesome/free-solid-svg-icons';
 import PoolsPage from './PoolsPage';
 
 type Props = {
@@ -116,7 +116,7 @@ class App extends React.Component<Props> {
     const loginStatusIcon = cliService.getLoginStatusIcon((icon,text)=>icon)
     const cliUrl = cliService.isCliLocal() ? 'standalone' : cliService.getCliUrl()
     const cliInfo = cliService.isCliLocal() ? 'CLI '+cliLocalService.getCliVersionStr():'CLI_API '+API_VERSION
-    const torIcon = cliService.isConnected() ? <span className={'torIcon torIcon'+(cliService.isTor() ? 'Enabled':'Disabled')} title={'TOR is '+(cliService.isTor() ?'ENABLED':'DISABLED')}>{utils.torIcon()}</span> : undefined
+    const torIcon = cliService.isConnected() ? cliService.getTorProgressIcon() : undefined
 
     return <div>
       <Helmet>

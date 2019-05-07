@@ -52,8 +52,17 @@
   width:12px;
   height:12px;
 }
-.torIconEnabled svg path {
+.torIconConnected {
+  color: green;
+}
+.torIconConnected svg path {
   fill: green;
+}
+.torIconConnecting svg path {
+  fill: orange;
+}
+.torIconConnecting {
+  color: orange;
 }
 .torIconDisabled svg path {
   fill: #CCC

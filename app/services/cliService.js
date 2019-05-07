@@ -11,6 +11,7 @@ import { cliLocalService } from './cliLocalService';
 import { DEFAULT_CLI_LOCAL, STORE_CLILOCAL } from '../const';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
+import utils from './utils';
 
 const STORE_CLIURL = "cli.url"
 const STORE_APIKEY = "cli.apiKey"
@@ -265,6 +266,22 @@ class CliService {
 
   isLoggedIn() {
     return this.isCliStatusReady() && this.state.cli.loggedIn
+  }
+
+  getTorProgress() {
+    return this.isCliStatusReady() && this.state.cli.torProgress
+  }
+
+  getTorProgressIcon() {
+    const torProgress = this.getTorProgress()
+    if (!torProgress) {
+      return undefined
+    }
+    const connected = torProgress === 100
+    return <span className={'torIcon torIcon'+(cliService.isTor() ? (connected?'Connected':'Connecting'):'Disabled')} title={'TOR is '+(cliService.isTor() ?(connected?'CONNECTED':'CONNECTING '+torProgress+'%'):'DISABLED')}>
+      {utils.torIcon()}
+      {!connected && <span>{torProgress+'%'}</span>}
+    </span>
   }
 
   setCliLocalState(cliLocalState) {
