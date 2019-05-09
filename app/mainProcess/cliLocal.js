@@ -6,7 +6,7 @@ import Store from 'electron-store';
 import AwaitLock from 'await-lock';
 import ps from 'ps-node'
 import {
-  API_VERSION, CLI_CONFIG_FILENAME,
+  API_VERSION, CLI_CONFIG_FILENAME, CLI_LOG_ERROR_FILE,
   CLI_LOG_FILE,
   CLILOCAL_STATUS,
   DEFAULT_CLI_LOCAL,
@@ -247,7 +247,7 @@ export class CliLocal {
           if (IS_DEV) {
             args.push('--debug-client')
           }
-          myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE)
+          myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE, CLI_LOG_ERROR_FILE)
         }, (e) => {
           // port in use => cannot start proc
           logger.error("[CLI_LOCAL] cannot start: port "+DEFAULT_CLIPORT+" already in use")
@@ -308,17 +308,20 @@ export class CliLocal {
     });
   }
 
-  startProc(cmd, args, cwd, logFile) {
+  startProc(cmd, args, cwd, logFile, logErrorFile) {
     const cliLog = fs.createWriteStream(logFile, {flags: 'a'})
+    const cliLogError = fs.createWriteStream(logErrorFile, {flags: 'a'})
     const myThis = this
 
     const cmdStr = cmd+' '+args.join(' ')
     cliLog.write('[CLI_LOCAL] => start: '+cmdStr+' (cwd='+cwd+')\n')
+    cliLogError.write('[CLI_LOCAL] => start: '+cmdStr+' (cwd='+cwd+')\n')
     logger.info('[CLI_LOCAL] => start: '+cmdStr+' (cwd='+cwd+')')
     try {
       this.cliProc = spawn(cmd, args, { cwd: cwd })
       this.cliProc.on('error', function(err) {
         cliLog.write('[CLI_LOCAL][ERROR] => ' + err + '\n')
+        cliLogError.write('[CLI_LOCAL][ERROR] => ' + err + '\n')
         logger.error('[CLI_LOCAL] => ', err)
       })
       this.cliProc.on('exit', (code) => {
@@ -326,6 +329,7 @@ export class CliLocal {
         if (code == 0) {
           // finishing normal
           cliLog.write('[CLI_LOCAL] => terminated without error.\n')
+          cliLogError.write('[CLI_LOCAL] => terminated without error.\n')
           logger.info('[CLI_LOCAL] => terminated without error.')
         } else {
           // finishing with error
@@ -333,9 +337,11 @@ export class CliLocal {
             // reloading? TODO
             reloading = true
             cliLog.write('[CLI_LOCAL] => terminated for reloading...\n')
+            cliLogError.write('[CLI_LOCAL] => terminated for reloading...\n')
             logger.error('[CLI_LOCAL] => terminated for reloading...')
           } else {
             cliLog.write('[CLI_LOCAL][ERROR] => terminated with error: ' + code + '\n')
+            cliLogError.write('[CLI_LOCAL][ERROR] => terminated with error: ' + code + '\n')
             logger.error('[CLI_LOCAL] => terminated with error: ' + code + '. Check logs for details (' + GUI_LOG_FILE + ' & ' + CLI_LOG_FILE + ')')
           }
         }
@@ -356,6 +362,7 @@ export class CliLocal {
         console.error('[CLI_LOCAL] ' + dataLine);
         logger.error('[CLI_LOCAL] ' + dataLine)
         cliLog.write('[ERROR]' + data)
+        cliLogError.write('[ERROR]' + data)
       });
     } catch(e) {
       myThis.stop(true)

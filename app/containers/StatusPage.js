@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cliLocalService } from '../services/cliLocalService';
 import cliService from '../services/cliService';
 import {
-  API_VERSION,
+  API_VERSION, CLI_LOG_ERROR_FILE,
   CLI_LOG_FILE,
   GUI_LOG_FILE,
   GUI_VERSION
@@ -21,6 +21,7 @@ export default class StatusPage extends Component<Props> {
     this.onResetConfig = this.onResetConfig.bind(this)
 
     this.cliLogFile = CLI_LOG_FILE
+    this.cliLogErrorFile = CLI_LOG_ERROR_FILE
     this.guiLogFile = GUI_LOG_FILE
   }
 
@@ -77,8 +78,9 @@ export default class StatusPage extends Component<Props> {
         </div>
 
         {cliService.isCliLocal() && <div className='row'>
-          <div className='col-sm-12'>
-            <strong>CLI logs: <a href={this.cliLogFile} target='_blank'>{this.cliLogFile}</a></strong>
+          <div className='col-sm-12'><br/>
+            <strong>CLI logs: <a href={this.cliLogFile} target='_blank'>{this.cliLogFile}</a></strong><br/>
+            <strong>CLI errors: <a href={this.cliLogErrorFile} target='_blank'>{this.cliLogErrorFile}</a></strong><br/>
           </div>
         </div>}
         <br/>
