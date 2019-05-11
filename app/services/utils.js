@@ -111,7 +111,7 @@ class Utils {
     if (utxo.status === UTXO_STATUS.MIX_FAILED) {
       return <FontAwesomeIcon icon={Icons.faSquare} size='xs' color='red' title='MIX FAILED'/>
     }
-    if ((utxo.account === WHIRLPOOL_ACCOUNTS.POSTMIX || utxo.status === UTXO_STATUS.MIX_SUCCESS) && utxo.mixsDone >= utxo.mixsTarget) {
+    if ((utxo.account === WHIRLPOOL_ACCOUNTS.POSTMIX && utxo.mixsDone >= utxo.mixsTarget) || utxo.status === UTXO_STATUS.MIX_SUCCESS) {
       return <FontAwesomeIcon icon={Icons.faCheck} size='xs' color='green' title='MIXED'/>
     }
 
