@@ -4,12 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cliLocalService } from '../services/cliLocalService';
 import cliService from '../services/cliService';
 import {
-  API_VERSION, CLI_LOG_ERROR_FILE,
+  API_VERSION, CLI_LOG_ERRORS_FILE,
   CLI_LOG_FILE,
   GUI_LOG_FILE,
   GUI_VERSION
 } from '../const';
 import * as Icons from "@fortawesome/free-solid-svg-icons";
+import LinkExternal from '../components/Utils/LinkExternal';
 
 type Props = {};
 
@@ -21,7 +22,7 @@ export default class StatusPage extends Component<Props> {
     this.onResetConfig = this.onResetConfig.bind(this)
 
     this.cliLogFile = CLI_LOG_FILE
-    this.cliLogErrorFile = CLI_LOG_ERROR_FILE
+    this.cliLogErrorFile = CLI_LOG_ERRORS_FILE
     this.guiLogFile = GUI_LOG_FILE
   }
 
@@ -72,15 +73,22 @@ export default class StatusPage extends Component<Props> {
 
         <br/>
         <div className='row'>
-          <div className='col-sm-12'>
-            <strong>GUI logs: <a href={this.guiLogFile} target='_blank'>{this.guiLogFile}</a></strong>
+          <div className='col-sm-2'>
+            <strong>GUI logs:</strong>
+          </div>
+          <div className='col-sm-10'>
+            <LinkExternal href={this.guiLogFile}>{this.guiLogFile}</LinkExternal>
           </div>
         </div>
 
         {cliService.isCliLocal() && <div className='row'>
-          <div className='col-sm-12'><br/>
-            <strong>CLI logs: <a href={this.cliLogFile} target='_blank'>{this.cliLogFile}</a></strong><br/>
-            <strong>CLI errors: <a href={this.cliLogErrorFile} target='_blank'>{this.cliLogErrorFile}</a></strong><br/>
+          <div className='col-sm-2'>
+            <strong>CLI logs:</strong><br/>
+            <strong>CLI errors:</strong>
+          </div>
+          <div className='col-sm-10'>
+            <LinkExternal href={this.cliLogFile}>{this.cliLogFile}</LinkExternal><br/>
+            <LinkExternal href={this.cliLogErrorFile}>{this.cliLogErrorFile}</LinkExternal>
           </div>
         </div>}
         <br/>

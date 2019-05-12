@@ -6,7 +6,7 @@ import Store from 'electron-store';
 import AwaitLock from 'await-lock';
 import ps from 'ps-node'
 import {
-  API_VERSION, CLI_CONFIG_FILENAME, CLI_LOG_ERROR_FILE,
+  API_VERSION, CLI_CONFIG_FILENAME, CLI_LOG_ERRORS_FILE,
   CLI_LOG_FILE,
   CLILOCAL_STATUS,
   DEFAULT_CLI_LOCAL,
@@ -247,7 +247,7 @@ export class CliLocal {
           if (IS_DEV) {
             args.push('--debug-client')
           }
-          myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE, CLI_LOG_ERROR_FILE)
+          myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE, CLI_LOG_ERRORS_FILE)
         }, (e) => {
           // port in use => cannot start proc
           logger.error("[CLI_LOCAL] cannot start: port "+DEFAULT_CLIPORT+" already in use")
@@ -363,6 +363,9 @@ export class CliLocal {
         logger.error('[CLI_LOCAL] ' + dataLine)
         cliLog.write('[ERROR]' + data)
         cliLogError.write('[ERROR]' + data)
+
+        myThis.state.error = dataLine
+        myThis.updateState(CLILOCAL_STATUS.ERROR)
       });
     } catch(e) {
       myThis.stop(true)
