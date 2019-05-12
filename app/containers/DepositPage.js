@@ -13,6 +13,7 @@ import UtxoPoolSelector from '../components/Utxo/UtxoPoolSelector';
 import UtxoMixsTargetSelector from '../components/Utxo/UtxoMixsTargetSelector';
 import UtxoControls from '../components/Utxo/UtxoControls';
 import modalService from '../services/modalService';
+import LinkExternal from '../components/Utils/LinkExternal';
 
 class DepositPage extends Component {
 
@@ -69,7 +70,7 @@ class DepositPage extends Component {
             const lastActivity = mixService.computeLastActivity(utxo)
             return <tr key={i}>
               <td>
-                <small><a href='#' onClick={e => {utils.openExternal(utils.linkExplorer(utxo));e.preventDefault()}}>{utxo.hash}:{utxo.index}</a><br/>
+                <small><LinkExternal href={utils.linkExplorer(utxo)}>{utxo.hash}:{utxo.index}</LinkExternal><br/>
                   {utxo.account} · {utxo.path} · {utxo.confirmations>0?<span>{utxo.confirmations} confirms</span>:<strong>unconfirmed</strong>}</small>
               </td>
               <td>{utils.toBtc(utxo.value)}</td>

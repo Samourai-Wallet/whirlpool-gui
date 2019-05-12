@@ -77,7 +77,7 @@ export default class StatusPage extends Component<Props> {
             <strong>GUI logs:</strong>
           </div>
           <div className='col-sm-10'>
-            <LinkExternal href={this.guiLogFile}>{this.guiLogFile}</LinkExternal>
+            <LinkExternal href={'file://'+this.guiLogFile}>{this.guiLogFile}</LinkExternal>
           </div>
         </div>
 
@@ -87,8 +87,8 @@ export default class StatusPage extends Component<Props> {
             <strong>CLI errors:</strong>
           </div>
           <div className='col-sm-10'>
-            <LinkExternal href={this.cliLogFile}>{this.cliLogFile}</LinkExternal><br/>
-            <LinkExternal href={this.cliLogErrorFile}>{this.cliLogErrorFile}</LinkExternal>
+            <LinkExternal href={'file://'+this.cliLogFile}>{this.cliLogFile}</LinkExternal><br/>
+            <LinkExternal href={'file://'+this.cliLogErrorFile}>{this.cliLogErrorFile}</LinkExternal>
           </div>
         </div>}
         <br/>
