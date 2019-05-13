@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cliLocalService } from '../services/cliLocalService';
 import cliService from '../services/cliService';
 import {
-  API_VERSION, CLI_LOG_ERRORS_FILE,
+  API_VERSION, CLI_LOG_ERROR_FILE,
   CLI_LOG_FILE,
   GUI_LOG_FILE,
   GUI_VERSION
@@ -22,7 +22,7 @@ export default class StatusPage extends Component<Props> {
     this.onResetConfig = this.onResetConfig.bind(this)
 
     this.cliLogFile = CLI_LOG_FILE
-    this.cliLogErrorFile = CLI_LOG_ERRORS_FILE
+    this.cliLogErrorFile = CLI_LOG_ERROR_FILE
     this.guiLogFile = GUI_LOG_FILE
   }
 
