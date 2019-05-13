@@ -114,7 +114,6 @@ class App extends React.Component<Props> {
     const cliLocalStatusIcon = cliService.isCliLocal() ? cliLocalService.getStatusIcon((icon,text)=>icon) : undefined
     const cliStatusIcon = cliService.getStatusIcon((icon,text)=>icon)
     const loginStatusIcon = cliService.getLoginStatusIcon((icon,text)=>icon)
-    const cliUrl = cliService.isCliLocal() ? 'standalone' : cliService.getCliUrl()
     const cliInfo = cliService.isCliLocal() ? 'CLI '+cliLocalService.getCliVersionStr():'CLI_API '+API_VERSION
     const torIcon = cliService.isConnected() ? cliService.getTorProgressIcon() : undefined
 
@@ -226,8 +225,11 @@ class App extends React.Component<Props> {
                 <small>Fetching wallet...</small>
               </div>}
               <div className="footerNav">
-                  {cliService.isConnected() && <small>{cliService.getServerName()}</small>}
-                  {cliStatusIcon && <small> | {cliLocalStatusIcon} {cliUrl}</small>}
+                  <div>
+                    {cliService.isConnected() && <small>{cliService.getServerName()}</small>}
+                    {cliService.isCliLocal() && <small> {cliLocalStatusIcon} standalone</small>}
+                  </div>
+                  {!cliService.isCliLocal() && <div><small>{cliService.getCliUrl()}</small></div>}
               </div>
             </div>
             <Status

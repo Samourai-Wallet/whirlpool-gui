@@ -47,17 +47,14 @@ export class CliLocal {
   }
 
   async onIpcMain(id) {
-    logger.debug('### onIpcMain: '+id+' ###')
     await this.ipcMutex.acquireAsync();
     try {
-      logger.debug('### onIpcMain: '+id+' ### =>')
       switch(id) {
         case IPC_CLILOCAL.RELOAD: await this.reload(true); break
         case IPC_CLILOCAL.GET_STATE: await this.onGetState(true); break
         case IPC_CLILOCAL.DELETE_CONFIG: await this.onDeleteConfig(true); break
       }
     } finally {
-      logger.debug('### onIpcMain: '+id+' ### <=')
       this.ipcMutex.release();
     }
   }
@@ -222,12 +219,10 @@ export class CliLocal {
   }
 
   async start(gotMutex=false) {
-    logger.debug('# start #'+gotMutex)
     if (!gotMutex) {
       await this.ipcMutex.acquireAsync();
     }
     try {
-      logger.debug('# start # =>')
       if (!this.state.valid) {
         console.error("[CLI_LOCAL] start skipped: not valid")
         return
@@ -279,7 +274,6 @@ export class CliLocal {
           myThis.updateState(CLILOCAL_STATUS.ERROR)
         });
     } finally {
-      logger.debug('# start # <='+gotMutex)
       if (!gotMutex) {
         this.ipcMutex.release();
       }
@@ -373,12 +367,10 @@ export class CliLocal {
   }
 
   async stop(gotMutex=false, kill=true) {
-    logger.debug('# stop # '+gotMutex)
     if (!gotMutex) {
       await this.ipcMutex.acquireAsync();
     }
     try {
-      logger.debug('# stop # =>'+gotMutex)
       if (!this.state.started) {
         console.error("CliLocal: stop skipped: not started")
         return
@@ -394,7 +386,6 @@ export class CliLocal {
         this.cliProc.kill()
       }
     } finally {
-      logger.debug('# stop # <='+gotMutex)
       if (!gotMutex) {
         this.ipcMutex.release();
       }
