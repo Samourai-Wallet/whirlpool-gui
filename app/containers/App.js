@@ -117,7 +117,7 @@ class App extends React.Component<Props> {
     const cliInfo = cliService.isCliLocal() ? 'CLI '+cliLocalService.getCliVersionStr():'CLI_API '+API_VERSION
     const torIcon = cliService.isConnected() ? cliService.getTorProgressIcon() : undefined
 
-    return <div>
+    return <div className='h-100'>
       <Helmet>
         <title>Whirlpool - Samourai Wallet - GUI {GUI_VERSION}, {cliInfo}</title>
       </Helmet>
@@ -149,9 +149,9 @@ class App extends React.Component<Props> {
         </div>
       </nav>
 
-      <div className="container-fluid">
+      <div className="container-fluid h-100 main-container">
 
-        <div className="row">
+        <div className="row h-100">
           <nav className="col-md-2 d-none d-md-block bg-light sidebar">
             <div className="sidebar-sticky">
 

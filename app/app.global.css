@@ -29,8 +29,14 @@ th.utxoStatus {
 
 .tablescroll {
   overflow-y: scroll;
+}
+
+.table-utxos {
   border-left: 1px solid #700606;
-  max-height: 500px;
+}
+
+.table-utxos th.utxoControls {
+  width:5.5em;
 }
 
 .modal-body canvas.qr {

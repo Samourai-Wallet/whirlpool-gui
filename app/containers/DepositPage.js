@@ -9,11 +9,8 @@ import walletService from '../services/walletService';
 import utils, { WHIRLPOOL_ACCOUNTS } from '../services/utils';
 import mixService from '../services/mixService';
 import poolsService from '../services/poolsService';
-import UtxoPoolSelector from '../components/Utxo/UtxoPoolSelector';
-import UtxoMixsTargetSelector from '../components/Utxo/UtxoMixsTargetSelector';
-import UtxoControls from '../components/Utxo/UtxoControls';
 import modalService from '../services/modalService';
-import LinkExternal from '../components/Utils/LinkExternal';
+import UtxosTable from '../components/Utxo/UtxosTable';
 
 class DepositPage extends Component {
 
@@ -34,63 +31,22 @@ class DepositPage extends Component {
       return <small>Fetching pools...</small>
     }
 
-    const utxosDeposit = walletService.getUtxosDeposit()
+    const utxos = walletService.getUtxosDeposit()
     return (
-      <div className='depositPage'>
+      <div className='depositPage h-100'>
         <div className='row'>
           <div className='col-sm-2'>
             <h2>Deposit</h2>
           </div>
           <div className='col-sm-10 stats'>
             <a className='zpubLink' href='#' onClick={e => {modalService.openZpub(WHIRLPOOL_ACCOUNTS.DEPOSIT, walletService.getZpubDeposit());e.preventDefault()}}>ZPUB</a>
-            <span className='text-primary'>{utxosDeposit.length} utxos ({utils.toBtc(walletService.getBalanceDeposit())}btc)</span>
+            <span className='text-primary'>{utxos.length} utxos ({utils.toBtc(walletService.getBalanceDeposit())}btc)</span>
           </div>
         </div>
-        <div className="tablescroll">
-        <table className="table table-sm table-hover">
-          <thead>
-          <tr>
-            <th scope="col">UTXO</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Pool</th>
-            <th scope="col" className='utxoStatus'>Status</th>
-            <th scope="col"></th>
-            <th scope="col">Mixs</th>
-            <th scope="col" colSpan={2}>Last activity</th>
-            <th scope="col">
-              {false && <div className="custom-control custom-switch">
-                <input type="checkbox" className="custom-control-input" defaultChecked={true} id="autoTx0"/>
-                <label className="custom-control-label" htmlFor="autoTx0">Auto-TX0</label>
-              </div>}
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-          {utxosDeposit.map((utxo,i) => {
-            const lastActivity = mixService.computeLastActivity(utxo)
-            return <tr key={i}>
-              <td>
-                <small><LinkExternal href={utils.linkExplorer(utxo)}>{utxo.hash}:{utxo.index}</LinkExternal><br/>
-                  {utxo.account} · {utxo.path} · {utxo.confirmations>0?<span>{utxo.confirmations} confirms</span>:<strong>unconfirmed</strong>}</small>
-              </td>
-              <td>{utils.toBtc(utxo.value)}</td>
-              <td>
-                <UtxoPoolSelector utxo={utxo}/>
-              </td>
-              <td><span className='text-primary'>{utils.statusLabel(utxo)}</span></td>
-              <td></td>
-              <td>
-                <UtxoMixsTargetSelector utxo={utxo}/>
-              </td>
-              <td><small>{utils.utxoMessage(utxo)}</small></td>
-              <td><small>{lastActivity ? lastActivity : '-'}</small></td>
-              <td>
-                <UtxoControls utxo={utxo}/>
-              </td>
-            </tr>
-          })}
-          </tbody>
-        </table>
+        <div className='row h-100 d-flex flex-column'>
+          <div className='col-sm-12 flex-grow-1 tablescroll'>
+            <UtxosTable utxos={utxos} controls={true}/>
+          </div>
         </div>
       </div>
     );

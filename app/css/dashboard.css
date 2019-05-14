@@ -73,9 +73,16 @@ span.logo {
 
 
 /* navbar */
+[role="main"] {
+  padding-top: 0px !important;
+}
 .navbar {
   height:80px;
 }
-[role="main"], .sidebar {
+.sidebar {
   padding-top: 80px !important; /* Space for fixed navbar */
+}
+.main-container {
+  padding-top: 80px !important; /* Space for fixed navbar */
+  padding-bottom: 60px;
 }
