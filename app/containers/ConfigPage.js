@@ -84,8 +84,6 @@ export default class ConfigPage extends Component<Props> {
     const checked = e => {
       return e.target.checked
     }
-    const poolIdValue = cliConfig.mix.poolIdsByPriority ? cliConfig.mix.poolIdsByPriority[0] : ''
-    const ALL_POOLS_LABEL = 'All pools'
     const autoAggregatePostmixPossible = cliConfig.mix.autoTx0 && cliConfig.server !== SERVER_MAIN
     return (
       <div>
@@ -113,20 +111,6 @@ export default class ConfigPage extends Component<Props> {
                 }} defaultValue={cliConfig.server}>
                   {Object.keys(WHIRLPOOL_SERVER).map((value) => <option value={value} key={value}>{WHIRLPOOL_SERVER[value]}</option>)}
                 </select>
-              </div>
-
-              <div className="form-group row">
-                <label htmlFor="pools" className="col-sm-2 col-form-label">Pool</label>
-                {poolsService.isReady() && <select className="col-sm-8 form-control" id="pools" onChange={e => myThis.onChangeCliConfig(cliConfig => {
-                  const value = e.target.value
-                  cliConfig.mix.poolIdsByPriority = [value]
-                })} defaultValue={poolIdValue}>
-                  <option value=''>{ALL_POOLS_LABEL}</option>
-                  {poolsService.getPoolsAvailable().map(pool => <option key={pool.poolId} value={pool.poolId}>{pool.poolId} (denomination: {utils.toBtc(pool.denomination)}btc, fee: {utils.toBtc(pool.feeValue)}, anonymity set: {pool.mixAnonymitySet})</option>)}
-                </select>}
-                {!poolsService.isReady() && <div className='col-sm-10'>
-                  <strong>{poolIdValue ? poolIdValue : ALL_POOLS_LABEL}</strong> <small><i><a href='#'>Please login to edit pools</a></i></small>
-                </div>}
               </div>
 
               <div className="form-group row">
