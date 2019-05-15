@@ -243,7 +243,6 @@ class InitPage extends Component<Props> {
     let payload = undefined
     try {
       payload = JSON.parse(payloadStr)
-      console.log('payload', payload)
     } catch(e) {}
     if (payload && payload.pairing && Object.keys(payload.pairing).length > 0) {
       // seems valid
