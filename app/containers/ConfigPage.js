@@ -6,8 +6,6 @@ import * as Icons from '@fortawesome/free-solid-svg-icons';
 import { WHIRLPOOL_SERVER } from '../const';
 import { logger } from '../utils/logger';
 import { CliConfigService } from '../services/cliConfigService';
-import utils from '../services/utils';
-import poolsService from '../services/poolsService';
 import cliService from '../services/cliService';
 
 type Props = {};
@@ -84,7 +82,6 @@ export default class ConfigPage extends Component<Props> {
     const checked = e => {
       return e.target.checked
     }
-    const autoAggregatePostmixPossible = cliConfig.mix.autoTx0 && cliConfig.server !== SERVER_MAIN
     return (
       <div>
         <h1>Configuration</h1>
@@ -105,9 +102,6 @@ export default class ConfigPage extends Component<Props> {
                 <select className="col-sm-8 form-control" id="server" onChange={e => {
                   const myValue = e.target.value
                   myThis.onChangeCliConfig(cliConfig => cliConfig.server = myValue)
-                  if (myValue !== SERVER_MAIN) {
-                    myThis.onChangeCliConfig(cliConfig => cliConfig.mix.autoAggregatePostmix = false)
-                  }
                 }} defaultValue={cliConfig.server}>
                   {Object.keys(WHIRLPOOL_SERVER).map((value) => <option value={value} key={value}>{WHIRLPOOL_SERVER[value]}</option>)}
                 </select>
@@ -131,20 +125,6 @@ export default class ConfigPage extends Component<Props> {
                 <div className="col-sm-10 custom-control custom-switch">
                   <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeCliConfig(cliConfig => cliConfig.mix.autoMix = checked(e))} defaultChecked={cliConfig.mix.autoMix} id="autoMix"/>
                   <label className="custom-control-label" htmlFor="autoMix">Automatically QUEUE premix & postmix</label>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label htmlFor="autoTx0" className="col-sm-2 col-form-label">Auto-TX0</label>
-                <div className="col-sm-10 custom-control custom-switch">
-                  <input type="checkbox" className="custom-control-input" onChange={e => {
-                    const myValue = checked(e)
-                    myThis.onChangeCliConfig(cliConfig => cliConfig.mix.autoTx0 = myValue)
-                    if (!myValue) {
-                      myThis.onChangeCliConfig(cliConfig => cliConfig.mix.autoAggregatePostmix = false)
-                    }
-                  }} defaultChecked={cliConfig.mix.autoTx0} id="autoTx0"/>
-                  <label className="custom-control-label" htmlFor="autoTx0">Automatically TX0 whole deposit account (otherwise, you can click "TX0" on deposit UTXOs)</label>
                 </div>
               </div>
 
@@ -217,16 +197,6 @@ export default class ConfigPage extends Component<Props> {
                     }} defaultValue={cliConfig.mix.tx0MaxOutputs} id="tx0MaxOutputs"/>
                     <label className='col-form-label col-sm-11'>Max premixs per TX0 (0 = no limit)</label>
                   </div>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label htmlFor="autoAggregatePostmix" className="col-sm-2 col-form-label">Auto-Aggregate</label>
-                <div className="col-sm-10">
-                  {autoAggregatePostmixPossible && <div className="custom-control custom-switch">
-                    <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeCliConfig(cliConfig => cliConfig.mix.autoAggregatePostmix = checked(e))} defaultChecked={cliConfig.mix.autoAggregatePostmix} id="autoAggregatePostmix"/>
-                    <label className="custom-control-label" htmlFor="autoAggregatePostmix">Aggregate deposit, premix & postmix when there is no more to mix (testnet only).{cliConfig.mix.autoTx0}</label></div>}
-                  {!autoAggregatePostmixPossible && <div><i>Only available with <strong>AutoTX0</strong> on <strong>TestNet</strong></i></div>}
                 </div>
               </div>
 
