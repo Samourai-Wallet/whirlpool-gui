@@ -336,7 +336,7 @@ export class CliLocal {
           } else {
             cliLog.write('[CLI_LOCAL][ERROR] => terminated with error: ' + code + '\n')
             cliLogError.write('[CLI_LOCAL][ERROR] => terminated with error: ' + code + '\n')
-            logger.error('[CLI_LOCAL] => terminated with error: ' + code + '. Check logs for details (' + GUI_LOG_FILE + ' & ' + CLI_LOG_FILE + ')')
+            logger.error('[CLI_LOCAL][ERROR] => terminated with error: ' + code + '. Check logs for details (' + GUI_LOG_FILE + ' & ' + CLI_LOG_ERROR_FILE + ')')
           }
         }
         if (!reloading) {
@@ -349,12 +349,19 @@ export class CliLocal {
         const dataLine = dataStr.substring(0, (dataStr.length - 1))
         console.log('[CLI_LOCAL] ' + dataLine);
         cliLog.write(data)
+
+        // log java errors to CLI error file
+        if (dataStr.match(/ ERROR ([0-9]+) \-\-\- /g)) {
+          console.error('[CLI_LOCAL][ERROR] ' + dataLine);
+          logger.error('[CLI_LOCAL][ERROR] ' + dataLine)
+          cliLogError.write('[ERROR]' + data)
+        }
       });
       this.cliProc.stderr.on('data', function(data) {
         const dataStr = data.toString()
         const dataLine = dataStr.substring(0, (dataStr.length - 1))
-        console.error('[CLI_LOCAL] ' + dataLine);
-        logger.error('[CLI_LOCAL] ' + dataLine)
+        console.error('[CLI_LOCAL][ERROR] ' + dataLine);
+        logger.error('[CLI_LOCAL][ERROR] ' + dataLine)
         cliLog.write('[ERROR]' + data)
         cliLogError.write('[ERROR]' + data)
 
