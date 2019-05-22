@@ -40,7 +40,7 @@ class PoolsPage extends Component {
           </tr>
           </thead>
           <tbody>
-          {poolsService.getPoolsAvailable().map((pool,i) => <tr key={i}>
+          {poolsService.getPools().map((pool,i) => <tr key={i}>
             <td>{pool.poolId}</td>
             <td>{utils.toBtc(pool.denomination)}</td>
             <td>{utils.toBtc(pool.tx0BalanceMin)}</td>

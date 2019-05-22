@@ -28,7 +28,10 @@ export default class StatusPage extends Component<Props> {
     }
   }
 
+
   render() {
+    const cliStatusIcon = cliService.getStatusIcon((icon,text)=><div>{icon} {text}</div>)
+
     return (
       <div>
         <h1>System</h1>
@@ -36,26 +39,27 @@ export default class StatusPage extends Component<Props> {
         <div className='row'>
           <div className='col-sm-12'>
             <Card>
-              <Card.Header>STATUS</Card.Header>
-              <Card.Body>
+              <Card.Header>
                 <div className='row'>
                   <div className='col-sm-6'>
-                {cliService.getStatusIcon((icon,text)=><div>{icon} {text}</div>)}
-                {cliService.getLoginStatusIcon((icon,text)=><div>{icon} {text}</div>)}
+                    <strong>GUI STATUS</strong>
                   </div>
                   <div className='col-sm-6'>
-                    <div>GUI <strong>{GUI_VERSION}</strong>, CLI API <strong>{API_VERSION}</strong></div>
-                    {cliService.isConnected() && <div>
-                      Server: {cliService.getServerUrl()}
-                    </div>}
+                    {cliService.getLoginStatusIcon((icon,text)=><div>{icon} {text}</div>)}
                   </div>
                 </div>
+              </Card.Header>
+              <Card.Body>
                 <div className='row'>
                   <div className='col-sm-2'>
-                    GUI logs:
+                    <strong>GUI logs:</strong><br/>
+                    <strong>Version:</strong><br/>
+                    {cliService.isConnected() && <strong>Whirlpool server:</strong>}
                   </div>
                   <div className='col-sm-10'>
-                    <LinkExternal href={'file://'+this.guiLogFile}>{this.guiLogFile}</LinkExternal>
+                    <div><LinkExternal href={'file://'+this.guiLogFile}>{this.guiLogFile}</LinkExternal></div>
+                    <div>GUI <strong>{GUI_VERSION}</strong>, CLI API <strong>{API_VERSION}</strong></div>
+                    {cliService.isConnected() && <div>{cliService.getServerUrl()}</div>}
                   </div>
                 </div>
               </Card.Body>
@@ -66,11 +70,21 @@ export default class StatusPage extends Component<Props> {
         <br/>
 
         {!cliService.isCliLocal() && <Card>
-          <Card.Header>SETUP MODE : <strong>Remote DOJO / Nodl / CLI</strong></Card.Header>
+          <Card.Header>
+            <div className='row'>
+              <div className='col-sm-6'>
+                <strong>Remote CLI / DOJO / Nodl</strong>
+              </div>
+              <div className='col-sm-6'>
+                {cliStatusIcon}
+              </div>
+            </div>
+          </Card.Header>
           <Card.Body>
             <div className='row'>
               <div className='col-sm-12'>
-                {cliService.isConfigured() && <span>CLI: {cliService.getCliUrl()}</span>}
+                {cliStatusIcon}<br/>
+                {cliService.isConfigured() && <span>Remote CLI: {cliService.getCliUrl()}</span>}
               </div>
             </div>
           </Card.Body>
@@ -80,22 +94,24 @@ export default class StatusPage extends Component<Props> {
           <Card.Header>
             <div className='row'>
               <div className='col-sm-6'>
-                SETUP MODE : <strong>standalone (local CLI run from GUI)</strong>
+                <strong>Standalone CLI run from GUI</strong>
               </div>
               <div className='col-sm-6'>
-                {cliLocalService.getStatusIcon((icon,text)=><span>{icon} {text}</span>)}
+                {cliStatusIcon}
               </div>
             </div>
           </Card.Header>
           <Card.Body>
             <div className='row'>
               <div className='col-sm-2'>
-                <strong>Local CLI:</strong><br/>
+                <strong>Status:</strong><br/>
+                <strong>CLI path:</strong><br/>
                 <strong>JAR:</strong><br/>
                 <strong>Version:</strong><br/>
                 <strong>Checksum:</strong><br/><br/>
               </div>
               <div className='col-sm-10'>
+                {cliLocalService.getStatusIcon((icon,text)=><div>{icon} {text}</div>)}
                 <LinkExternal href={'file://'+DL_PATH}>{DL_PATH}</LinkExternal><br/>
                 {cliLocalService.hasCliApi() && <span>{cliLocalService.getCliFilename()}<br/>{cliLocalService.getCliVersionStr()}<br/>{cliLocalService.getCliChecksum()}</span>}
                 {!cliLocalService.hasCliApi() && <span><strong>CLI_API {API_VERSION} could not be resolved</strong><br/></span>}

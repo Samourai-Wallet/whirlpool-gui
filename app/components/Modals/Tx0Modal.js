@@ -7,33 +7,47 @@ import utils from '../../services/utils';
 import mixService from '../../services/mixService';
 import AbstractModal from './AbstractModal';
 import poolsService from '../../services/poolsService';
+import { TX0_FEE_TARGET } from '../../const';
 
 export default class Tx0Modal extends AbstractModal {
   constructor(props) {
     const initialState = {
       pools: undefined,
-      poolId: undefined,
-      mixsTarget: 0
+      feeTarget: TX0_FEE_TARGET.BLOCKS_2.value,
+      poolId: props.utxo.poolId,
+      mixsTarget: props.utxo.mixsTarget > 0 ? props.utxo.mixsTarget : 0
     }
     super(props, 'modal-tx0', initialState)
+
+    console.log('Tx0Modal', initialState)
 
     // fetch pools for tx0
     this.loading("Fetching pools for tx0...", poolsService.fetchState().then(foo => {
       const pools = mixService.getPoolsForTx0(props.utxo)
 
       if (pools.length == 0) {
-        this.setError("No pool applicable to this utxo.")
+        this.setError("No pool for this utxo.")
       }
-      this.setState({
-        pools: pools,
-        poolId: pools.length > 0 ? pools[0].poolId : undefined,
-        mixsTarget: 0
-      })
+
+      // default poolId
+      if (!initialState.poolId) {
+        initialState.poolId = pools.length > 0 ? pools[0].poolId : undefined
+      }
+      initialState.pools = pools
+      this.setState(initialState)
     }))
 
     this.handleChangePoolTx0 = this.handleChangePoolTx0.bind(this);
     this.handleChangeMixsTargetTx0 = this.handleChangeMixsTargetTx0.bind(this);
     this.handleSubmitTx0 = this.handleSubmitTx0.bind(this)
+  }
+
+  handleChangeFeeTarget(e) {
+    const feeTarget = e.target.value
+
+    this.setState({
+      feeTarget: feeTarget
+    })
   }
 
   handleChangePoolTx0(e) {
@@ -53,14 +67,13 @@ export default class Tx0Modal extends AbstractModal {
   }
 
   handleSubmitTx0() {
-    mixService.tx0(this.props.utxo)
+    mixService.tx0(this.props.utxo, this.state.feeTarget, this.state.poolId, this.state.mixsTarget)
     this.props.onClose();
   }
 
   renderTitle() {
     return <div>
-      Add to premix<br/>
-      <small>{this.props.utxo.hash}:{this.props.utxo.index}</small>
+      TX0: <small>{this.props.utxo.hash}:{this.props.utxo.index}</small>
     </div>
   }
 
@@ -70,16 +83,24 @@ export default class Tx0Modal extends AbstractModal {
 
   renderBody() {
     return <div>
-      This will split your UTXO and start mixing.<br/>
+      This will split your deposit UTXO and start mixing.<br/>
       Value: <strong>{utils.toBtc(this.props.utxo.value)}btc</strong><br/>
       <br/>
       {!this.isLoading() && !this.isError() && <div>
-        Select a pool:
-        <select className="form-control" onChange={this.handleChangePoolTx0} defaultValue={this.state.poolId}>
-          {this.state.pools.map(pool => <option key={pool.poolId} value={pool.poolId}>{pool.poolId} (denomination: {utils.toBtc(pool.denomination)}btc, fee: {utils.toBtc(pool.feeValue)}, anonymity set: {pool.mixAnonymitySet}, connected: {pool.nbRegistered}, last mix: {moment.duration(pool.elapsedTime).humanize()})</option>)}
+        Miner fee:
+        <select className="form-control" onChange={this.handleChangeFeeTarget} defaultValue={this.state.feeTarget}>
+          {Object.keys(TX0_FEE_TARGET).map(feeTargetKey => {
+            const feeTargetItem = TX0_FEE_TARGET[feeTargetKey]
+            return <option key={feeTargetItem.value} value={feeTargetItem.value}>{feeTargetItem.label}</option>
+          })}
         </select><br/>
 
-        Mixs target:
+        Pool:
+        <select className="form-control" onChange={this.handleChangePoolTx0} defaultValue={this.state.poolId}>
+          {this.state.pools.map(pool => <option key={pool.poolId} value={pool.poolId}>{pool.poolId} · denomination: {utils.toBtc(pool.denomination)}btc · fee: {utils.toBtc(pool.feeValue)}btc · anonymity set: {pool.mixAnonymitySet}}</option>)}
+        </select><br/>
+
+        Mixs target: (you can change this later)
         <select className="form-control col-sm-2" onChange={this.handleChangeMixsTargetTx0} defaultValue={this.state.mixsTarget}>
           <option value={1}>1</option>
           <option value={2}>2</option>
@@ -87,7 +108,7 @@ export default class Tx0Modal extends AbstractModal {
           <option value={5}>5</option>
           <option value={10}>10</option>
           <option value={0}>∞</option>
-        </select> (you can change this later)
+        </select>
       </div>}
     </div>
   }

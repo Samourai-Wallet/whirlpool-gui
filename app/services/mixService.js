@@ -85,8 +85,8 @@ class MixService {
     return backendService.utxo.configure(utxo.hash, utxo.index, utxo.poolId, utxo.mixsTarget).then(() => walletService.fetchState())
   }
 
-  tx0(utxo) {
-    return backendService.utxo.tx0(utxo.hash, utxo.index).then(() => walletService.fetchState())
+  tx0(utxo, feeTarget, poolId, mixsTarget) {
+    return backendService.utxo.tx0(utxo.hash, utxo.index, feeTarget, poolId, mixsTarget).then(() => walletService.fetchState())
   }
 
   startMixUtxo(utxo) {

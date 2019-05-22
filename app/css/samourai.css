@@ -44,6 +44,9 @@ html,body{height:100%;}
   font-size:0.8em;
   color:#CCC;
 }
+.cliStatus .icon {
+  margin: 0 0.5em;
+}
 .footerNav {
   position:absolute;
   bottom:2.5em;

@@ -55,7 +55,11 @@ class Utils {
       }
       if (!resp.ok) {
         return resp.json().then(responseError => {
-          const message = responseError.message ? responseError.message : 'Fetch failed'
+          const message = responseError.message ? responseError.message : 'Error '+resp.status
+          console.error('fetch error:', message)
+          return Promise.reject(new Error(message))
+        }).catch(e => { // no json response
+          const message = 'Error '+resp.status
           console.error('fetch error:', message)
           return Promise.reject(new Error(message))
         })

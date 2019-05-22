@@ -11,6 +11,7 @@ import utils, { WHIRLPOOL_ACCOUNTS } from '../../services/utils';
 import LinkExternal from '../Utils/LinkExternal';
 import UtxoMixsTargetSelector from './UtxoMixsTargetSelector';
 import UtxoPoolSelector from './UtxoPoolSelector';
+import modalService from '../../services/modalService';
 
 
 /* eslint-disable react/prefer-stateless-function */
@@ -65,7 +66,7 @@ class UtxosTable extends React.PureComponent {
     return (
       <div>
         {utxo.account == WHIRLPOOL_ACCOUNTS.DEPOSIT && utxo.confirmations === 0 && <small>unconfirmed</small>}
-        {utxo.account == WHIRLPOOL_ACCOUNTS.DEPOSIT && mixService.isTx0Possible(utxo) && <button className='btn btn-sm btn-primary' title='Tx0' onClick={() => mixService.tx0(utxo)} >Tx0 <Icon.ChevronsRight size={12}/></button>}
+        {utxo.account == WHIRLPOOL_ACCOUNTS.DEPOSIT && mixService.isTx0Possible(utxo) && <button className='btn btn-sm btn-primary' title='Tx0' onClick={() => modalService.openTx0(utxo)} >Tx0 <Icon.ChevronsRight size={12}/></button>}
         {mixService.isStartMixPossible(utxo) && <button className='btn btn-sm btn-primary' title='Start mixing' onClick={() => mixService.startMixUtxo(utxo)}>Mix <Icon.Play size={12} /></button>}
         {mixService.isStopMixPossible(utxo) && <button className='btn btn-sm btn-primary' title='Stop mixing' onClick={() => mixService.stopMixUtxo(utxo)}>Stop <Icon.Square size={12} /></button>}
       </div>

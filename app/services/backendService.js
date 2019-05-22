@@ -139,9 +139,13 @@ class BackendService {
   };
 
   utxo = {
-    tx0: (hash, index) => {
+    tx0: (hash, index, feeTarget, poolId, mixsTarget) => {
       return this.withStatus('Utxo', 'New tx0', () =>
-        this.fetchBackendAsJson('/rest/utxos/'+hash+':'+index+'/tx0', 'POST')
+        this.fetchBackendAsJson('/rest/utxos/'+hash+':'+index+'/tx0', 'POST', {
+          feeTarget: feeTarget,
+          poolId: poolId,
+          mixsTarget: mixsTarget
+        })
       )
     },
     configure: (hash, index, poolId, mixsTarget) => {

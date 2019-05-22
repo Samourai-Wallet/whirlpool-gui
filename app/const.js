@@ -4,7 +4,7 @@ import { computeLogPath, logger } from './utils/logger';
 
 /* shared with mainProcess */
 
-export const API_VERSION = '0.5';
+export const API_VERSION = '0.6';
 export const GUI_VERSION = version;
 
 export const DEFAULT_CLI_LOCAL = true;
@@ -26,6 +26,21 @@ export const WHIRLPOOL_SERVER = {
   MAINNET: 'Whirlpool MAINNET',
   INTEGRATION: 'Whirlpool INTEGRATION'
 };
+
+export const TX0_FEE_TARGET = {
+  BLOCKS_2: {
+    value: 'BLOCKS_2',
+    label: 'High priority · confirm in 2 blocks'
+  },
+  BLOCKS_6: {
+    value: 'BLOCKS_6',
+    label: 'Medium priority · confirm in 6 blocks'
+  },
+  BLOCKS_24: {
+    value: 'BLOCKS_24',
+    label: 'Low priority · confirm in 24 blocks'
+  }
+}
 
 export const STORE_CLILOCAL = 'cli.local';
 

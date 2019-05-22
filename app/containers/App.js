@@ -115,7 +115,8 @@ class App extends React.Component<Props> {
     const cliStatusIcon = cliService.getStatusIcon((icon,text)=>icon)
     const loginStatusIcon = cliService.getLoginStatusIcon((icon,text)=>icon)
     const cliInfo = cliService.isCliLocal() ? 'CLI '+cliLocalService.getCliVersionStr():'CLI_API '+API_VERSION
-    const torIcon = cliService.isConnected() ? cliService.getTorProgressIcon() : undefined
+    const torIcon = cliService.isConnected() && cliService.getTorProgressIcon() ? <span className='icon'>{cliService.getTorProgressIcon()}</span> : undefined
+    const logoutIcon = cliService.isLoggedIn() ? <a href='#' title='Logout' onClick={()=>cliService.logout()} className='icon'><FontAwesomeIcon icon={Icons.faSignOutAlt} color='#CCC'/></a> : undefined
 
     return <div className='h-100'>
       <Helmet>
@@ -130,9 +131,12 @@ class App extends React.Component<Props> {
             </a>
             <a href='#' className='product-title'>Whirlpool</a>
           </div>
-          <div>
-            {cliStatusIcon && <div className='cliStatus'>{loginStatusIcon && <span>{loginStatusIcon}</span>}&nbsp;&nbsp;&nbsp;{cliStatusIcon}&nbsp;&nbsp;&nbsp;{torIcon}</div>}
-          </div>
+          {cliStatusIcon && <div className='cliStatus'>
+            {loginStatusIcon && <span className='icon'>{loginStatusIcon}</span>}
+            <span className='icon'>{cliStatusIcon}</span>
+            {torIcon}
+            {logoutIcon}
+          </div>}
         </div>
         <div className='col-md-10'>
           {cliService.isLoggedIn() && (mixService.isReady() ? <MixStatus mixState={this.props.mix} mixActions={this.props.mixActions}/> : <small>Fetching mix state...</small>)}

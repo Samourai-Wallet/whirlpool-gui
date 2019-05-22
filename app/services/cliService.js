@@ -367,8 +367,8 @@ class CliService {
   getLoginStatusIcon(format) {
     if (cliService.isLoggedIn()) {
       // logged in
-      const status = 'Wallet opened (click to logout)'
-      return format(<a href='#' onClick={()=>cliService.logout()}><FontAwesomeIcon icon={Icons.faLockOpen} color='grey' title={status} /></a>, status)
+      const status = 'Wallet opened'
+      return format(<FontAwesomeIcon icon={Icons.faLockOpen} color='green' title={status} />, status)
     }
     const status = 'Wallet closed'
     return format(<FontAwesomeIcon icon={Icons.faLock} color='#CCC' title={status} />, status)
