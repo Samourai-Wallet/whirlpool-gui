@@ -365,8 +365,8 @@ export class CliLocal {
         cliLog.write('[ERROR]' + data)
         cliLogError.write('[ERROR]' + data)
 
-        myThis.state.error = dataLine
-        myThis.updateState(CLILOCAL_STATUS.ERROR)
+        //myThis.state.error = dataLine
+        //myThis.updateState(CLILOCAL_STATUS.ERROR)
       });
     } catch(e) {
       myThis.stop(true)

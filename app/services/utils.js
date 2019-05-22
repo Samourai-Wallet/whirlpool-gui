@@ -54,18 +54,21 @@ class Utils {
         return Promise.reject(new Error(message))
       }
       if (!resp.ok) {
-        return resp.json().then(responseError => {
-          const message = responseError.message ? responseError.message : 'Error '+resp.status
-          console.error('fetch error:', message)
-          return Promise.reject(new Error(message))
-        }).catch(e => { // no json response
+        if (resp.body) {
+          return resp.json().then(responseError => {
+            const message = responseError.message ? responseError.message : 'Error ' + resp.status
+            console.error('fetch error: ' + message, responseError)
+            return Promise.reject(new Error(message))
+          })/*.catch(e => { // no json response
           const message = 'Error '+resp.status
-          console.error('fetch error:', message)
+          console.error('fetch error: '+message, e)
           return Promise.reject(new Error(message))
-        })
-        const message = 'Fetch failed: status='+resp.status
-        console.error('fetch error:', message)
-        return Promise.reject(new Error(message))
+        })*/
+        } else {
+          const message = 'Error '+resp.status
+          console.error('fetch error: '+message, e)
+          return Promise.reject(new Error(message))
+        }
       }
       if (json) {
         return resp.json()

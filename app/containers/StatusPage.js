@@ -3,7 +3,15 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cliLocalService } from '../services/cliLocalService';
 import cliService from '../services/cliService';
-import { API_VERSION, CLI_LOG_ERROR_FILE, CLI_LOG_FILE, DL_PATH, GUI_LOG_FILE, GUI_VERSION } from '../const';
+import {
+  API_VERSION,
+  CLI_CONFIG_FILENAME,
+  CLI_LOG_ERROR_FILE,
+  CLI_LOG_FILE,
+  DL_PATH,
+  GUI_LOG_FILE,
+  GUI_VERSION
+} from '../const';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import LinkExternal from '../components/Utils/LinkExternal';
 import { Card } from 'react-bootstrap';
@@ -104,17 +112,25 @@ export default class StatusPage extends Component<Props> {
           <Card.Body>
             <div className='row'>
               <div className='col-sm-2'>
-                <strong>Status:</strong><br/>
-                <strong>CLI path:</strong><br/>
-                <strong>JAR:</strong><br/>
-                <strong>Version:</strong><br/>
-                <strong>Checksum:</strong><br/><br/>
+                <strong>Status:</strong>
               </div>
               <div className='col-sm-10'>
                 {cliLocalService.getStatusIcon((icon,text)=><div>{icon} {text}</div>)}
+              </div>
+            </div>
+            <div className='row'>
+              <div className='col-sm-2'>
+                <strong>Path:</strong><br/>
+                <strong>Config:</strong><br/>
+                {cliLocalService.hasCliApi() && <strong>JAR:<br/></strong>}
+                {cliLocalService.hasCliApi() && <strong>Version:<br/></strong>}<br/>
+              </div>
+              <div className='col-sm-10'>
                 <LinkExternal href={'file://'+DL_PATH}>{DL_PATH}</LinkExternal><br/>
-                {cliLocalService.hasCliApi() && <span>{cliLocalService.getCliFilename()}<br/>{cliLocalService.getCliVersionStr()}<br/>{cliLocalService.getCliChecksum()}</span>}
-                {!cliLocalService.hasCliApi() && <span><strong>CLI_API {API_VERSION} could not be resolved</strong><br/></span>}
+                <LinkExternal href={'file://'+DL_PATH+CLI_CONFIG_FILENAME}>{CLI_CONFIG_FILENAME}</LinkExternal><br/>
+                {cliLocalService.hasCliApi() && <div>{cliLocalService.getCliFilename()} ({cliLocalService.getCliChecksum()})</div>}
+                {cliLocalService.hasCliApi() && <div>{cliLocalService.getCliVersionStr()}</div>}
+                {!cliLocalService.hasCliApi() && <div><strong>CLI_API {API_VERSION} could not be resolved</strong><br/></div>}
               </div>
             </div>
             <div className='row'>
