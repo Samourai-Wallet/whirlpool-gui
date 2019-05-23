@@ -1,7 +1,7 @@
 import utils from './utils';
 import status from './status';
 import cliService from './cliService';
-import { API_VERSION } from '../const';
+import { API_VERSION, VERSIONS_URL } from '../const';
 
 const HEADER_API_VERSION = 'apiVersion'
 const HEADER_API_KEY = 'apiKey'
@@ -166,6 +166,18 @@ class BackendService {
         this.fetchBackend('/rest/utxos/'+hash+':'+index+'/stopMix', 'POST')
       )
     },
+  };
+
+  gui = {
+    versions: () => {
+      return this.withStatus('GUI', 'Check for updates', () => {
+          const headers = {
+            cache: "no-store"
+          }
+          return utils.fetch(VERSIONS_URL, { method: 'GET', headers: headers }, true)
+        }
+      )
+    }
   }
 }
 const backendService = new BackendService()

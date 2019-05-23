@@ -10,6 +10,8 @@ export const GUI_VERSION = version;
 export const DEFAULT_CLI_LOCAL = true;
 export const DEFAULT_CLIPORT = 8899;
 
+export const VERSIONS_URL = "https://raw.githubusercontent.com/Samourai-Wallet/whirlpool-runtimes/master/CLI.json"
+
 export const IPC_CLILOCAL = {
   GET_STATE: 'cliLocal.getState',
   STATE: 'cliLocal.state',

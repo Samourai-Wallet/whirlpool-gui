@@ -67,7 +67,7 @@ export default class StatusPage extends Component<Props> {
                   <div className='col-sm-10'>
                     <div><LinkExternal href={'file://'+this.guiLogFile}>{this.guiLogFile}</LinkExternal></div>
                     <div>GUI <strong>{GUI_VERSION}</strong>, CLI API <strong>{API_VERSION}</strong></div>
-                    {cliService.isConnected() && <div>{cliService.getServerUrl()}</div>}
+                    {cliService.isConnected() && <div>{cliService.getServerName()}</div>}
                   </div>
                 </div>
               </Card.Body>

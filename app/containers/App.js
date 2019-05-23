@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet';
 import walletService from '../services/walletService';
 import { bindActionCreators } from 'redux';
 import { cliActions } from '../actions/cliActions';
+import { guiActions } from '../actions/guiActions';
 import { walletActions } from '../actions/walletActions';
 import { poolsActions } from '../actions/poolsActions';
 import { mixActions } from '../actions/mixActions';
@@ -38,6 +39,8 @@ import { cliLocalService } from '../services/cliLocalService';
 import { API_VERSION, GUI_VERSION } from '../const';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import PoolsPage from './PoolsPage';
+import guiService from '../services/guiService';
+import { Alert } from 'react-bootstrap';
 
 type Props = {
   children: React.Node
@@ -57,6 +60,9 @@ class App extends React.Component<Props> {
     backendService.init(props.dispatch)
     cliService.init(props.cli, cliState =>
       props.cliActions.set(cliState)
+    )
+    guiService.init(props.gui, guiState =>
+      props.guiActions.set(guiState)
     )
     mixService.init(props.mix, mixState =>
       props.mixActions.set(mixState)
@@ -117,6 +123,9 @@ class App extends React.Component<Props> {
     const cliInfo = cliService.isCliLocal() ? 'CLI '+cliLocalService.getCliVersionStr():'CLI_API '+API_VERSION
     const torIcon = cliService.isConnected() && cliService.getTorProgressIcon() ? <span className='icon'>{cliService.getTorProgressIcon()}</span> : undefined
     const logoutIcon = cliService.isLoggedIn() ? <a href='#' title='Logout' onClick={()=>cliService.logout()} className='icon'><FontAwesomeIcon icon={Icons.faSignOutAlt} color='#CCC'/></a> : undefined
+
+    const guiUpdate = guiService.getGuiUpdate()
+    console.log('guiUpdate',guiUpdate)
 
     return <div className='h-100'>
       <Helmet>
@@ -244,6 +253,7 @@ class App extends React.Component<Props> {
 
           <main role="main" className="col-md-10 ml-sm-auto col-lg-10 px-4">
 
+            {guiUpdate && <div><br/><Alert variant='warning'>GUI update {guiUpdate} available!</Alert></div>}
             {this.routes()}
 
             {this.state.modalTx0 && <Tx0Modal utxo={this.state.modalTx0} onClose={modalService.close.bind(modalService)}/>}
@@ -263,6 +273,7 @@ function mapStateToProps(state) {
   return {
     status: state.status,
     cli: state.cli,
+    gui: state.gui,
     wallet: state.wallet,
     mix: state.mix
   };
@@ -273,6 +284,7 @@ function mapDispatchToProps (dispatch) {
     dispatch,
     statusActions: bindActionCreators(statusActions, dispatch),
     cliActions: bindActionCreators(cliActions, dispatch),
+    guiActions: bindActionCreators(guiActions, dispatch),
     walletActions: bindActionCreators(walletActions, dispatch),
     poolsActions: bindActionCreators(poolsActions, dispatch),
     mixActions: bindActionCreators(mixActions, dispatch)

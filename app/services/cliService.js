@@ -3,7 +3,7 @@ import ifNot from 'if-not-running';
 import Store from 'electron-store';
 import { logger } from '../utils/logger';
 import backendService from './backendService';
-import { CLI_STATUS } from './utils';
+import utils, { CLI_STATUS } from './utils';
 import mixService from './mixService';
 import walletService from './walletService';
 import poolsService from './poolsService';
@@ -11,7 +11,7 @@ import { cliLocalService } from './cliLocalService';
 import { DEFAULT_CLI_LOCAL, STORE_CLILOCAL } from '../const';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
-import utils from './utils';
+import guiService from './guiService';
 
 const STORE_CLIURL = "cli.url"
 const STORE_APIKEY = "cli.apiKey"
@@ -56,7 +56,7 @@ class CliService {
 
   startServices() {
     if (!this.servicesStarted) {
-      this.servicesStarted = true
+      this.servicesStarted = truew
       mixService.start()
       walletService.start()
       poolsService.start()
@@ -302,6 +302,9 @@ class CliService {
           cli: cliState,
           cliUrlError: undefined
         })
+
+        // start guiService
+        guiService.start()
 
         // notify services
         if (this.isLoggedIn()) {

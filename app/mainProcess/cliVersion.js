@@ -1,7 +1,6 @@
 import fetch from 'node-fetch'
-import { IS_DEV } from '../const';
+import { IS_DEV, VERSIONS_URL } from '../const';
 
-const VERSIONS_URL = "https://raw.githubusercontent.com/Samourai-Wallet/whirlpool-runtimes/master/CLI.json"
 class CliVersion {
 
   constructor() {
