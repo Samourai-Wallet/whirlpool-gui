@@ -125,7 +125,6 @@ class App extends React.Component<Props> {
     const logoutIcon = cliService.isLoggedIn() ? <a href='#' title='Logout' onClick={()=>cliService.logout()} className='icon'><FontAwesomeIcon icon={Icons.faSignOutAlt} color='#CCC'/></a> : undefined
 
     const guiUpdate = guiService.getGuiUpdate()
-    console.log('guiUpdate',guiUpdate)
 
     return <div className='h-100'>
       <Helmet>

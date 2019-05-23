@@ -56,7 +56,7 @@ class CliService {
 
   startServices() {
     if (!this.servicesStarted) {
-      this.servicesStarted = truew
+      this.servicesStarted = true
       mixService.start()
       walletService.start()
       poolsService.start()
