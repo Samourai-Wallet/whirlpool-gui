@@ -2,7 +2,7 @@ import ifNot from 'if-not-running';
 import moment from 'moment';
 import backendService from './backendService';
 
-const REFRESH_RATE = 60000;
+const REFRESH_RATE = 30000;
 class PoolsService {
   constructor () {
     this.setState = undefined
@@ -81,6 +81,7 @@ class PoolsService {
     return ifNot.run('poolsService:fetchState', () => {
       // fetchState backend
       return backendService.pools.fetchPools().then(pools => {
+        pools.fetchTime = new Date().getTime()
         // set state
         if (this.state === undefined) {
           console.log('poolsService: initializing new state')

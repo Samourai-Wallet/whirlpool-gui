@@ -5,6 +5,7 @@ import cli from './cli';
 import gui from './gui';
 import wallet from './wallet';
 import mix from './mix';
+import pools from './pools';
 import status from './status';
 
 export default function createRootReducer(history: History) {
@@ -14,6 +15,7 @@ export default function createRootReducer(history: History) {
     gui: gui,
     wallet: wallet,
     status: status,
-    mix: mix
+    mix: mix,
+    pools: pools
   });
 }
