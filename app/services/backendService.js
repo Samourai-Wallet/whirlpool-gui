@@ -43,14 +43,15 @@ class BackendService {
     return this.fetchBackend(url, method, jsonBody, true, cliUrl, apiKey)
   }
 
-  withStatus (mainLabel, label, executor, itemId) {
+  withStatus (mainLabel, label, executor, itemId, silent=false) {
     console.log(`=> req backend: ${mainLabel}: ${label}`)
     return status.executeWithStatus(
       mainLabel,
       label,
       executor,
       this.dispatch,
-      itemId
+      itemId,
+      silent
     )
   }
 
@@ -58,7 +59,7 @@ class BackendService {
     fetchState: (cliUrl=undefined, apiKey=undefined) => {
       return this.withStatus('CLI', 'Fetch state', () =>
           this.fetchBackendAsJson('/rest/cli', 'GET', undefined, cliUrl, apiKey)
-        , 'cli.status')
+        , 'cli.status', true)
     },
     init: (cliUrl, apiKey, pairingPayload) => {
       return this.withStatus('CLI', 'Initialize configuration', () =>
@@ -102,7 +103,7 @@ class BackendService {
     fetchPools: () => {
       return this.withStatus('Pools', 'Fetch pools', () =>
           this.fetchBackendAsJson('/rest/pools', 'GET')
-        , 'pools.fetchPools')
+        , 'pools.fetchPools', true)
     }
   };
 
@@ -110,7 +111,7 @@ class BackendService {
     fetchUtxos: () => {
       return this.withStatus('Wallet', 'Fetch utxos', () =>
         this.fetchBackendAsJson('/rest/utxos', 'GET')
-        , 'wallet.fetchUtxos')
+        , 'wallet.fetchUtxos', true)
     },
 
     fetchDeposit: (increment) => {
@@ -124,7 +125,7 @@ class BackendService {
     fetchState: () => {
       return this.withStatus('Mix', 'Fetch state', () =>
         this.fetchBackendAsJson('/rest/mix', 'GET')
-        , 'mix.fetchState')
+        , 'mix.fetchState', true)
     },
     start: () => {
       return this.withStatus('Mix', 'Start mixing', () =>
@@ -175,7 +176,8 @@ class BackendService {
             cache: "no-store"
           }
           return utils.fetch(VERSIONS_URL, { method: 'GET', headers: headers }, true)
-        }
+        },
+        'gui.versions', true
       )
     }
   }

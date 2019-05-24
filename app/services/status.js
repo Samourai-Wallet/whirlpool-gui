@@ -7,20 +7,24 @@ class Status {
   constructor () {
   }
 
-  executeWithStatus (mainLabel, label, executor, dispatch, itemId) {
+  executeWithStatus (mainLabel, label, executor, dispatch, itemId, silent=false) {
     if (itemId === undefined) {
       itemId = uniqueId()
     }
-    dispatch(statusActions.add(itemId, mainLabel, label, executor))
+    if (!silent) {
+      dispatch(statusActions.add(itemId, mainLabel, label, executor))
+    }
 
     const promise = executor()
     // important: keep promise variable unchanged to return initial promise
     promise
       .then(() => {
-        dispatch(statusActions.success(itemId))
-        setTimeout(() => dispatch(statusActions.clear(itemId)),
-          STATUS_SUCCESS_CLEAR
-        )
+        if (!silent) {
+          dispatch(statusActions.success(itemId))
+          setTimeout(() => dispatch(statusActions.clear(itemId)),
+            STATUS_SUCCESS_CLEAR
+          )
+        }
       })
       .catch(error => {
         console.error(`failed: ${label}`, error)
