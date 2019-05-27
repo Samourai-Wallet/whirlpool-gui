@@ -37,6 +37,7 @@ export default class Tx0Modal extends AbstractModal {
       this.setState(initialState)
     }))
 
+    this.handleChangeFeeTarget = this.handleChangeFeeTarget.bind(this);
     this.handleChangePoolTx0 = this.handleChangePoolTx0.bind(this);
     this.handleChangeMixsTargetTx0 = this.handleChangeMixsTargetTx0.bind(this);
     this.handleSubmitTx0 = this.handleSubmitTx0.bind(this)
