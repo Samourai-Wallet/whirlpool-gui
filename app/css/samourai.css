@@ -1,0 +1,187 @@
+html,body{height:100%;}
+
+.btn-primary {
+  background-color: #700606;
+  border-color: #700606;
+}
+.btn-primary:hover {
+  background-color: #b71c1c;
+  border-color: #b71c1c;
+}
+.btn-primary.disabled,
+.btn-primary:disabled {
+  background-color: #aaa;
+}
+.text-primary {
+  color: #700606 !important;
+}
+.form-control:focus {
+  border-color: #b71c1c;
+}
+.page-middle {
+  margin-top: 10%;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: #700606 !important;
+}
+.container-fluid a.dropdown-item.active:hover {
+  color: #fff !important;
+}
+
+.progress-bar.progressBarSamourai {
+  background-color: #700606 !important;
+}
+.progress-bar.progressBarSamourai.connecting {
+  background-color: #888 !important;
+}
+
+.cliStatus {
+  text-align:center;
+  margin-top:-1em;
+  margin-left:3em;
+  font-size:0.8em;
+  color:#CCC;
+}
+.cliStatus .icon {
+  margin: 0 0.5em;
+}
+.footerNav {
+  position:absolute;
+  bottom:2.5em;
+  left:1em;
+  color:#AAA;
+}
+.navbar .torIcon svg {
+  width:12px;
+  height:12px;
+}
+.torIconConnected {
+  color: green;
+}
+.torIconConnected svg path {
+  fill: green;
+}
+.torIconConnecting svg path {
+  fill: orange;
+}
+.torIconConnecting {
+  color: orange;
+}
+.torIconDisabled svg path {
+  fill: #CCC
+}
+
+.loginLocalStatus {
+  float:left;
+  margin-top:-0.5em;
+}
+
+/* status */
+.status {
+  position: absolute;
+  left: 253px;
+  bottom: 0;
+  z-index: 999999;
+}
+.status .item {
+  width: 800px;
+  font-size: 0.8em;
+  background-color: #f0f2f5;
+}
+.status .item .label {
+  font-weight: bold;
+}
+.status .item .errorMessage {
+  font-weight: bold;
+  color: red;
+}
+
+.mixStatus {
+  text-align: left;
+}
+.mixStatus strong {
+  font-size: 1.1em;
+}
+.mixThreads {
+  font-size: 0.9em;
+  padding-top: 0.3em;
+  color: #222;
+}
+.mixThreads > .row {
+  height: 5em;
+}
+.mixThreads > .row > .col-sm-3, .mixThreads .item .progress {
+  height: 2.1em;
+}
+.mixThreads .progress-bar {
+  font-weight: normal;
+}
+.mixThreads .item {
+  position: relative;
+  margin-bottom: 0.1em;
+  padding: 0 8px;
+}
+.mixThreads .item .label {
+  position: absolute;
+  top: 0.1em;
+  text-align:center;
+  width: 100%;
+  line-height: 1em;
+}
+
+/* DepositPage */
+.modal-tx0 {
+  width: 80%;
+  max-width: none !important;
+}
+
+.modal-status {
+  width: 100%;
+}
+
+.utxoPoolSelector .dropdown-item,
+.utxoMixsTargetSelector .dropdown-item {
+  padding: 0 0.4em;
+}
+
+
+/* login */
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+.form-signin .checkbox {
+  font-weight: 400;
+}
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+}
+
+/* seedSelector */
+.clearWord {
+  cursor: not-allowed;
+}
+
+/* statusPage */
+.logs {
+  font-size:0.8em;
+  padding:1em;
+  border: 1px solid #000;
+  height: 16em;
+  overflow: auto;
+  white-space: pre;
+}

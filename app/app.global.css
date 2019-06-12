@@ -2,42 +2,60 @@
  * @NOTE: Prepend a `~` to css file paths that are in your node_modules
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
-@import "~@fortawesome/fontawesome-free/css/all.css";
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import './css/bootstrap-dashboard.css';
+@import './css/samourai.css';
+@import './css/dashboard.css';
 
-body {
-  position: relative;
-  color: white;
-  height: 100vh;
-  background-color: #232c39;
-  background-image: linear-gradient(45deg, rgba(0, 216, 255, 0.5) 10%, rgba(0, 1, 127, 0.7));
-  font-family: Arial, Helvetica, Helvetica Neue, serif;
-  overflow-y: hidden;
+.premixPage .btn-sm {
+  line-height: 1em !important;
 }
 
-h2 {
-  margin: 0;
-  font-size: 2.25rem;
+th.utxoStatus {
+  min-width: 85px;
+}
+
+.progress-bar {
   font-weight: bold;
-  letter-spacing: -0.025em;
-  color: #fff;
 }
 
-p {
-  font-size: 24px;
+.navbar {
+  color: #fff !important;
 }
 
-li {
-  list-style: none;
+.stats {
+  padding-top: 1em;
 }
 
-a {
-  color: white;
-  opacity: 0.75;
-  text-decoration: none;
+.tablescroll {
+  overflow-y: scroll;
 }
 
-a:hover {
-  opacity: 1;
-  text-decoration: none;
-  cursor: pointer;
+.table-utxos {
+  border-left: 1px solid #700606;
+}
+
+.table-utxos th.utxoControls {
+  width:5.5em;
+}
+
+.modal-body canvas.qr {
+  margin: 0.6em 0 0.2em 0;
+}
+
+.modal-zpub {
+  word-break: break-word;
+}
+
+.sidebar-sticky {
+  text-align: center;
+}
+.sidebar-sticky .nav {
+  text-align: left;
+}
+
+.zpubLink {
+  float:right;
+  font-size:0.9em;
+  font-weight: bold;
 }
