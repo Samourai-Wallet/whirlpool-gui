@@ -49,6 +49,9 @@ export default class ConfigPage extends Component<Props> {
   }
 
   onSubmit(e) {
+    // TODO TOR temporarily disabled
+    this.state.cliConfig.tor = false
+
     this.cliConfigService.save(this.state.cliConfig).then(() => {
       logger.info('Configuration updated')
       this.setState({
@@ -128,13 +131,13 @@ export default class ConfigPage extends Component<Props> {
                 </div>
               </div>
 
-              <div className="form-group row">
+              {false && <div className="form-group row">
                 <label htmlFor="tor" className="col-sm-2 col-form-label">TOR</label>
                 <div className="col-sm-10 custom-control custom-switch">
                   <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeCliConfig(cliConfig => cliConfig.tor = checked(e))} defaultChecked={cliConfig.tor} id="tor"/>
                   <label className="custom-control-label" htmlFor="tor">Route all traffic to TOR</label>
                 </div>
-              </div>
+              </div>}
 
               <div className="form-group row">
                 <label htmlFor="proxy" className="col-sm-2 col-form-label">Proxy</label>

@@ -273,6 +273,10 @@ class CliService {
   }
 
   getTorProgressIcon() {
+    // TODO TOR temporarily disabled
+    if(true) {
+      return undefined
+    }
     const torProgress = this.getTorProgress()
     if (!torProgress) {
       return undefined
