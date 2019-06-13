@@ -52,6 +52,11 @@ export default class ConfigPage extends Component<Props> {
     // TODO TOR temporarily disabled
     this.state.cliConfig.tor = false
 
+    // force mix.clients=1 for mainnet
+    if (this.state.cliConfig.server === SERVER_MAIN) {
+      this.state.cliConfig.mix.clients = 1
+    }
+
     this.cliConfigService.save(this.state.cliConfig).then(() => {
       logger.info('Configuration updated')
       this.setState({
@@ -85,6 +90,7 @@ export default class ConfigPage extends Component<Props> {
     const checked = e => {
       return e.target.checked
     }
+    const clientsEditable = cliConfig.server !== SERVER_MAIN
     return (
       <div>
         <h1>Configuration</h1>
@@ -164,7 +170,7 @@ export default class ConfigPage extends Component<Props> {
           {this.state.showDevelopersConfig && <Card>
             <Card.Header>Developers settings</Card.Header>
             <Card.Body>
-              <div className="form-group row">
+              {clientsEditable && <div className="form-group row">
                 <label htmlFor="clients" className="col-sm-2 col-form-label">Max clients</label>
                 <div className="col-sm-10">
                   <div className='row'>
@@ -175,7 +181,7 @@ export default class ConfigPage extends Component<Props> {
                     <label className='col-form-label col-sm-11'>Max simultaneous mixing clients</label>
                   </div>
                 </div>
-              </div>
+              </div>}
 
               <div className="form-group row">
                 <label htmlFor="clientDelay" className="col-sm-2 col-form-label">Client delay</label>
