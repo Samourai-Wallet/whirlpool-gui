@@ -37,6 +37,22 @@ class UtxosTable extends React.PureComponent {
           <tbody>
           {this.props.utxos.map((utxo,i) => {
             const lastActivity = mixService.computeLastActivity(utxo)
+            const utxoReadOnly = utils.isUtxoReadOnly(utxo)
+            if (utxoReadOnly) {
+              return <tr key={i} className='utxo-disabled'>
+                <td>
+                  <small><LinkExternal href={utils.linkExplorer(utxo)}>{utxo.hash}:{utxo.index}</LinkExternal><br/>
+                    {utxo.account} · {utxo.path} · {utxo.confirmations>0?<span>{utxo.confirmations} confirms</span>:<strong>unconfirmed</strong>}</small>
+                </td>
+                <td>{utils.toBtc(utxo.value)}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            }
             return <tr key={i}>
               <td>
                 <small><LinkExternal href={utils.linkExplorer(utxo)}>{utxo.hash}:{utxo.index}</LinkExternal><br/>

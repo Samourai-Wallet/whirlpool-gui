@@ -165,6 +165,32 @@ class Utils {
     return utxo.message
   }
 
+  utxoPathChain(utxo) {
+    if (!utxo.path) {
+      return undefined
+    }
+    var matches = utxo.path.match(/M\/([0-9]+)\/[0-9]+$/)
+    return parseInt(matches[1])
+  }
+
+  isUtxoPostmixSpending(utxo) {
+    if (utxo.account === WHIRLPOOL_ACCOUNTS.POSTMIX) {
+      const utxoPathChain = this.utxoPathChain(utxo)
+      if (utxoPathChain && utxoPathChain !== 0) {
+        return true
+      }
+    }
+    return false
+  }
+
+  isUtxoReadOnly(utxo) {
+    // POSTMIX spendings (chains <> 0) as read only
+    if (this.isUtxoPostmixSpending(utxo)) {
+      return true
+    }
+    return false
+  }
+
   mixsTargetLabel(mixsTarget) {
     return mixsTarget !== MIXSTARGET_UNLIMITED ? mixsTarget : '∞'
   }
