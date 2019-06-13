@@ -32,15 +32,15 @@ export const WHIRLPOOL_SERVER = {
 export const TX0_FEE_TARGET = {
   BLOCKS_2: {
     value: 'BLOCKS_2',
-    label: 'High priority · confirm in 2 blocks'
+    label: 'High priority · in 2 blocks'
   },
   BLOCKS_6: {
     value: 'BLOCKS_6',
-    label: 'Medium priority · confirm in 6 blocks'
+    label: 'Medium priority · in 6 blocks'
   },
   BLOCKS_24: {
     value: 'BLOCKS_24',
-    label: 'Low priority · confirm in 24 blocks'
+    label: 'Low priority · in 24 blocks'
   }
 }
 

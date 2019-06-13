@@ -62,7 +62,7 @@ class BackendService {
         , 'cli.status', true)
     },
     init: (cliUrl, apiKey, pairingPayload) => {
-      return this.withStatus('CLI', 'Initialize configuration', () =>
+      return this.withStatus('CLI', 'Initial setup', () =>
         this.fetchBackendAsJson('/rest/cli/init', 'POST', {
           pairingPayload: pairingPayload
         }, cliUrl, apiKey)
