@@ -107,16 +107,6 @@ export default class ConfigPage extends Component<Props> {
             <Card.Header>General configuration</Card.Header>
             <Card.Body>
               <div className="form-group row">
-                <label htmlFor="server" className="col-sm-2 col-form-label">Server</label>
-                <select className="col-sm-8 form-control" id="server" onChange={e => {
-                  const myValue = e.target.value
-                  myThis.onChangeCliConfig(cliConfig => cliConfig.server = myValue)
-                }} defaultValue={cliConfig.server}>
-                  {Object.keys(WHIRLPOOL_SERVER).map((value) => <option value={value} key={value}>{WHIRLPOOL_SERVER[value]}</option>)}
-                </select>
-              </div>
-
-              <div className="form-group row">
                 <label htmlFor="mixsTarget" className="col-sm-2 col-form-label">Default mixs target</label>
                 <div className="col-sm-10">
                   <div className='row'>
@@ -170,18 +160,16 @@ export default class ConfigPage extends Component<Props> {
           {this.state.showDevelopersConfig && <Card>
             <Card.Header>Developers settings</Card.Header>
             <Card.Body>
-              {clientsEditable && <div className="form-group row">
-                <label htmlFor="clients" className="col-sm-2 col-form-label">Max clients</label>
-                <div className="col-sm-10">
-                  <div className='row'>
-                    <input type="number" className='form-control col-sm-1' onChange={e => {
-                      const myValue = parseInt(e.target.value)
-                      myThis.onChangeCliConfig(cliConfig => cliConfig.mix.clients = myValue)
-                    }} defaultValue={cliConfig.mix.clients} id="clients"/>
-                    <label className='col-form-label col-sm-11'>Max simultaneous mixing clients</label>
-                  </div>
-                </div>
-              </div>}
+
+              <div className="form-group row">
+                <label htmlFor="server" className="col-sm-2 col-form-label">Server</label>
+                <select className="col-sm-8 form-control" id="server" onChange={e => {
+                  const myValue = e.target.value
+                  myThis.onChangeCliConfig(cliConfig => cliConfig.server = myValue)
+                }} defaultValue={cliConfig.server}>
+                  {Object.keys(WHIRLPOOL_SERVER).map((value) => <option value={value} key={value}>{WHIRLPOOL_SERVER[value]}</option>)}
+                </select>
+              </div>
 
               <div className="form-group row">
                 <label htmlFor="clientDelay" className="col-sm-2 col-form-label">Client delay</label>
@@ -220,6 +208,19 @@ export default class ConfigPage extends Component<Props> {
                   </div>
                 </div>
               </div>
+
+              {clientsEditable && <div className="form-group row">
+                <label htmlFor="clients" className="col-sm-2 col-form-label">Max clients</label>
+                <div className="col-sm-10">
+                  <div className='row'>
+                    <input type="number" className='form-control col-sm-1' onChange={e => {
+                      const myValue = parseInt(e.target.value)
+                      myThis.onChangeCliConfig(cliConfig => cliConfig.mix.clients = myValue)
+                    }} defaultValue={cliConfig.mix.clients} id="clients"/>
+                    <label className='col-form-label col-sm-11'>Max simultaneous mixing clients</label>
+                  </div>
+                </div>
+              </div>}
             </Card.Body>
           </Card>}
           <br/>
