@@ -128,7 +128,8 @@ class CliLocalService {
       version += ' (dev)'
     }
     else if (IS_DEVELOP_SNAPSHOT) {
-      version += ' (develop-SNAPSHOT)'
+      const checksum = this.getCliChecksum() ? this.getCliChecksum() : '?'
+      version += ' ('+checksum+')'
     }
     return version
   }
@@ -151,7 +152,7 @@ class CliLocalService {
     if (!this.hasCliApi()) {
       return undefined
     }
-    return this.state.cliApi.cliChecksum
+    return this.state.cliApi.checksum
   }
 }
 export const cliLocalService = new CliLocalService()

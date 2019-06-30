@@ -4,16 +4,19 @@ import fs from 'fs';
 import { spawn } from 'child_process';
 import Store from 'electron-store';
 import AwaitLock from 'await-lock';
-import ps from 'ps-node'
+import ps from 'ps-node';
 import {
-  API_VERSION, CLI_CONFIG_FILENAME, CLI_LOG_ERROR_FILE,
+  API_VERSION,
+  CLI_CONFIG_FILENAME,
+  CLI_LOG_ERROR_FILE,
   CLI_LOG_FILE,
   CLILOCAL_STATUS,
   DEFAULT_CLI_LOCAL,
   DEFAULT_CLIPORT,
   DL_PATH,
   GUI_LOG_FILE,
-  IPC_CLILOCAL, IS_DEV, IS_DEVELOP_SNAPSHOT,
+  IPC_CLILOCAL,
+  IS_DEV,
   STORE_CLILOCAL
 } from '../const';
 import { logger } from '../utils/logger';
@@ -412,7 +415,7 @@ export class CliLocal {
         logger.error('CLI not found: '+dlPathFile)
         return false;
       }
-      if (!IS_DEV && !IS_DEVELOP_SNAPSHOT && checksum !== expectedChecksum) {
+      if (!IS_DEV && checksum !== expectedChecksum) {
         logger.error('CLI is invalid: '+dlPathFile+', '+checksum+' vs '+expectedChecksum)
         return false;
       }
@@ -424,7 +427,18 @@ export class CliLocal {
     }
   }
 
-  download(url) {
+  async download(url) {
+    // delete existing file if any
+    const dlPathFile = this.dlPath+'/'+this.getCliFilename()
+    if (fs.existsSync(dlPathFile)) {
+      logger.verbose('CLI overwriting '+dlPathFile)
+      try {
+        await fs.unlinkSync(dlPathFile)
+      } catch (e) {
+        logger.error("unable to unlink " + dlPathFile, e)
+      }
+    }
+
     this.updateState(CLILOCAL_STATUS.DOWNLOADING)
 
     const onProgress = progress => {
