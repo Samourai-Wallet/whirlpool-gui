@@ -49,9 +49,6 @@ export default class ConfigPage extends Component<Props> {
   }
 
   onSubmit(e) {
-    // TODO TOR temporarily disabled
-    this.state.cliConfig.tor = false
-
     // force mix.clients=1 for mainnet
     if (this.state.cliConfig.server === SERVER_MAIN) {
       this.state.cliConfig.mix.clients = 1
@@ -127,13 +124,13 @@ export default class ConfigPage extends Component<Props> {
                 </div>
               </div>
 
-              {false && <div className="form-group row">
+              <div className="form-group row">
                 <label htmlFor="tor" className="col-sm-2 col-form-label">TOR</label>
                 <div className="col-sm-10 custom-control custom-switch">
                   <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeCliConfig(cliConfig => cliConfig.tor = checked(e))} defaultChecked={cliConfig.tor} id="tor"/>
-                  <label className="custom-control-label" htmlFor="tor">Route all traffic to TOR</label>
+                  <label className="custom-control-label" htmlFor="tor">Use TOR</label>
                 </div>
-              </div>}
+              </div>
 
               <div className="form-group row">
                 <label htmlFor="proxy" className="col-sm-2 col-form-label">Proxy</label>
