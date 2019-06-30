@@ -320,6 +320,10 @@ export class CliLocal {
         cliLog.write('[CLI_LOCAL][ERROR] => ' + err + '\n')
         cliLogError.write('[CLI_LOCAL][ERROR] => ' + err + '\n')
         logger.error('[CLI_LOCAL] => ', err)
+        myThis.state.info = undefined
+        myThis.state.error = ''+err
+        myThis.state.progress = undefined
+        myThis.updateState(CLILOCAL_STATUS.ERROR)
       })
       this.cliProc.on('exit', (code) => {
         let reloading = false
@@ -341,7 +345,7 @@ export class CliLocal {
             cliLogError.write('[CLI_LOCAL][ERROR] => terminated with error: ' + code + '\n')
             logger.error('[CLI_LOCAL][ERROR] => terminated with error: ' + code + '. Check logs for details (' + GUI_LOG_FILE + ' & ' + CLI_LOG_ERROR_FILE + ')')
             myThis.state.info = undefined
-            myThis.state.error = 'CLI terminated with error: '+code+'. Check logs for details (' + GUI_LOG_FILE + ' & ' + CLI_LOG_ERROR_FILE + ')'
+            myThis.state.error = 'CLI terminated with error: '+code+'. Check logs for details.'
             myThis.state.progress = undefined
             myThis.updateState(CLILOCAL_STATUS.ERROR)
           }
