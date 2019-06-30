@@ -13,7 +13,7 @@ import {
   DEFAULT_CLIPORT,
   DL_PATH,
   GUI_LOG_FILE,
-  IPC_CLILOCAL, IS_DEV,
+  IPC_CLILOCAL, IS_DEV, IS_DEVELOP_SNAPSHOT,
   STORE_CLILOCAL
 } from '../const';
 import { logger } from '../utils/logger';
@@ -401,11 +401,6 @@ export class CliLocal {
 
   async verifyChecksum() {
     const dlPathFile = this.dlPath+'/'+this.getCliFilename()
-    if (IS_DEV) {
-      logger.debug('CLI IS_DEV: '+dlPathFile)
-      return true
-    }
-
     const expectedChecksum = this.getCliChecksum()
     try {
       const checksum = await this.sha256File(dlPathFile)
@@ -413,7 +408,7 @@ export class CliLocal {
         logger.error('CLI not found: '+dlPathFile)
         return false;
       }
-      if (checksum !== expectedChecksum) {
+      if (!IS_DEV && !IS_DEVELOP_SNAPSHOT && checksum !== expectedChecksum) {
         logger.error('CLI is invalid: '+dlPathFile+', '+checksum+' vs '+expectedChecksum)
         return false;
       }

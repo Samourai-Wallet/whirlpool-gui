@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ipcRenderer } from 'electron';
 import { ProgressBar } from 'react-bootstrap';
-import { CLILOCAL_STATUS, IPC_CLILOCAL } from '../const';
+import { CLILOCAL_STATUS, IPC_CLILOCAL, IS_DEV, IS_DEVELOP_SNAPSHOT } from '../const';
 import cliService from './cliService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
@@ -123,7 +123,14 @@ class CliLocalService {
   }
 
   getCliVersionStr() {
-    return this.getCliVersion() ? this.getCliVersion() : '?'
+    let version = this.getCliVersion() ? this.getCliVersion() : '?'
+    if (IS_DEV) {
+      version += ' (dev)'
+    }
+    else if (IS_DEVELOP_SNAPSHOT) {
+      version += ' (develop-SNAPSHOT)'
+    }
+    return version
   }
 
   getCliFilename() {
