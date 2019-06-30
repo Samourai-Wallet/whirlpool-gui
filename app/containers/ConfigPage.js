@@ -141,10 +141,8 @@ export default class ConfigPage extends Component<Props> {
                       myThis.onChangeCliConfig(cliConfig => cliConfig.proxy = myValue)
                     }} defaultValue={cliConfig.proxy} id="proxy"/>
                     <label className='col-form-label col-sm-8'>
-                      Connect through SOCKS/HTTP proxy.<br/>
-                      <small>Tor proxy: socks://localhost:9050<br/>
-                      Tor Browser: socks://localhost:9150<br/>
-                      HTTP proxy: http://your-proxy:8080</small>
+                      Use SOCKS or HTTP proxy.<br/>
+                      <small>socks://host:port or http://host:port</small>
                     </label>
                   </div>
                 </div>

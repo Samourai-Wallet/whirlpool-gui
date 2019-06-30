@@ -337,6 +337,10 @@ export class CliLocal {
             cliLog.write('[CLI_LOCAL][ERROR] => terminated with error: ' + code + '\n')
             cliLogError.write('[CLI_LOCAL][ERROR] => terminated with error: ' + code + '\n')
             logger.error('[CLI_LOCAL][ERROR] => terminated with error: ' + code + '. Check logs for details (' + GUI_LOG_FILE + ' & ' + CLI_LOG_ERROR_FILE + ')')
+            myThis.state.info = undefined
+            myThis.state.error = 'CLI terminated with error: '+code+'. Check logs for details (' + GUI_LOG_FILE + ' & ' + CLI_LOG_ERROR_FILE + ')'
+            myThis.state.progress = undefined
+            myThis.updateState(CLILOCAL_STATUS.ERROR)
           }
         }
         if (!reloading) {
