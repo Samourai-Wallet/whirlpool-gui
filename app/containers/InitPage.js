@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cliService from '../services/cliService';
 import { CLI_CONFIG_FILENAME, DEFAULT_CLIPORT } from '../const';
 import { cliLocalService } from '../services/cliLocalService';
+import utils from '../services/utils';
 
 const STEP_LAST = 2
 const DEFAULT_CLIHOST = 'http://my-dojo-server'
@@ -28,6 +29,7 @@ class InitPage extends Component<Props> {
       currentApiKey: DEFAULT_APIKEY,
       cliError: undefined,
       hasPairingPayload: false,
+      tor: false,
       pairingError: undefined,
       cliInitError: undefined
     }
@@ -46,6 +48,7 @@ class InitPage extends Component<Props> {
     this.onChangeInputCliHostPort = this.onChangeInputCliHostPort.bind(this)
     this.connectCli = this.connectCli.bind(this)
     this.onChangePairingPayload = this.onChangePairingPayload.bind(this)
+    this.onChangeTor = this.onChangeTor.bind(this)
     this.onSubmitInitialize = this.onSubmitInitialize.bind(this)
   }
 
@@ -83,6 +86,7 @@ class InitPage extends Component<Props> {
 
         {this.state.cliUrl && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Connected to whirlpool-cli: <strong>{this.state.cliLocal ? 'standalone' : this.state.cliUrl}</strong></div>}
         {this.state.hasPairingPayload && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Ready to pair with Samourai Wallet</div>}
+        {this.state.step > 0 && <div><FontAwesomeIcon icon={this.state.tor?Icons.faCheck:Icons.faTimes} color={this.state.tor?'green':'red'} /> TOR is <strong>{this.state.tor?'enabled':'disabled'}</strong></div>}
         {this.state.step === STEP_LAST && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Configuration saved</div>}
         <br/>
 
@@ -261,8 +265,14 @@ class InitPage extends Component<Props> {
     }
   }
 
+  onChangeTor(tor) {
+    this.setState({
+      tor: tor
+    })
+  }
+
   onSubmitInitialize() {
-    cliService.initializeCli(this.state.cliUrl, this.state.currentApiKey, this.state.cliLocal, this.pairingPayload).then(() => {
+    cliService.initializeCli(this.state.cliUrl, this.state.currentApiKey, this.state.cliLocal, this.pairingPayload, this.state.tor).then(() => {
       // success!
       this.goNextStep()
     }).catch(error => {
@@ -274,6 +284,10 @@ class InitPage extends Component<Props> {
   }
 
   step1() {
+    const checked = e => {
+      return e.target.checked
+    }
+    const myThis = this
     return <div>
       <div className="form-group row">
         <div className="col-sm-1 text-right">
@@ -294,6 +308,15 @@ class InitPage extends Component<Props> {
             {this.state.pairingError && <div className="col-sm-12"><br/>
               <Alert variant='danger'>{this.state.pairingError}</Alert>
             </div>}
+          </div>
+        </div>
+      </div>
+      <div className="row">
+        <label htmlFor="tor" className="col-sm-1 col-form-label text-right"></label>
+        <div className="col-sm-11 custom-control custom-switch">
+          <div style={{paddingLeft:'1em'}}>
+            <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeTor(checked(e))} defaultChecked={myThis.state.tor} id="tor"/>
+            <label className="custom-control-label" htmlFor="tor">Enable TOR {utils.torIcon()}</label>
           </div>
         </div>
       </div>

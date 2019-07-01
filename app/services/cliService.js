@@ -107,8 +107,8 @@ class CliService {
     return error
   }
 
-  initializeCli(cliUrl, apiKey, cliLocal, pairingPayload) {
-    return backendService.cli.init(cliUrl, apiKey, pairingPayload).then(result => {
+  initializeCli(cliUrl, apiKey, cliLocal, pairingPayload, tor) {
+    return backendService.cli.init(cliUrl, apiKey, pairingPayload, tor).then(result => {
       const apiKey = result.apiKey
 
       // save configuration

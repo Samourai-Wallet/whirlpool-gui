@@ -4,7 +4,7 @@ import { computeLogPath, logger } from './utils/logger';
 
 /* shared with mainProcess */
 
-export const API_VERSION = '0.6';
+export const API_VERSION = '0.7';
 export const IS_DEVELOP_SNAPSHOT = true;
 export const GUI_VERSION = version;
 
