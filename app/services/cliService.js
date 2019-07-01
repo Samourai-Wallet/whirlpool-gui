@@ -95,14 +95,14 @@ class CliService {
   }
 
   testCliUrl(cliUrl, apiKey) {
-    return backendService.cli.fetchState(cliUrl, apiKey).then(cliState => {
+    return this.doFetchState(cliUrl, apiKey).then(cliState => {
       return cliState.cliStatus === CLI_STATUS.READY
     })
   }
 
   fetchStateError(error) {
     if (error.message === 'Failed to fetch') {
-      error = Error('Could not connect to CLI (starting up?)')
+      error = Error('Could not connect to CLI (may take a few seconds to start...)')
     }
     return error
   }
@@ -288,6 +288,12 @@ class CliService {
     this.updateState({cliLocalState: cliLocalState})
   }
 
+  doFetchState(cliUrl=undefined, apiKey=undefined)  {
+    return backendService.cli.fetchState(cliUrl, apiKey).catch(e => {
+      throw this.fetchStateError(e)
+    })
+  }
+
   fetchState () {
     if (this.isCliLocal()) {
       cliLocalService.fetchState()
@@ -297,7 +303,7 @@ class CliService {
     }
     return ifNot.run('cliService:fetchState', () => {
       // fetchState backend
-      return backendService.cli.fetchState().then(cliState => {
+      return this.doFetchState().then(cliState => {
         this.updateState({
           cli: cliState,
           cliUrlError: undefined
@@ -316,7 +322,7 @@ class CliService {
         // notify services
         this.updateState({
           cli: undefined,
-          cliUrlError: this.fetchStateError(error).message
+          cliUrlError: e.message
         })
         this.stopServices()
       })
