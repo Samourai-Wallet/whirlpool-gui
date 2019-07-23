@@ -1,0 +1,5379 @@
+%PDF-1.4
+%����
+1 0 obj
+<<
+  /Type /Catalog
+  /Pages 2 0 R
+>>
+endobj
+
+2 0 obj
+<<
+  /Type /Pages
+  /MediaBox [ 0 0 540 720 ]
+  /Count 3
+  /Kids [ 3 0 R 8 0 R 15 0 R ]
+>>
+endobj
+
+3 0 obj
+<<
+  /Type /Page
+  /Parent 2 0 R
+  /Resources <<
+    /Font <<
+      /F1 4 0 R
+      /F2 6 0 R
+    >>
+    /XObject <<
+      /img1 7 0 R
+    >>
+  >>
+  /Contents 5 0 R
+>>
+endobj
+
+4 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Times-Roman
+  /Encoding /WinAnsiEncoding
+>>
+endobj
+
+5 0 obj
+<<
+  /Length 2563
+>>
+stream
+q
+1 0 0 1 20 617 cm
+1 0 0 1 0 0 cm
+126 0 0 83 0 0 cm
+/img1 Do
+Q
+0.0 0.5 1.0 rg
+BT
+1 0 0 1 202 658 Tm
+/F2 30 Tf
+(Mycelium Wallet Backup) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 607 Tm
+/F2 10 Tf
+(Creation Date:) Tj
+ET
+BT
+1 0 0 1 129 607 Tm
+/F2 10 Tf
+(January 21, 2019) Tj
+ET
+BT
+1 0 0 1 46 597 Tm
+/F2 10 Tf
+(Made With:) Tj
+ET
+BT
+1 0 0 1 129 597 Tm
+/F2 10 Tf
+(Mycelium Wallet 2.12.0.18) Tj
+ET
+BT
+1 0 0 1 46 587 Tm
+/F2 10 Tf
+(Backup Format:) Tj
+ET
+BT
+1 0 0 1 129 587 Tm
+/F2 10 Tf
+(Mycelium Backup 1.1) Tj
+ET
+BT
+1 0 0 1 46 577 Tm
+/F2 10 Tf
+(Active Records:) Tj
+ET
+BT
+1 0 0 1 129 577 Tm
+/F2 10 Tf
+(1) Tj
+ET
+BT
+1 0 0 1 46 567 Tm
+/F2 10 Tf
+(Archived Records:) Tj
+ET
+BT
+1 0 0 1 129 567 Tm
+/F2 10 Tf
+(0) Tj
+ET
+BT
+1 0 0 1 46 557 Tm
+/F2 10 Tf
+(Total Keys:) Tj
+ET
+BT
+1 0 0 1 129 557 Tm
+/F2 10 Tf
+(1) Tj
+ET
+BT
+1 0 0 1 46 547 Tm
+/F2 10 Tf
+(Total Addresses:) Tj
+ET
+BT
+1 0 0 1 129 547 Tm
+/F2 10 Tf
+(1) Tj
+ET
+BT
+1 0 0 1 46 535 Tm
+/F2 12 Tf
+(This document contains an encrypted backup of your Mycelium Wallet.) Tj
+ET
+BT
+1 0 0 1 46 515 Tm
+/F2 12 Tf
+(The backup contains sensitive data consisting of one or more private keys and an) Tj
+ET
+BT
+1 0 0 1 46 502 Tm
+/F2 12 Tf
+(optional master seed. For your protection this data is encrypted with a 15 character) Tj
+ET
+BT
+1 0 0 1 46 490 Tm
+/F2 12 Tf
+(random password.) Tj
+ET
+BT
+1 0 0 1 46 469 Tm
+/F2 12 Tf
+(The password was shown on display while creating the backup, and is different for) Tj
+ET
+BT
+1 0 0 1 46 457 Tm
+/F2 12 Tf
+(every backup. It is not possible to restore the backup and access your bitcoins) Tj
+ET
+BT
+1 0 0 1 46 444 Tm
+/F2 12 Tf
+(without the password.) Tj
+ET
+BT
+1 0 0 1 46 411 Tm
+/F2 12 Tf
+(Write the 15-character password and the checksum character from the display here:) Tj
+ET
+0.0 0.5 1.0 RG
+0.0 0.5 1.0 RG
+46 403 18 -17 re
+S
+69 403 18 -17 re
+S
+92 403 18 -17 re
+S
+129 403 18 -17 re
+S
+152 403 18 -17 re
+S
+175 403 18 -17 re
+S
+212 403 18 -17 re
+S
+235 403 18 -17 re
+S
+258 403 18 -17 re
+S
+296 403 18 -17 re
+S
+319 403 18 -17 re
+S
+342 403 18 -17 re
+S
+379 403 18 -17 re
+S
+402 403 18 -17 re
+S
+425 403 18 -17 re
+S
+0.0 0.8 0.0 RG
+462 403 18 -17 re
+S
+BT
+1 0 0 1 46 371 Tm
+/F2 12 Tf
+(Alternatively you can write it down elsewhere. Keep it safe!) Tj
+ET
+BT
+1 0 0 1 46 338 Tm
+/F2 12 Tf
+(To import a key or a master seed in the Mycelium wallet you need to scan the corresponding) Tj
+ET
+BT
+1 0 0 1 46 327 Tm
+/F2 12 Tf
+(QR code and enter the encryption password.) Tj
+ET
+BT
+1 0 0 1 46 302 Tm
+/F2 12 Tf
+(Note that the embedded PDF viewer in Windows 8 cannot display the QR codes properly.) Tj
+ET
+BT
+1 0 0 1 436 24 Tm
+/F2 12 Tf
+(Page 1 of 3) Tj
+ET
+endstream
+endobj
+
+6 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Times-Roman
+>>
+endobj
+
+7 0 obj
+<<
+ /Type /XObject
+ /Subtype /Image
+ /Filter [/ASCII85Decode /FlateDecode]
+ /Width 404
+ /Height 266
+ /BitsPerComponent 8
+ /Interpolate false
+ /ColorSpace /DeviceRGB
+ /Length 15021
+>>
+stream
+Gb"/lGBaik(WJ,%2eb2:,(\*,!>,>5Bd3=$+sJFk@KAn0OJ4/%+AL81#t5E$8WaJq5rt-'!(lBF8FJ^RBBIqpL_nM-h4<B.Hggbnmm$A*Ap2JD^3=14jp^E2-9.P\H\E7BZ(+FAnkh,(Q!jp=*I^fG[4gNp/uKaQ`tp%B>K)aJng$]er?HSBm+3^gFhbpLARPg7','f6nbg[RpbC!lVO.*cC"NG1#T]]qmN65lpZq?Br(m4)?cqh(^Mo,10(clt6SbnK6kF5K0CuHR]Wrhhl^kFF+FsW<L]h`BS[\S'5Hm.Jo_QZ&BEiX1#YuWp
+PD9:YqPE][8/V7c%.+KKhhA6=_"]',q/`uX)EW)/bHcje*%(3LOh?&irelt=`C'En.+MB^P*JVOb'En-kGlg/q;,)1ojXFu\p-MI],2lE!TSsPf,qoOpL./G(t95=%#!_`plYM;.8ab0$&\faHNI3:l;/.o(P/THr0:EseELkQ:Q6G6s2RU#;8@,5V(DUe!q-lL94GX_H0Ml?r,5B'_PDfFgqCUg59,QL?fp7cn,qq?@U8s]5;/oFrj?giV#>^JMJdZ7JULNuZNo/FSRBu7Ssj+\YR+7<GZGhl21N]D5*26X)r84&gM]Q87aFfe)cHIr
+,ebgl01b.[id%/8rg6]8m^)#!OfqR#D?:K^R\g">TSGZP.Dp1;,W7*3s-1<c,cW(YV1Fp[nSb.Imjjf5b[5J!I=9@g($_)^7V+\q-YN(fe'8rd-bn5!HT/H7agFacppcsRN_oAnn"M;%jkn&I9X!g"qpK_Q9DD6>\ge^l)#EX<.nq&reQnkK'j*Yd*6`lM`P@;D:plChT(&p/?_8W_^NS5f3:u(!O,A\]^>V2k6^P5d7!WL3Z17dYr*nZe@V=W*Dn\rE;c\-M<?ud:MZ8)5]."$;?qgC,JVKGKkQs1jq5FUk=hPcfgZPRPQhfT^lrL>!
+8\g*O>B_+YJc44"Ge(5UI2/asL+rdUEY<Oo&GZqP-$O9>Cesh-=k*k/n^TS@O!]2Q^T!"7o;0r(F5q'PIk_AHJSnE,-(?-N\BCE1$;L!LL\>2d"-Egs=.i91PBt*\g>8Zko$`Hp(6f-eUSD[L[)[R&V=6Os3)!<B<7Z7\LWI3hf/3%sm8EH:B'_u0EcD!d1jdS[j2tDI_gAEP3/dPUf_9'?q+/<!@36gGI58_0H"(+N.gkU/@5e8H7.;@5Ct@6#2k=gb=QR;lb^U"l\AWUFs(IJh+<E9iHA4"ulW(m;$GJ]?a\;%:+Kk>10rTR,AnSWV
+TT5#S*D\EW'tEuXTAs'EHcu^@\]<c,#GLll7;U@nm-o?bBkbr.#'s(deqVeJ0E/FsFQY:h_?WSWm*QmG=d<g[mc%"hrd`iuDl?,[Ie!bfm(F>4r&ssqi1r@ToJO#IGPoMQO7ns%3JWGtS[ZK&`VKG^VE,_?_LcW1KAQ]Mk^Ph#1SX'a\=am5,)da?;A7Y!A6ejMN/jr?%_Zr?Xq>S^8)5\P#W$c/W]'h3Z?hAVP/(sBi@P!mQ=nVE#?*UDDTH7\ko]Xin!U_%j)XLJHQDJ/(\$0B%t4*+'HnJ\qe/d$KH4h]6i!!LQltrR;4VR%10mFV
+JtiP3GsWKoaM!Fl@/NL?>L<m0l9Fe5$m"_$,mj@&BO4<L,1rd\c_:*TI)KWGM]HUe!^;#G]uBTp%mrP.gsmK0YNFI\XMD@trmFeP`mnM^<qP6NJ=9G<ZZ-U)&.o+(MMZ5e6;YE:q"fgCK,K,,.gJMSgX"&rnuq7jO7`cPj`RsP-JJLtP9N)gdS$VU(2mQ\(1>28.tEJoKX@*$iu,:R4[4FNa$eb)n/N1g(/7m0?&4?Nk9&V_-\!_,?`'YOX.nu8dA)%@Mt*,,2;lM.Gt>19.#d]7G^ea:5I(fS^SN"CdJrr&e\r$&(Qb-i%Ee!Q.Fu*_
+5I`5Y;PM$:lmFheg&,Ri(OLBi3ne'WZ>V(1h7Ekdr)%B>mI`"@4dFn\?+m%GYch27YC5g6h5i#N.=1`1.0HUC93j,bd53ugY]RWh'os^(hm\MuW7e#[1UX31q'/mFPB=dUG.dI+Y3u-X%p)i,/qh**Y%>&f9:rt3E7hfD)#(#4?a4m?h("G%q[I;*e6H8)J0k#5Cu5VJO4NW,#[A!-]rE3)j1=tmFI&N+WH"QAQa-A]6)[^cHZ:(l(`"\i7IKlVp=:*;:d^)DGFR_-IsnY=?6/qAE1TBdWGTrG,kXu]?;:@Ce@F<1lF2C'4:g2\62O9g
+Y7FE$&0<%T#$I@_kOn2dFrW?-"mbi_[R-0mQd2"(U;C'IM,*ei$BYs>Rn#5kc*)<;BI!2mC>LVdk'X)_0R%@G)][j%NpP6M0$<NVF0T[lLZWW(chuJ,5F2i<]4kF)ZUeT=p#Xqfl[f#dZqhMd%b(D68I=,&m=5%3>Z?M`@.P^\ruoS4[7OZq>]j9&2E1MSktlN#&E.m["+U/Jq\h4blhIAY8KJPEk@*#TSMgD\.ruB@(gupt)Z.E"4nKN'Ek\uV-"!:"p\n+PHJU5G"Q@28bIjOt+mriWlY>de"1m`E&m4b3`hHgb>Y$9!SA=on)LkSl
+Y0gB/gV-NpJ#MWL2>Si"1G>PH:erHB<j-79gA7fA6(3-.Hp'a`F"#L,D$Nite.N>t+r=Y25]-IN+53L!lm)BbpVt-4A\&oh'+k5]l7>S-]k^F,VV8`,J!BrQJ@]=!']$@#rh>6SJPdM&lOPOcS_gY*KP9h6<?6'$pCn2>_?PseX*)RNh,bEfl[=Ad9T>l-HVd*1Lg5JVhU0t(qN%(7L$RubTT9!7Akt'&2*&?AAR/SQj\L2p+Y#fgd8/UD+9FrKB_F&:msCToZRr5"H5C\'8*RiQ*Z4jLhL>%K4*htmoT[@i)rDqc#"1)J=lV@tb2>4#
+((D>l\5SI%hHK)C%Dp8lBj^2p,gbaM0'gY-!pb<_<j_cs;c052DM&+qe(>c?MXn!pg'^YKe%#1@e%Y[%j:Ya-m=FKTd!hJVV0#O'p_q?+5NF'[imKjSrF+1\RYqn7@<Ar]IU-ie$R7b;[WmPB*hp\Bf_5!lHffo%"ic5*"T[pm*GUnu;;k[c9o+LHINj-9dRj;M6l-hf#QQD`Jspmb?k6-2Wn(H=En;YlbM<g[2E$4Ed(-l6a*@K,AbP:nH"h!`.m!ChjJ/XALL",D#ngY^s'1XmCLKd.GbQBHpU@bq_ZD1M.9,>g45h+IANr>[U\lV3
+fP$TZ"8;_PL@i]ZqQ_2=UEbf-"I@@G[0iA7>!1$(Y.=He!+1/MX14IV)At,Yo:lQ_G)=dMq5&-9(Nf$d(tdYHj1>%K8+mfB3'nT^iQ<"oN5!]EN_=dF/WKFQ8S;2MJ$e`so6(8<5!;b?c0]]PYM9N,:&lpG.\aRUXY>_4KJL<q!+gDM%(FHoOIa)4-I:um_Ci0F8^O0.mSXB@o3ZQ+l&BB6jcrar+'!5">/-"JRE9'"Ks?9_LL%l(]V7]Omt.A:RM-qZL3%;M][-YVDcCl#Y;V0>#Cuh&[U9I?[[>=/I!o.(bVoUSUEt)&]n;+p6a!Ao
+LgFak^`>mtq1N#hZ8pULUAGhQK"]V>^UXg(J8VqVdh8BG93$^-HL>"BJJscNdq\#bp,(LIc87!=MuP372g#\kJFuR/fn9&__-jO%;m@S7?,2+Zk`'J7P]t10$RH*fS3/?HDhd0G-Kp0(Bo1AVP!YgE3W,a57ETtq:EI?4\9AJt#p\<XF/Q75jQj^E#@U-X)hAG:e#:tub1ebIYKg>hM#>?:<;.?]^B;6Qbu2]'\dKGdq47E14+O<1?V\j77[YYmUE3imeec)L9iOg(qrpp/-E1)*`=hCj^hgEXcF.Z0%_\cZp,%-&4arlhX112*df2Lf
+*I;XZ`>jN=T)Qth2lWdlcC_o_^R[rTLT`psl:''hdUX[$Q25.fIdH83.P,Bp2##e]Wqj`>.#]07LPaeUQJ%Fhd-+7&(,T;7eV[\gYQ_W>M#UlG2F'Xupbn@8NUMV`F6H9+Mnjlacq3QBY;Va.lZ7>#D7QnkE./,k:M:(pH\i4G(!+p`m":Yp>7*sRlJ-f%';^Yo.!"<HH)q+JiV+!BIIo!"]7SiKeg!$U-@ZL_^$i;Q^KTOWq;77]"rg2;$1CO%4.mI?Da@=(P%lTr3_YbIA$BR-R\^e5?'(:S]u1.o:E=M,@CHA:+B_V7'@Jmr4NIO\
+n9YY6RQgr@QXR?,2TPjGQ+u/S$>eCqes@aj>#3.L%p6gm.GUW^ZpPntJB%@i#YX`hc+Wa';:IH?g0=%])"pg1p#>R(^KL;hUP4/M&l[b]AF/G$>XjV>I`&l6?#dsW*UoSZcHscY^[@1JF3([-nj\DA`PH^mA_T/J/Z[O@WN9GC2%_?^GKj(#4tumd*Yj7^->"E4WE1BLq.Pgr;7Z!k0PS%coJ1CQ[U6JMr,d:l@68i.?i8Gi,F<W<HMklGRFO.^3kJGeShGGN^1U]\i`b"R[Ym=7gC!b^'OL>pqoVs46iPIVpNOEZ"g-rh;nYpIk)boh
+Um$hnrf.uIk4[d7Pi3&ZQt4^C6Ma^^%d!5*<[L:GR"t6b!c=sr7lsd8Gn3Re!IM<3Q7P[sc8AoThmAhgQ(=/lG48POb-jP+9T!0Xfu'uB]74\P:8<,_fkKBUinpXqs.'KQ+YEkt2$f2_8Y=f+?-^%FOL@11Bb#F$6_<Y+V`<b*%XG3E?KdL&3i$hBs,Z+KaOlV^_*L09S*f_&P[*m_0AF4tU]rN@o4Q][cf%AR=1,'F(=1nVl$5Ghf#r$%G<)_VjG^!kn*/MD;4mUF^"7JjJ@GH3oUbj2lXP\C)ZSS?)kDad3V@5#X`W5,QE`51n'\<$
+"tgX?r%Id#s/`cf_VT+4iU/qrP*>rV5I"lSb0K\1oP4V9K:W8ENZ%ZGQY)eJ2l@)jYt.c'H/[U+-[k:",D63#X't41:ek"D!b2H*7%<pe!4I!XH:J9f4EINnT/(t?]db[R@)@ohdJ:/tAQP]&DSj)FA[n;H!VUB>kTQ0[GHrO$m!>$IBW%FpdLB0.nnc.'>aF0Fc2:N"#@6e8ZY.GoMJ8k<&FEbW3D7lm-rrP0gSl5Yn>GL&)bJ[n(si^VDE1_!0T:D:NJlDZ#Z'R!]k_1-/U#e_\0cO,X.c]ZZ#J,+p0h$OoobuX)b+!\r:m*GDs^E*
+3';Uo:Z^jo(@5>sH%$_UX:J6!8cl[6iqj(-.*EsLX'#KNJ"cXiJ3"SKXBT/]>C0O9_R?Pq?bqc;M-TU$2j5SIp-sqP>G-2^8]*qZR!"T$2gYPUr?A81@Q8X8me/JdA9+\FBf9g%5+<YLUA#FcK<?]2:iCENW1"pN?-*aK5+I<[GE?0Gb)[VY=]oTDpXYp&0_fc3EE-CP#O`;i?&b0cYVCd73)WFkOku?]=8X:479K<W*86lh#Sg]X=%Gqk1WEVJfXj!&8&XRa*ZHAFcM605>,\nhEr8Q3]o/_j2X3R[H^Uk:%ib"qnp!W(4=="b0QEI;
+>mm*#L/eU@1W1&@#E/5W2n%)'dG@.J4!M?ge(D>:<k^tnokqqSf,C"l9JM4\61F\s:pW--ATO")<0N(.<!+p3X9o^,>m#;4GM*oqBrFSkatc/Q9NiA0O0[n+!*-F!Z?JCJdJt>29iQNU98!n*Tuk"C[ECr(r>59po4%!S2qtNl>jiT=O1`Zma@X:&Nk:=?o\<lAiM0K%hq<BW#WgLg+h_!n"SM9-eP!'jU_7/4_-Q>$h,,8u*\FM[db/rL2XC`,\?TuAk>dZ!;b*$qfc7VM=#L;-_[DOc^V;D$DAd+d?1--som2qsIn<B52u5ma5W,2R
+HaCDSZ)U/C2%L,lF1S<)Q.Vhq"WjES#^I6FN4lo_X2g3.q&K&C1\>nEHW7ZaHp,:CqsMS<#\RuB?.gJL_RG.LRc_Sq`-SoSTr1^*RCnGs`^@BhRgYqVSPJBe\&YLk<V8^/*opU[1EPX`f7@43TUd2(S*ikJ=-a"`5Ym21hF0EaH/>AA95MG*d%EN#>Anj'Jmj(P<&f&ZWfVE:c?Q41AJ6!l,MuRD7c?FZ/S12'S,]dX]SgaGPJ&K9e&U!E;V40@1KcD5#'h#)/"Z38f3qla6AnA'4i-up<RS05b/h1#B=u0p<&2nTZnYCT1ql1V<U-8u
+$g36jmin:l,4EZ$i[P@ch3rPg@B+Bs*jcTmD$kg+Mf?]%]ITHrqrKGinK#LSC4)@oEnh.K+d$s\c?Q=4EAaR$XBM:ZRmM<0/GU$7Z%I:!!d75H$@*HHN;%X"2Q=ePBt-Sf@MpWG[j++e#!;\LZ0NM&0&f+.h7Ku'Eh9uE,.aD6Uc-cVT:<&0Xp+AK_AVpIS%tU\2&d:A[hu%>jk.5f>fspDZpr-K#\V5jDF'TAU1s*b7=:^>.pjA8q(@_b_N(fPaL_^jaLcI9+]chpBZ6HtZq0WAN1]ZoFs6;uS0@@DP66;$Mhf]N8!ds)@f[6[Z2_WT
+aL_^jaLh!f.1ld!JT!j.e?KKJI2k>#+sHD!S0@>N&@Uh)W)jblMqlaJJNP.Z4*#r+*CemSr!.M69,p/%%4gC!P"R:Ck5TrP01-lN,+KhFEg>!Md.BM<?ReUs$EMcVHRRr\KJV[pDXbsUBN55nT^l"*ib[p!lkgTGGo,EJH'`kG?*ib8a6H*$f,!`:(^kU*i=(!ugRL9th@b`a<k!r<RYDh!_]eImS0@@L!"3%IXduL;ho?4`)3B%ScB*6aK*=ra\#ep.=-&[@4eh-UjB[EpjB\4bSpqL0]37>@j'o5;@1mq.]*Ke*]<mcdW8=G)lWni=
+Z(k\JjB[EpjB[(>gG`LYf8./n!AG8Z0#ALs/tKeNSiFa_o_g[?f.7'q0#ALs0"o3B5i]K$pF[5k%_Lk86f(6k6f+X]phd:h`q<bAlq/KfhF0CkhB`.%kYT_jn+-/1B2<$h)$0:\_AVns+i)+Zk'>S!Y@1KKLV;bSKG3EP@UREUHTIBWf=AZ$CPr:?(Z>dJQRL>tKdM&rTUsdN7>&72E/)"u(s:4+I1;sbbA.>gS@jci(%Nu.Y^f<")OK7HC$[<Y6Jb-j6f',PW,$/1;T$/*/Y.l,6VPS5#\V5j`5;@m0Zq"BQLM>BoX@-C76!Zk,o0Ul
+`$k'mcjdU-aQt/?,+KeE&klJt5o69#m2N:qL(&>Di=(!uE7ipkMt\j=U5CI1f*iPf0#ALs0&a$;j+ViHgpIH3[I>@.,+KhF'$m8bil>?b5/jZ>53-"&1ZVj$ai]9?,m>rFH!eR\S<.q,cB*5fJ_]9'U#&e*-cBKG#p8^j_AVns,ChHEM=dqtQ*DiM$-9^aB?7]D!%*1=d^qQk_6/kGfH3lF7JmC9QP$G*rZW/jHFC\nO<l%<,+KhF1'1SPMb*:Tn-X>m/-1#4i=(!u&\t!q7Euc@ouF4s,p;Y#S0@>VKHp@_HIp)Df_)KPjB[EpjB[L*
+hIQ]J?%b#p?%tW$AH:dsKJRYc7man)06W&N!I:"4r,G/mE@Dg7MnI6i89$d\H<9q]lj?ktnh(#H)C!VAhVL`YAT-Xs[K=,M;?O-RA.?Vl$t.4T-IB@cY@H3",'4ts2\>4Z8RntTA.?Vl%,d&W,0*tb/X*Fi7-GgFnj.i`,q"(n>p3uKhIQ]UD%l/>^'eW"BP1GI'OF2'GK"aDY*(XbmkTFE.n.`$92(%5)L:!OaOi,l\5Yn_=8j[m[4D<'QY7Z&V5K.iG:D5^L0Z;r/!0[o@.+GHJ92dC=r)Y$9/Jq$2g8hK_BE*c[jtoP1>\BVVG>17
+Q3AE"'$^0+6r"T*7@tK8M_%;]&aiq&I!=q'=TJ"FdCcta]Q[AG$"R@cKOsNaDd;Rj=(PS+,4?/&"ME/6_8_bB,>m*9,MWM:5;:$f_B"`K%D-Z5OEV"BrH[pcY&"Q@P<lX0AP*Q"%.Z#"rXJ5Z@7/ltP\qG"nud<A5c/h%X^LCoNA<+T&Z%K\`i^L8jB^c$:Zo]p)Ict)g2qnib>-.K0,j%[b-Wm?!Ho2T+n$&aX:n&4]!D"_-CQjH#DeP[M]1kdEbnD88tnZ/-&s=qA4+&2`)KQfG(_FYRr:",Ti^B*m#'dghBdsu6?@>3V,<J4ck\$^
+Y)(LQGaBE%%_J`cOEV#*`<p)[?.lf!#/ns:bOW_GT:0.mg%*uVWoRG0&=Y(*IsnblL0iF8,0_!Ih&(IW[)K1%''*=BB`>%MK<B$UR1<).fG,b(7SXq>RW89fo\,:1Bai(pFL1A?H%W89d6:RR!a-n0rk+VVU?cciKjAiM+n*iL]#:X&0\a3s:4_=?m$\Tu+A:)kbr2`jK&k>3FZ1?3/q&]2A%$AgX77s5[b4jo8=k?@>h;siUgWNhQj\2+%Lu#",5sRYV<E7ul=D7a.ms^tJ`g=]bd!9cnA>`gM3)pq,n"t27;0];W73X`T7@pciWbP[
+h%\>JZ=f1HhdXXB7**!I127o.EFl3$8k(U,.f]nSd#IA&Hs"B8lsQ1aH']l/S2L$(U?``-K>'>i,H&i&[O`dpP[i/!fHDsQnh0Ys&^AKma*4YT$4&!U6K@o"5U*Bcdk<_].Yg"M^_dT-Q^^C>nOMa#qj"LF:4XEeaM&3ndQ&bN,.^q=@UHCdE\:dUa'd!#g`]TSFUPnKW\b+/dCR$%-rVoNnc<j%b1")a3cjfSZ`iFq/s@dTp8b=$b`u*;b_7iZ0N#%[OEjZ[\.d\k$6"?#jH,$8.`3CtEfG_\rq(4]NjtU%f5/$]_[IYtLD3T$h3qSH
+F<`DbkSXg"/f0=;iUn#I>E^Qe2\UA`-/(fil-#1_TXnuI[?u%G4)>*dhGk-07',*/HrG&k-)\WFF0t8V&>])-pg0a^&Z$Xn2KnRX6f+(eb54Er-nB#mobkcKml!`1^=33RKC;,f,fb)h&<7btEKGD+_:<)Qf"rs/Y,KKjfLtg+TqM:DmK$E986_#n77!#ZjZj]$rH&Z%beuF^r@7.E_fnI?-?`'G"aonRU?JJ9Gn<''\fpORQ2T[Sd8I#p:NT\4c[eN_JX4+DK5Wig<!X-5fR!rshXrPE,k6jGpc`2XROj[&Z?'*T!n`5P=qP<hGlhXP
+*1)k5?-dp[jo?np%GtJcd$n7t=pfGkD%")4(a(i=.SF-,*Er4-HLL\fPZdC$U<tGH*QB+1);^UT:))nUA"\InZt7Z7li=YM(OOc=.,OMrH[eW:UW7h82.pV4bWX;n`aBO4_u[<g6/e*c'qNM)%og<[Tc49Kg8nm6UTrRk5%&_q.>k&LVbX]eqIhPR/d_:`LKXEjpnhI?.3AKI%_?Q4-1Ho51e$#IbWi>lSM/j\?(3L!T<1l_R&Ps!@G3HY+C,!BQ=@#Xpm47[J0";Fn.+moM;upcp"lMsf2[/0"B$/U]KnIi$l,*B7rXcQ*W$h$\p#H4
+nfbWpbbF=0?mE@pNmS;(\UnZCG`'-E;LcE0keo6$Y'0p,F+WB=g%\TU7hqX',PKJumb>SP&7!1:$!@M;)rY-de@To&_]/N*mf7N4jT&CJLP_P:G7T'9P2^h.f`Hs,4jLYl-h6UDn_\Xg;WD?ZIQC/E*GjW;N$?ECpXlb[bf9,pmn/l?k^?jfFBd>J)d=H/HL%scK5VZ/OrRJUV6<@($r?Dr-%EgbF7EUVcW9:E0]i@.p[l)(nc@Q!/1<Ne2.W7CBFOcbf:b_Sgk+KVH=S(u%/&%+0E^0[+"<ph<ocVGFDWJ<TbLL4MQA?tPX]jB2cU\-
+qO;o4LRl+/,)*eF%=GD;ATq-d3nuYah'LfpM-T@ZFgtOkVYt8WC*bt0I<Q=gHbi?Hd8*=']chYFbLd*K`I'U=a]si2.2^L"aiPdhpm7eTC5PGfHW7_:W$&!51%.kAH[8bjbU4H@G?F`U:LSaO^&YaGB;>1:ndmbuc/[8u?6AR!Inn;K(D?Ou$Z*['en['(reo=YmZ\(PqZEQkc"V5lT]M/nXt;#]JB[t^le_9W;HWc68E_9ehMpu'Gq#a?AH"2*fEG\Nmojpq<W*7(c-8oU#/E<OYkC1Pec#B?(u=%&5(#<=YjbMe$8]Nu.$M;R1VOg3
+E(k[?e_dS528HNka[sB$HbZ[&pO^d/X23Y0,/*<cIYL&RWEA"pPspc-gcZT?h[9\+NS8Z*/qHe^b\AfJYA(.;gi_pochB)Z?JF+5OKld##@aZi6`S=@fOgD<MTJFWNOtPseh7^#?#7;,#!HU(#6/oQ'X;3"RRcPYoOB4rI8c)ErHW#.D\J\nZ-[_OidaGuXqgs\A-S_i(SiXIUAV7?.Q9fQ$`W`W3)%7+9c*&"YI>;HKJMRDNj23_n6aD0WqA/!rYn[S0C02/c`OJ3&@C(((qL(fm?n!g5k9:iUE=-:]@!6G)1tKm(%D/OQhWC:-FmT$
+bGKY5EmE=:Y1UelisO:=N;l*(PiAOg/W_]!gL\o"dA)h&pB8:E@.:hX7(J:-mY94O!nQ=!+ici75DsuQ9^'U[X.h'N?[X3J]:.S(lG5(unh07133H*?XWMD837PhWc:FU7hHeNl[n/cg"SPsUgm^QHI2RscM1[gp@`Ak=Nm"]0nBEG\,"b5N2]Ms2\qE@47=&%[iqa`G3K&C$=3Y6*rp&TEgXYXiXSs],-T7NF\AP%DXF"c8IlugHdEQl3NpR*T+kViS!%_uP*;(_o?fb*bjMNPI=1u$-fh/&a<H[e!m;',P$tJ71Fl+PBl]tJ1rM4=X
+cl$\q$'*uj>4OakWG1kP!L@?t_aNdj(KI#;Cr1W4Q[s6L)Iq0SqD$=#XCE17Q&u*T8rE9o(9$bt[fbUe8P<A\?$88f5KGT3J+LHMesp;Ok2XK6V]M;)ma8u`O"MRNHd6Jqe4^@9&meYgf:`#kmIGhHpGf[2h$`QU'PgsR7_\3V@tZ0"?CUKBXBa:g.tlYrhfsn"`uS]%VW.n8Vcp0`O%*R`a=DhcrDH=!CpV8YOlb]ca_i\^_>'_`]rTfgY!51_`5`'boG)^fRJ`DrP?(s^iGWVMO(;#]r!;b/UPq5^0M#E@*qr.uX'?Y2?:^[O@Ua`K
+>[P-f<H[f[`sXFZ0p>Bm`$u#M^IL;,ru>/%6-2HG_Kh>V<h,*bT;irf]T@pi+>8BobDF-5nDa4lPuA80jeP`no)0gLFr@:q1;^ZUb]!)%2Bmj9fV<%R5_!uuWl.jR\IVS#DI97"_i(Vm&Yt4Io\'_Oojpork/c^!\FN.M7<)nG]K8gC)7]8f\'A"i$c:urEr:jjAsKu\Q&u^b?/P(>bN^8[lXPTfWG6H,:VD27QNcZZ@c_gBKI&QA.!g.@]4f0c3l4]U=`J&s`kT]C[e;gVE7o*fe+q"Am'FCPCk\D*Ng`K$X"?CkLi'j3;/&M>f:G7i
+2CZ3Q^00Q3@\r2=%a&#h1(UBVo&U^;-4#!IN:O-ONq>o87Ao^+P1;WI^'S8pY%"6)iP-CYWU=6JmPU=D.fQN^bNL\,983><d8F*bRK%^BXsA#+D%\YT@?gsX1gW>g3U%+@]1m,tD&LY\XC9t)B&$*k3G#3G=i5G5(F6b(P\Xh\`NS@?hcrR!&IML6=YR_p7siHm`te:?7uom#CAnXJK0<YXR7JG9&jNVa@A972op`5+Q)u@Y]o(Z8o2-*LpiqRJNqSj$in-%_YWFF^aP@gb^KdE"Kd8>>"$$B2=H7eFh4o#B;$T3lL3G(mqqX9rrA.N_
+>@l3W4m!EMc3IN1\WAhO11/;;7QA<6f>pfhnBK*YQQ5Lb8]ISTUKZ%\6[,2I:1mS7_pKOs3??#lYI<jCR*eg5HcuNQ3SS"r^bR$DS.ng)hmKU[mVe\:ALk([SQ3BfLYb$!>sI%!iK0Ujp6a2&o?;CZIS4+K`<uEu;)pgW$XAnTH_VZ0P"2!Y>hKI%>cY_p=PRfif'g%0g1*=([nj=-,ppX2_FurKI?u#j#\4-20hp#RCEedYASZM]Vb;H)K$kU1=sb>eeI4Bn9]:D:G^5ejh)u]DiijB;MD.S,,XpR&[W,$Z1p1YsD;2&Rj@h?kiVdiI
+KZr(#DIX/Hnn'DRGaQQc4Z(K+&rm9QV9"Lc8`:sh19UE_nAY,S7IrV82Q-#/QjR3eot[=c-nGg)Dnea8'9hOed(A_:F:40`aDkJo2m2$X:^u<iDJEFcTgndfXrBP%BTMtb8UU.oX']s!>Rd%@oOTBl+Ci"t?,nA^]'+ZVpjR@T=q1;FT[$S^1$nCuUHRa\3Jht;Li4_SC2=GuS&c[S:7WOs<"_FZq?l,ZEpCT,[=p8]h)PjTT('ap4m'(4N'I:L^8mVGAZ/11pk"&V3T223]SJ91$?AB@I&G+e"5`Sbe[p_6_n[9(0AtCn_Gu-V3Pk"T
+3-9'n6(QWT0;;)nl'*1>:<]B342+5HV:\u5mi!:I^L+BQ`H:6j+uGLNabT57U/URK`G!Xb%+eo*lf>"E\r:DZ^-Ukag&LB=V`RoW$.bZB*edB\*.NF>LE@jhGV2OoN9WGT'9X_6&S8@qQ^NUE[7Tr^H0jk')ELdLkqJ6[p/m9u(Y)4`kU'f0f$i!h>p'1]qRCs@k^YXVH(lL0ZQ4Gf);DG0<m61nrT,YkTk89fIsf0RA)6N=Df:8a'^S:4E^L_4r,A$ga#cso@A]L#Yl/=fF#+6W!So\d^cPe-hE]qo"ireS75o@!_DkSHZ*9h%Gj)-^
++%XO`JSUtDI6*9Gg8(>+SYt^m3ne'GU/UmbJS#uNWZ2#r+(@7>,,\"[<@Cd>XL.Dc]u?j6/:A&W#a82b8E$CMRP;1uB3_i:Z3C5t(%akW&-nj"ctQj9UJ;WXD+[NT.7Xbn)T"i-%HCH<1;gNfRLR`,Z1NXrT3b.N20;W.V]DNrW#^sdV3n.fn?/>YN2q@9INcZ&7q.s:Kc7oe(\^AEYO_-9:G%btj,JsF@2-j4W;h$NND#ZP*d7@>g:.RJr)[0:1E.s?2--9hC-o/o@X1]c^X-Co22\qb[Gl&-RH$,j(u2W%?<ou;V2m]/gJ.([f$!?8
+GU&0JLd,^ei*PTfOSPprF;=*;*C`G'5h:e):(fi?mG>gZNR@;RZ7NcgUujuc(jdQA-`OEh:.1##)M(2%3q'=F]Q_U0f!9'W!reRIafI66-3PI39/6*\nZKkM4[e_dLs&uj9f[\-C6m4IDUW%+DsJS>(XkQn:SZeh,)tnW*IHTWe'hRilsQ7d#Qg`r.)0!!l\^^E2uC&LHBt`udT17p&!o;#&&3g?!N66t]^rfp$hLNt+kjD_Ac[BlT#Pe8hEb@F`?AU%jZ8GI>)g_WLSsFk3!JW7C+FULmn#J87[<dgQ#aTa-o0ggedL,]?ZIVAkAnhZ
+)pC@:nM+4NUiD_l5e\@0hL!/P[V5?:%^kpma2PC=MOsb:a4VKnh>k'I-mBjg<QUJN>MZb#.0caB0gam0[\>8Wd'u_&OS6kWO,OISHIpO#H67_nBM`#&d478jSD>oK3C=h)o=:%&9Bk1[3_.XK]ebd")SPI>g!iI0,K2K<^$C$)hSnXWT`5nj*m\LJH>g-fP[;aR"`9k$(;:+'2>!??H]P*\r6n^="*;Sr`5Am@8Dubdn'm^]6N8i,q\gB1%W'h@k=<*cb)8fWpnRGgHe12#Eg^Y]q`XWdH'][>Hs_/eeo=d[[X*j-:'+cE%7Mptrq1I:
+WCqIP.mp]T]a!lRgKTn^QT"<4q(m.m6NHA\'W?00olpYR`<Ye[<qNn>6]]]hbKBn*2=J$C]g],UCqQ^o3?.l_hIRDLWL=a=X/^eZ3No>o2Xc!0jc1G@0<4l%N>TB6UNbN-!,5X2:hS6iX2^l<d&O0U5l=$K>"I\\;;6Yp)[1lV@mOmCX:Q0J_D[pAe[T"iBZa3>94#bo;0.o*_7OC9AJbsZNUP4RoVtcIT/iUI=>js-k4)dE^3sI#5hLc<Q>#oP#NgX#`4:2[g6DV=BE3imOScH:Ca7<;5*t'^Z5aLY3Kn2mND_lkc7XDlP7D<9O]a'=
+fZ<:o?=B_N&f"]IS@qAnCOX_">uf_</<Q%q0/V$\>\MHMN!TSp"3r3+T/IIW$Hq3eeJOUr+4>Iu;:-W[BYnF:$*d=/YV,hLU^'\OF/c7)LS7'e4_7&5?>+:;#YS*/Z$%p#2#a/KUT_U0?<:K:4ZARK)%Pu[;O;SVC3h!!F&RO!a:e(d%=Ub=PTp#$n2S!cdAn.m:R@\%lM!dLT,f69o7B8(g9,6D3_eIB3,IG^^#!m;m+or<@%s)/-gBN8c,6]gXfLEmc_+bgrI7&le`NfM,4IT.V1%'B;e;i,K;,d:Dnl*Cq9Ra19QS2mBAGcWZH0UN
+i9DW%e&L-B#[1;``chghRgul?)Kqn^I&cBi+*=!pc%Pek=juK<ha7"kF:j"2IsL#sqSHnY0_/MS4sOCY+6"0&rgVgH3YIjLUH<'aVKro4\d#Q8i>Y`[>",LaKF0EHX6<#g#]3-j(\iG)^-UkW:3AQnIirV?GQlutnl!jaE$YfP5i+tN&i@<1hkkGET:<*\6Wf8llNF#92F=Qb_]T*!(=0e*W>oAc[_iR`@6$[6\2(oeGH0EIH6i[!/gOiolf_r'Mcr6[@jpFJOUGY/=DR,#E@0N>JkALegpII&AS%oK=WS37*>-0"o\G7?=Z<bb*"BH_
+M$f#M&)nOpY7D"GLE-c>dR_0G>@WN;=2-u`>EUj'Gm&Q=":LTI*<j:a,\QYfImGuq[seRM`a%(<BI>XJ'?R`kYo.&VlVH/fn5SdV=6nJr?*l_44g&**EXpJ[eLe\IY/.8$@5G&5o4M+Fjr;p>"6<Ze,rM+(pHS8.X2Q<PF0Q?aN\YAhI=N%JG:#%o.0[uCIIe[l/<%F+cUAr,c:+gI/(tJ!k[`jVrkMdVNN;;aR4bPG%A>0&4.V<cY%N19QBg)[,WpaIFT0-\UHUkBRK[bbBn=H^*;EJ#dR^0L283;>Cni0<4[J/PhD!et4nB7H8UMls
+@d(6'qk?b-2_J1oG>Pu/0%Xk$a/4:0PNg^L@3F_GpjaA]>19V)2cX?29K9uSiXF-V+V*'S@NTcIH=^CT.pjCoQ)<idXU?<):JZ3IZ0?YY;:]k7]?d%k[I9UhrO5-j3;1f7`fZAaHag7+ZXE>?0]Hs#VZV%@$W#U]D5sS'n3?.<j+jl75HmksnsDu7B-k3]98S&<hk1Ctg9,$><le&hQ0U)(7ok]L"AP3(ICI$'LY;-_+H0&B&d1K3"@3S%5nF7lJ(Ls!endstream
+endobj
+
+8 0 obj
+<<
+  /Type /Page
+  /Parent 2 0 R
+  /Resources <<
+    /Font <<
+      /F1 9 0 R
+      /F2 11 0 R
+      /F3 12 0 R
+      /F4 13 0 R
+      /F5 14 0 R
+    >>
+  >>
+  /Contents 10 0 R
+>>
+endobj
+
+9 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Times-Roman
+  /Encoding /WinAnsiEncoding
+>>
+endobj
+
+10 0 obj
+<<
+  /Length 52656
+>>
+stream
+0.0 0.5 1.0 RG
+46 700 m
+189 700 l
+S
+0.0 0.5 1.0 rg
+BT
+1 0 0 1 228 697 Tm
+/F1 13 Tf
+(Active 1 of 1) Tj
+ET
+332 700 m
+488 700 l
+S
+BT
+1 0 0 1 216 678 Tm
+/F2 15 Tf
+(Jan 21, 2019) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 73 657 Tm
+/F3 13 Tf
+(Bitcoin Addresses) Tj
+ET
+BT
+1 0 0 1 332 657 Tm
+/F3 13 Tf
+(Encrypted Private Key) Tj
+ET
+82.0 637.0 3.2 -3.2 re
+f
+85.1 637.0 3.2 -3.2 re
+f
+88.3 637.0 3.2 -3.2 re
+f
+91.4 637.0 3.2 -3.2 re
+f
+94.6 637.0 3.2 -3.2 re
+f
+97.7 637.0 3.2 -3.2 re
+f
+100.8 637.0 3.2 -3.2 re
+f
+107.1 637.0 3.2 -3.2 re
+f
+119.7 637.0 3.2 -3.2 re
+f
+125.9 637.0 3.2 -3.2 re
+f
+129.1 637.0 3.2 -3.2 re
+f
+132.2 637.0 3.2 -3.2 re
+f
+135.3 637.0 3.2 -3.2 re
+f
+138.5 637.0 3.2 -3.2 re
+f
+141.6 637.0 3.2 -3.2 re
+f
+144.8 637.0 3.2 -3.2 re
+f
+151.0 637.0 3.2 -3.2 re
+f
+154.2 637.0 3.2 -3.2 re
+f
+157.3 637.0 3.2 -3.2 re
+f
+160.4 637.0 3.2 -3.2 re
+f
+163.6 637.0 3.2 -3.2 re
+f
+166.7 637.0 3.2 -3.2 re
+f
+169.9 637.0 3.2 -3.2 re
+f
+82.0 633.9 3.2 -3.2 re
+f
+100.8 633.9 3.2 -3.2 re
+f
+107.1 633.9 3.2 -3.2 re
+f
+113.4 633.9 3.2 -3.2 re
+f
+119.7 633.9 3.2 -3.2 re
+f
+132.2 633.9 3.2 -3.2 re
+f
+138.5 633.9 3.2 -3.2 re
+f
+144.8 633.9 3.2 -3.2 re
+f
+151.0 633.9 3.2 -3.2 re
+f
+169.9 633.9 3.2 -3.2 re
+f
+82.0 630.7 3.2 -3.2 re
+f
+88.3 630.7 3.2 -3.2 re
+f
+91.4 630.7 3.2 -3.2 re
+f
+94.6 630.7 3.2 -3.2 re
+f
+100.8 630.7 3.2 -3.2 re
+f
+119.7 630.7 3.2 -3.2 re
+f
+122.8 630.7 3.2 -3.2 re
+f
+129.1 630.7 3.2 -3.2 re
+f
+132.2 630.7 3.2 -3.2 re
+f
+138.5 630.7 3.2 -3.2 re
+f
+144.8 630.7 3.2 -3.2 re
+f
+151.0 630.7 3.2 -3.2 re
+f
+157.3 630.7 3.2 -3.2 re
+f
+160.4 630.7 3.2 -3.2 re
+f
+163.6 630.7 3.2 -3.2 re
+f
+169.9 630.7 3.2 -3.2 re
+f
+82.0 627.6 3.2 -3.2 re
+f
+88.3 627.6 3.2 -3.2 re
+f
+91.4 627.6 3.2 -3.2 re
+f
+94.6 627.6 3.2 -3.2 re
+f
+100.8 627.6 3.2 -3.2 re
+f
+107.1 627.6 3.2 -3.2 re
+f
+110.2 627.6 3.2 -3.2 re
+f
+116.5 627.6 3.2 -3.2 re
+f
+119.7 627.6 3.2 -3.2 re
+f
+122.8 627.6 3.2 -3.2 re
+f
+129.1 627.6 3.2 -3.2 re
+f
+135.3 627.6 3.2 -3.2 re
+f
+144.8 627.6 3.2 -3.2 re
+f
+151.0 627.6 3.2 -3.2 re
+f
+157.3 627.6 3.2 -3.2 re
+f
+160.4 627.6 3.2 -3.2 re
+f
+163.6 627.6 3.2 -3.2 re
+f
+169.9 627.6 3.2 -3.2 re
+f
+82.0 624.4 3.2 -3.2 re
+f
+88.3 624.4 3.2 -3.2 re
+f
+91.4 624.4 3.2 -3.2 re
+f
+94.6 624.4 3.2 -3.2 re
+f
+100.8 624.4 3.2 -3.2 re
+f
+110.2 624.4 3.2 -3.2 re
+f
+113.4 624.4 3.2 -3.2 re
+f
+132.2 624.4 3.2 -3.2 re
+f
+135.3 624.4 3.2 -3.2 re
+f
+138.5 624.4 3.2 -3.2 re
+f
+151.0 624.4 3.2 -3.2 re
+f
+157.3 624.4 3.2 -3.2 re
+f
+160.4 624.4 3.2 -3.2 re
+f
+163.6 624.4 3.2 -3.2 re
+f
+169.9 624.4 3.2 -3.2 re
+f
+82.0 621.3 3.2 -3.2 re
+f
+100.8 621.3 3.2 -3.2 re
+f
+113.4 621.3 3.2 -3.2 re
+f
+116.5 621.3 3.2 -3.2 re
+f
+122.8 621.3 3.2 -3.2 re
+f
+125.9 621.3 3.2 -3.2 re
+f
+135.3 621.3 3.2 -3.2 re
+f
+141.6 621.3 3.2 -3.2 re
+f
+151.0 621.3 3.2 -3.2 re
+f
+169.9 621.3 3.2 -3.2 re
+f
+82.0 618.2 3.2 -3.2 re
+f
+85.1 618.2 3.2 -3.2 re
+f
+88.3 618.2 3.2 -3.2 re
+f
+91.4 618.2 3.2 -3.2 re
+f
+94.6 618.2 3.2 -3.2 re
+f
+97.7 618.2 3.2 -3.2 re
+f
+100.8 618.2 3.2 -3.2 re
+f
+107.1 618.2 3.2 -3.2 re
+f
+113.4 618.2 3.2 -3.2 re
+f
+119.7 618.2 3.2 -3.2 re
+f
+125.9 618.2 3.2 -3.2 re
+f
+132.2 618.2 3.2 -3.2 re
+f
+138.5 618.2 3.2 -3.2 re
+f
+144.8 618.2 3.2 -3.2 re
+f
+151.0 618.2 3.2 -3.2 re
+f
+154.2 618.2 3.2 -3.2 re
+f
+157.3 618.2 3.2 -3.2 re
+f
+160.4 618.2 3.2 -3.2 re
+f
+163.6 618.2 3.2 -3.2 re
+f
+166.7 618.2 3.2 -3.2 re
+f
+169.9 618.2 3.2 -3.2 re
+f
+107.1 615.0 3.2 -3.2 re
+f
+113.4 615.0 3.2 -3.2 re
+f
+119.7 615.0 3.2 -3.2 re
+f
+125.9 615.0 3.2 -3.2 re
+f
+135.3 615.0 3.2 -3.2 re
+f
+138.5 615.0 3.2 -3.2 re
+f
+144.8 615.0 3.2 -3.2 re
+f
+82.0 611.9 3.2 -3.2 re
+f
+88.3 611.9 3.2 -3.2 re
+f
+91.4 611.9 3.2 -3.2 re
+f
+97.7 611.9 3.2 -3.2 re
+f
+100.8 611.9 3.2 -3.2 re
+f
+104.0 611.9 3.2 -3.2 re
+f
+110.2 611.9 3.2 -3.2 re
+f
+116.5 611.9 3.2 -3.2 re
+f
+119.7 611.9 3.2 -3.2 re
+f
+125.9 611.9 3.2 -3.2 re
+f
+129.1 611.9 3.2 -3.2 re
+f
+132.2 611.9 3.2 -3.2 re
+f
+138.5 611.9 3.2 -3.2 re
+f
+151.0 611.9 3.2 -3.2 re
+f
+160.4 611.9 3.2 -3.2 re
+f
+166.7 611.9 3.2 -3.2 re
+f
+169.9 611.9 3.2 -3.2 re
+f
+82.0 608.8 3.2 -3.2 re
+f
+88.3 608.8 3.2 -3.2 re
+f
+94.6 608.8 3.2 -3.2 re
+f
+107.1 608.8 3.2 -3.2 re
+f
+110.2 608.8 3.2 -3.2 re
+f
+113.4 608.8 3.2 -3.2 re
+f
+119.7 608.8 3.2 -3.2 re
+f
+132.2 608.8 3.2 -3.2 re
+f
+138.5 608.8 3.2 -3.2 re
+f
+141.6 608.8 3.2 -3.2 re
+f
+144.8 608.8 3.2 -3.2 re
+f
+147.9 608.8 3.2 -3.2 re
+f
+151.0 608.8 3.2 -3.2 re
+f
+154.2 608.8 3.2 -3.2 re
+f
+157.3 608.8 3.2 -3.2 re
+f
+166.7 608.8 3.2 -3.2 re
+f
+169.9 608.8 3.2 -3.2 re
+f
+91.4 605.6 3.2 -3.2 re
+f
+94.6 605.6 3.2 -3.2 re
+f
+97.7 605.6 3.2 -3.2 re
+f
+100.8 605.6 3.2 -3.2 re
+f
+104.0 605.6 3.2 -3.2 re
+f
+113.4 605.6 3.2 -3.2 re
+f
+116.5 605.6 3.2 -3.2 re
+f
+119.7 605.6 3.2 -3.2 re
+f
+122.8 605.6 3.2 -3.2 re
+f
+125.9 605.6 3.2 -3.2 re
+f
+135.3 605.6 3.2 -3.2 re
+f
+138.5 605.6 3.2 -3.2 re
+f
+144.8 605.6 3.2 -3.2 re
+f
+147.9 605.6 3.2 -3.2 re
+f
+151.0 605.6 3.2 -3.2 re
+f
+154.2 605.6 3.2 -3.2 re
+f
+157.3 605.6 3.2 -3.2 re
+f
+160.4 605.6 3.2 -3.2 re
+f
+166.7 605.6 3.2 -3.2 re
+f
+85.1 602.5 3.2 -3.2 re
+f
+94.6 602.5 3.2 -3.2 re
+f
+107.1 602.5 3.2 -3.2 re
+f
+110.2 602.5 3.2 -3.2 re
+f
+116.5 602.5 3.2 -3.2 re
+f
+122.8 602.5 3.2 -3.2 re
+f
+129.1 602.5 3.2 -3.2 re
+f
+132.2 602.5 3.2 -3.2 re
+f
+154.2 602.5 3.2 -3.2 re
+f
+157.3 602.5 3.2 -3.2 re
+f
+169.9 602.5 3.2 -3.2 re
+f
+85.1 599.3 3.2 -3.2 re
+f
+88.3 599.3 3.2 -3.2 re
+f
+91.4 599.3 3.2 -3.2 re
+f
+94.6 599.3 3.2 -3.2 re
+f
+97.7 599.3 3.2 -3.2 re
+f
+100.8 599.3 3.2 -3.2 re
+f
+104.0 599.3 3.2 -3.2 re
+f
+110.2 599.3 3.2 -3.2 re
+f
+119.7 599.3 3.2 -3.2 re
+f
+125.9 599.3 3.2 -3.2 re
+f
+132.2 599.3 3.2 -3.2 re
+f
+144.8 599.3 3.2 -3.2 re
+f
+157.3 599.3 3.2 -3.2 re
+f
+163.6 599.3 3.2 -3.2 re
+f
+82.0 596.2 3.2 -3.2 re
+f
+88.3 596.2 3.2 -3.2 re
+f
+91.4 596.2 3.2 -3.2 re
+f
+97.7 596.2 3.2 -3.2 re
+f
+104.0 596.2 3.2 -3.2 re
+f
+110.2 596.2 3.2 -3.2 re
+f
+119.7 596.2 3.2 -3.2 re
+f
+132.2 596.2 3.2 -3.2 re
+f
+135.3 596.2 3.2 -3.2 re
+f
+141.6 596.2 3.2 -3.2 re
+f
+147.9 596.2 3.2 -3.2 re
+f
+151.0 596.2 3.2 -3.2 re
+f
+160.4 596.2 3.2 -3.2 re
+f
+166.7 596.2 3.2 -3.2 re
+f
+169.9 596.2 3.2 -3.2 re
+f
+82.0 593.1 3.2 -3.2 re
+f
+91.4 593.1 3.2 -3.2 re
+f
+94.6 593.1 3.2 -3.2 re
+f
+97.7 593.1 3.2 -3.2 re
+f
+100.8 593.1 3.2 -3.2 re
+f
+104.0 593.1 3.2 -3.2 re
+f
+107.1 593.1 3.2 -3.2 re
+f
+110.2 593.1 3.2 -3.2 re
+f
+113.4 593.1 3.2 -3.2 re
+f
+116.5 593.1 3.2 -3.2 re
+f
+119.7 593.1 3.2 -3.2 re
+f
+135.3 593.1 3.2 -3.2 re
+f
+138.5 593.1 3.2 -3.2 re
+f
+141.6 593.1 3.2 -3.2 re
+f
+144.8 593.1 3.2 -3.2 re
+f
+151.0 593.1 3.2 -3.2 re
+f
+154.2 593.1 3.2 -3.2 re
+f
+163.6 593.1 3.2 -3.2 re
+f
+166.7 593.1 3.2 -3.2 re
+f
+169.9 593.1 3.2 -3.2 re
+f
+82.0 589.9 3.2 -3.2 re
+f
+85.1 589.9 3.2 -3.2 re
+f
+88.3 589.9 3.2 -3.2 re
+f
+91.4 589.9 3.2 -3.2 re
+f
+104.0 589.9 3.2 -3.2 re
+f
+110.2 589.9 3.2 -3.2 re
+f
+113.4 589.9 3.2 -3.2 re
+f
+116.5 589.9 3.2 -3.2 re
+f
+119.7 589.9 3.2 -3.2 re
+f
+138.5 589.9 3.2 -3.2 re
+f
+151.0 589.9 3.2 -3.2 re
+f
+157.3 589.9 3.2 -3.2 re
+f
+160.4 589.9 3.2 -3.2 re
+f
+82.0 586.8 3.2 -3.2 re
+f
+85.1 586.8 3.2 -3.2 re
+f
+88.3 586.8 3.2 -3.2 re
+f
+94.6 586.8 3.2 -3.2 re
+f
+97.7 586.8 3.2 -3.2 re
+f
+100.8 586.8 3.2 -3.2 re
+f
+107.1 586.8 3.2 -3.2 re
+f
+113.4 586.8 3.2 -3.2 re
+f
+116.5 586.8 3.2 -3.2 re
+f
+132.2 586.8 3.2 -3.2 re
+f
+138.5 586.8 3.2 -3.2 re
+f
+141.6 586.8 3.2 -3.2 re
+f
+147.9 586.8 3.2 -3.2 re
+f
+157.3 586.8 3.2 -3.2 re
+f
+169.9 586.8 3.2 -3.2 re
+f
+85.1 583.7 3.2 -3.2 re
+f
+88.3 583.7 3.2 -3.2 re
+f
+91.4 583.7 3.2 -3.2 re
+f
+97.7 583.7 3.2 -3.2 re
+f
+122.8 583.7 3.2 -3.2 re
+f
+141.6 583.7 3.2 -3.2 re
+f
+144.8 583.7 3.2 -3.2 re
+f
+151.0 583.7 3.2 -3.2 re
+f
+154.2 583.7 3.2 -3.2 re
+f
+160.4 583.7 3.2 -3.2 re
+f
+163.6 583.7 3.2 -3.2 re
+f
+82.0 580.5 3.2 -3.2 re
+f
+88.3 580.5 3.2 -3.2 re
+f
+100.8 580.5 3.2 -3.2 re
+f
+104.0 580.5 3.2 -3.2 re
+f
+107.1 580.5 3.2 -3.2 re
+f
+110.2 580.5 3.2 -3.2 re
+f
+116.5 580.5 3.2 -3.2 re
+f
+125.9 580.5 3.2 -3.2 re
+f
+129.1 580.5 3.2 -3.2 re
+f
+135.3 580.5 3.2 -3.2 re
+f
+157.3 580.5 3.2 -3.2 re
+f
+160.4 580.5 3.2 -3.2 re
+f
+91.4 577.4 3.2 -3.2 re
+f
+110.2 577.4 3.2 -3.2 re
+f
+125.9 577.4 3.2 -3.2 re
+f
+129.1 577.4 3.2 -3.2 re
+f
+132.2 577.4 3.2 -3.2 re
+f
+135.3 577.4 3.2 -3.2 re
+f
+138.5 577.4 3.2 -3.2 re
+f
+144.8 577.4 3.2 -3.2 re
+f
+147.9 577.4 3.2 -3.2 re
+f
+151.0 577.4 3.2 -3.2 re
+f
+160.4 577.4 3.2 -3.2 re
+f
+163.6 577.4 3.2 -3.2 re
+f
+169.9 577.4 3.2 -3.2 re
+f
+85.1 574.2 3.2 -3.2 re
+f
+91.4 574.2 3.2 -3.2 re
+f
+100.8 574.2 3.2 -3.2 re
+f
+107.1 574.2 3.2 -3.2 re
+f
+113.4 574.2 3.2 -3.2 re
+f
+116.5 574.2 3.2 -3.2 re
+f
+122.8 574.2 3.2 -3.2 re
+f
+125.9 574.2 3.2 -3.2 re
+f
+129.1 574.2 3.2 -3.2 re
+f
+132.2 574.2 3.2 -3.2 re
+f
+135.3 574.2 3.2 -3.2 re
+f
+144.8 574.2 3.2 -3.2 re
+f
+147.9 574.2 3.2 -3.2 re
+f
+151.0 574.2 3.2 -3.2 re
+f
+154.2 574.2 3.2 -3.2 re
+f
+157.3 574.2 3.2 -3.2 re
+f
+160.4 574.2 3.2 -3.2 re
+f
+163.6 574.2 3.2 -3.2 re
+f
+169.9 574.2 3.2 -3.2 re
+f
+107.1 571.1 3.2 -3.2 re
+f
+110.2 571.1 3.2 -3.2 re
+f
+116.5 571.1 3.2 -3.2 re
+f
+125.9 571.1 3.2 -3.2 re
+f
+132.2 571.1 3.2 -3.2 re
+f
+141.6 571.1 3.2 -3.2 re
+f
+144.8 571.1 3.2 -3.2 re
+f
+157.3 571.1 3.2 -3.2 re
+f
+160.4 571.1 3.2 -3.2 re
+f
+163.6 571.1 3.2 -3.2 re
+f
+166.7 571.1 3.2 -3.2 re
+f
+169.9 571.1 3.2 -3.2 re
+f
+82.0 568.0 3.2 -3.2 re
+f
+85.1 568.0 3.2 -3.2 re
+f
+88.3 568.0 3.2 -3.2 re
+f
+91.4 568.0 3.2 -3.2 re
+f
+94.6 568.0 3.2 -3.2 re
+f
+97.7 568.0 3.2 -3.2 re
+f
+100.8 568.0 3.2 -3.2 re
+f
+107.1 568.0 3.2 -3.2 re
+f
+110.2 568.0 3.2 -3.2 re
+f
+113.4 568.0 3.2 -3.2 re
+f
+119.7 568.0 3.2 -3.2 re
+f
+125.9 568.0 3.2 -3.2 re
+f
+141.6 568.0 3.2 -3.2 re
+f
+144.8 568.0 3.2 -3.2 re
+f
+151.0 568.0 3.2 -3.2 re
+f
+157.3 568.0 3.2 -3.2 re
+f
+166.7 568.0 3.2 -3.2 re
+f
+82.0 564.8 3.2 -3.2 re
+f
+100.8 564.8 3.2 -3.2 re
+f
+107.1 564.8 3.2 -3.2 re
+f
+113.4 564.8 3.2 -3.2 re
+f
+122.8 564.8 3.2 -3.2 re
+f
+129.1 564.8 3.2 -3.2 re
+f
+132.2 564.8 3.2 -3.2 re
+f
+141.6 564.8 3.2 -3.2 re
+f
+144.8 564.8 3.2 -3.2 re
+f
+157.3 564.8 3.2 -3.2 re
+f
+160.4 564.8 3.2 -3.2 re
+f
+82.0 561.7 3.2 -3.2 re
+f
+88.3 561.7 3.2 -3.2 re
+f
+91.4 561.7 3.2 -3.2 re
+f
+94.6 561.7 3.2 -3.2 re
+f
+100.8 561.7 3.2 -3.2 re
+f
+113.4 561.7 3.2 -3.2 re
+f
+116.5 561.7 3.2 -3.2 re
+f
+132.2 561.7 3.2 -3.2 re
+f
+135.3 561.7 3.2 -3.2 re
+f
+144.8 561.7 3.2 -3.2 re
+f
+147.9 561.7 3.2 -3.2 re
+f
+151.0 561.7 3.2 -3.2 re
+f
+154.2 561.7 3.2 -3.2 re
+f
+157.3 561.7 3.2 -3.2 re
+f
+160.4 561.7 3.2 -3.2 re
+f
+163.6 561.7 3.2 -3.2 re
+f
+166.7 561.7 3.2 -3.2 re
+f
+169.9 561.7 3.2 -3.2 re
+f
+82.0 558.6 3.2 -3.2 re
+f
+88.3 558.6 3.2 -3.2 re
+f
+91.4 558.6 3.2 -3.2 re
+f
+94.6 558.6 3.2 -3.2 re
+f
+100.8 558.6 3.2 -3.2 re
+f
+107.1 558.6 3.2 -3.2 re
+f
+110.2 558.6 3.2 -3.2 re
+f
+113.4 558.6 3.2 -3.2 re
+f
+116.5 558.6 3.2 -3.2 re
+f
+125.9 558.6 3.2 -3.2 re
+f
+132.2 558.6 3.2 -3.2 re
+f
+135.3 558.6 3.2 -3.2 re
+f
+138.5 558.6 3.2 -3.2 re
+f
+147.9 558.6 3.2 -3.2 re
+f
+154.2 558.6 3.2 -3.2 re
+f
+169.9 558.6 3.2 -3.2 re
+f
+82.0 555.4 3.2 -3.2 re
+f
+88.3 555.4 3.2 -3.2 re
+f
+91.4 555.4 3.2 -3.2 re
+f
+94.6 555.4 3.2 -3.2 re
+f
+100.8 555.4 3.2 -3.2 re
+f
+107.1 555.4 3.2 -3.2 re
+f
+113.4 555.4 3.2 -3.2 re
+f
+119.7 555.4 3.2 -3.2 re
+f
+122.8 555.4 3.2 -3.2 re
+f
+138.5 555.4 3.2 -3.2 re
+f
+141.6 555.4 3.2 -3.2 re
+f
+147.9 555.4 3.2 -3.2 re
+f
+151.0 555.4 3.2 -3.2 re
+f
+154.2 555.4 3.2 -3.2 re
+f
+160.4 555.4 3.2 -3.2 re
+f
+163.6 555.4 3.2 -3.2 re
+f
+169.9 555.4 3.2 -3.2 re
+f
+82.0 552.3 3.2 -3.2 re
+f
+100.8 552.3 3.2 -3.2 re
+f
+119.7 552.3 3.2 -3.2 re
+f
+129.1 552.3 3.2 -3.2 re
+f
+132.2 552.3 3.2 -3.2 re
+f
+138.5 552.3 3.2 -3.2 re
+f
+141.6 552.3 3.2 -3.2 re
+f
+144.8 552.3 3.2 -3.2 re
+f
+154.2 552.3 3.2 -3.2 re
+f
+157.3 552.3 3.2 -3.2 re
+f
+166.7 552.3 3.2 -3.2 re
+f
+82.0 549.1 3.2 -3.2 re
+f
+85.1 549.1 3.2 -3.2 re
+f
+88.3 549.1 3.2 -3.2 re
+f
+91.4 549.1 3.2 -3.2 re
+f
+94.6 549.1 3.2 -3.2 re
+f
+97.7 549.1 3.2 -3.2 re
+f
+100.8 549.1 3.2 -3.2 re
+f
+107.1 549.1 3.2 -3.2 re
+f
+110.2 549.1 3.2 -3.2 re
+f
+113.4 549.1 3.2 -3.2 re
+f
+116.5 549.1 3.2 -3.2 re
+f
+119.7 549.1 3.2 -3.2 re
+f
+132.2 549.1 3.2 -3.2 re
+f
+138.5 549.1 3.2 -3.2 re
+f
+141.6 549.1 3.2 -3.2 re
+f
+144.8 549.1 3.2 -3.2 re
+f
+151.0 549.1 3.2 -3.2 re
+f
+154.2 549.1 3.2 -3.2 re
+f
+160.4 549.1 3.2 -3.2 re
+f
+166.7 549.1 3.2 -3.2 re
+f
+BT
+1 0 0 1 72 520 Tm
+/F4 12 Tf
+(1DqNnsGVr8YrhVosD) Tj
+ET
+BT
+1 0 0 1 72 507 Tm
+/F4 12 Tf
+(Fg2tuZnSZiCT4bRDP) Tj
+ET
+82.0 493.0 2.9 -2.9 re
+f
+84.8 493.0 2.9 -2.9 re
+f
+87.5 493.0 2.9 -2.9 re
+f
+90.3 493.0 2.9 -2.9 re
+f
+93.0 493.0 2.9 -2.9 re
+f
+95.8 493.0 2.9 -2.9 re
+f
+98.5 493.0 2.9 -2.9 re
+f
+104.1 493.0 2.9 -2.9 re
+f
+109.6 493.0 2.9 -2.9 re
+f
+112.3 493.0 2.9 -2.9 re
+f
+123.4 493.0 2.9 -2.9 re
+f
+128.9 493.0 2.9 -2.9 re
+f
+137.2 493.0 2.9 -2.9 re
+f
+145.4 493.0 2.9 -2.9 re
+f
+153.7 493.0 2.9 -2.9 re
+f
+156.5 493.0 2.9 -2.9 re
+f
+159.2 493.0 2.9 -2.9 re
+f
+162.0 493.0 2.9 -2.9 re
+f
+164.7 493.0 2.9 -2.9 re
+f
+167.5 493.0 2.9 -2.9 re
+f
+170.2 493.0 2.9 -2.9 re
+f
+82.0 490.2 2.9 -2.9 re
+f
+98.5 490.2 2.9 -2.9 re
+f
+106.8 490.2 2.9 -2.9 re
+f
+128.9 490.2 2.9 -2.9 re
+f
+134.4 490.2 2.9 -2.9 re
+f
+137.2 490.2 2.9 -2.9 re
+f
+153.7 490.2 2.9 -2.9 re
+f
+170.2 490.2 2.9 -2.9 re
+f
+82.0 487.5 2.9 -2.9 re
+f
+87.5 487.5 2.9 -2.9 re
+f
+90.3 487.5 2.9 -2.9 re
+f
+93.0 487.5 2.9 -2.9 re
+f
+98.5 487.5 2.9 -2.9 re
+f
+112.3 487.5 2.9 -2.9 re
+f
+117.8 487.5 2.9 -2.9 re
+f
+126.1 487.5 2.9 -2.9 re
+f
+137.2 487.5 2.9 -2.9 re
+f
+139.9 487.5 2.9 -2.9 re
+f
+153.7 487.5 2.9 -2.9 re
+f
+159.2 487.5 2.9 -2.9 re
+f
+162.0 487.5 2.9 -2.9 re
+f
+164.7 487.5 2.9 -2.9 re
+f
+170.2 487.5 2.9 -2.9 re
+f
+82.0 484.7 2.9 -2.9 re
+f
+87.5 484.7 2.9 -2.9 re
+f
+90.3 484.7 2.9 -2.9 re
+f
+93.0 484.7 2.9 -2.9 re
+f
+98.5 484.7 2.9 -2.9 re
+f
+104.1 484.7 2.9 -2.9 re
+f
+106.8 484.7 2.9 -2.9 re
+f
+109.6 484.7 2.9 -2.9 re
+f
+115.1 484.7 2.9 -2.9 re
+f
+120.6 484.7 2.9 -2.9 re
+f
+128.9 484.7 2.9 -2.9 re
+f
+131.6 484.7 2.9 -2.9 re
+f
+137.2 484.7 2.9 -2.9 re
+f
+145.4 484.7 2.9 -2.9 re
+f
+153.7 484.7 2.9 -2.9 re
+f
+159.2 484.7 2.9 -2.9 re
+f
+162.0 484.7 2.9 -2.9 re
+f
+164.7 484.7 2.9 -2.9 re
+f
+170.2 484.7 2.9 -2.9 re
+f
+82.0 482.0 2.9 -2.9 re
+f
+87.5 482.0 2.9 -2.9 re
+f
+90.3 482.0 2.9 -2.9 re
+f
+93.0 482.0 2.9 -2.9 re
+f
+98.5 482.0 2.9 -2.9 re
+f
+104.1 482.0 2.9 -2.9 re
+f
+117.8 482.0 2.9 -2.9 re
+f
+120.6 482.0 2.9 -2.9 re
+f
+131.6 482.0 2.9 -2.9 re
+f
+134.4 482.0 2.9 -2.9 re
+f
+137.2 482.0 2.9 -2.9 re
+f
+139.9 482.0 2.9 -2.9 re
+f
+145.4 482.0 2.9 -2.9 re
+f
+153.7 482.0 2.9 -2.9 re
+f
+159.2 482.0 2.9 -2.9 re
+f
+162.0 482.0 2.9 -2.9 re
+f
+164.7 482.0 2.9 -2.9 re
+f
+170.2 482.0 2.9 -2.9 re
+f
+82.0 479.2 2.9 -2.9 re
+f
+98.5 479.2 2.9 -2.9 re
+f
+104.1 479.2 2.9 -2.9 re
+f
+106.8 479.2 2.9 -2.9 re
+f
+126.1 479.2 2.9 -2.9 re
+f
+134.4 479.2 2.9 -2.9 re
+f
+139.9 479.2 2.9 -2.9 re
+f
+142.7 479.2 2.9 -2.9 re
+f
+148.2 479.2 2.9 -2.9 re
+f
+153.7 479.2 2.9 -2.9 re
+f
+170.2 479.2 2.9 -2.9 re
+f
+82.0 476.5 2.9 -2.9 re
+f
+84.8 476.5 2.9 -2.9 re
+f
+87.5 476.5 2.9 -2.9 re
+f
+90.3 476.5 2.9 -2.9 re
+f
+93.0 476.5 2.9 -2.9 re
+f
+95.8 476.5 2.9 -2.9 re
+f
+98.5 476.5 2.9 -2.9 re
+f
+104.1 476.5 2.9 -2.9 re
+f
+109.6 476.5 2.9 -2.9 re
+f
+115.1 476.5 2.9 -2.9 re
+f
+120.6 476.5 2.9 -2.9 re
+f
+126.1 476.5 2.9 -2.9 re
+f
+131.6 476.5 2.9 -2.9 re
+f
+137.2 476.5 2.9 -2.9 re
+f
+142.7 476.5 2.9 -2.9 re
+f
+148.2 476.5 2.9 -2.9 re
+f
+153.7 476.5 2.9 -2.9 re
+f
+156.5 476.5 2.9 -2.9 re
+f
+159.2 476.5 2.9 -2.9 re
+f
+162.0 476.5 2.9 -2.9 re
+f
+164.7 476.5 2.9 -2.9 re
+f
+167.5 476.5 2.9 -2.9 re
+f
+170.2 476.5 2.9 -2.9 re
+f
+104.1 473.7 2.9 -2.9 re
+f
+109.6 473.7 2.9 -2.9 re
+f
+112.3 473.7 2.9 -2.9 re
+f
+115.1 473.7 2.9 -2.9 re
+f
+123.4 473.7 2.9 -2.9 re
+f
+126.1 473.7 2.9 -2.9 re
+f
+128.9 473.7 2.9 -2.9 re
+f
+131.6 473.7 2.9 -2.9 re
+f
+139.9 473.7 2.9 -2.9 re
+f
+142.7 473.7 2.9 -2.9 re
+f
+145.4 473.7 2.9 -2.9 re
+f
+82.0 470.9 2.9 -2.9 re
+f
+93.0 470.9 2.9 -2.9 re
+f
+98.5 470.9 2.9 -2.9 re
+f
+101.3 470.9 2.9 -2.9 re
+f
+104.1 470.9 2.9 -2.9 re
+f
+106.8 470.9 2.9 -2.9 re
+f
+120.6 470.9 2.9 -2.9 re
+f
+128.9 470.9 2.9 -2.9 re
+f
+134.4 470.9 2.9 -2.9 re
+f
+137.2 470.9 2.9 -2.9 re
+f
+139.9 470.9 2.9 -2.9 re
+f
+142.7 470.9 2.9 -2.9 re
+f
+145.4 470.9 2.9 -2.9 re
+f
+150.9 470.9 2.9 -2.9 re
+f
+153.7 470.9 2.9 -2.9 re
+f
+156.5 470.9 2.9 -2.9 re
+f
+159.2 470.9 2.9 -2.9 re
+f
+162.0 470.9 2.9 -2.9 re
+f
+170.2 470.9 2.9 -2.9 re
+f
+82.0 468.2 2.9 -2.9 re
+f
+84.8 468.2 2.9 -2.9 re
+f
+95.8 468.2 2.9 -2.9 re
+f
+104.1 468.2 2.9 -2.9 re
+f
+106.8 468.2 2.9 -2.9 re
+f
+112.3 468.2 2.9 -2.9 re
+f
+117.8 468.2 2.9 -2.9 re
+f
+123.4 468.2 2.9 -2.9 re
+f
+126.1 468.2 2.9 -2.9 re
+f
+139.9 468.2 2.9 -2.9 re
+f
+142.7 468.2 2.9 -2.9 re
+f
+145.4 468.2 2.9 -2.9 re
+f
+148.2 468.2 2.9 -2.9 re
+f
+82.0 465.4 2.9 -2.9 re
+f
+84.8 465.4 2.9 -2.9 re
+f
+90.3 465.4 2.9 -2.9 re
+f
+93.0 465.4 2.9 -2.9 re
+f
+95.8 465.4 2.9 -2.9 re
+f
+98.5 465.4 2.9 -2.9 re
+f
+101.3 465.4 2.9 -2.9 re
+f
+106.8 465.4 2.9 -2.9 re
+f
+115.1 465.4 2.9 -2.9 re
+f
+123.4 465.4 2.9 -2.9 re
+f
+126.1 465.4 2.9 -2.9 re
+f
+128.9 465.4 2.9 -2.9 re
+f
+139.9 465.4 2.9 -2.9 re
+f
+145.4 465.4 2.9 -2.9 re
+f
+148.2 465.4 2.9 -2.9 re
+f
+150.9 465.4 2.9 -2.9 re
+f
+156.5 465.4 2.9 -2.9 re
+f
+167.5 465.4 2.9 -2.9 re
+f
+82.0 462.7 2.9 -2.9 re
+f
+84.8 462.7 2.9 -2.9 re
+f
+90.3 462.7 2.9 -2.9 re
+f
+93.0 462.7 2.9 -2.9 re
+f
+104.1 462.7 2.9 -2.9 re
+f
+106.8 462.7 2.9 -2.9 re
+f
+109.6 462.7 2.9 -2.9 re
+f
+112.3 462.7 2.9 -2.9 re
+f
+120.6 462.7 2.9 -2.9 re
+f
+126.1 462.7 2.9 -2.9 re
+f
+128.9 462.7 2.9 -2.9 re
+f
+131.6 462.7 2.9 -2.9 re
+f
+139.9 462.7 2.9 -2.9 re
+f
+145.4 462.7 2.9 -2.9 re
+f
+153.7 462.7 2.9 -2.9 re
+f
+167.5 462.7 2.9 -2.9 re
+f
+170.2 462.7 2.9 -2.9 re
+f
+87.5 459.9 2.9 -2.9 re
+f
+90.3 459.9 2.9 -2.9 re
+f
+93.0 459.9 2.9 -2.9 re
+f
+95.8 459.9 2.9 -2.9 re
+f
+98.5 459.9 2.9 -2.9 re
+f
+101.3 459.9 2.9 -2.9 re
+f
+104.1 459.9 2.9 -2.9 re
+f
+106.8 459.9 2.9 -2.9 re
+f
+112.3 459.9 2.9 -2.9 re
+f
+117.8 459.9 2.9 -2.9 re
+f
+120.6 459.9 2.9 -2.9 re
+f
+131.6 459.9 2.9 -2.9 re
+f
+134.4 459.9 2.9 -2.9 re
+f
+137.2 459.9 2.9 -2.9 re
+f
+139.9 459.9 2.9 -2.9 re
+f
+142.7 459.9 2.9 -2.9 re
+f
+150.9 459.9 2.9 -2.9 re
+f
+153.7 459.9 2.9 -2.9 re
+f
+159.2 459.9 2.9 -2.9 re
+f
+162.0 459.9 2.9 -2.9 re
+f
+170.2 459.9 2.9 -2.9 re
+f
+82.0 457.2 2.9 -2.9 re
+f
+87.5 457.2 2.9 -2.9 re
+f
+93.0 457.2 2.9 -2.9 re
+f
+95.8 457.2 2.9 -2.9 re
+f
+101.3 457.2 2.9 -2.9 re
+f
+106.8 457.2 2.9 -2.9 re
+f
+109.6 457.2 2.9 -2.9 re
+f
+115.1 457.2 2.9 -2.9 re
+f
+126.1 457.2 2.9 -2.9 re
+f
+128.9 457.2 2.9 -2.9 re
+f
+134.4 457.2 2.9 -2.9 re
+f
+142.7 457.2 2.9 -2.9 re
+f
+145.4 457.2 2.9 -2.9 re
+f
+148.2 457.2 2.9 -2.9 re
+f
+156.5 457.2 2.9 -2.9 re
+f
+162.0 457.2 2.9 -2.9 re
+f
+164.7 457.2 2.9 -2.9 re
+f
+167.5 457.2 2.9 -2.9 re
+f
+82.0 454.4 2.9 -2.9 re
+f
+84.8 454.4 2.9 -2.9 re
+f
+87.5 454.4 2.9 -2.9 re
+f
+95.8 454.4 2.9 -2.9 re
+f
+98.5 454.4 2.9 -2.9 re
+f
+101.3 454.4 2.9 -2.9 re
+f
+104.1 454.4 2.9 -2.9 re
+f
+106.8 454.4 2.9 -2.9 re
+f
+117.8 454.4 2.9 -2.9 re
+f
+120.6 454.4 2.9 -2.9 re
+f
+126.1 454.4 2.9 -2.9 re
+f
+134.4 454.4 2.9 -2.9 re
+f
+142.7 454.4 2.9 -2.9 re
+f
+145.4 454.4 2.9 -2.9 re
+f
+148.2 454.4 2.9 -2.9 re
+f
+153.7 454.4 2.9 -2.9 re
+f
+156.5 454.4 2.9 -2.9 re
+f
+159.2 454.4 2.9 -2.9 re
+f
+162.0 454.4 2.9 -2.9 re
+f
+167.5 454.4 2.9 -2.9 re
+f
+95.8 451.6 2.9 -2.9 re
+f
+101.3 451.6 2.9 -2.9 re
+f
+104.1 451.6 2.9 -2.9 re
+f
+120.6 451.6 2.9 -2.9 re
+f
+128.9 451.6 2.9 -2.9 re
+f
+134.4 451.6 2.9 -2.9 re
+f
+137.2 451.6 2.9 -2.9 re
+f
+139.9 451.6 2.9 -2.9 re
+f
+142.7 451.6 2.9 -2.9 re
+f
+145.4 451.6 2.9 -2.9 re
+f
+148.2 451.6 2.9 -2.9 re
+f
+153.7 451.6 2.9 -2.9 re
+f
+170.2 451.6 2.9 -2.9 re
+f
+90.3 448.9 2.9 -2.9 re
+f
+95.8 448.9 2.9 -2.9 re
+f
+98.5 448.9 2.9 -2.9 re
+f
+101.3 448.9 2.9 -2.9 re
+f
+104.1 448.9 2.9 -2.9 re
+f
+106.8 448.9 2.9 -2.9 re
+f
+109.6 448.9 2.9 -2.9 re
+f
+115.1 448.9 2.9 -2.9 re
+f
+120.6 448.9 2.9 -2.9 re
+f
+123.4 448.9 2.9 -2.9 re
+f
+126.1 448.9 2.9 -2.9 re
+f
+128.9 448.9 2.9 -2.9 re
+f
+139.9 448.9 2.9 -2.9 re
+f
+153.7 448.9 2.9 -2.9 re
+f
+159.2 448.9 2.9 -2.9 re
+f
+162.0 448.9 2.9 -2.9 re
+f
+167.5 448.9 2.9 -2.9 re
+f
+170.2 448.9 2.9 -2.9 re
+f
+82.0 446.1 2.9 -2.9 re
+f
+90.3 446.1 2.9 -2.9 re
+f
+93.0 446.1 2.9 -2.9 re
+f
+104.1 446.1 2.9 -2.9 re
+f
+106.8 446.1 2.9 -2.9 re
+f
+112.3 446.1 2.9 -2.9 re
+f
+123.4 446.1 2.9 -2.9 re
+f
+126.1 446.1 2.9 -2.9 re
+f
+128.9 446.1 2.9 -2.9 re
+f
+142.7 446.1 2.9 -2.9 re
+f
+145.4 446.1 2.9 -2.9 re
+f
+150.9 446.1 2.9 -2.9 re
+f
+156.5 446.1 2.9 -2.9 re
+f
+162.0 446.1 2.9 -2.9 re
+f
+164.7 446.1 2.9 -2.9 re
+f
+167.5 446.1 2.9 -2.9 re
+f
+82.0 443.4 2.9 -2.9 re
+f
+84.8 443.4 2.9 -2.9 re
+f
+87.5 443.4 2.9 -2.9 re
+f
+98.5 443.4 2.9 -2.9 re
+f
+104.1 443.4 2.9 -2.9 re
+f
+112.3 443.4 2.9 -2.9 re
+f
+115.1 443.4 2.9 -2.9 re
+f
+117.8 443.4 2.9 -2.9 re
+f
+120.6 443.4 2.9 -2.9 re
+f
+123.4 443.4 2.9 -2.9 re
+f
+131.6 443.4 2.9 -2.9 re
+f
+137.2 443.4 2.9 -2.9 re
+f
+145.4 443.4 2.9 -2.9 re
+f
+148.2 443.4 2.9 -2.9 re
+f
+153.7 443.4 2.9 -2.9 re
+f
+159.2 443.4 2.9 -2.9 re
+f
+162.0 443.4 2.9 -2.9 re
+f
+167.5 443.4 2.9 -2.9 re
+f
+87.5 440.6 2.9 -2.9 re
+f
+93.0 440.6 2.9 -2.9 re
+f
+101.3 440.6 2.9 -2.9 re
+f
+104.1 440.6 2.9 -2.9 re
+f
+106.8 440.6 2.9 -2.9 re
+f
+112.3 440.6 2.9 -2.9 re
+f
+123.4 440.6 2.9 -2.9 re
+f
+126.1 440.6 2.9 -2.9 re
+f
+134.4 440.6 2.9 -2.9 re
+f
+139.9 440.6 2.9 -2.9 re
+f
+145.4 440.6 2.9 -2.9 re
+f
+150.9 440.6 2.9 -2.9 re
+f
+156.5 440.6 2.9 -2.9 re
+f
+167.5 440.6 2.9 -2.9 re
+f
+82.0 437.8 2.9 -2.9 re
+f
+84.8 437.8 2.9 -2.9 re
+f
+90.3 437.8 2.9 -2.9 re
+f
+93.0 437.8 2.9 -2.9 re
+f
+98.5 437.8 2.9 -2.9 re
+f
+109.6 437.8 2.9 -2.9 re
+f
+112.3 437.8 2.9 -2.9 re
+f
+115.1 437.8 2.9 -2.9 re
+f
+123.4 437.8 2.9 -2.9 re
+f
+126.1 437.8 2.9 -2.9 re
+f
+134.4 437.8 2.9 -2.9 re
+f
+137.2 437.8 2.9 -2.9 re
+f
+139.9 437.8 2.9 -2.9 re
+f
+142.7 437.8 2.9 -2.9 re
+f
+153.7 437.8 2.9 -2.9 re
+f
+159.2 437.8 2.9 -2.9 re
+f
+170.2 437.8 2.9 -2.9 re
+f
+82.0 435.1 2.9 -2.9 re
+f
+84.8 435.1 2.9 -2.9 re
+f
+87.5 435.1 2.9 -2.9 re
+f
+90.3 435.1 2.9 -2.9 re
+f
+95.8 435.1 2.9 -2.9 re
+f
+101.3 435.1 2.9 -2.9 re
+f
+104.1 435.1 2.9 -2.9 re
+f
+106.8 435.1 2.9 -2.9 re
+f
+109.6 435.1 2.9 -2.9 re
+f
+115.1 435.1 2.9 -2.9 re
+f
+120.6 435.1 2.9 -2.9 re
+f
+131.6 435.1 2.9 -2.9 re
+f
+134.4 435.1 2.9 -2.9 re
+f
+137.2 435.1 2.9 -2.9 re
+f
+145.4 435.1 2.9 -2.9 re
+f
+150.9 435.1 2.9 -2.9 re
+f
+156.5 435.1 2.9 -2.9 re
+f
+164.7 435.1 2.9 -2.9 re
+f
+167.5 435.1 2.9 -2.9 re
+f
+93.0 432.3 2.9 -2.9 re
+f
+95.8 432.3 2.9 -2.9 re
+f
+98.5 432.3 2.9 -2.9 re
+f
+112.3 432.3 2.9 -2.9 re
+f
+115.1 432.3 2.9 -2.9 re
+f
+117.8 432.3 2.9 -2.9 re
+f
+123.4 432.3 2.9 -2.9 re
+f
+128.9 432.3 2.9 -2.9 re
+f
+131.6 432.3 2.9 -2.9 re
+f
+145.4 432.3 2.9 -2.9 re
+f
+148.2 432.3 2.9 -2.9 re
+f
+162.0 432.3 2.9 -2.9 re
+f
+167.5 432.3 2.9 -2.9 re
+f
+90.3 429.6 2.9 -2.9 re
+f
+93.0 429.6 2.9 -2.9 re
+f
+95.8 429.6 2.9 -2.9 re
+f
+101.3 429.6 2.9 -2.9 re
+f
+104.1 429.6 2.9 -2.9 re
+f
+109.6 429.6 2.9 -2.9 re
+f
+112.3 429.6 2.9 -2.9 re
+f
+117.8 429.6 2.9 -2.9 re
+f
+123.4 429.6 2.9 -2.9 re
+f
+126.1 429.6 2.9 -2.9 re
+f
+128.9 429.6 2.9 -2.9 re
+f
+131.6 429.6 2.9 -2.9 re
+f
+134.4 429.6 2.9 -2.9 re
+f
+139.9 429.6 2.9 -2.9 re
+f
+142.7 429.6 2.9 -2.9 re
+f
+153.7 429.6 2.9 -2.9 re
+f
+159.2 429.6 2.9 -2.9 re
+f
+170.2 429.6 2.9 -2.9 re
+f
+82.0 426.8 2.9 -2.9 re
+f
+84.8 426.8 2.9 -2.9 re
+f
+95.8 426.8 2.9 -2.9 re
+f
+98.5 426.8 2.9 -2.9 re
+f
+101.3 426.8 2.9 -2.9 re
+f
+104.1 426.8 2.9 -2.9 re
+f
+109.6 426.8 2.9 -2.9 re
+f
+115.1 426.8 2.9 -2.9 re
+f
+117.8 426.8 2.9 -2.9 re
+f
+120.6 426.8 2.9 -2.9 re
+f
+126.1 426.8 2.9 -2.9 re
+f
+128.9 426.8 2.9 -2.9 re
+f
+134.4 426.8 2.9 -2.9 re
+f
+139.9 426.8 2.9 -2.9 re
+f
+145.4 426.8 2.9 -2.9 re
+f
+148.2 426.8 2.9 -2.9 re
+f
+150.9 426.8 2.9 -2.9 re
+f
+153.7 426.8 2.9 -2.9 re
+f
+156.5 426.8 2.9 -2.9 re
+f
+159.2 426.8 2.9 -2.9 re
+f
+162.0 426.8 2.9 -2.9 re
+f
+167.5 426.8 2.9 -2.9 re
+f
+170.2 426.8 2.9 -2.9 re
+f
+104.1 424.1 2.9 -2.9 re
+f
+106.8 424.1 2.9 -2.9 re
+f
+112.3 424.1 2.9 -2.9 re
+f
+117.8 424.1 2.9 -2.9 re
+f
+120.6 424.1 2.9 -2.9 re
+f
+123.4 424.1 2.9 -2.9 re
+f
+126.1 424.1 2.9 -2.9 re
+f
+139.9 424.1 2.9 -2.9 re
+f
+142.7 424.1 2.9 -2.9 re
+f
+145.4 424.1 2.9 -2.9 re
+f
+148.2 424.1 2.9 -2.9 re
+f
+159.2 424.1 2.9 -2.9 re
+f
+164.7 424.1 2.9 -2.9 re
+f
+82.0 421.3 2.9 -2.9 re
+f
+84.8 421.3 2.9 -2.9 re
+f
+87.5 421.3 2.9 -2.9 re
+f
+90.3 421.3 2.9 -2.9 re
+f
+93.0 421.3 2.9 -2.9 re
+f
+95.8 421.3 2.9 -2.9 re
+f
+98.5 421.3 2.9 -2.9 re
+f
+104.1 421.3 2.9 -2.9 re
+f
+106.8 421.3 2.9 -2.9 re
+f
+109.6 421.3 2.9 -2.9 re
+f
+112.3 421.3 2.9 -2.9 re
+f
+115.1 421.3 2.9 -2.9 re
+f
+117.8 421.3 2.9 -2.9 re
+f
+120.6 421.3 2.9 -2.9 re
+f
+123.4 421.3 2.9 -2.9 re
+f
+128.9 421.3 2.9 -2.9 re
+f
+137.2 421.3 2.9 -2.9 re
+f
+142.7 421.3 2.9 -2.9 re
+f
+148.2 421.3 2.9 -2.9 re
+f
+153.7 421.3 2.9 -2.9 re
+f
+159.2 421.3 2.9 -2.9 re
+f
+164.7 421.3 2.9 -2.9 re
+f
+82.0 418.5 2.9 -2.9 re
+f
+98.5 418.5 2.9 -2.9 re
+f
+126.1 418.5 2.9 -2.9 re
+f
+128.9 418.5 2.9 -2.9 re
+f
+131.6 418.5 2.9 -2.9 re
+f
+137.2 418.5 2.9 -2.9 re
+f
+139.9 418.5 2.9 -2.9 re
+f
+145.4 418.5 2.9 -2.9 re
+f
+148.2 418.5 2.9 -2.9 re
+f
+159.2 418.5 2.9 -2.9 re
+f
+82.0 415.8 2.9 -2.9 re
+f
+87.5 415.8 2.9 -2.9 re
+f
+90.3 415.8 2.9 -2.9 re
+f
+93.0 415.8 2.9 -2.9 re
+f
+98.5 415.8 2.9 -2.9 re
+f
+104.1 415.8 2.9 -2.9 re
+f
+106.8 415.8 2.9 -2.9 re
+f
+112.3 415.8 2.9 -2.9 re
+f
+115.1 415.8 2.9 -2.9 re
+f
+117.8 415.8 2.9 -2.9 re
+f
+120.6 415.8 2.9 -2.9 re
+f
+131.6 415.8 2.9 -2.9 re
+f
+134.4 415.8 2.9 -2.9 re
+f
+139.9 415.8 2.9 -2.9 re
+f
+142.7 415.8 2.9 -2.9 re
+f
+148.2 415.8 2.9 -2.9 re
+f
+150.9 415.8 2.9 -2.9 re
+f
+153.7 415.8 2.9 -2.9 re
+f
+156.5 415.8 2.9 -2.9 re
+f
+159.2 415.8 2.9 -2.9 re
+f
+167.5 415.8 2.9 -2.9 re
+f
+170.2 415.8 2.9 -2.9 re
+f
+82.0 413.0 2.9 -2.9 re
+f
+87.5 413.0 2.9 -2.9 re
+f
+90.3 413.0 2.9 -2.9 re
+f
+93.0 413.0 2.9 -2.9 re
+f
+98.5 413.0 2.9 -2.9 re
+f
+106.8 413.0 2.9 -2.9 re
+f
+109.6 413.0 2.9 -2.9 re
+f
+112.3 413.0 2.9 -2.9 re
+f
+120.6 413.0 2.9 -2.9 re
+f
+126.1 413.0 2.9 -2.9 re
+f
+142.7 413.0 2.9 -2.9 re
+f
+145.4 413.0 2.9 -2.9 re
+f
+153.7 413.0 2.9 -2.9 re
+f
+159.2 413.0 2.9 -2.9 re
+f
+82.0 410.3 2.9 -2.9 re
+f
+87.5 410.3 2.9 -2.9 re
+f
+90.3 410.3 2.9 -2.9 re
+f
+93.0 410.3 2.9 -2.9 re
+f
+98.5 410.3 2.9 -2.9 re
+f
+106.8 410.3 2.9 -2.9 re
+f
+109.6 410.3 2.9 -2.9 re
+f
+112.3 410.3 2.9 -2.9 re
+f
+126.1 410.3 2.9 -2.9 re
+f
+131.6 410.3 2.9 -2.9 re
+f
+137.2 410.3 2.9 -2.9 re
+f
+139.9 410.3 2.9 -2.9 re
+f
+145.4 410.3 2.9 -2.9 re
+f
+153.7 410.3 2.9 -2.9 re
+f
+159.2 410.3 2.9 -2.9 re
+f
+82.0 407.5 2.9 -2.9 re
+f
+98.5 407.5 2.9 -2.9 re
+f
+106.8 407.5 2.9 -2.9 re
+f
+109.6 407.5 2.9 -2.9 re
+f
+112.3 407.5 2.9 -2.9 re
+f
+115.1 407.5 2.9 -2.9 re
+f
+128.9 407.5 2.9 -2.9 re
+f
+131.6 407.5 2.9 -2.9 re
+f
+137.2 407.5 2.9 -2.9 re
+f
+139.9 407.5 2.9 -2.9 re
+f
+145.4 407.5 2.9 -2.9 re
+f
+148.2 407.5 2.9 -2.9 re
+f
+82.0 404.8 2.9 -2.9 re
+f
+84.8 404.8 2.9 -2.9 re
+f
+87.5 404.8 2.9 -2.9 re
+f
+90.3 404.8 2.9 -2.9 re
+f
+93.0 404.8 2.9 -2.9 re
+f
+95.8 404.8 2.9 -2.9 re
+f
+98.5 404.8 2.9 -2.9 re
+f
+104.1 404.8 2.9 -2.9 re
+f
+117.8 404.8 2.9 -2.9 re
+f
+123.4 404.8 2.9 -2.9 re
+f
+128.9 404.8 2.9 -2.9 re
+f
+134.4 404.8 2.9 -2.9 re
+f
+137.2 404.8 2.9 -2.9 re
+f
+139.9 404.8 2.9 -2.9 re
+f
+142.7 404.8 2.9 -2.9 re
+f
+145.4 404.8 2.9 -2.9 re
+f
+148.2 404.8 2.9 -2.9 re
+f
+156.5 404.8 2.9 -2.9 re
+f
+159.2 404.8 2.9 -2.9 re
+f
+162.0 404.8 2.9 -2.9 re
+f
+170.2 404.8 2.9 -2.9 re
+f
+BT
+1 0 0 1 72 381 Tm
+/F4 12 Tf
+(bc1q3nr65espd5zuwcyrj) Tj
+ET
+BT
+1 0 0 1 72 369 Tm
+/F4 12 Tf
+(605gtpywlf9cku8amwkur) Tj
+ET
+82.0 350.0 3.2 -3.2 re
+f
+85.1 350.0 3.2 -3.2 re
+f
+88.3 350.0 3.2 -3.2 re
+f
+91.4 350.0 3.2 -3.2 re
+f
+94.6 350.0 3.2 -3.2 re
+f
+97.7 350.0 3.2 -3.2 re
+f
+100.8 350.0 3.2 -3.2 re
+f
+107.1 350.0 3.2 -3.2 re
+f
+122.8 350.0 3.2 -3.2 re
+f
+138.5 350.0 3.2 -3.2 re
+f
+141.6 350.0 3.2 -3.2 re
+f
+151.0 350.0 3.2 -3.2 re
+f
+154.2 350.0 3.2 -3.2 re
+f
+157.3 350.0 3.2 -3.2 re
+f
+160.4 350.0 3.2 -3.2 re
+f
+163.6 350.0 3.2 -3.2 re
+f
+166.7 350.0 3.2 -3.2 re
+f
+169.9 350.0 3.2 -3.2 re
+f
+82.0 346.9 3.2 -3.2 re
+f
+100.8 346.9 3.2 -3.2 re
+f
+107.1 346.9 3.2 -3.2 re
+f
+116.5 346.9 3.2 -3.2 re
+f
+119.7 346.9 3.2 -3.2 re
+f
+138.5 346.9 3.2 -3.2 re
+f
+141.6 346.9 3.2 -3.2 re
+f
+151.0 346.9 3.2 -3.2 re
+f
+169.9 346.9 3.2 -3.2 re
+f
+82.0 343.7 3.2 -3.2 re
+f
+88.3 343.7 3.2 -3.2 re
+f
+91.4 343.7 3.2 -3.2 re
+f
+94.6 343.7 3.2 -3.2 re
+f
+100.8 343.7 3.2 -3.2 re
+f
+107.1 343.7 3.2 -3.2 re
+f
+110.2 343.7 3.2 -3.2 re
+f
+113.4 343.7 3.2 -3.2 re
+f
+122.8 343.7 3.2 -3.2 re
+f
+125.9 343.7 3.2 -3.2 re
+f
+129.1 343.7 3.2 -3.2 re
+f
+132.2 343.7 3.2 -3.2 re
+f
+138.5 343.7 3.2 -3.2 re
+f
+141.6 343.7 3.2 -3.2 re
+f
+144.8 343.7 3.2 -3.2 re
+f
+151.0 343.7 3.2 -3.2 re
+f
+157.3 343.7 3.2 -3.2 re
+f
+160.4 343.7 3.2 -3.2 re
+f
+163.6 343.7 3.2 -3.2 re
+f
+169.9 343.7 3.2 -3.2 re
+f
+82.0 340.6 3.2 -3.2 re
+f
+88.3 340.6 3.2 -3.2 re
+f
+91.4 340.6 3.2 -3.2 re
+f
+94.6 340.6 3.2 -3.2 re
+f
+100.8 340.6 3.2 -3.2 re
+f
+116.5 340.6 3.2 -3.2 re
+f
+119.7 340.6 3.2 -3.2 re
+f
+122.8 340.6 3.2 -3.2 re
+f
+129.1 340.6 3.2 -3.2 re
+f
+135.3 340.6 3.2 -3.2 re
+f
+141.6 340.6 3.2 -3.2 re
+f
+144.8 340.6 3.2 -3.2 re
+f
+151.0 340.6 3.2 -3.2 re
+f
+157.3 340.6 3.2 -3.2 re
+f
+160.4 340.6 3.2 -3.2 re
+f
+163.6 340.6 3.2 -3.2 re
+f
+169.9 340.6 3.2 -3.2 re
+f
+82.0 337.4 3.2 -3.2 re
+f
+88.3 337.4 3.2 -3.2 re
+f
+91.4 337.4 3.2 -3.2 re
+f
+94.6 337.4 3.2 -3.2 re
+f
+100.8 337.4 3.2 -3.2 re
+f
+107.1 337.4 3.2 -3.2 re
+f
+110.2 337.4 3.2 -3.2 re
+f
+116.5 337.4 3.2 -3.2 re
+f
+119.7 337.4 3.2 -3.2 re
+f
+122.8 337.4 3.2 -3.2 re
+f
+125.9 337.4 3.2 -3.2 re
+f
+129.1 337.4 3.2 -3.2 re
+f
+132.2 337.4 3.2 -3.2 re
+f
+135.3 337.4 3.2 -3.2 re
+f
+138.5 337.4 3.2 -3.2 re
+f
+141.6 337.4 3.2 -3.2 re
+f
+151.0 337.4 3.2 -3.2 re
+f
+157.3 337.4 3.2 -3.2 re
+f
+160.4 337.4 3.2 -3.2 re
+f
+163.6 337.4 3.2 -3.2 re
+f
+169.9 337.4 3.2 -3.2 re
+f
+82.0 334.3 3.2 -3.2 re
+f
+100.8 334.3 3.2 -3.2 re
+f
+122.8 334.3 3.2 -3.2 re
+f
+138.5 334.3 3.2 -3.2 re
+f
+151.0 334.3 3.2 -3.2 re
+f
+169.9 334.3 3.2 -3.2 re
+f
+82.0 331.2 3.2 -3.2 re
+f
+85.1 331.2 3.2 -3.2 re
+f
+88.3 331.2 3.2 -3.2 re
+f
+91.4 331.2 3.2 -3.2 re
+f
+94.6 331.2 3.2 -3.2 re
+f
+97.7 331.2 3.2 -3.2 re
+f
+100.8 331.2 3.2 -3.2 re
+f
+107.1 331.2 3.2 -3.2 re
+f
+113.4 331.2 3.2 -3.2 re
+f
+119.7 331.2 3.2 -3.2 re
+f
+125.9 331.2 3.2 -3.2 re
+f
+132.2 331.2 3.2 -3.2 re
+f
+138.5 331.2 3.2 -3.2 re
+f
+144.8 331.2 3.2 -3.2 re
+f
+151.0 331.2 3.2 -3.2 re
+f
+154.2 331.2 3.2 -3.2 re
+f
+157.3 331.2 3.2 -3.2 re
+f
+160.4 331.2 3.2 -3.2 re
+f
+163.6 331.2 3.2 -3.2 re
+f
+166.7 331.2 3.2 -3.2 re
+f
+169.9 331.2 3.2 -3.2 re
+f
+113.4 328.0 3.2 -3.2 re
+f
+116.5 328.0 3.2 -3.2 re
+f
+119.7 328.0 3.2 -3.2 re
+f
+122.8 328.0 3.2 -3.2 re
+f
+125.9 328.0 3.2 -3.2 re
+f
+129.1 328.0 3.2 -3.2 re
+f
+138.5 328.0 3.2 -3.2 re
+f
+82.0 324.9 3.2 -3.2 re
+f
+91.4 324.9 3.2 -3.2 re
+f
+94.6 324.9 3.2 -3.2 re
+f
+97.7 324.9 3.2 -3.2 re
+f
+100.8 324.9 3.2 -3.2 re
+f
+104.0 324.9 3.2 -3.2 re
+f
+107.1 324.9 3.2 -3.2 re
+f
+110.2 324.9 3.2 -3.2 re
+f
+113.4 324.9 3.2 -3.2 re
+f
+119.7 324.9 3.2 -3.2 re
+f
+122.8 324.9 3.2 -3.2 re
+f
+125.9 324.9 3.2 -3.2 re
+f
+132.2 324.9 3.2 -3.2 re
+f
+141.6 324.9 3.2 -3.2 re
+f
+147.9 324.9 3.2 -3.2 re
+f
+157.3 324.9 3.2 -3.2 re
+f
+163.6 324.9 3.2 -3.2 re
+f
+166.7 324.9 3.2 -3.2 re
+f
+169.9 324.9 3.2 -3.2 re
+f
+82.0 321.8 3.2 -3.2 re
+f
+85.1 321.8 3.2 -3.2 re
+f
+88.3 321.8 3.2 -3.2 re
+f
+94.6 321.8 3.2 -3.2 re
+f
+107.1 321.8 3.2 -3.2 re
+f
+113.4 321.8 3.2 -3.2 re
+f
+129.1 321.8 3.2 -3.2 re
+f
+135.3 321.8 3.2 -3.2 re
+f
+154.2 321.8 3.2 -3.2 re
+f
+157.3 321.8 3.2 -3.2 re
+f
+163.6 321.8 3.2 -3.2 re
+f
+82.0 318.6 3.2 -3.2 re
+f
+88.3 318.6 3.2 -3.2 re
+f
+94.6 318.6 3.2 -3.2 re
+f
+100.8 318.6 3.2 -3.2 re
+f
+116.5 318.6 3.2 -3.2 re
+f
+119.7 318.6 3.2 -3.2 re
+f
+129.1 318.6 3.2 -3.2 re
+f
+135.3 318.6 3.2 -3.2 re
+f
+138.5 318.6 3.2 -3.2 re
+f
+151.0 318.6 3.2 -3.2 re
+f
+160.4 318.6 3.2 -3.2 re
+f
+91.4 315.5 3.2 -3.2 re
+f
+94.6 315.5 3.2 -3.2 re
+f
+104.0 315.5 3.2 -3.2 re
+f
+107.1 315.5 3.2 -3.2 re
+f
+110.2 315.5 3.2 -3.2 re
+f
+113.4 315.5 3.2 -3.2 re
+f
+116.5 315.5 3.2 -3.2 re
+f
+129.1 315.5 3.2 -3.2 re
+f
+132.2 315.5 3.2 -3.2 re
+f
+135.3 315.5 3.2 -3.2 re
+f
+141.6 315.5 3.2 -3.2 re
+f
+147.9 315.5 3.2 -3.2 re
+f
+157.3 315.5 3.2 -3.2 re
+f
+160.4 315.5 3.2 -3.2 re
+f
+169.9 315.5 3.2 -3.2 re
+f
+85.1 312.3 3.2 -3.2 re
+f
+88.3 312.3 3.2 -3.2 re
+f
+100.8 312.3 3.2 -3.2 re
+f
+119.7 312.3 3.2 -3.2 re
+f
+129.1 312.3 3.2 -3.2 re
+f
+132.2 312.3 3.2 -3.2 re
+f
+138.5 312.3 3.2 -3.2 re
+f
+144.8 312.3 3.2 -3.2 re
+f
+151.0 312.3 3.2 -3.2 re
+f
+157.3 312.3 3.2 -3.2 re
+f
+160.4 312.3 3.2 -3.2 re
+f
+169.9 312.3 3.2 -3.2 re
+f
+88.3 309.2 3.2 -3.2 re
+f
+91.4 309.2 3.2 -3.2 re
+f
+97.7 309.2 3.2 -3.2 re
+f
+110.2 309.2 3.2 -3.2 re
+f
+116.5 309.2 3.2 -3.2 re
+f
+119.7 309.2 3.2 -3.2 re
+f
+122.8 309.2 3.2 -3.2 re
+f
+132.2 309.2 3.2 -3.2 re
+f
+135.3 309.2 3.2 -3.2 re
+f
+141.6 309.2 3.2 -3.2 re
+f
+151.0 309.2 3.2 -3.2 re
+f
+154.2 309.2 3.2 -3.2 re
+f
+157.3 309.2 3.2 -3.2 re
+f
+166.7 309.2 3.2 -3.2 re
+f
+169.9 309.2 3.2 -3.2 re
+f
+88.3 306.1 3.2 -3.2 re
+f
+91.4 306.1 3.2 -3.2 re
+f
+97.7 306.1 3.2 -3.2 re
+f
+100.8 306.1 3.2 -3.2 re
+f
+107.1 306.1 3.2 -3.2 re
+f
+113.4 306.1 3.2 -3.2 re
+f
+122.8 306.1 3.2 -3.2 re
+f
+129.1 306.1 3.2 -3.2 re
+f
+138.5 306.1 3.2 -3.2 re
+f
+141.6 306.1 3.2 -3.2 re
+f
+144.8 306.1 3.2 -3.2 re
+f
+151.0 306.1 3.2 -3.2 re
+f
+154.2 306.1 3.2 -3.2 re
+f
+157.3 306.1 3.2 -3.2 re
+f
+163.6 306.1 3.2 -3.2 re
+f
+169.9 306.1 3.2 -3.2 re
+f
+88.3 302.9 3.2 -3.2 re
+f
+91.4 302.9 3.2 -3.2 re
+f
+104.0 302.9 3.2 -3.2 re
+f
+110.2 302.9 3.2 -3.2 re
+f
+113.4 302.9 3.2 -3.2 re
+f
+125.9 302.9 3.2 -3.2 re
+f
+129.1 302.9 3.2 -3.2 re
+f
+132.2 302.9 3.2 -3.2 re
+f
+138.5 302.9 3.2 -3.2 re
+f
+144.8 302.9 3.2 -3.2 re
+f
+154.2 302.9 3.2 -3.2 re
+f
+157.3 302.9 3.2 -3.2 re
+f
+160.4 302.9 3.2 -3.2 re
+f
+163.6 302.9 3.2 -3.2 re
+f
+166.7 302.9 3.2 -3.2 re
+f
+169.9 302.9 3.2 -3.2 re
+f
+88.3 299.8 3.2 -3.2 re
+f
+94.6 299.8 3.2 -3.2 re
+f
+100.8 299.8 3.2 -3.2 re
+f
+107.1 299.8 3.2 -3.2 re
+f
+110.2 299.8 3.2 -3.2 re
+f
+129.1 299.8 3.2 -3.2 re
+f
+132.2 299.8 3.2 -3.2 re
+f
+138.5 299.8 3.2 -3.2 re
+f
+141.6 299.8 3.2 -3.2 re
+f
+144.8 299.8 3.2 -3.2 re
+f
+154.2 299.8 3.2 -3.2 re
+f
+157.3 299.8 3.2 -3.2 re
+f
+166.7 299.8 3.2 -3.2 re
+f
+169.9 299.8 3.2 -3.2 re
+f
+82.0 296.7 3.2 -3.2 re
+f
+85.1 296.7 3.2 -3.2 re
+f
+88.3 296.7 3.2 -3.2 re
+f
+94.6 296.7 3.2 -3.2 re
+f
+104.0 296.7 3.2 -3.2 re
+f
+107.1 296.7 3.2 -3.2 re
+f
+110.2 296.7 3.2 -3.2 re
+f
+113.4 296.7 3.2 -3.2 re
+f
+119.7 296.7 3.2 -3.2 re
+f
+135.3 296.7 3.2 -3.2 re
+f
+141.6 296.7 3.2 -3.2 re
+f
+144.8 296.7 3.2 -3.2 re
+f
+151.0 296.7 3.2 -3.2 re
+f
+157.3 296.7 3.2 -3.2 re
+f
+163.6 296.7 3.2 -3.2 re
+f
+82.0 293.5 3.2 -3.2 re
+f
+85.1 293.5 3.2 -3.2 re
+f
+91.4 293.5 3.2 -3.2 re
+f
+94.6 293.5 3.2 -3.2 re
+f
+100.8 293.5 3.2 -3.2 re
+f
+113.4 293.5 3.2 -3.2 re
+f
+119.7 293.5 3.2 -3.2 re
+f
+122.8 293.5 3.2 -3.2 re
+f
+129.1 293.5 3.2 -3.2 re
+f
+132.2 293.5 3.2 -3.2 re
+f
+138.5 293.5 3.2 -3.2 re
+f
+141.6 293.5 3.2 -3.2 re
+f
+154.2 293.5 3.2 -3.2 re
+f
+157.3 293.5 3.2 -3.2 re
+f
+163.6 293.5 3.2 -3.2 re
+f
+169.9 293.5 3.2 -3.2 re
+f
+82.0 290.4 3.2 -3.2 re
+f
+85.1 290.4 3.2 -3.2 re
+f
+88.3 290.4 3.2 -3.2 re
+f
+104.0 290.4 3.2 -3.2 re
+f
+113.4 290.4 3.2 -3.2 re
+f
+122.8 290.4 3.2 -3.2 re
+f
+138.5 290.4 3.2 -3.2 re
+f
+141.6 290.4 3.2 -3.2 re
+f
+144.8 290.4 3.2 -3.2 re
+f
+157.3 290.4 3.2 -3.2 re
+f
+163.6 290.4 3.2 -3.2 re
+f
+169.9 290.4 3.2 -3.2 re
+f
+82.0 287.2 3.2 -3.2 re
+f
+85.1 287.2 3.2 -3.2 re
+f
+88.3 287.2 3.2 -3.2 re
+f
+94.6 287.2 3.2 -3.2 re
+f
+97.7 287.2 3.2 -3.2 re
+f
+100.8 287.2 3.2 -3.2 re
+f
+104.0 287.2 3.2 -3.2 re
+f
+107.1 287.2 3.2 -3.2 re
+f
+110.2 287.2 3.2 -3.2 re
+f
+122.8 287.2 3.2 -3.2 re
+f
+125.9 287.2 3.2 -3.2 re
+f
+132.2 287.2 3.2 -3.2 re
+f
+144.8 287.2 3.2 -3.2 re
+f
+147.9 287.2 3.2 -3.2 re
+f
+151.0 287.2 3.2 -3.2 re
+f
+154.2 287.2 3.2 -3.2 re
+f
+157.3 287.2 3.2 -3.2 re
+f
+160.4 287.2 3.2 -3.2 re
+f
+163.6 287.2 3.2 -3.2 re
+f
+166.7 287.2 3.2 -3.2 re
+f
+169.9 287.2 3.2 -3.2 re
+f
+107.1 284.1 3.2 -3.2 re
+f
+113.4 284.1 3.2 -3.2 re
+f
+119.7 284.1 3.2 -3.2 re
+f
+125.9 284.1 3.2 -3.2 re
+f
+138.5 284.1 3.2 -3.2 re
+f
+144.8 284.1 3.2 -3.2 re
+f
+157.3 284.1 3.2 -3.2 re
+f
+160.4 284.1 3.2 -3.2 re
+f
+82.0 281.0 3.2 -3.2 re
+f
+85.1 281.0 3.2 -3.2 re
+f
+88.3 281.0 3.2 -3.2 re
+f
+91.4 281.0 3.2 -3.2 re
+f
+94.6 281.0 3.2 -3.2 re
+f
+97.7 281.0 3.2 -3.2 re
+f
+100.8 281.0 3.2 -3.2 re
+f
+107.1 281.0 3.2 -3.2 re
+f
+110.2 281.0 3.2 -3.2 re
+f
+113.4 281.0 3.2 -3.2 re
+f
+122.8 281.0 3.2 -3.2 re
+f
+125.9 281.0 3.2 -3.2 re
+f
+129.1 281.0 3.2 -3.2 re
+f
+135.3 281.0 3.2 -3.2 re
+f
+141.6 281.0 3.2 -3.2 re
+f
+144.8 281.0 3.2 -3.2 re
+f
+151.0 281.0 3.2 -3.2 re
+f
+157.3 281.0 3.2 -3.2 re
+f
+82.0 277.8 3.2 -3.2 re
+f
+100.8 277.8 3.2 -3.2 re
+f
+107.1 277.8 3.2 -3.2 re
+f
+110.2 277.8 3.2 -3.2 re
+f
+119.7 277.8 3.2 -3.2 re
+f
+125.9 277.8 3.2 -3.2 re
+f
+129.1 277.8 3.2 -3.2 re
+f
+135.3 277.8 3.2 -3.2 re
+f
+138.5 277.8 3.2 -3.2 re
+f
+141.6 277.8 3.2 -3.2 re
+f
+144.8 277.8 3.2 -3.2 re
+f
+157.3 277.8 3.2 -3.2 re
+f
+82.0 274.7 3.2 -3.2 re
+f
+88.3 274.7 3.2 -3.2 re
+f
+91.4 274.7 3.2 -3.2 re
+f
+94.6 274.7 3.2 -3.2 re
+f
+100.8 274.7 3.2 -3.2 re
+f
+107.1 274.7 3.2 -3.2 re
+f
+116.5 274.7 3.2 -3.2 re
+f
+119.7 274.7 3.2 -3.2 re
+f
+122.8 274.7 3.2 -3.2 re
+f
+125.9 274.7 3.2 -3.2 re
+f
+132.2 274.7 3.2 -3.2 re
+f
+135.3 274.7 3.2 -3.2 re
+f
+141.6 274.7 3.2 -3.2 re
+f
+144.8 274.7 3.2 -3.2 re
+f
+147.9 274.7 3.2 -3.2 re
+f
+151.0 274.7 3.2 -3.2 re
+f
+154.2 274.7 3.2 -3.2 re
+f
+157.3 274.7 3.2 -3.2 re
+f
+166.7 274.7 3.2 -3.2 re
+f
+82.0 271.6 3.2 -3.2 re
+f
+88.3 271.6 3.2 -3.2 re
+f
+91.4 271.6 3.2 -3.2 re
+f
+94.6 271.6 3.2 -3.2 re
+f
+100.8 271.6 3.2 -3.2 re
+f
+107.1 271.6 3.2 -3.2 re
+f
+110.2 271.6 3.2 -3.2 re
+f
+113.4 271.6 3.2 -3.2 re
+f
+119.7 271.6 3.2 -3.2 re
+f
+125.9 271.6 3.2 -3.2 re
+f
+132.2 271.6 3.2 -3.2 re
+f
+144.8 271.6 3.2 -3.2 re
+f
+147.9 271.6 3.2 -3.2 re
+f
+154.2 271.6 3.2 -3.2 re
+f
+157.3 271.6 3.2 -3.2 re
+f
+160.4 271.6 3.2 -3.2 re
+f
+169.9 271.6 3.2 -3.2 re
+f
+82.0 268.4 3.2 -3.2 re
+f
+88.3 268.4 3.2 -3.2 re
+f
+91.4 268.4 3.2 -3.2 re
+f
+94.6 268.4 3.2 -3.2 re
+f
+100.8 268.4 3.2 -3.2 re
+f
+110.2 268.4 3.2 -3.2 re
+f
+116.5 268.4 3.2 -3.2 re
+f
+119.7 268.4 3.2 -3.2 re
+f
+122.8 268.4 3.2 -3.2 re
+f
+125.9 268.4 3.2 -3.2 re
+f
+129.1 268.4 3.2 -3.2 re
+f
+132.2 268.4 3.2 -3.2 re
+f
+135.3 268.4 3.2 -3.2 re
+f
+141.6 268.4 3.2 -3.2 re
+f
+147.9 268.4 3.2 -3.2 re
+f
+154.2 268.4 3.2 -3.2 re
+f
+157.3 268.4 3.2 -3.2 re
+f
+160.4 268.4 3.2 -3.2 re
+f
+163.6 268.4 3.2 -3.2 re
+f
+166.7 268.4 3.2 -3.2 re
+f
+169.9 268.4 3.2 -3.2 re
+f
+82.0 265.3 3.2 -3.2 re
+f
+100.8 265.3 3.2 -3.2 re
+f
+116.5 265.3 3.2 -3.2 re
+f
+122.8 265.3 3.2 -3.2 re
+f
+132.2 265.3 3.2 -3.2 re
+f
+138.5 265.3 3.2 -3.2 re
+f
+141.6 265.3 3.2 -3.2 re
+f
+147.9 265.3 3.2 -3.2 re
+f
+151.0 265.3 3.2 -3.2 re
+f
+154.2 265.3 3.2 -3.2 re
+f
+163.6 265.3 3.2 -3.2 re
+f
+169.9 265.3 3.2 -3.2 re
+f
+82.0 262.1 3.2 -3.2 re
+f
+85.1 262.1 3.2 -3.2 re
+f
+88.3 262.1 3.2 -3.2 re
+f
+91.4 262.1 3.2 -3.2 re
+f
+94.6 262.1 3.2 -3.2 re
+f
+97.7 262.1 3.2 -3.2 re
+f
+100.8 262.1 3.2 -3.2 re
+f
+107.1 262.1 3.2 -3.2 re
+f
+110.2 262.1 3.2 -3.2 re
+f
+113.4 262.1 3.2 -3.2 re
+f
+116.5 262.1 3.2 -3.2 re
+f
+119.7 262.1 3.2 -3.2 re
+f
+132.2 262.1 3.2 -3.2 re
+f
+135.3 262.1 3.2 -3.2 re
+f
+141.6 262.1 3.2 -3.2 re
+f
+144.8 262.1 3.2 -3.2 re
+f
+147.9 262.1 3.2 -3.2 re
+f
+151.0 262.1 3.2 -3.2 re
+f
+154.2 262.1 3.2 -3.2 re
+f
+157.3 262.1 3.2 -3.2 re
+f
+160.4 262.1 3.2 -3.2 re
+f
+BT
+1 0 0 1 72 243 Tm
+/F4 12 Tf
+(3PEWofLfqiiKFmHbY) Tj
+ET
+BT
+1 0 0 1 72 230 Tm
+/F4 12 Tf
+(82DVXNHSBkXwjTpEC) Tj
+ET
+345.0 643.0 3.3 -3.3 re
+f
+348.2 643.0 3.3 -3.3 re
+f
+351.3 643.0 3.3 -3.3 re
+f
+354.5 643.0 3.3 -3.3 re
+f
+357.6 643.0 3.3 -3.3 re
+f
+360.8 643.0 3.3 -3.3 re
+f
+363.9 643.0 3.3 -3.3 re
+f
+370.2 643.0 3.3 -3.3 re
+f
+376.5 643.0 3.3 -3.3 re
+f
+382.8 643.0 3.3 -3.3 re
+f
+386.0 643.0 3.3 -3.3 re
+f
+389.1 643.0 3.3 -3.3 re
+f
+392.3 643.0 3.3 -3.3 re
+f
+398.6 643.0 3.3 -3.3 re
+f
+404.9 643.0 3.3 -3.3 re
+f
+411.2 643.0 3.3 -3.3 re
+f
+414.3 643.0 3.3 -3.3 re
+f
+420.6 643.0 3.3 -3.3 re
+f
+426.9 643.0 3.3 -3.3 re
+f
+430.1 643.0 3.3 -3.3 re
+f
+433.2 643.0 3.3 -3.3 re
+f
+436.4 643.0 3.3 -3.3 re
+f
+439.5 643.0 3.3 -3.3 re
+f
+442.7 643.0 3.3 -3.3 re
+f
+445.8 643.0 3.3 -3.3 re
+f
+345.0 639.8 3.3 -3.3 re
+f
+363.9 639.8 3.3 -3.3 re
+f
+370.2 639.8 3.3 -3.3 re
+f
+376.5 639.8 3.3 -3.3 re
+f
+379.7 639.8 3.3 -3.3 re
+f
+395.4 639.8 3.3 -3.3 re
+f
+401.7 639.8 3.3 -3.3 re
+f
+404.9 639.8 3.3 -3.3 re
+f
+411.2 639.8 3.3 -3.3 re
+f
+420.6 639.8 3.3 -3.3 re
+f
+426.9 639.8 3.3 -3.3 re
+f
+445.8 639.8 3.3 -3.3 re
+f
+345.0 636.7 3.3 -3.3 re
+f
+351.3 636.7 3.3 -3.3 re
+f
+354.5 636.7 3.3 -3.3 re
+f
+357.6 636.7 3.3 -3.3 re
+f
+363.9 636.7 3.3 -3.3 re
+f
+370.2 636.7 3.3 -3.3 re
+f
+376.5 636.7 3.3 -3.3 re
+f
+382.8 636.7 3.3 -3.3 re
+f
+386.0 636.7 3.3 -3.3 re
+f
+392.3 636.7 3.3 -3.3 re
+f
+408.0 636.7 3.3 -3.3 re
+f
+411.2 636.7 3.3 -3.3 re
+f
+426.9 636.7 3.3 -3.3 re
+f
+433.2 636.7 3.3 -3.3 re
+f
+436.4 636.7 3.3 -3.3 re
+f
+439.5 636.7 3.3 -3.3 re
+f
+445.8 636.7 3.3 -3.3 re
+f
+345.0 633.5 3.3 -3.3 re
+f
+351.3 633.5 3.3 -3.3 re
+f
+354.5 633.5 3.3 -3.3 re
+f
+357.6 633.5 3.3 -3.3 re
+f
+363.9 633.5 3.3 -3.3 re
+f
+376.5 633.5 3.3 -3.3 re
+f
+382.8 633.5 3.3 -3.3 re
+f
+386.0 633.5 3.3 -3.3 re
+f
+408.0 633.5 3.3 -3.3 re
+f
+411.2 633.5 3.3 -3.3 re
+f
+414.3 633.5 3.3 -3.3 re
+f
+420.6 633.5 3.3 -3.3 re
+f
+426.9 633.5 3.3 -3.3 re
+f
+433.2 633.5 3.3 -3.3 re
+f
+436.4 633.5 3.3 -3.3 re
+f
+439.5 633.5 3.3 -3.3 re
+f
+445.8 633.5 3.3 -3.3 re
+f
+345.0 630.4 3.3 -3.3 re
+f
+351.3 630.4 3.3 -3.3 re
+f
+354.5 630.4 3.3 -3.3 re
+f
+357.6 630.4 3.3 -3.3 re
+f
+363.9 630.4 3.3 -3.3 re
+f
+370.2 630.4 3.3 -3.3 re
+f
+373.4 630.4 3.3 -3.3 re
+f
+386.0 630.4 3.3 -3.3 re
+f
+414.3 630.4 3.3 -3.3 re
+f
+417.5 630.4 3.3 -3.3 re
+f
+426.9 630.4 3.3 -3.3 re
+f
+433.2 630.4 3.3 -3.3 re
+f
+436.4 630.4 3.3 -3.3 re
+f
+439.5 630.4 3.3 -3.3 re
+f
+445.8 630.4 3.3 -3.3 re
+f
+345.0 627.2 3.3 -3.3 re
+f
+363.9 627.2 3.3 -3.3 re
+f
+373.4 627.2 3.3 -3.3 re
+f
+386.0 627.2 3.3 -3.3 re
+f
+389.1 627.2 3.3 -3.3 re
+f
+401.7 627.2 3.3 -3.3 re
+f
+417.5 627.2 3.3 -3.3 re
+f
+420.6 627.2 3.3 -3.3 re
+f
+426.9 627.2 3.3 -3.3 re
+f
+445.8 627.2 3.3 -3.3 re
+f
+345.0 624.1 3.3 -3.3 re
+f
+348.2 624.1 3.3 -3.3 re
+f
+351.3 624.1 3.3 -3.3 re
+f
+354.5 624.1 3.3 -3.3 re
+f
+357.6 624.1 3.3 -3.3 re
+f
+360.8 624.1 3.3 -3.3 re
+f
+363.9 624.1 3.3 -3.3 re
+f
+370.2 624.1 3.3 -3.3 re
+f
+376.5 624.1 3.3 -3.3 re
+f
+382.8 624.1 3.3 -3.3 re
+f
+389.1 624.1 3.3 -3.3 re
+f
+395.4 624.1 3.3 -3.3 re
+f
+401.7 624.1 3.3 -3.3 re
+f
+408.0 624.1 3.3 -3.3 re
+f
+414.3 624.1 3.3 -3.3 re
+f
+420.6 624.1 3.3 -3.3 re
+f
+426.9 624.1 3.3 -3.3 re
+f
+430.1 624.1 3.3 -3.3 re
+f
+433.2 624.1 3.3 -3.3 re
+f
+436.4 624.1 3.3 -3.3 re
+f
+439.5 624.1 3.3 -3.3 re
+f
+442.7 624.1 3.3 -3.3 re
+f
+445.8 624.1 3.3 -3.3 re
+f
+373.4 620.9 3.3 -3.3 re
+f
+376.5 620.9 3.3 -3.3 re
+f
+379.7 620.9 3.3 -3.3 re
+f
+386.0 620.9 3.3 -3.3 re
+f
+392.3 620.9 3.3 -3.3 re
+f
+395.4 620.9 3.3 -3.3 re
+f
+401.7 620.9 3.3 -3.3 re
+f
+414.3 620.9 3.3 -3.3 re
+f
+420.6 620.9 3.3 -3.3 re
+f
+345.0 617.8 3.3 -3.3 re
+f
+354.5 617.8 3.3 -3.3 re
+f
+357.6 617.8 3.3 -3.3 re
+f
+360.8 617.8 3.3 -3.3 re
+f
+363.9 617.8 3.3 -3.3 re
+f
+367.1 617.8 3.3 -3.3 re
+f
+370.2 617.8 3.3 -3.3 re
+f
+373.4 617.8 3.3 -3.3 re
+f
+379.7 617.8 3.3 -3.3 re
+f
+382.8 617.8 3.3 -3.3 re
+f
+389.1 617.8 3.3 -3.3 re
+f
+395.4 617.8 3.3 -3.3 re
+f
+404.9 617.8 3.3 -3.3 re
+f
+408.0 617.8 3.3 -3.3 re
+f
+411.2 617.8 3.3 -3.3 re
+f
+417.5 617.8 3.3 -3.3 re
+f
+420.6 617.8 3.3 -3.3 re
+f
+423.8 617.8 3.3 -3.3 re
+f
+433.2 617.8 3.3 -3.3 re
+f
+439.5 617.8 3.3 -3.3 re
+f
+442.7 617.8 3.3 -3.3 re
+f
+445.8 617.8 3.3 -3.3 re
+f
+345.0 614.6 3.3 -3.3 re
+f
+354.5 614.6 3.3 -3.3 re
+f
+360.8 614.6 3.3 -3.3 re
+f
+370.2 614.6 3.3 -3.3 re
+f
+373.4 614.6 3.3 -3.3 re
+f
+379.7 614.6 3.3 -3.3 re
+f
+382.8 614.6 3.3 -3.3 re
+f
+398.6 614.6 3.3 -3.3 re
+f
+401.7 614.6 3.3 -3.3 re
+f
+404.9 614.6 3.3 -3.3 re
+f
+417.5 614.6 3.3 -3.3 re
+f
+426.9 614.6 3.3 -3.3 re
+f
+430.1 614.6 3.3 -3.3 re
+f
+433.2 614.6 3.3 -3.3 re
+f
+436.4 614.6 3.3 -3.3 re
+f
+439.5 614.6 3.3 -3.3 re
+f
+442.7 614.6 3.3 -3.3 re
+f
+348.2 611.5 3.3 -3.3 re
+f
+357.6 611.5 3.3 -3.3 re
+f
+360.8 611.5 3.3 -3.3 re
+f
+363.9 611.5 3.3 -3.3 re
+f
+370.2 611.5 3.3 -3.3 re
+f
+373.4 611.5 3.3 -3.3 re
+f
+379.7 611.5 3.3 -3.3 re
+f
+386.0 611.5 3.3 -3.3 re
+f
+392.3 611.5 3.3 -3.3 re
+f
+395.4 611.5 3.3 -3.3 re
+f
+398.6 611.5 3.3 -3.3 re
+f
+401.7 611.5 3.3 -3.3 re
+f
+408.0 611.5 3.3 -3.3 re
+f
+411.2 611.5 3.3 -3.3 re
+f
+414.3 611.5 3.3 -3.3 re
+f
+417.5 611.5 3.3 -3.3 re
+f
+426.9 611.5 3.3 -3.3 re
+f
+439.5 611.5 3.3 -3.3 re
+f
+442.7 611.5 3.3 -3.3 re
+f
+445.8 611.5 3.3 -3.3 re
+f
+345.0 608.3 3.3 -3.3 re
+f
+348.2 608.3 3.3 -3.3 re
+f
+351.3 608.3 3.3 -3.3 re
+f
+360.8 608.3 3.3 -3.3 re
+f
+367.1 608.3 3.3 -3.3 re
+f
+370.2 608.3 3.3 -3.3 re
+f
+373.4 608.3 3.3 -3.3 re
+f
+376.5 608.3 3.3 -3.3 re
+f
+379.7 608.3 3.3 -3.3 re
+f
+382.8 608.3 3.3 -3.3 re
+f
+389.1 608.3 3.3 -3.3 re
+f
+395.4 608.3 3.3 -3.3 re
+f
+398.6 608.3 3.3 -3.3 re
+f
+404.9 608.3 3.3 -3.3 re
+f
+417.5 608.3 3.3 -3.3 re
+f
+426.9 608.3 3.3 -3.3 re
+f
+439.5 608.3 3.3 -3.3 re
+f
+442.7 608.3 3.3 -3.3 re
+f
+351.3 605.2 3.3 -3.3 re
+f
+357.6 605.2 3.3 -3.3 re
+f
+363.9 605.2 3.3 -3.3 re
+f
+367.1 605.2 3.3 -3.3 re
+f
+373.4 605.2 3.3 -3.3 re
+f
+376.5 605.2 3.3 -3.3 re
+f
+382.8 605.2 3.3 -3.3 re
+f
+386.0 605.2 3.3 -3.3 re
+f
+389.1 605.2 3.3 -3.3 re
+f
+398.6 605.2 3.3 -3.3 re
+f
+404.9 605.2 3.3 -3.3 re
+f
+411.2 605.2 3.3 -3.3 re
+f
+420.6 605.2 3.3 -3.3 re
+f
+426.9 605.2 3.3 -3.3 re
+f
+430.1 605.2 3.3 -3.3 re
+f
+433.2 605.2 3.3 -3.3 re
+f
+436.4 605.2 3.3 -3.3 re
+f
+445.8 605.2 3.3 -3.3 re
+f
+348.2 602.0 3.3 -3.3 re
+f
+351.3 602.0 3.3 -3.3 re
+f
+354.5 602.0 3.3 -3.3 re
+f
+357.6 602.0 3.3 -3.3 re
+f
+386.0 602.0 3.3 -3.3 re
+f
+389.1 602.0 3.3 -3.3 re
+f
+395.4 602.0 3.3 -3.3 re
+f
+401.7 602.0 3.3 -3.3 re
+f
+408.0 602.0 3.3 -3.3 re
+f
+423.8 602.0 3.3 -3.3 re
+f
+430.1 602.0 3.3 -3.3 re
+f
+442.7 602.0 3.3 -3.3 re
+f
+445.8 602.0 3.3 -3.3 re
+f
+345.0 598.9 3.3 -3.3 re
+f
+348.2 598.9 3.3 -3.3 re
+f
+363.9 598.9 3.3 -3.3 re
+f
+367.1 598.9 3.3 -3.3 re
+f
+370.2 598.9 3.3 -3.3 re
+f
+373.4 598.9 3.3 -3.3 re
+f
+376.5 598.9 3.3 -3.3 re
+f
+386.0 598.9 3.3 -3.3 re
+f
+389.1 598.9 3.3 -3.3 re
+f
+392.3 598.9 3.3 -3.3 re
+f
+395.4 598.9 3.3 -3.3 re
+f
+398.6 598.9 3.3 -3.3 re
+f
+401.7 598.9 3.3 -3.3 re
+f
+404.9 598.9 3.3 -3.3 re
+f
+411.2 598.9 3.3 -3.3 re
+f
+414.3 598.9 3.3 -3.3 re
+f
+423.8 598.9 3.3 -3.3 re
+f
+430.1 598.9 3.3 -3.3 re
+f
+436.4 598.9 3.3 -3.3 re
+f
+439.5 598.9 3.3 -3.3 re
+f
+345.0 595.7 3.3 -3.3 re
+f
+351.3 595.7 3.3 -3.3 re
+f
+357.6 595.7 3.3 -3.3 re
+f
+360.8 595.7 3.3 -3.3 re
+f
+370.2 595.7 3.3 -3.3 re
+f
+376.5 595.7 3.3 -3.3 re
+f
+379.7 595.7 3.3 -3.3 re
+f
+392.3 595.7 3.3 -3.3 re
+f
+404.9 595.7 3.3 -3.3 re
+f
+408.0 595.7 3.3 -3.3 re
+f
+423.8 595.7 3.3 -3.3 re
+f
+433.2 595.7 3.3 -3.3 re
+f
+436.4 595.7 3.3 -3.3 re
+f
+439.5 595.7 3.3 -3.3 re
+f
+445.8 595.7 3.3 -3.3 re
+f
+348.2 592.6 3.3 -3.3 re
+f
+351.3 592.6 3.3 -3.3 re
+f
+354.5 592.6 3.3 -3.3 re
+f
+363.9 592.6 3.3 -3.3 re
+f
+367.1 592.6 3.3 -3.3 re
+f
+370.2 592.6 3.3 -3.3 re
+f
+373.4 592.6 3.3 -3.3 re
+f
+379.7 592.6 3.3 -3.3 re
+f
+389.1 592.6 3.3 -3.3 re
+f
+392.3 592.6 3.3 -3.3 re
+f
+395.4 592.6 3.3 -3.3 re
+f
+401.7 592.6 3.3 -3.3 re
+f
+408.0 592.6 3.3 -3.3 re
+f
+414.3 592.6 3.3 -3.3 re
+f
+417.5 592.6 3.3 -3.3 re
+f
+420.6 592.6 3.3 -3.3 re
+f
+423.8 592.6 3.3 -3.3 re
+f
+426.9 592.6 3.3 -3.3 re
+f
+430.1 592.6 3.3 -3.3 re
+f
+436.4 592.6 3.3 -3.3 re
+f
+439.5 592.6 3.3 -3.3 re
+f
+345.0 589.4 3.3 -3.3 re
+f
+348.2 589.4 3.3 -3.3 re
+f
+357.6 589.4 3.3 -3.3 re
+f
+360.8 589.4 3.3 -3.3 re
+f
+373.4 589.4 3.3 -3.3 re
+f
+379.7 589.4 3.3 -3.3 re
+f
+382.8 589.4 3.3 -3.3 re
+f
+386.0 589.4 3.3 -3.3 re
+f
+392.3 589.4 3.3 -3.3 re
+f
+398.6 589.4 3.3 -3.3 re
+f
+404.9 589.4 3.3 -3.3 re
+f
+408.0 589.4 3.3 -3.3 re
+f
+420.6 589.4 3.3 -3.3 re
+f
+430.1 589.4 3.3 -3.3 re
+f
+433.2 589.4 3.3 -3.3 re
+f
+442.7 589.4 3.3 -3.3 re
+f
+445.8 589.4 3.3 -3.3 re
+f
+348.2 586.3 3.3 -3.3 re
+f
+360.8 586.3 3.3 -3.3 re
+f
+363.9 586.3 3.3 -3.3 re
+f
+367.1 586.3 3.3 -3.3 re
+f
+370.2 586.3 3.3 -3.3 re
+f
+379.7 586.3 3.3 -3.3 re
+f
+386.0 586.3 3.3 -3.3 re
+f
+392.3 586.3 3.3 -3.3 re
+f
+395.4 586.3 3.3 -3.3 re
+f
+401.7 586.3 3.3 -3.3 re
+f
+404.9 586.3 3.3 -3.3 re
+f
+414.3 586.3 3.3 -3.3 re
+f
+417.5 586.3 3.3 -3.3 re
+f
+420.6 586.3 3.3 -3.3 re
+f
+423.8 586.3 3.3 -3.3 re
+f
+426.9 586.3 3.3 -3.3 re
+f
+430.1 586.3 3.3 -3.3 re
+f
+433.2 586.3 3.3 -3.3 re
+f
+436.4 586.3 3.3 -3.3 re
+f
+442.7 586.3 3.3 -3.3 re
+f
+445.8 586.3 3.3 -3.3 re
+f
+345.0 583.1 3.3 -3.3 re
+f
+373.4 583.1 3.3 -3.3 re
+f
+376.5 583.1 3.3 -3.3 re
+f
+382.8 583.1 3.3 -3.3 re
+f
+386.0 583.1 3.3 -3.3 re
+f
+389.1 583.1 3.3 -3.3 re
+f
+392.3 583.1 3.3 -3.3 re
+f
+395.4 583.1 3.3 -3.3 re
+f
+401.7 583.1 3.3 -3.3 re
+f
+404.9 583.1 3.3 -3.3 re
+f
+408.0 583.1 3.3 -3.3 re
+f
+417.5 583.1 3.3 -3.3 re
+f
+420.6 583.1 3.3 -3.3 re
+f
+433.2 583.1 3.3 -3.3 re
+f
+436.4 583.1 3.3 -3.3 re
+f
+439.5 583.1 3.3 -3.3 re
+f
+345.0 580.0 3.3 -3.3 re
+f
+348.2 580.0 3.3 -3.3 re
+f
+351.3 580.0 3.3 -3.3 re
+f
+354.5 580.0 3.3 -3.3 re
+f
+363.9 580.0 3.3 -3.3 re
+f
+367.1 580.0 3.3 -3.3 re
+f
+376.5 580.0 3.3 -3.3 re
+f
+379.7 580.0 3.3 -3.3 re
+f
+389.1 580.0 3.3 -3.3 re
+f
+392.3 580.0 3.3 -3.3 re
+f
+398.6 580.0 3.3 -3.3 re
+f
+401.7 580.0 3.3 -3.3 re
+f
+417.5 580.0 3.3 -3.3 re
+f
+442.7 580.0 3.3 -3.3 re
+f
+345.0 576.8 3.3 -3.3 re
+f
+348.2 576.8 3.3 -3.3 re
+f
+351.3 576.8 3.3 -3.3 re
+f
+354.5 576.8 3.3 -3.3 re
+f
+360.8 576.8 3.3 -3.3 re
+f
+367.1 576.8 3.3 -3.3 re
+f
+373.4 576.8 3.3 -3.3 re
+f
+379.7 576.8 3.3 -3.3 re
+f
+382.8 576.8 3.3 -3.3 re
+f
+386.0 576.8 3.3 -3.3 re
+f
+389.1 576.8 3.3 -3.3 re
+f
+404.9 576.8 3.3 -3.3 re
+f
+411.2 576.8 3.3 -3.3 re
+f
+414.3 576.8 3.3 -3.3 re
+f
+417.5 576.8 3.3 -3.3 re
+f
+420.6 576.8 3.3 -3.3 re
+f
+423.8 576.8 3.3 -3.3 re
+f
+426.9 576.8 3.3 -3.3 re
+f
+433.2 576.8 3.3 -3.3 re
+f
+436.4 576.8 3.3 -3.3 re
+f
+439.5 576.8 3.3 -3.3 re
+f
+442.7 576.8 3.3 -3.3 re
+f
+345.0 573.7 3.3 -3.3 re
+f
+357.6 573.7 3.3 -3.3 re
+f
+363.9 573.7 3.3 -3.3 re
+f
+379.7 573.7 3.3 -3.3 re
+f
+386.0 573.7 3.3 -3.3 re
+f
+392.3 573.7 3.3 -3.3 re
+f
+395.4 573.7 3.3 -3.3 re
+f
+401.7 573.7 3.3 -3.3 re
+f
+417.5 573.7 3.3 -3.3 re
+f
+420.6 573.7 3.3 -3.3 re
+f
+423.8 573.7 3.3 -3.3 re
+f
+426.9 573.7 3.3 -3.3 re
+f
+436.4 573.7 3.3 -3.3 re
+f
+442.7 573.7 3.3 -3.3 re
+f
+445.8 573.7 3.3 -3.3 re
+f
+345.0 570.5 3.3 -3.3 re
+f
+351.3 570.5 3.3 -3.3 re
+f
+360.8 570.5 3.3 -3.3 re
+f
+367.1 570.5 3.3 -3.3 re
+f
+370.2 570.5 3.3 -3.3 re
+f
+373.4 570.5 3.3 -3.3 re
+f
+382.8 570.5 3.3 -3.3 re
+f
+386.0 570.5 3.3 -3.3 re
+f
+392.3 570.5 3.3 -3.3 re
+f
+398.6 570.5 3.3 -3.3 re
+f
+404.9 570.5 3.3 -3.3 re
+f
+408.0 570.5 3.3 -3.3 re
+f
+414.3 570.5 3.3 -3.3 re
+f
+417.5 570.5 3.3 -3.3 re
+f
+423.8 570.5 3.3 -3.3 re
+f
+433.2 570.5 3.3 -3.3 re
+f
+439.5 570.5 3.3 -3.3 re
+f
+445.8 570.5 3.3 -3.3 re
+f
+345.0 567.4 3.3 -3.3 re
+f
+348.2 567.4 3.3 -3.3 re
+f
+351.3 567.4 3.3 -3.3 re
+f
+363.9 567.4 3.3 -3.3 re
+f
+367.1 567.4 3.3 -3.3 re
+f
+370.2 567.4 3.3 -3.3 re
+f
+373.4 567.4 3.3 -3.3 re
+f
+382.8 567.4 3.3 -3.3 re
+f
+386.0 567.4 3.3 -3.3 re
+f
+392.3 567.4 3.3 -3.3 re
+f
+395.4 567.4 3.3 -3.3 re
+f
+404.9 567.4 3.3 -3.3 re
+f
+414.3 567.4 3.3 -3.3 re
+f
+420.6 567.4 3.3 -3.3 re
+f
+423.8 567.4 3.3 -3.3 re
+f
+426.9 567.4 3.3 -3.3 re
+f
+430.1 567.4 3.3 -3.3 re
+f
+433.2 567.4 3.3 -3.3 re
+f
+436.4 567.4 3.3 -3.3 re
+f
+370.2 564.2 3.3 -3.3 re
+f
+373.4 564.2 3.3 -3.3 re
+f
+386.0 564.2 3.3 -3.3 re
+f
+389.1 564.2 3.3 -3.3 re
+f
+395.4 564.2 3.3 -3.3 re
+f
+401.7 564.2 3.3 -3.3 re
+f
+408.0 564.2 3.3 -3.3 re
+f
+411.2 564.2 3.3 -3.3 re
+f
+414.3 564.2 3.3 -3.3 re
+f
+420.6 564.2 3.3 -3.3 re
+f
+433.2 564.2 3.3 -3.3 re
+f
+439.5 564.2 3.3 -3.3 re
+f
+345.0 561.1 3.3 -3.3 re
+f
+348.2 561.1 3.3 -3.3 re
+f
+351.3 561.1 3.3 -3.3 re
+f
+354.5 561.1 3.3 -3.3 re
+f
+357.6 561.1 3.3 -3.3 re
+f
+360.8 561.1 3.3 -3.3 re
+f
+363.9 561.1 3.3 -3.3 re
+f
+370.2 561.1 3.3 -3.3 re
+f
+373.4 561.1 3.3 -3.3 re
+f
+379.7 561.1 3.3 -3.3 re
+f
+392.3 561.1 3.3 -3.3 re
+f
+401.7 561.1 3.3 -3.3 re
+f
+404.9 561.1 3.3 -3.3 re
+f
+411.2 561.1 3.3 -3.3 re
+f
+414.3 561.1 3.3 -3.3 re
+f
+420.6 561.1 3.3 -3.3 re
+f
+426.9 561.1 3.3 -3.3 re
+f
+433.2 561.1 3.3 -3.3 re
+f
+436.4 561.1 3.3 -3.3 re
+f
+345.0 557.9 3.3 -3.3 re
+f
+363.9 557.9 3.3 -3.3 re
+f
+370.2 557.9 3.3 -3.3 re
+f
+376.5 557.9 3.3 -3.3 re
+f
+386.0 557.9 3.3 -3.3 re
+f
+389.1 557.9 3.3 -3.3 re
+f
+392.3 557.9 3.3 -3.3 re
+f
+401.7 557.9 3.3 -3.3 re
+f
+404.9 557.9 3.3 -3.3 re
+f
+417.5 557.9 3.3 -3.3 re
+f
+420.6 557.9 3.3 -3.3 re
+f
+433.2 557.9 3.3 -3.3 re
+f
+436.4 557.9 3.3 -3.3 re
+f
+439.5 557.9 3.3 -3.3 re
+f
+442.7 557.9 3.3 -3.3 re
+f
+445.8 557.9 3.3 -3.3 re
+f
+345.0 554.8 3.3 -3.3 re
+f
+351.3 554.8 3.3 -3.3 re
+f
+354.5 554.8 3.3 -3.3 re
+f
+357.6 554.8 3.3 -3.3 re
+f
+363.9 554.8 3.3 -3.3 re
+f
+370.2 554.8 3.3 -3.3 re
+f
+373.4 554.8 3.3 -3.3 re
+f
+376.5 554.8 3.3 -3.3 re
+f
+379.7 554.8 3.3 -3.3 re
+f
+386.0 554.8 3.3 -3.3 re
+f
+389.1 554.8 3.3 -3.3 re
+f
+395.4 554.8 3.3 -3.3 re
+f
+408.0 554.8 3.3 -3.3 re
+f
+411.2 554.8 3.3 -3.3 re
+f
+414.3 554.8 3.3 -3.3 re
+f
+417.5 554.8 3.3 -3.3 re
+f
+420.6 554.8 3.3 -3.3 re
+f
+423.8 554.8 3.3 -3.3 re
+f
+426.9 554.8 3.3 -3.3 re
+f
+430.1 554.8 3.3 -3.3 re
+f
+433.2 554.8 3.3 -3.3 re
+f
+436.4 554.8 3.3 -3.3 re
+f
+439.5 554.8 3.3 -3.3 re
+f
+442.7 554.8 3.3 -3.3 re
+f
+445.8 554.8 3.3 -3.3 re
+f
+345.0 551.6 3.3 -3.3 re
+f
+351.3 551.6 3.3 -3.3 re
+f
+354.5 551.6 3.3 -3.3 re
+f
+357.6 551.6 3.3 -3.3 re
+f
+363.9 551.6 3.3 -3.3 re
+f
+370.2 551.6 3.3 -3.3 re
+f
+376.5 551.6 3.3 -3.3 re
+f
+379.7 551.6 3.3 -3.3 re
+f
+392.3 551.6 3.3 -3.3 re
+f
+395.4 551.6 3.3 -3.3 re
+f
+398.6 551.6 3.3 -3.3 re
+f
+408.0 551.6 3.3 -3.3 re
+f
+423.8 551.6 3.3 -3.3 re
+f
+430.1 551.6 3.3 -3.3 re
+f
+433.2 551.6 3.3 -3.3 re
+f
+442.7 551.6 3.3 -3.3 re
+f
+445.8 551.6 3.3 -3.3 re
+f
+345.0 548.5 3.3 -3.3 re
+f
+351.3 548.5 3.3 -3.3 re
+f
+354.5 548.5 3.3 -3.3 re
+f
+357.6 548.5 3.3 -3.3 re
+f
+363.9 548.5 3.3 -3.3 re
+f
+373.4 548.5 3.3 -3.3 re
+f
+376.5 548.5 3.3 -3.3 re
+f
+389.1 548.5 3.3 -3.3 re
+f
+392.3 548.5 3.3 -3.3 re
+f
+398.6 548.5 3.3 -3.3 re
+f
+401.7 548.5 3.3 -3.3 re
+f
+404.9 548.5 3.3 -3.3 re
+f
+408.0 548.5 3.3 -3.3 re
+f
+411.2 548.5 3.3 -3.3 re
+f
+420.6 548.5 3.3 -3.3 re
+f
+423.8 548.5 3.3 -3.3 re
+f
+426.9 548.5 3.3 -3.3 re
+f
+433.2 548.5 3.3 -3.3 re
+f
+436.4 548.5 3.3 -3.3 re
+f
+442.7 548.5 3.3 -3.3 re
+f
+445.8 548.5 3.3 -3.3 re
+f
+345.0 545.3 3.3 -3.3 re
+f
+363.9 545.3 3.3 -3.3 re
+f
+373.4 545.3 3.3 -3.3 re
+f
+376.5 545.3 3.3 -3.3 re
+f
+414.3 545.3 3.3 -3.3 re
+f
+420.6 545.3 3.3 -3.3 re
+f
+423.8 545.3 3.3 -3.3 re
+f
+430.1 545.3 3.3 -3.3 re
+f
+436.4 545.3 3.3 -3.3 re
+f
+439.5 545.3 3.3 -3.3 re
+f
+442.7 545.3 3.3 -3.3 re
+f
+445.8 545.3 3.3 -3.3 re
+f
+345.0 542.2 3.3 -3.3 re
+f
+348.2 542.2 3.3 -3.3 re
+f
+351.3 542.2 3.3 -3.3 re
+f
+354.5 542.2 3.3 -3.3 re
+f
+357.6 542.2 3.3 -3.3 re
+f
+360.8 542.2 3.3 -3.3 re
+f
+363.9 542.2 3.3 -3.3 re
+f
+370.2 542.2 3.3 -3.3 re
+f
+373.4 542.2 3.3 -3.3 re
+f
+376.5 542.2 3.3 -3.3 re
+f
+382.8 542.2 3.3 -3.3 re
+f
+395.4 542.2 3.3 -3.3 re
+f
+398.6 542.2 3.3 -3.3 re
+f
+404.9 542.2 3.3 -3.3 re
+f
+417.5 542.2 3.3 -3.3 re
+f
+420.6 542.2 3.3 -3.3 re
+f
+423.8 542.2 3.3 -3.3 re
+f
+426.9 542.2 3.3 -3.3 re
+f
+433.2 542.2 3.3 -3.3 re
+f
+BT
+1 0 0 1 275 520 Tm
+/F4 12 Tf
+(xEncEXICEGJ-d-Qz5f9bwZC3aoFyEOu) Tj
+ET
+BT
+1 0 0 1 275 507 Tm
+/F4 12 Tf
+(s5yFna2BcZL5HC5BiVGb6AYB0y7V_6w) Tj
+ET
+0.0 0.5 1.0 RG
+46 204 m
+488 204 l
+S
+BT
+1 0 0 1 436 24 Tm
+/F5 12 Tf
+(Page 2 of 3) Tj
+ET
+endstream
+endobj
+
+11 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+12 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Times-Roman
+>>
+endobj
+
+13 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+14 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Times-Roman
+>>
+endobj
+
+15 0 obj
+<<
+  /Type /Page
+  /Parent 2 0 R
+  /Resources <<
+    /Font <<
+      /F1 16 0 R
+      /F2 18 0 R
+      /F3 19 0 R
+      /F4 20 0 R
+      /F5 21 0 R
+      /F6 22 0 R
+      /F7 23 0 R
+      /F8 24 0 R
+      /F9 25 0 R
+      /F10 26 0 R
+      /F11 27 0 R
+      /F12 28 0 R
+      /F13 29 0 R
+      /F14 30 0 R
+      /F15 31 0 R
+      /F16 32 0 R
+      /F17 33 0 R
+      /F18 34 0 R
+      /F19 35 0 R
+      /F20 36 0 R
+      /F21 37 0 R
+      /F22 38 0 R
+      /F23 39 0 R
+      /F24 40 0 R
+      /F25 41 0 R
+      /F26 42 0 R
+      /F27 43 0 R
+      /F28 44 0 R
+      /F29 45 0 R
+      /F30 46 0 R
+      /F31 47 0 R
+      /F32 48 0 R
+      /F33 49 0 R
+      /F34 50 0 R
+      /F35 51 0 R
+      /F36 52 0 R
+      /F37 53 0 R
+      /F38 54 0 R
+      /F39 55 0 R
+      /F40 56 0 R
+      /F41 57 0 R
+      /F42 58 0 R
+      /F43 59 0 R
+      /F44 60 0 R
+      /F45 61 0 R
+      /F46 62 0 R
+      /F47 63 0 R
+      /F48 64 0 R
+      /F49 65 0 R
+      /F50 66 0 R
+      /F51 67 0 R
+    >>
+  >>
+  /Contents 17 0 R
+>>
+endobj
+
+16 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Times-Roman
+  /Encoding /WinAnsiEncoding
+>>
+endobj
+
+17 0 obj
+<<
+  /Length 6953
+>>
+stream
+BT
+1 0 0 1 436 24 Tm
+/F1 12 Tf
+(Page 3 of 3) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 691 Tm
+/F2 9 Tf
+(The Mycelium Bitcoin Wallet performs the steps described below when decrypting) Tj
+ET
+BT
+1 0 0 1 46 682 Tm
+/F2 9 Tf
+(and verifying an encrypted private key. The description is quite technical and) Tj
+ET
+BT
+1 0 0 1 46 673 Tm
+/F2 9 Tf
+(allows a developer to create software that allows you to decrypt your private) Tj
+ET
+BT
+1 0 0 1 46 663 Tm
+/F2 9 Tf
+(keys. This allows you to access your funds if the Mycelium software is no longer) Tj
+ET
+BT
+1 0 0 1 46 654 Tm
+/F2 9 Tf
+(available. If you wish to read or review the implementation used by the Mycelium) Tj
+ET
+BT
+1 0 0 1 46 644 Tm
+/F2 9 Tf
+(Bitcoin Wallet you can find it here:) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 635 Tm
+/F3 9 Tf
+(https://github.com/mycelium-com/wallet/tree/master/public/bitlib/src/main/java/c) Tj
+ET
+BT
+1 0 0 1 46 625 Tm
+/F3 9 Tf
+(om/mrd/bitlib/crypto/MrdExport.java) Tj
+ET
+0.0 0.5 1.0 rg
+BT
+1 0 0 1 46 604 Tm
+/F4 13 Tf
+(Parsing The QR Code) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 593 Tm
+/F5 9 Tf
+(1. Scan the QR code to get a Base64 encoded string.) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 584 Tm
+/F6 9 Tf
+(2. Decode the Base64 encoded string to get exactly 46 bytes. The Base64 variant) Tj
+ET
+BT
+1 0 0 1 46 574 Tm
+/F6 9 Tf
+(   used is designed for URLs as specified in RFC 4648 section 5.) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 565 Tm
+/F7 9 Tf
+(3. The first 3 bytes are the the magic cookie 0xC4 0x49 0xDC: decoded[0...2]) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 555 Tm
+/F8 9 Tf
+(4. The next 3 bytes are the header bytes: H = decoded[3...5]) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 546 Tm
+/F9 9 Tf
+(5. The next 4 bytes is the random salt: SALT = decoded[6...9]) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 537 Tm
+/F10 9 Tf
+(6. The next 32 bytes are the encrypted private key: E = decoded[10...41]) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 527 Tm
+/F11 9 Tf
+(7. The next 4 bytes are the checksum: C = decoded[42...45]) Tj
+ET
+0.0 0.5 1.0 rg
+BT
+1 0 0 1 46 506 Tm
+/F12 13 Tf
+(Decoding the 3 Header Bytes) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 495 Tm
+/F13 9 Tf
+(Regard the header as an array of 24 bits and decode the following values:) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 486 Tm
+/F14 9 Tf
+(version    = XXXX???? ???????? ????????: must be 1) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 476 Tm
+/F15 9 Tf
+(network    = ????X??? ???????? ????????: 0 = prodnet, 1 = testnet) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 467 Tm
+/F16 9 Tf
+(content    = ?????XXX ???????? ????????: 000 = private key with uncompressed public key) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 457 Tm
+/F17 9 Tf
+(                                         001 = private key with compressed public key) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 448 Tm
+/F18 9 Tf
+(                                         010 = 128 bit master seed) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 438 Tm
+/F19 9 Tf
+(                                         011 = 192 bit master seed) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 429 Tm
+/F20 9 Tf
+(                                         100 = 256 bit master seed) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 419 Tm
+/F21 9 Tf
+(HN         = ???????? XXXXX??? ????????: 0 <= HN <= 31) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 410 Tm
+/F22 9 Tf
+(Hr         = ???????? ?????XXX XX??????: 1 <= Hr <= 31) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 401 Tm
+/F23 9 Tf
+(Hp         = ???????? ???????? ??XXXXX?: 1 <= Hp <= 31) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 391 Tm
+/F24 9 Tf
+(reserved   = ???????? ???????? ???????X: must be zero) Tj
+ET
+0.0 0.5 1.0 rg
+BT
+1 0 0 1 46 370 Tm
+/F25 13 Tf
+(AES Key Derivation) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 359 Tm
+/F26 9 Tf
+(1. Make the user enter a 15-character password using characters A-Z, all in) Tj
+ET
+BT
+1 0 0 1 46 350 Tm
+/F26 9 Tf
+(   upper case. Convert the characters to 15 bytes using normal ASCII conversion.) Tj
+ET
+BT
+1 0 0 1 46 340 Tm
+/F26 9 Tf
+(   An implementations may use additional checksum characters for password) Tj
+ET
+BT
+1 0 0 1 46 331 Tm
+/F26 9 Tf
+(   integrity. They are not part of the AES key derivation.) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 321 Tm
+/F27 9 Tf
+(2. Run scrypt using parameters N = 2^HN, r = Hr, p = Hp on the password bytes) Tj
+ET
+BT
+1 0 0 1 46 312 Tm
+/F27 9 Tf
+(   and SALT, to derive 32 bytes.) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 302 Tm
+/F28 9 Tf
+(3. The 32 output bytes are used as the 256-bit AES key used for decryption.) Tj
+ET
+0.0 0.5 1.0 rg
+BT
+1 0 0 1 46 281 Tm
+/F29 13 Tf
+(Decrypting the Content Data) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 270 Tm
+/F30 9 Tf
+(The decryption function is 256-bit AES in CBC mode.) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 261 Tm
+/F31 9 Tf
+(1. Generate the AES initialization vector (IV) by doing a single round of SHA256) Tj
+ET
+BT
+1 0 0 1 46 251 Tm
+/F31 9 Tf
+(   on the concatenation of SALT and C, and use the first 16 bytes of the output.) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 242 Tm
+/F32 9 Tf
+(2. Split E into two 16-byte blocks E1 and E2) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 232 Tm
+/F33 9 Tf
+(3. Do an AES block decryption of E1 into P1 using the derived AES key) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 223 Tm
+/F34 9 Tf
+(4. X-or the initialization vector onto P1: P1 = P1 xor IV) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 214 Tm
+/F35 9 Tf
+(5. Do an AES block decryption of E2 into P2 using the derived AES key) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 204 Tm
+/F36 9 Tf
+(6. X-or E1 onto P2: P2 = P2 xor E1) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 195 Tm
+/F37 9 Tf
+(7. The 32 byte plaintext data is the concatenation of P1 and P2: P = P1 || P2) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 185 Tm
+/F38 9 Tf
+(If content is 000 or 001 the 32 bytes are a private key) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 176 Tm
+/F39 9 Tf
+(If content is 010 the first 16 bytes are a master seed) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 166 Tm
+/F40 9 Tf
+(If content is 011 the first 24 bytes are a master seed) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 157 Tm
+/F41 9 Tf
+(If content is 100 the 32 bytes are a master seed) Tj
+ET
+0.0 0.5 1.0 rg
+BT
+1 0 0 1 46 136 Tm
+/F42 13 Tf
+(Verifying the Checksum) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 125 Tm
+/F43 9 Tf
+(1. Convert the generated bitcoin address to an array of ASCII bytes) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 115 Tm
+/F44 9 Tf
+(2. Do a single SHA256 operation on the array of bytes) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 106 Tm
+/F45 9 Tf
+(3. The checksum is the first 4 bytes of the output) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 96 Tm
+/F46 9 Tf
+(4. Verify that the calculated checksum equals C.) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 87 Tm
+/F47 9 Tf
+(If a wrong password was entered the checksums will not match.) Tj
+ET
+0.0 0.5 1.0 rg
+BT
+1 0 0 1 46 66 Tm
+/F48 13 Tf
+(Cryptographic Functions Used) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 55 Tm
+/F49 9 Tf
+(AES - http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 45 Tm
+/F50 9 Tf
+(SHA-256 - http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf) Tj
+ET
+0.0 0.0 0.0 rg
+BT
+1 0 0 1 46 36 Tm
+/F51 9 Tf
+(scrypt - http://www.tarsnap.com/scrypt/scrypt.pdf) Tj
+ET
+endstream
+endobj
+
+18 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+19 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+20 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Times-Roman
+>>
+endobj
+
+21 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+22 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+23 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+24 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+25 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+26 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+27 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+28 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Times-Roman
+>>
+endobj
+
+29 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+30 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+31 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+32 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+33 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+34 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+35 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+36 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+37 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+38 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+39 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+40 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+41 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Times-Roman
+>>
+endobj
+
+42 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+43 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+44 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+45 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Times-Roman
+>>
+endobj
+
+46 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+47 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+48 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+49 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+50 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+51 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+52 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+53 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+54 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+55 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+56 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+57 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+58 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Times-Roman
+>>
+endobj
+
+59 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+60 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+61 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+62 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+63 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+64 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Times-Roman
+>>
+endobj
+
+65 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+66 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+67 0 obj
+<<
+  /Type /Font
+  /Subtype /Type1
+  /BaseFont /Courier
+>>
+endobj
+
+xref
+0 68
+0000000000 65536 f 
+0000000015 00000 n 
+0000000069 00000 n 
+0000000176 00000 n 
+0000000360 00000 n 
+0000000468 00000 n 
+0000003085 00000 n 
+0000003164 00000 n 
+0000018401 00000 n 
+0000018597 00000 n 
+0000018705 00000 n 
+0000071417 00000 n 
+0000071493 00000 n 
+0000071573 00000 n 
+0000071649 00000 n 
+0000071729 00000 n 
+0000072751 00000 n 
+0000072860 00000 n 
+0000079868 00000 n 
+0000079944 00000 n 
+0000080020 00000 n 
+0000080100 00000 n 
+0000080176 00000 n 
+0000080252 00000 n 
+0000080328 00000 n 
+0000080404 00000 n 
+0000080480 00000 n 
+0000080556 00000 n 
+0000080632 00000 n 
+0000080712 00000 n 
+0000080788 00000 n 
+0000080864 00000 n 
+0000080940 00000 n 
+0000081016 00000 n 
+0000081092 00000 n 
+0000081168 00000 n 
+0000081244 00000 n 
+0000081320 00000 n 
+0000081396 00000 n 
+0000081472 00000 n 
+0000081548 00000 n 
+0000081624 00000 n 
+0000081704 00000 n 
+0000081780 00000 n 
+0000081856 00000 n 
+0000081932 00000 n 
+0000082012 00000 n 
+0000082088 00000 n 
+0000082164 00000 n 
+0000082240 00000 n 
+0000082316 00000 n 
+0000082392 00000 n 
+0000082468 00000 n 
+0000082544 00000 n 
+0000082620 00000 n 
+0000082696 00000 n 
+0000082772 00000 n 
+0000082848 00000 n 
+0000082924 00000 n 
+0000083004 00000 n 
+0000083080 00000 n 
+0000083156 00000 n 
+0000083232 00000 n 
+0000083308 00000 n 
+0000083384 00000 n 
+0000083464 00000 n 
+0000083540 00000 n 
+0000083616 00000 n 
+trailer
+<<
+  /Size 67
+  /Root 1 0 R
+  /ID [<A396E4966016110380C74F6CE9412643> <A396E4966016110380C74F6CE9412643>]
+>>
+startxref
+83692
+%%EOF
