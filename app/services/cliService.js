@@ -12,6 +12,8 @@ import { DEFAULT_CLI_LOCAL, STORE_CLILOCAL } from '../const';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import guiService from './guiService';
+import routes from '../constants/routes';
+import { Link } from "react-router-dom";
 
 const STORE_CLIURL = "cli.url"
 const STORE_APIKEY = "cli.apiKey"
@@ -107,8 +109,8 @@ class CliService {
     return error
   }
 
-  initializeCli(cliUrl, apiKey, cliLocal, pairingPayload, tor) {
-    return backendService.cli.init(cliUrl, apiKey, pairingPayload, tor).then(result => {
+  initializeCli(cliUrl, apiKey, cliLocal, pairingPayload, tor, dojo) {
+    return backendService.cli.init(cliUrl, apiKey, pairingPayload, tor, dojo).then(result => {
       const apiKey = result.apiKey
 
       // save configuration
@@ -252,6 +254,27 @@ class CliService {
     return this.state.cli.tor;
   }
 
+  isDojo() {
+    if (!this.isConnected()) {
+      return undefined
+    }
+    return this.state.cli.dojo;
+  }
+
+  isDojoPossible() {
+    if (!this.isConnected()) {
+      return undefined
+    }
+    return this.getDojoUrl() ? true : false
+  }
+
+  getDojoUrl() {
+    if (!this.isConnected()) {
+      return undefined
+    }
+    return this.state.cli.dojoUrl;
+  }
+
   isTestnet() {
     return this.getNetwork() === 'test'
   }
@@ -278,10 +301,17 @@ class CliService {
       return undefined
     }
     const connected = torProgress === 100
-    return <span className={'torIcon torIcon'+(cliService.isTor() ? (connected?'Connected':'Connecting'):'Disabled')} title={'TOR is '+(cliService.isTor() ?(connected?'CONNECTED':'CONNECTING '+torProgress+'%'):'DISABLED')}>
+    return <span className={'torIcon torIcon'+(cliService.isTor() ? (connected?'Connected':'Connecting'):'Disabled')} title={'Tor is '+(cliService.isTor() ?(connected?'CONNECTED':'CONNECTING '+torProgress+'%'):'DISABLED')}>
       {utils.torIcon()}
       {!connected && <span>{torProgress+'%'}</span>}
     </span>
+  }
+
+  getDojoIcon() {
+    if (!this.isConnected() || !this.isDojo()) {
+      return undefined
+    }
+    return <span className='dojoIcon' title={'DOJO is ENABLED: '+this.getDojoUrl()}><FontAwesomeIcon icon={Icons.faHdd} color='green'/></span>
   }
 
   setCliLocalState(cliLocalState) {
@@ -354,7 +384,7 @@ class CliService {
     if (cliService.isCliStatusReady()) {
       // connected & ready
       const status = 'Connected to CLI'
-      return format(<FontAwesomeIcon icon={Icons.faWifi} color='green' title={status} size='xs'/>, status)
+      return format(<FontAwesomeIcon icon={Icons.faWifi} color='green' title={status} />, status)
     }
     if (cliService.getCliUrlError()) {
       // not connected
@@ -368,19 +398,24 @@ class CliService {
     }
     // connected & not ready
     if (cliService.isConnected()) {
-      const status = 'Connected to CLI, which is not ready: '+cliService.getCliMessage()
-      return format(<FontAwesomeIcon icon={Icons.faWifi} color='yellow' title={status}/>, status)
+      let cliMessage = cliService.getCliMessage()
+      if (!cliMessage) {
+        cliMessage = 'starting...'
+      }
+      const status = 'Connected to CLI, which is not ready: '+cliMessage
+      return format(<FontAwesomeIcon icon={Icons.faWifi} color='lightgreen' title={status}/>, status)
     }
   }
 
   getLoginStatusIcon(format) {
     if (cliService.isLoggedIn()) {
       // logged in
-      const status = 'Wallet opened'
-      return format(<FontAwesomeIcon icon={Icons.faLockOpen} color='green' title={status} />, status)
+      const status = 'Wallet opened, click to logout'
+      return format(<a href='#' title={status} onClick={()=>cliService.logout()} className='icon'><FontAwesomeIcon icon={Icons.faSignOutAlt} color='#CCC'/></a>, status)
     }
-    const status = 'Wallet closed'
-    return format(<FontAwesomeIcon icon={Icons.faLock} color='#CCC' title={status} />, status)
+
+    const status = 'Wallet closed, click to login'
+    return format(<Link to={routes.HOME} title={status} className='icon'><FontAwesomeIcon icon={Icons.faLock} color='#CCC' /></Link>, status)
   }
 }
 

@@ -119,10 +119,10 @@ class App extends React.Component<Props> {
   render() {
     const cliLocalStatusIcon = cliService.isCliLocal() ? cliLocalService.getStatusIcon((icon,text)=>icon) : undefined
     const cliStatusIcon = cliService.getStatusIcon((icon,text)=>icon)
-    const loginStatusIcon = cliService.getLoginStatusIcon((icon,text)=>icon)
+    const loginLogoutIcon = cliService.getLoginStatusIcon((icon,text)=>icon)
     const cliInfo = cliService.isCliLocal() ? 'CLI '+cliLocalService.getCliVersionStr():'CLI_API '+API_VERSION
     const torIcon = cliService.isConnected() && cliService.getTorProgressIcon() ? <span className='icon'>{cliService.getTorProgressIcon()}</span> : undefined
-    const logoutIcon = cliService.isLoggedIn() ? <a href='#' title='Logout' onClick={()=>cliService.logout()} className='icon'><FontAwesomeIcon icon={Icons.faSignOutAlt} color='#CCC'/></a> : undefined
+    const dojoIcon = cliService.isConnected() && cliService.getDojoIcon() ? <span className='icon'>{cliService.getDojoIcon()}</span> : undefined
 
     const guiUpdate = guiService.getGuiUpdate()
 
@@ -140,10 +140,10 @@ class App extends React.Component<Props> {
             <a href='#' className='product-title'>Whirlpool</a>
           </div>
           {cliStatusIcon && <div className='cliStatus'>
-            {loginStatusIcon && <span className='icon'>{loginStatusIcon}</span>}
             <span className='icon'>{cliStatusIcon}</span>
+            {dojoIcon}
             {torIcon}
-            {logoutIcon}
+            <span className='icon'>{loginLogoutIcon}</span>
           </div>}
         </div>
         <div className='col-md-10'>

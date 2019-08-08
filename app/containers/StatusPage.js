@@ -15,6 +15,7 @@ import {
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import LinkExternal from '../components/Utils/LinkExternal';
 import { Card } from 'react-bootstrap';
+import utils from '../services/utils';
 
 type Props = {};
 
@@ -50,7 +51,7 @@ export default class StatusPage extends Component<Props> {
               <Card.Header>
                 <div className='row'>
                   <div className='col-sm-6'>
-                    <strong>GUI STATUS</strong>
+                    <strong>GUI</strong>
                   </div>
                   <div className='col-sm-6'>
                     {cliService.getLoginStatusIcon((icon,text)=><div>{icon} {text}</div>)}
@@ -61,27 +62,24 @@ export default class StatusPage extends Component<Props> {
                 <div className='row'>
                   <div className='col-sm-2'>
                     <strong>GUI logs:</strong><br/>
-                    <strong>Version:</strong><br/>
-                    {cliService.isConnected() && <strong>Whirlpool server:</strong>}
+                    <strong>Version:</strong>
                   </div>
                   <div className='col-sm-10'>
                     <div><LinkExternal href={'file://'+this.guiLogFile}>{this.guiLogFile}</LinkExternal></div>
                     <div>GUI <strong>{GUI_VERSION}</strong>, CLI API <strong>{API_VERSION}</strong></div>
-                    {cliService.isConnected() && <div>{cliService.getServerName()}</div>}
                   </div>
                 </div>
               </Card.Body>
             </Card>
+            <br/>
           </div>
         </div>
-
-        <br/>
 
         {!cliService.isCliLocal() && <Card>
           <Card.Header>
             <div className='row'>
               <div className='col-sm-6'>
-                <strong>Remote CLI / DOJO / Nodl</strong>
+                <strong>Remote CLI</strong>
               </div>
               <div className='col-sm-6'>
                 {cliStatusIcon}
@@ -102,7 +100,7 @@ export default class StatusPage extends Component<Props> {
           <Card.Header>
             <div className='row'>
               <div className='col-sm-6'>
-                <strong>Standalone CLI run from GUI</strong>
+                <strong>Standalone GUI</strong>
               </div>
               <div className='col-sm-6'>
                 {cliStatusIcon}
@@ -146,6 +144,41 @@ export default class StatusPage extends Component<Props> {
           </Card.Body>
         </Card>}
         <br/>
+
+        {cliService.isConnected() && <div className='row'>
+          <div className='col-sm-12'>
+            <Card>
+              <Card.Header>
+                <div className='row'>
+                  <div className='col-sm-6'>
+                    <strong>Connectivity</strong>
+                  </div>
+                  <div className='col-sm-6'>
+                  </div>
+                </div>
+              </Card.Header>
+              <Card.Body>
+                <div className='row'>
+                  <div className='col-sm-2'>
+                    <strong>Whirlpool server:</strong><br/>
+                    <strong>DOJO:</strong><br/>
+                    <strong>Tor:</strong><br/>
+                  </div>
+                  <div className='col-sm-10'>
+                    <div>{cliService.getServerName()}</div>
+                    <div>
+                      {utils.checkedIcon(cliService.isDojo())} <strong>{cliService.isDojo()?'enabled':'disabled'}</strong>&nbsp;
+                      {cliService.isDojo() && <small>{cliService.getDojoUrl()}</small>}
+                    </div>
+                    <div>{utils.checkedIcon(cliService.isTor())} <strong>{cliService.isTor()?'enabled':'disabled'}</strong></div>
+                  </div>
+                </div>
+              </Card.Body>
+            </Card>
+            <br/>
+          </div>
+        </div>}
+
         <div className="col-sm-12">
           <button type='button' className='btn btn-danger' onClick={this.onResetConfig}><FontAwesomeIcon icon={Icons.faExclamationTriangle} /> Reset {cliService.getResetLabel()}</button>
         </div>

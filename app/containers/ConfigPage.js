@@ -124,12 +124,28 @@ export default class ConfigPage extends Component<Props> {
                 </div>
               </div>
 
-              <div className="form-group row">
-                <label htmlFor="tor" className="col-sm-2 col-form-label">TOR</label>
+              {cliService.isDojoPossible() && <div className="form-group row">
+                <label htmlFor="dojo" className="col-sm-2 col-form-label">DOJO</label>
                 <div className="col-sm-10 custom-control custom-switch">
-                  <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeCliConfig(cliConfig => cliConfig.tor = checked(e))} defaultChecked={cliConfig.tor} id="tor"/>
-                  <label className="custom-control-label" htmlFor="tor">Enable TOR</label>
+                  <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeCliConfig(cliConfig => {
+                    cliConfig.dojo = checked(e)
+                    if (cliConfig.dojo) {
+                      cliConfig.tor = true
+                    }
+                  })} defaultChecked={cliConfig.dojo} id="dojo"/>
+                  <label className="custom-control-label" htmlFor="dojo">Enable DOJO <small>- {cliService.getDojoUrl()}</small></label>
                 </div>
+              </div>}
+
+              <div className="form-group row">
+                <label htmlFor="tor" className="col-sm-2 col-form-label">Tor</label>
+                {!cliConfig.dojo && <div className="col-sm-10 custom-control custom-switch">
+                  <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeCliConfig(cliConfig => cliConfig.tor = checked(e))} defaultChecked={cliConfig.tor} id="tor"/>
+                  <label className="custom-control-label" htmlFor="tor">Enable Tor</label>
+                </div>}
+                {cliConfig.dojo && <div className="col-sm-10">
+                  DOJO+Tor enabled <FontAwesomeIcon icon={Icons.faCheck} color='green' />
+                </div>}
               </div>
 
               <div className="form-group row">

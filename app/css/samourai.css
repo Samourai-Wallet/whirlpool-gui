@@ -44,7 +44,7 @@ html,body{height:100%;}
   font-size:0.8em;
   color:#CCC;
 }
-.cliStatus .icon {
+.cliStatus > .icon {
   margin: 0 0.5em;
 }
 .footerNav {

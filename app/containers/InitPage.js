@@ -10,7 +10,7 @@ import { cliLocalService } from '../services/cliLocalService';
 import utils from '../services/utils';
 
 const STEP_LAST = 2
-const DEFAULT_CLIHOST = 'http://my-dojo-server'
+const DEFAULT_CLIHOST = 'http://my-remote-CLI'
 const DEFAULT_APIKEY = ''
 const CLILOCAL_URL = 'http://localhost:'+DEFAULT_CLIPORT
 class InitPage extends Component<Props> {
@@ -29,6 +29,8 @@ class InitPage extends Component<Props> {
       currentApiKey: DEFAULT_APIKEY,
       cliError: undefined,
       hasPairingPayload: false,
+      hasPairingDojo: false,
+      dojo: false,
       tor: false,
       pairingError: undefined,
       cliInitError: undefined
@@ -49,6 +51,7 @@ class InitPage extends Component<Props> {
     this.connectCli = this.connectCli.bind(this)
     this.onChangePairingPayload = this.onChangePairingPayload.bind(this)
     this.onChangeTor = this.onChangeTor.bind(this)
+    this.onChangeDojo = this.onChangeDojo.bind(this)
     this.onSubmitInitialize = this.onSubmitInitialize.bind(this)
   }
 
@@ -86,7 +89,8 @@ class InitPage extends Component<Props> {
 
         {this.state.cliUrl && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Connected to whirlpool-cli: <strong>{this.state.cliLocal ? 'standalone' : this.state.cliUrl}</strong></div>}
         {this.state.hasPairingPayload && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Ready to pair with Samourai Wallet</div>}
-        {this.state.step > 0 && <div><FontAwesomeIcon icon={this.state.tor?Icons.faCheck:Icons.faTimes} color={this.state.tor?'green':'red'} /> TOR is <strong>{this.state.tor?'enabled':'disabled'}</strong></div>}
+        {this.state.step > 0 && this.state.hasPairingDojo && <div>{utils.checkedIcon(this.state.dojo)} DOJO is <strong>{this.state.dojo?'enabled':'disabled'}</strong></div>}
+        {this.state.step > 0 && <div>{utils.checkedIcon(this.state.tor)} Tor is <strong>{this.state.tor?'enabled':'disabled'}</strong></div>}
         {this.state.step === STEP_LAST && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Configuration saved</div>}
         <br/>
 
@@ -249,10 +253,15 @@ class InitPage extends Component<Props> {
       payload = JSON.parse(payloadStr)
     } catch(e) {}
     if (payload && payload.pairing && Object.keys(payload.pairing).length > 0) {
+      const isDojo = payload.dojo && Object.keys(payload.dojo).length > 0
+
       // seems valid
       this.pairingPayload = payloadStr
       this.setState({
         hasPairingPayload: true,
+        hasPairingDojo: isDojo,
+        dojo: isDojo,
+        tor: isDojo,
         pairingError: undefined
       })
     } else {
@@ -260,6 +269,9 @@ class InitPage extends Component<Props> {
       console.error('Invalid payload: '+payloadStr)
       this.setState({
         hasPairingPayload: false,
+        hasPairingDojo: false,
+        dojo: false,
+        tor: false,
         pairingError: 'Invalid payload'
       })
     }
@@ -271,8 +283,14 @@ class InitPage extends Component<Props> {
     })
   }
 
+  onChangeDojo(value) {
+    this.setState({
+      dojo: value
+    })
+  }
+
   onSubmitInitialize() {
-    cliService.initializeCli(this.state.cliUrl, this.state.currentApiKey, this.state.cliLocal, this.pairingPayload, this.state.tor).then(() => {
+    cliService.initializeCli(this.state.cliUrl, this.state.currentApiKey, this.state.cliLocal, this.pairingPayload, this.state.tor, this.state.dojo).then(() => {
       // success!
       this.goNextStep()
     }).catch(error => {
@@ -311,13 +329,25 @@ class InitPage extends Component<Props> {
           </div>
         </div>
       </div>
-      <div className="row">
-        <label htmlFor="tor" className="col-sm-1 col-form-label text-right"></label>
-        <div className="col-sm-11 custom-control custom-switch">
-          <div style={{paddingLeft:'1em'}}>
-            <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeTor(checked(e))} defaultChecked={myThis.state.tor} id="tor"/>
-            <label className="custom-control-label" htmlFor="tor">Enable TOR {utils.torIcon()}</label>
+      {this.state.hasPairingDojo && <div className="row">
+        <div className="col-sm-1"></div>
+        <div className="col-sm-11">
+          <div className='custom-control custom-switch' style={{paddingLeft:'1em'}}>
+            <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeDojo(checked(e))} defaultChecked={myThis.state.dojo} id="dojo"/>
+            <label className="custom-control-label" htmlFor="dojo">Enable DOJO (wallet backend) <FontAwesomeIcon icon={Icons.faHdd}/></label>
           </div>
+        </div>
+      </div>}
+      <div className="row">
+        <div className="col-sm-1"></div>
+        <div className="col-sm-11">
+          {!this.state.dojo && <div className='custom-control custom-switch' style={{paddingLeft:'1em'}}>
+            <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeTor(checked(e))} defaultChecked={myThis.state.tor} id="tor"/>
+            <label className="custom-control-label" htmlFor="tor">Enable Tor {utils.torIcon()}</label>
+          </div>}
+          {this.state.dojo && <div style={{paddingLeft:'1em'}}>
+            <label>Tor+DOJO enabled {utils.torIcon()}</label>
+          </div>}
         </div>
       </div>
       <div className="row">

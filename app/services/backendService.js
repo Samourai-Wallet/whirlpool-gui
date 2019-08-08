@@ -61,11 +61,12 @@ class BackendService {
           this.fetchBackendAsJson('/rest/cli', 'GET', undefined, cliUrl, apiKey)
         , 'cli.status', true)
     },
-    init: (cliUrl, apiKey, pairingPayload, tor) => {
+    init: (cliUrl, apiKey, pairingPayload, tor, dojo) => {
       return this.withStatus('CLI', 'Initial setup', () =>
         this.fetchBackendAsJson('/rest/cli/init', 'POST', {
           pairingPayload: pairingPayload,
-          tor: tor
+          tor: tor,
+          dojo: dojo
         }, cliUrl, apiKey)
         , 'cli.init')
     },
