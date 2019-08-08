@@ -201,7 +201,7 @@ class InitPage extends Component<Props> {
           <div className="form-check">
             <input className="form-check-input" type="radio" name="cliLocal" id="cliLocalFalse" value='false' checked={!this.state.cliLocal} onChange={this.onChangeCliLocal} />
             <label className="form-check-label" htmlFor="cliLocalFalse">
-              <strong>Connect to existing DOJO / Nodl / CLI</strong><br/>
+              <strong>Connect to remote CLI</strong><br/>
               {!this.state.cliLocal &&
               <div className="row">
                 <div className="col-sm-5">
