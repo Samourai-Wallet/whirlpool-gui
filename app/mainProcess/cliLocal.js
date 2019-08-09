@@ -1,7 +1,7 @@
 import { download } from 'electron-dl';
 import tcpPortUsed from 'tcp-port-used';
 import fs from 'fs';
-import { spawn } from 'child_process';
+import { spawn, exec } from 'child_process';
 import Store from 'electron-store';
 import AwaitLock from 'await-lock';
 import ps from 'ps-node';
@@ -161,6 +161,15 @@ export class CliLocal {
   }
 
   async refreshState(downloadIfMissing=true, gotMutex=false) {
+    const javaInstalled = await this.isJavaInstalled()
+    if (!javaInstalled) {
+      this.state.valid = false
+      this.state.error = 'Please install JAVA 8+ (OpenJDK recommended)'
+      this.updateState(CLILOCAL_STATUS.ERROR)
+      await this.stop(gotMutex)
+      return
+    }
+
     try {
       const cliApi = await cliVersion.fetchCliApi(API_VERSION)
       logger.info('using CLI_API ' + API_VERSION, cliApi)
@@ -219,6 +228,30 @@ export class CliLocal {
         await this.start(gotMutex)
       }
     }
+  }
+
+  async isJavaInstalled() {
+    try {
+      const result = await this.execPromise('java -version')
+      console.log("[CLI_LOCAL] java seems installed: "+result)
+      return true
+    } catch (e) {
+      console.error("[CLI_LOCAL] java is NOT installed: "+e.message)
+      return false
+    }
+  }
+
+  execPromise(command) {
+    return new Promise(function(resolve, reject) {
+      exec(command, (error, stdout, stderr) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+
+        resolve(stdout.trim());
+      });
+    });
   }
 
   async start(gotMutex=false) {
