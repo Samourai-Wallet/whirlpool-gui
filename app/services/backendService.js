@@ -102,9 +102,9 @@ class BackendService {
   };
 
   pools = {
-    fetchPools: () => {
+    fetchPools: (tx0FeeTarget=undefined) => {
       return this.withStatus('Pools', 'Fetch pools', () =>
-          this.fetchBackendAsJson('/rest/pools', 'GET')
+          this.fetchBackendAsJson('/rest/pools'+(tx0FeeTarget!=undefined?'?tx0FeeTarget='+tx0FeeTarget:''), 'GET')
         , 'pools.fetchPools', true)
     }
   };

@@ -21,26 +21,27 @@ export default class Tx0Modal extends AbstractModal {
 
     console.log('Tx0Modal', initialState)
 
-    // fetch pools for tx0
-    this.loading("Fetching pools for tx0...", poolsService.fetchState().then(foo => {
-      const pools = mixService.getPoolsForTx0(props.utxo)
-
-      if (pools.length == 0) {
-        this.setError("No pool for this utxo.")
-      }
-
-      // default poolId
-      if (!initialState.poolId) {
-        initialState.poolId = pools.length > 0 ? pools[0].poolId : undefined
-      }
-      initialState.pools = pools
-      this.setState(initialState)
-    }))
-
     this.handleChangeFeeTarget = this.handleChangeFeeTarget.bind(this);
     this.handleChangePoolTx0 = this.handleChangePoolTx0.bind(this);
     this.handleChangeMixsTargetTx0 = this.handleChangeMixsTargetTx0.bind(this);
     this.handleSubmitTx0 = this.handleSubmitTx0.bind(this)
+    this.fetchPoolsForTx0FeeTarget = this.fetchPoolsForTx0FeeTarget.bind(this)
+
+    this.fetchPoolsForTx0FeeTarget(initialState.feeTarget)
+  }
+
+  fetchPoolsForTx0FeeTarget(tx0FeeTarget) {
+    // fetch pools for tx0 feeTarget
+    this.loading("Fetching pools for tx0...", poolsService.fetchPoolsForTx0(this.props.utxo.value, tx0FeeTarget).then(pools => {
+      if (pools.length == 0) {
+        this.setError("No pool for this utxo and miner fee.")
+      }
+
+      this.setState({
+        poolId: pools.length > 0 ? pools[0].poolId : undefined, // default poolId
+        pools: pools
+      })
+    }))
   }
 
   handleChangeFeeTarget(e) {
@@ -49,6 +50,7 @@ export default class Tx0Modal extends AbstractModal {
     this.setState({
       feeTarget: feeTarget
     })
+    this.fetchPoolsForTx0FeeTarget(feeTarget)
   }
 
   handleChangePoolTx0(e) {
@@ -98,7 +100,7 @@ export default class Tx0Modal extends AbstractModal {
 
         Pool:
         <select className="form-control" onChange={this.handleChangePoolTx0} defaultValue={this.state.poolId}>
-          {this.state.pools.map(pool => <option key={pool.poolId} value={pool.poolId}>{pool.poolId} · denomination: {utils.toBtc(pool.denomination)}btc · fee: {utils.toBtc(pool.feeValue)}btc · anonymity set: {pool.mixAnonymitySet}}</option>)}
+          {this.state.pools.map(pool => <option key={pool.poolId} value={pool.poolId}>{pool.poolId} · denomination: {utils.toBtc(pool.denomination)}btc · fee: {utils.toBtc(pool.feeValue)}btc · anonymity set: {pool.mixAnonymitySet}</option>)}
         </select><br/>
 
         Mixs target: (you can change this later)
