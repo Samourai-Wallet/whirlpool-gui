@@ -49,11 +49,6 @@ export default class ConfigPage extends Component<Props> {
   }
 
   onSubmit(e) {
-    // force mix.clients=1 for mainnet
-    if (this.state.cliConfig.server === SERVER_MAIN) {
-      this.state.cliConfig.mix.clients = 1
-    }
-
     this.cliConfigService.save(this.state.cliConfig).then(() => {
       logger.info('Configuration updated')
       this.setState({
