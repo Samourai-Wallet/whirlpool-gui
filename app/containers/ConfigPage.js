@@ -87,7 +87,7 @@ export default class ConfigPage extends Component<Props> {
     const checked = e => {
       return e.target.checked
     }
-    const clientsEditable = cliConfig.server !== SERVER_MAIN
+    const clientsPerPoolEditable = cliConfig.server !== SERVER_MAIN
     return (
       <div>
         <h1>Configuration</h1>
@@ -220,7 +220,7 @@ export default class ConfigPage extends Component<Props> {
                 </div>
               </div>
 
-              {clientsEditable && <div className="form-group row">
+              <div className="form-group row">
                 <label htmlFor="clients" className="col-sm-2 col-form-label">Max clients</label>
                 <div className="col-sm-10">
                   <div className='row'>
@@ -229,6 +229,19 @@ export default class ConfigPage extends Component<Props> {
                       myThis.onChangeCliConfig(cliConfig => cliConfig.mix.clients = myValue)
                     }} defaultValue={cliConfig.mix.clients} id="clients"/>
                     <label className='col-form-label col-sm-11'>Max simultaneous mixing clients</label>
+                  </div>
+                </div>
+              </div>
+
+              {clientsPerPoolEditable && <div className="form-group row">
+                <label htmlFor="clientsPerPool" className="col-sm-2 col-form-label">Max clients per pool</label>
+                <div className="col-sm-10">
+                  <div className='row'>
+                    <input type="number" className='form-control col-sm-1' onChange={e => {
+                      const myValue = parseInt(e.target.value)
+                      myThis.onChangeCliConfig(cliConfig => cliConfig.mix.clientsPerPool = myValue)
+                    }} defaultValue={cliConfig.mix.clientsPerPool} id="clientsPerPool"/>
+                    <label className='col-form-label col-sm-11'>Max simultaneous mixing clients per pool</label>
                   </div>
                 </div>
               </div>}

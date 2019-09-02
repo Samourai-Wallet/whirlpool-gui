@@ -12,6 +12,9 @@ html,body{height:100%;}
 .btn-primary:disabled {
   background-color: #aaa;
 }
+.btn-border {
+  border-color: #700606;
+}
 .text-primary {
   color: #700606 !important;
 }
