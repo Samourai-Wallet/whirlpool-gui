@@ -27,14 +27,18 @@ class UtxoPoolSelector extends React.PureComponent {
     const utxo = this.props.utxo
     const pools = this.computePools(utxo);
     const activeLabel = this.computePoolLabel(utxo.poolId)
+    if (pools.length < 2 && (!this.props.noPool || !utxo.poolId)) {
+      // single choice available
+      return <span>{this.computePoolLabel(utxo.poolId ? utxo.poolId : undefined)}</span>
+    }
     return (
       <DropdownButton size='sm' variant="default" title={activeLabel} className='utxoPoolSelector'>
-        {pools.map(pool => {
+        {pools.map((pool,i) => {
           const poolLabel = this.computePoolLabel(pool.poolId)
-          return <Dropdown.Item key={utxo.poolId} active={utxo.poolId === pool.poolId} onClick={() => mixService.setPoolId(utxo, pool.poolId)}>{poolLabel}</Dropdown.Item>
+          return <Dropdown.Item key={i} active={utxo.poolId === pool.poolId} onClick={() => mixService.setPoolId(utxo, pool.poolId)}>{poolLabel}</Dropdown.Item>
         })}
-        <Dropdown.Divider />
-        <Dropdown.Item active={!utxo.poolId} onClick={() => mixService.setPoolId(utxo, undefined)}>{this.computePoolLabel(undefined)}</Dropdown.Item>
+        {(this.props.noPool || !utxo.poolId) && <Dropdown.Divider />}
+        {(this.props.noPool || !utxo.poolId) && <Dropdown.Item active={!utxo.poolId} onClick={() => mixService.setPoolId(utxo, undefined)}>{this.computePoolLabel(undefined)}</Dropdown.Item>}
       </DropdownButton>
     )
   }
