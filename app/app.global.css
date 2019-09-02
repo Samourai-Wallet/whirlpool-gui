@@ -11,8 +11,17 @@
   line-height: 1em !important;
 }
 
+th.utxo {
+  min-width: 340px;
+}
+
 th.utxoStatus {
   min-width: 85px;
+}
+
+td.utxoMessage {
+  overflow: auto;
+  max-width: 180px;
 }
 
 .progress-bar {

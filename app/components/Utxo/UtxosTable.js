@@ -24,7 +24,8 @@ class UtxosTable extends React.PureComponent {
         <table className="table table-sm table-hover">
           <thead>
           <tr>
-            <th scope="col">UTXO</th>
+            {this.props.account && <th scope="col">Account</th>}
+            <th scope="col" className='utxo'>UTXO</th>
             <th scope="col">Amount</th>
             <th scope="col">Pool</th>
             <th scope="col" className='utxoStatus'>Status</th>
@@ -38,38 +39,23 @@ class UtxosTable extends React.PureComponent {
           {this.props.utxos.map((utxo,i) => {
             const lastActivity = mixService.computeLastActivity(utxo)
             const utxoReadOnly = utils.isUtxoReadOnly(utxo)
-            if (utxoReadOnly) {
-              return <tr key={i} className='utxo-disabled'>
-                <td>
-                  <small><LinkExternal href={utils.linkExplorer(utxo)}>{utxo.hash}:{utxo.index}</LinkExternal><br/>
-                    {utxo.account} · {utxo.path} · {utxo.confirmations>0?<span>{utxo.confirmations} confirms</span>:<strong>unconfirmed</strong>}</small>
-                </td>
-                <td>{utils.toBtc(utxo.value)}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            }
-            return <tr key={i}>
+            const allowNoPool = utxo.account === WHIRLPOOL_ACCOUNTS.DEPOSIT
+            return <tr key={i} className={utxoReadOnly?'utxo-disabled':''}>
+              {this.props.account && <td><small>{utxo.account}</small></td>}
               <td>
-                <small><LinkExternal href={utils.linkExplorer(utxo)}>{utxo.hash}:{utxo.index}</LinkExternal><br/>
-                  {utxo.account} · {utxo.path} · {utxo.confirmations>0?<span>{utxo.confirmations} confirms</span>:<strong>unconfirmed</strong>}</small>
+                <small><span title={utxo.hash+':'+utxo.index}><LinkExternal href={utils.linkExplorer(utxo)}>{utxo.hash.substring(0,20)}...{utxo.hash.substring(utxo.hash.length-5)}:{utxo.index}</LinkExternal></span> · {utxo.path} · {utxo.confirmations>0?<span>{utxo.confirmations} confirms</span>:<strong>unconfirmed</strong>}</small>
               </td>
               <td>{utils.toBtc(utxo.value)}</td>
-              <td>
-                <UtxoPoolSelector utxo={utxo}/>
+              <td>{!utxoReadOnly && <UtxoPoolSelector utxo={utxo} noPool={allowNoPool}/>}
               </td>
-              <td><span className='text-primary'>{utils.statusLabel(utxo)}</span></td>
+              <td>{!utxoReadOnly && <span className='text-primary'>{utils.statusLabel(utxo)}</span>}</td>
               <td></td>
               <td>
-                <UtxoMixsTargetSelector utxo={utxo}/>
+                {!utxoReadOnly && <UtxoMixsTargetSelector utxo={utxo}/>}
               </td>
-              <td><small>{utils.utxoMessage(utxo)}</small></td>
-              <td><small>{lastActivity ? lastActivity : '-'}</small></td>
-              {controls && <td>{this.renderUtxoControls(utxo)}</td>}
+              <td className='utxoMessage'>{!utxoReadOnly && <small>{utils.utxoMessage(utxo)}</small>}</td>
+              <td>{!utxoReadOnly && <small>{lastActivity ? lastActivity : '-'}</small>}</td>
+              {!utxoReadOnly && controls && <td>{this.renderUtxoControls(utxo)}</td>}
             </tr>
           })}
           </tbody>
@@ -81,7 +67,6 @@ class UtxosTable extends React.PureComponent {
   renderUtxoControls (utxo) {
     return (
       <div>
-        {utxo.account == WHIRLPOOL_ACCOUNTS.DEPOSIT && utxo.confirmations === 0 && <small>unconfirmed</small>}
         {utxo.account == WHIRLPOOL_ACCOUNTS.DEPOSIT && mixService.isTx0Possible(utxo) && <button className='btn btn-sm btn-primary' title='Tx0' onClick={() => modalService.openTx0(utxo)} >Tx0 <Icon.ChevronsRight size={12}/></button>}
         {mixService.isStartMixPossible(utxo) && <button className='btn btn-sm btn-primary' title='Start mixing' onClick={() => mixService.startMixUtxo(utxo)}>Mix <Icon.Play size={12} /></button>}
         {mixService.isStopMixPossible(utxo) && <button className='btn btn-sm btn-primary' title='Stop mixing' onClick={() => mixService.stopMixUtxo(utxo)}>Stop <Icon.Square size={12} /></button>}

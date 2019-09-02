@@ -39,7 +39,7 @@ export default class PremixPage extends Component<Props> {
         </div>
         <div className='row h-100 d-flex flex-column'>
           <div className='col-sm-12 flex-grow-1 tablescroll'>
-            <UtxosTable utxos={utxos} controls={true}/>
+            <UtxosTable utxos={utxos} controls={true} account={false}/>
           </div>
         </div>
       </div>

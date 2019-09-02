@@ -44,7 +44,7 @@ class LastActivityPage extends Component {
         </div>
         <div className='row h-100 d-flex flex-column'>
           <div className='col-sm-12 flex-grow-1 tablescroll'>
-            <UtxosTable utxos={utxos} controls={false}/>
+            <UtxosTable utxos={utxos} controls={false} account={true}/>
           </div>
         </div>
       </div>

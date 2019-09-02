@@ -128,7 +128,7 @@ class Utils {
       case MIXABLE_STATUS.HASH_MIXING:
         return <FontAwesomeIcon icon={Icons.faEllipsisH} size='xs' color='orange' title='Another utxo from same hash is currently mixing'/>
       case MIXABLE_STATUS.NO_POOL:
-        return <FontAwesomeIcon icon={Icons.faExclamation} size='xs' color='red' title='No pool'/>
+        return <span></span>
       case MIXABLE_STATUS.UNCONFIRMED:
         return <FontAwesomeIcon icon={Icons.faClock} size='xs' color='orange' title='Unconfirmed'/>
     }
@@ -136,8 +136,9 @@ class Utils {
   }
 
   statusLabel(utxo) {
-    let icon = this.statusIcon(utxo)
-    return <span>{icon?icon:''} {this.statusLabelText(utxo)}</span>
+    const icon = this.statusIcon(utxo)
+    const text = this.statusLabelText(utxo)
+    return <span>{icon?icon:''} {text?text:''}</span>
   }
 
   statusLabelText(utxo) {
@@ -145,6 +146,9 @@ class Utils {
       case UTXO_STATUS.READY:
         if (utxo.account === WHIRLPOOL_ACCOUNTS.POSTMIX && utxo.mixsDone >= utxo.mixsTarget) {
           return 'MIXED'
+        }
+        if (utxo.mixableStatus === MIXABLE_STATUS.NO_POOL) {
+          return undefined
         }
         return 'READY'
       case UTXO_STATUS.TX0: return 'TX0'
