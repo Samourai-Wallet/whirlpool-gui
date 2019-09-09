@@ -22,9 +22,7 @@ class MixStatus extends React.PureComponent {
           </div>
           <div className='col-sm-10 mixThreads'>
             <div className='row no-gutters justify-content-center'>
-            {mixService.getThreadsAndIdle().map((utxo,i) => {
-              let content
-              if (utxo !== undefined) {
+              {mixService.getThreads().map((utxo,i) => {
                 const pool = poolsService.findPool(utxo.poolId)
                 const poolInfo = pool ? <small> • {pool.nbConfirmed}/{pool.mixAnonymitySet} peers</small> : undefined
                 const message = utils.utxoMessage(utxo)
@@ -36,32 +34,20 @@ class MixStatus extends React.PureComponent {
                 const progressVariant = utxo.progressPercent ? undefined : 'info'
                 const poolProgress = pool ? (100 - progressPercent) * poolsService.computePoolProgress(pool) / 100 : undefined
 
-                content = <div>
-                    <div className='label'
-                           title={utxo.hash + ':' + utxo.index + ' (' + utxo.account + ') (' + mixService.computeLastActivity(utxo) + ')'}>{progressLabel}</div>
-                      <ProgressBar>
-                        <ProgressBar animated now={progressPercent} variant={progressVariant} key={1}
-                                     className={'progressBarSamourai'+(utxo.mixStep === 'CONNECTING'?' connecting':'')}/>
-                        {poolProgress && <ProgressBar variant="warning" now={poolProgress} key={2}/>}
-                      </ProgressBar>
-                </div>
-              } else {
-                content = <div>
-                  <div className='label'>
-                    <strong>THREAD {(i+1)}</strong><br/>
-                    <small>idle</small>
-                  </div>
-                  <ProgressBar animated now={0} className={'progressBarSamourai'}/>
-                </div>
-              }
-              return <div className='col-sm-3 align-self-center' key={i}>
-                  <div className='row no-gutters'>
-                    <div className='col-sm-12 item'>
-                      {content}
+                return <div className='col-sm-3 align-self-center' key={i}>
+                    <div className='row no-gutters'>
+                      <div className='col-sm-12 item'>
+                        <div className='label'
+                             title={utxo.hash + ':' + utxo.index + ' (' + utxo.account + ') (' + mixService.computeLastActivity(utxo) + ')'}>{progressLabel}</div>
+                        <ProgressBar>
+                          <ProgressBar animated now={progressPercent} variant={progressVariant} key={1}
+                                       className={'progressBarSamourai' + (utxo.mixStep === 'CONNECTING' ? ' connecting' : '')}/>
+                          {poolProgress != undefined && <ProgressBar variant="warning" now={poolProgress} key={2}/>}
+                        </ProgressBar>
+                      </div>
                     </div>
                   </div>
-              </div>
-            })}
+              })}
             </div>
           </div>
           <div className='col-sm-1 mixStatus align-self-center text-center'>

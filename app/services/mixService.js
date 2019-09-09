@@ -131,32 +131,12 @@ class MixService {
     return this.state.mix.nbMixing;
   }
 
-  getMaxClients() {
-    return this.state.mix.maxClients;
-  }
-
-  getNbIdle() {
-    return this.state.mix.nbIdle;
-  }
-
   getNbQueued() {
     return this.state.mix.nbQueued;
   }
 
   getThreads() {
     return this.state.mix.threads;
-  }
-
-  getThreadsAndIdle() {
-    const threadsWithIdle = []
-    for (const i in this.state.mix.threads) {
-      const thread = this.state.mix.threads[i]
-      threadsWithIdle[threadsWithIdle.length] = thread
-    }
-    for (let i = 0; i < this.getNbIdle(); i++) {
-      threadsWithIdle[threadsWithIdle.length] = undefined
-    }
-    return threadsWithIdle;
   }
 
   fetchState () {

@@ -7,8 +7,6 @@ const initialState = {
   /*mix: {
     started: false,
     nbMixing: 0,
-    maxClients: 0,
-    nbIdle:0,
     nbQueued:0,
     threads: []
   }*/

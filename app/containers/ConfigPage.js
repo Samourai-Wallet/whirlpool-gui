@@ -215,19 +215,6 @@ export default class ConfigPage extends Component<Props> {
                 </div>
               </div>
 
-              <div className="form-group row">
-                <label htmlFor="clients" className="col-sm-2 col-form-label">Max clients</label>
-                <div className="col-sm-10">
-                  <div className='row'>
-                    <input type="number" className='form-control col-sm-1' onChange={e => {
-                      const myValue = parseInt(e.target.value)
-                      myThis.onChangeCliConfig(cliConfig => cliConfig.mix.clients = myValue)
-                    }} defaultValue={cliConfig.mix.clients} id="clients"/>
-                    <label className='col-form-label col-sm-11'>Max simultaneous mixing clients</label>
-                  </div>
-                </div>
-              </div>
-
               {clientsPerPoolEditable && <div className="form-group row">
                 <label htmlFor="clientsPerPool" className="col-sm-2 col-form-label">Max clients per pool</label>
                 <div className="col-sm-10">
