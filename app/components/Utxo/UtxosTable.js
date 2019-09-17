@@ -55,7 +55,7 @@ class UtxosTable extends React.PureComponent {
               </td>
               <td className='utxoMessage'>{!utxoReadOnly && <small>{utils.utxoMessage(utxo)}</small>}</td>
               <td>{!utxoReadOnly && <small>{lastActivity ? lastActivity : '-'}</small>}</td>
-              {!utxoReadOnly && controls && <td>{this.renderUtxoControls(utxo)}</td>}
+              <td>{!utxoReadOnly && controls && this.renderUtxoControls(utxo)}</td>
             </tr>
           })}
           </tbody>

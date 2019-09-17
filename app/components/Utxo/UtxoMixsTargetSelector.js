@@ -15,7 +15,7 @@ class UtxoMixsTargetSelector extends React.PureComponent {
 
   render () {
     const utxo = this.props.utxo
-    const targets = [1, 2, 3, 5, 10, 20, 50, 100, MIXSTARGET_UNLIMITED]
+    const targets = [1, 2, 3, 5, 10, 25, 50, 100, MIXSTARGET_UNLIMITED]
 
     return (
       <DropdownButton size='sm' variant="default" title={utxo.mixsDone+' / '+utils.mixsTargetLabel(utxo.mixsTarget)} className='utxoMixsTargetSelector'>

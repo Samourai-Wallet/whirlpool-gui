@@ -44,6 +44,13 @@ td.utxoMessage {
   border-left: 1px solid #700606;
 }
 
+.table-utxos .table-sm td {
+  padding: 0.2rem;
+}
+.table-utxos .btn-sm {
+  line-height: 1em;
+}
+
 .table-utxos th.utxoControls {
   width:6.5em;
 }
