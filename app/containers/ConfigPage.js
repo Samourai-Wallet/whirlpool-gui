@@ -99,14 +99,14 @@ export default class ConfigPage extends Component<Props> {
             <Card.Header>General configuration</Card.Header>
             <Card.Body>
               <div className="form-group row">
-                <label htmlFor="mixsTarget" className="col-sm-2 col-form-label">Default mixs target</label>
+                <label htmlFor="mixsTarget" className="col-sm-2 col-form-label">Mixs target min</label>
                 <div className="col-sm-10">
                   <div className='row'>
                     <input type="number" className='form-control col-sm-1' onChange={e => {
                       const myValue = parseInt(e.target.value)
                       myThis.onChangeCliConfig(cliConfig => cliConfig.mix.mixsTarget = myValue)
                     }} defaultValue={cliConfig.mix.mixsTarget} id="mixsTarget"/>
-                    <label className='col-form-label col-sm-11'>Default number of mixs to complete for new UTXOs</label>
+                    <label className='col-form-label col-sm-11'>Minimum number of mixs to achieve per UTXO</label>
                   </div>
                 </div>
               </div>
