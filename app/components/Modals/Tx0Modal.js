@@ -37,8 +37,13 @@ export default class Tx0Modal extends AbstractModal {
         this.setError("No pool for this utxo and miner fee.")
       }
 
+      const defaultPoolId = pools.length > 0 ? pools[0].poolId : undefined
+
+      // preserve active poolId if still available
+      const poolId = (this.state.poolId && pools.filter(p => p.poolId === this.state.poolId).length > 0) ? this.state.poolId : defaultPoolId
+
       this.setState({
-        poolId: pools.length > 0 ? pools[0].poolId : undefined, // default poolId
+        poolId: poolId,
         pools: pools
       })
     }))

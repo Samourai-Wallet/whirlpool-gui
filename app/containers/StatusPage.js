@@ -182,6 +182,7 @@ export default class StatusPage extends Component<Props> {
         <div className="col-sm-12">
           <button type='button' className='btn btn-danger' onClick={this.onResetConfig}><FontAwesomeIcon icon={Icons.faExclamationTriangle} /> Reset {cliService.getResetLabel()}</button>
         </div>
+        <br/><br/>
       </div>
     );
   }
