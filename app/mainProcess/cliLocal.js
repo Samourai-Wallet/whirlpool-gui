@@ -176,7 +176,7 @@ export class CliLocal {
       this.state.cliApi = {
         cliVersion: cliApi.CLI_VERSION,
         filename: 'whirlpool-client-cli-' + cliApi.CLI_VERSION + '-run.jar',
-        url: 'https://github.com/Samourai-Wallet/whirlpool-runtimes/releases/download/cli-' + cliApi.CLI_VERSION + '/whirlpool-client-cli-' + cliApi.CLI_VERSION + '-run.jar',
+        url: 'https://github.com/Samourai-Wallet/whirlpool-client-cli/releases/download/' + cliApi.CLI_VERSION + '/whirlpool-client-cli-' + cliApi.CLI_VERSION + '-run.jar',
         checksum: cliApi.CLI_CHECKSUM
       }
     } catch(e) {
