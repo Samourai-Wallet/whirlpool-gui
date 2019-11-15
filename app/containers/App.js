@@ -36,7 +36,7 @@ import StatusPage from './StatusPage';
 import LoginPage from './LoginPage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cliLocalService } from '../services/cliLocalService';
-import { API_VERSION, GUI_VERSION } from '../const';
+import { cliApiService, GUI_VERSION } from '../const';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import PoolsPage from './PoolsPage';
 import guiService from '../services/guiService';
@@ -120,7 +120,7 @@ class App extends React.Component<Props> {
     const cliLocalStatusIcon = cliService.isCliLocal() ? cliLocalService.getStatusIcon((icon,text)=>icon) : undefined
     const cliStatusIcon = cliService.getStatusIcon((icon,text)=>icon)
     const loginLogoutIcon = cliService.getLoginStatusIcon((icon,text)=>icon)
-    const cliInfo = cliService.isCliLocal() ? 'CLI '+cliLocalService.getCliVersionStr():'CLI_API '+API_VERSION
+    const cliInfo = cliService.isCliLocal() ? 'CLI '+cliLocalService.getCliVersionStr():'CLI_API '+cliApiService.getVersionName()
     const torIcon = cliService.isConnected() && cliService.getTorProgressIcon() ? <span className='icon'>{cliService.getTorProgressIcon()}</span> : undefined
     const dojoIcon = cliService.isConnected() && cliService.getDojoIcon() ? <span className='icon'>{cliService.getDojoIcon()}</span> : undefined
 

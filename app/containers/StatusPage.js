@@ -4,11 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cliLocalService } from '../services/cliLocalService';
 import cliService from '../services/cliService';
 import {
-  API_VERSION,
   CLI_CONFIG_FILENAME,
   CLI_LOG_ERROR_FILE,
-  CLI_LOG_FILE,
-  DL_PATH,
+  CLI_LOG_FILE, cliApiService,
   GUI_LOG_FILE,
   GUI_VERSION
 } from '../const';
@@ -66,7 +64,7 @@ export default class StatusPage extends Component<Props> {
                   </div>
                   <div className='col-sm-10'>
                     <div><LinkExternal href={'file://'+this.guiLogFile}>{this.guiLogFile}</LinkExternal></div>
-                    <div>GUI <strong>{GUI_VERSION}</strong>, CLI API <strong>{API_VERSION}</strong></div>
+                    <div>GUI <strong>{GUI_VERSION}</strong>, CLI API <strong>{cliApiService.getVersionName()}</strong></div>
                   </div>
                 </div>
               </Card.Body>
@@ -124,11 +122,11 @@ export default class StatusPage extends Component<Props> {
                 {cliLocalService.hasCliApi() && <strong>Version:<br/></strong>}<br/>
               </div>
               <div className='col-sm-10'>
-                <LinkExternal href={'file://'+DL_PATH}>{DL_PATH}</LinkExternal><br/>
-                <LinkExternal href={'file://'+DL_PATH+CLI_CONFIG_FILENAME}>{CLI_CONFIG_FILENAME}</LinkExternal><br/>
+                <LinkExternal href={'file://'+cliApiService.getDownloadPath()}>{cliApiService.getDownloadPath()}</LinkExternal><br/>
+                <LinkExternal href={'file://'+cliApiService.getDownloadPath()+CLI_CONFIG_FILENAME}>{CLI_CONFIG_FILENAME}</LinkExternal><br/>
                 {cliLocalService.hasCliApi() && <div>{cliLocalService.getCliFilename()} ({cliLocalService.getCliChecksum()})</div>}
                 {cliLocalService.hasCliApi() && <div>{cliLocalService.getCliVersionStr()}</div>}
-                {!cliLocalService.hasCliApi() && <div><strong>CLI_API {API_VERSION} could not be resolved</strong><br/></div>}
+                {!cliLocalService.hasCliApi() && <div><strong>CLI_API {cliApiService.getVersionName()} could not be resolved</strong><br/></div>}
               </div>
             </div>
             <div className='row'>

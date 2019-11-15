@@ -1,11 +1,16 @@
-import electron from 'electron';
 import { version } from '../package.json';
 import { computeLogPath, logger } from './utils/logger';
+import { API_MODES, CliApiService } from './mainProcess/cliApiService';
+
+export const IS_DEV = (process.env.NODE_ENV === 'development')
 
 /* shared with mainProcess */
 
-export const API_VERSION = '0.9';
-export const IS_DEVELOP_SNAPSHOT = false;
+//const API_MODE = API_MODES.RELEASE;
+const API_MODE = API_MODES.RELEASE;
+const API_VERSION = '0.9';
+export const cliApiService = new CliApiService(API_MODE, API_VERSION)
+
 export const GUI_VERSION = version;
 
 export const DEFAULT_CLI_LOCAL = true;
@@ -46,12 +51,6 @@ export const TX0_FEE_TARGET = {
 }
 
 export const STORE_CLILOCAL = 'cli.local';
-
-const app = electron.app || electron.remote.app;
-
-export const IS_DEV = (process.env.NODE_ENV === 'development')
-const DL_PATH_DEV = '/zl/workspaces/whirlpool/whirlpool-client-cli4/target/'
-export const DL_PATH = IS_DEV ? DL_PATH_DEV : app.getPath('userData');
 
 export const CLI_LOG_FILE = computeLogPath('whirlpool-cli.log');
 export const CLI_LOG_ERROR_FILE = computeLogPath('whirlpool-cli.error.log');

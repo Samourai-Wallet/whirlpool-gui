@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import { IS_DEV, IS_DEVELOP_SNAPSHOT, VERSIONS_URL } from '../const';
+import { VERSIONS_URL } from '../const';
 
 class CliVersion {
 
@@ -12,16 +12,6 @@ class CliVersion {
   }
 
   fetchCliApi(cliApi) {
-    if (IS_DEV) {
-      // mock for DEV
-      return {
-        CLI_VERSION: 'develop-SNAPSHOT',
-        CLI_CHECKSUM: 'dev'
-      }
-    }
-    if (IS_DEVELOP_SNAPSHOT) {
-      cliApi = 'develop-SNAPSHOT'
-    }
     return this.fetchVersions().then(json => {
       console.log('cliVersions',json)
       return json.CLI_API[cliApi]

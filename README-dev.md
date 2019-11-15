@@ -13,7 +13,7 @@ yarn
 ```
 
 ### Start in debug mode
-GUI will look for a local CLI jar in from `DL_PATH_DEV` directory. 
+GUI will look for a local CLI jar in from `DL_PATH_LOCAL` directory. 
 Edit this path for your own needs.
 ```
 cd whirlpool-gui

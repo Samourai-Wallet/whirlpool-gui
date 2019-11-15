@@ -1,27 +1,24 @@
 import { download } from 'electron-dl';
 import tcpPortUsed from 'tcp-port-used';
 import fs from 'fs';
-import { spawn, exec } from 'child_process';
+import { exec, spawn } from 'child_process';
 import Store from 'electron-store';
 import AwaitLock from 'await-lock';
 import ps from 'ps-node';
 import {
-  API_VERSION,
   CLI_CONFIG_FILENAME,
   CLI_LOG_ERROR_FILE,
   CLI_LOG_FILE,
+  cliApiService,
   CLILOCAL_STATUS,
   DEFAULT_CLI_LOCAL,
   DEFAULT_CLIPORT,
-  DL_PATH,
-  GUI_LOG_FILE,
   IPC_CLILOCAL,
   IS_DEV,
   STORE_CLILOCAL
 } from '../const';
 import { logger } from '../utils/logger';
 import crypto from 'crypto';
-import cliVersion from './cliVersion';
 
 const START_TIMEOUT = 10000
 const ARG_CLI_GUI = '--whirlpool-cli-gui'
@@ -33,7 +30,7 @@ export class CliLocal {
 
     this.ipcMain = ipcMain
     this.window = window
-    this.dlPath = DL_PATH
+
     this.store = new Store()
     this.ipcMutex = new AwaitLock()
 
@@ -121,7 +118,7 @@ export class CliLocal {
   }
 
   async onDeleteConfig(gotMutex=false) {
-    const cliConfigPath = this.dlPath+'/'+CLI_CONFIG_FILENAME
+    const cliConfigPath = cliApiService.getDownloadPath()+'/'+CLI_CONFIG_FILENAME
     logger.info("CLI deleting local config... "+cliConfigPath)
 
     await this.stop(gotMutex)
@@ -161,6 +158,10 @@ export class CliLocal {
   }
 
   async refreshState(downloadIfMissing=true, gotMutex=false) {
+    if (cliApiService.isApiModeLocal()) {
+      downloadIfMissing = false
+    }
+
     const javaInstalled = await this.isJavaInstalled()
     if (!javaInstalled) {
       this.state.valid = false
@@ -171,18 +172,11 @@ export class CliLocal {
     }
 
     try {
-      const cliApi = await cliVersion.fetchCliApi(API_VERSION)
-      logger.info('using CLI_API ' + API_VERSION, cliApi)
-      this.state.cliApi = {
-        cliVersion: cliApi.CLI_VERSION,
-        filename: 'whirlpool-client-cli-' + cliApi.CLI_VERSION + '-run.jar',
-        url: 'https://github.com/Samourai-Wallet/whirlpool-client-cli/releases/download/' + cliApi.CLI_VERSION + '/whirlpool-client-cli-' + cliApi.CLI_VERSION + '-run.jar',
-        checksum: cliApi.CLI_CHECKSUM
-      }
+      this.state.cliApi = await cliApiService.fetchCliApi()
     } catch(e) {
-      logger.error("Could not fetch CLI_API "+API_VERSION, e)
+      logger.error("Could not fetch CLI_API", e)
       this.state.valid = false
-      this.state.error = 'Could not fetch CLI_API '+API_VERSION
+      this.state.error = 'Could not fetch CLI_API'
       this.updateState(CLILOCAL_STATUS.ERROR)
       await this.stop(gotMutex)
       return
@@ -233,7 +227,7 @@ export class CliLocal {
   async isJavaInstalled() {
     try {
       const result = await this.execPromise('java -version')
-      console.log("[CLI_LOCAL] java seems installed: "+result)
+      console.log("[CLI_LOCAL] java seems installed. "+result)
       return true
     } catch (e) {
       console.error("[CLI_LOCAL] java is NOT installed: "+e.message)
@@ -278,7 +272,7 @@ export class CliLocal {
           if (IS_DEV) {
             args.push('--debug-client')
           }
-          myThis.startProc(cmd, args, myThis.dlPath, CLI_LOG_FILE, CLI_LOG_ERROR_FILE)
+          myThis.startProc(cmd, args, cliApiService.getDownloadPath(), CLI_LOG_FILE, CLI_LOG_ERROR_FILE)
         }, (e) => {
           // port in use => cannot start proc
           logger.error("[CLI_LOCAL] cannot start: port "+DEFAULT_CLIPORT+" already in use")
@@ -444,7 +438,7 @@ export class CliLocal {
   }
 
   async verifyChecksum() {
-    const dlPathFile = this.dlPath+'/'+this.getCliFilename()
+    const dlPathFile = cliApiService.getDownloadPath()+'/'+this.getCliFilename()
     const expectedChecksum = this.getCliChecksum()
     try {
       const checksum = await this.sha256File(dlPathFile)
@@ -452,7 +446,7 @@ export class CliLocal {
         logger.error('CLI not found: '+dlPathFile)
         return false;
       }
-      if (!IS_DEV && checksum !== expectedChecksum) {
+      if (cliApiService.useChecksum() && checksum !== expectedChecksum) {
         logger.error('CLI is invalid: '+dlPathFile+', '+checksum+' vs '+expectedChecksum)
         return false;
       }
@@ -466,7 +460,7 @@ export class CliLocal {
 
   async download(url) {
     // delete existing file if any
-    const dlPathFile = this.dlPath+'/'+this.getCliFilename()
+    const dlPathFile = cliApiService.getDownloadPath()+'/'+this.getCliFilename()
     if (fs.existsSync(dlPathFile)) {
       logger.verbose('CLI overwriting '+dlPathFile)
       try {
@@ -485,7 +479,7 @@ export class CliLocal {
       this.updateState(CLILOCAL_STATUS.DOWNLOADING)
     }
     logger.info('CLI downloading: '+url)
-    return download(this.window, url, {directory: this.dlPath, onProgress: onProgress.bind(this)})
+    return download(this.window, url, {directory: cliApiService.getDownloadPath(), onProgress: onProgress.bind(this)})
   }
 
   updateState(status) {
