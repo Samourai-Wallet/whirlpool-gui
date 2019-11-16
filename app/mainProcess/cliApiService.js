@@ -1,7 +1,7 @@
-import { IS_DEV } from '../const';
-import electron from "electron";
+import { APP_USERDATA, IS_DEV } from '../const';
 import cliVersion from './cliVersion';
 import { logger } from '../utils/logger';
+import guiConfig from './guiConfig';
 
 export const API_MODES = {
   RELEASE: 'RELEASE',
@@ -11,7 +11,8 @@ export const API_MODES = {
 const DL_PATH_LOCAL = '/zl/workspaces/whirlpool/whirlpool-client-cli4/target/'
 
 export class CliApiService {
-  constructor (apiMode, apiVersion) {
+  constructor (apiVersion) {
+    let apiMode = guiConfig.getApiMode()
     if (IS_DEV) {
       // use local jar when started with "yarn dev"
       apiMode = API_MODES.LOCAL
@@ -42,12 +43,14 @@ export class CliApiService {
     return !IS_DEV
   }
 
-  getDownloadPath() {
+  getCliPath() {
     if (this.isApiModeLocal()) {
+      // local CLI
       return DL_PATH_LOCAL
     }
-    const app = electron.app || electron.remote.app;
-    return app.getPath('userData')
+
+    // standard CLI download path
+    return APP_USERDATA
   }
 
   async fetchCliApi() {
@@ -64,10 +67,11 @@ export class CliApiService {
     try {
       let cliApi = await cliVersion.fetchCliApi(fetchVersion)
       logger.info('Using CLI_API ' + fetchVersion, cliApi)
+      const projectUrl = fetchVersion === API_MODES.QA ? 'SamouraiDev/QA' : 'Samourai-Wallet/whirlpool-client-cli'
       return {
         cliVersion: cliApi.CLI_VERSION,
         filename: 'whirlpool-client-cli-' + cliApi.CLI_VERSION + '-run.jar',
-        url: 'https://github.com/Samourai-Wallet/whirlpool-client-cli/releases/download/' + cliApi.CLI_VERSION + '/whirlpool-client-cli-' + cliApi.CLI_VERSION + '-run.jar',
+        url: 'https://github.com/'+projectUrl+'/releases/download/' + cliApi.CLI_VERSION + '/whirlpool-client-cli-' + cliApi.CLI_VERSION + '-run.jar',
         checksum: cliApi.CLI_CHECKSUM
       }
     } catch(e) {

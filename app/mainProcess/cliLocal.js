@@ -118,7 +118,7 @@ export class CliLocal {
   }
 
   async onDeleteConfig(gotMutex=false) {
-    const cliConfigPath = cliApiService.getDownloadPath()+'/'+CLI_CONFIG_FILENAME
+    const cliConfigPath = cliApiService.getCliPath()+'/'+CLI_CONFIG_FILENAME
     logger.info("CLI deleting local config... "+cliConfigPath)
 
     await this.stop(gotMutex)
@@ -272,7 +272,7 @@ export class CliLocal {
           if (IS_DEV) {
             args.push('--debug-client')
           }
-          myThis.startProc(cmd, args, cliApiService.getDownloadPath(), CLI_LOG_FILE, CLI_LOG_ERROR_FILE)
+          myThis.startProc(cmd, args, cliApiService.getCliPath(), CLI_LOG_FILE, CLI_LOG_ERROR_FILE)
         }, (e) => {
           // port in use => cannot start proc
           logger.error("[CLI_LOCAL] cannot start: port "+DEFAULT_CLIPORT+" already in use")
@@ -438,7 +438,7 @@ export class CliLocal {
   }
 
   async verifyChecksum() {
-    const dlPathFile = cliApiService.getDownloadPath()+'/'+this.getCliFilename()
+    const dlPathFile = cliApiService.getCliPath()+'/'+this.getCliFilename()
     const expectedChecksum = this.getCliChecksum()
     try {
       const checksum = await this.sha256File(dlPathFile)
@@ -460,7 +460,7 @@ export class CliLocal {
 
   async download(url) {
     // delete existing file if any
-    const dlPathFile = cliApiService.getDownloadPath()+'/'+this.getCliFilename()
+    const dlPathFile = cliApiService.getCliPath()+'/'+this.getCliFilename()
     if (fs.existsSync(dlPathFile)) {
       logger.verbose('CLI overwriting '+dlPathFile)
       try {
@@ -479,7 +479,7 @@ export class CliLocal {
       this.updateState(CLILOCAL_STATUS.DOWNLOADING)
     }
     logger.info('CLI downloading: '+url)
-    return download(this.window, url, {directory: cliApiService.getDownloadPath(), onProgress: onProgress.bind(this)})
+    return download(this.window, url, {directory: cliApiService.getCliPath(), onProgress: onProgress.bind(this)})
   }
 
   updateState(status) {

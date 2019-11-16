@@ -4,9 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cliLocalService } from '../services/cliLocalService';
 import cliService from '../services/cliService';
 import {
+  APP_USERDATA,
   CLI_CONFIG_FILENAME,
   CLI_LOG_ERROR_FILE,
-  CLI_LOG_FILE, cliApiService,
+  CLI_LOG_FILE,
+  cliApiService,
   GUI_LOG_FILE,
   GUI_VERSION
 } from '../const';
@@ -59,12 +61,14 @@ export default class StatusPage extends Component<Props> {
               <Card.Body>
                 <div className='row'>
                   <div className='col-sm-2'>
-                    <strong>GUI logs:</strong><br/>
-                    <strong>Version:</strong>
+                    <strong>Version:</strong><br/>
+                    <strong>Path:</strong><br/>
+                    <strong>GUI logs:</strong>
                   </div>
                   <div className='col-sm-10'>
-                    <div><LinkExternal href={'file://'+this.guiLogFile}>{this.guiLogFile}</LinkExternal></div>
                     <div>GUI <strong>{GUI_VERSION}</strong>, CLI API <strong>{cliApiService.getVersionName()}</strong></div>
+                    <div><LinkExternal href={'file://'+APP_USERDATA}>{APP_USERDATA}</LinkExternal></div>
+                    <div><LinkExternal href={'file://'+this.guiLogFile}>{this.guiLogFile}</LinkExternal></div>
                   </div>
                 </div>
               </Card.Body>
@@ -77,7 +81,7 @@ export default class StatusPage extends Component<Props> {
           <Card.Header>
             <div className='row'>
               <div className='col-sm-6'>
-                <strong>Remote CLI</strong>
+                <strong>CLI: remote</strong>
               </div>
               <div className='col-sm-6'>
                 {cliStatusIcon}
@@ -98,7 +102,7 @@ export default class StatusPage extends Component<Props> {
           <Card.Header>
             <div className='row'>
               <div className='col-sm-6'>
-                <strong>Standalone GUI</strong>
+                <strong>CLI: standalone</strong>
               </div>
               <div className='col-sm-6'>
                 {cliStatusIcon}
@@ -122,8 +126,8 @@ export default class StatusPage extends Component<Props> {
                 {cliLocalService.hasCliApi() && <strong>Version:<br/></strong>}<br/>
               </div>
               <div className='col-sm-10'>
-                <LinkExternal href={'file://'+cliApiService.getDownloadPath()}>{cliApiService.getDownloadPath()}</LinkExternal><br/>
-                <LinkExternal href={'file://'+cliApiService.getDownloadPath()+CLI_CONFIG_FILENAME}>{CLI_CONFIG_FILENAME}</LinkExternal><br/>
+                <LinkExternal href={'file://'+cliApiService.getCliPath()}>{cliApiService.getCliPath()}</LinkExternal><br/>
+                <LinkExternal href={'file://'+cliApiService.getCliPath()+CLI_CONFIG_FILENAME}>{CLI_CONFIG_FILENAME}</LinkExternal><br/>
                 {cliLocalService.hasCliApi() && <div>{cliLocalService.getCliFilename()} ({cliLocalService.getCliChecksum()})</div>}
                 {cliLocalService.hasCliApi() && <div>{cliLocalService.getCliVersionStr()}</div>}
                 {!cliLocalService.hasCliApi() && <div><strong>CLI_API {cliApiService.getVersionName()} could not be resolved</strong><br/></div>}

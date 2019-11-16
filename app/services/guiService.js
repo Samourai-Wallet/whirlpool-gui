@@ -1,8 +1,9 @@
 import ifNot from 'if-not-running';
-import fetch from 'node-fetch';
-import { GUI_VERSION, VERSIONS_URL } from '../const';
+import { GUI_VERSION } from '../const';
 import cliService from './cliService';
 import backendService from './backendService';
+import guiConfig from '../mainProcess/guiConfig';
+import { API_MODES } from '../mainProcess/cliApiService';
 
 const REFRESH_RATE = 1800000; //30min
 class GuiService {
@@ -49,12 +50,12 @@ class GuiService {
 
   // getUpdate
 
-
   getGuiUpdate () {
-    if (!this.isReady() || !cliService.isConnected()) {
+    if (!this.isReady() || !cliService.isConnected() || guiConfig.getApiMode() !== API_MODES.RELEASE) {
       return undefined
     }
-    const serverName = cliService.getServerName()
+    const apiMode = guiConfig.getApiMode()
+    const serverName = apiMode === API_MODES.QA ? API_MODES.QA : cliService.getServerName()
     if (serverName && this.state.guiLast[serverName] && this.state.guiLast[serverName] !== GUI_VERSION) {
       // update available
       return this.state.guiLast[serverName]
