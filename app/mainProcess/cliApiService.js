@@ -67,11 +67,11 @@ export class CliApiService {
     try {
       let cliApi = await cliVersion.fetchCliApi(fetchVersion)
       logger.info('Using CLI_API ' + fetchVersion, cliApi)
-      const projectUrl = fetchVersion === API_MODES.QA ? 'SamouraiDev/QA' : 'Samourai-Wallet/whirlpool-client-cli'
+      const projectUrl = fetchVersion === API_MODES.QA ? 'SamouraiDev/QA/releases/download/CLI-' + cliApi.CLI_VERSION : 'Samourai-Wallet/whirlpool-client-cli/releases/download/' + cliApi.CLI_VERSION
       return {
         cliVersion: cliApi.CLI_VERSION,
         filename: 'whirlpool-client-cli-' + cliApi.CLI_VERSION + '-run.jar',
-        url: 'https://github.com/'+projectUrl+'/releases/download/' + cliApi.CLI_VERSION + '/whirlpool-client-cli-' + cliApi.CLI_VERSION + '-run.jar',
+        url: 'https://github.com/'+projectUrl + '/whirlpool-client-cli-' + cliApi.CLI_VERSION + '-run.jar',
         checksum: cliApi.CLI_CHECKSUM
       }
     } catch(e) {
