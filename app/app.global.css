@@ -52,15 +52,30 @@ td.utxoMessage {
 }
 
 .table-utxos th.utxoControls {
-  width:6.5em;
+  width: 6.5em;
 }
 
 .table-utxos tr.utxo-disabled {
-  opacity:0.5;
+  opacity: 0.5;
 }
 
 .table-hover tbody tr.utxo-disabled:hover {
   background: none;
+}
+
+.table-utxos .clipboard-icon {
+  visibility: hidden;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.table-utxos .clipboard-icon:active {
+  opacity: 0.3;
+  outline: none;
+}
+
+.table-utxos tbody tr:hover .clipboard-icon {
+  visibility: visible;
 }
 
 .modal-body canvas.qr {
@@ -79,7 +94,7 @@ td.utxoMessage {
 }
 
 .zpubLink {
-  float:right;
-  font-size:0.9em;
+  float: right;
+  font-size: 0.9em;
   font-weight: bold;
 }

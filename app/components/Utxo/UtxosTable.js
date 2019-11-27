@@ -17,6 +17,21 @@ import modalService from '../../services/modalService';
 /* eslint-disable react/prefer-stateless-function */
 class UtxosTable extends React.PureComponent {
 
+  copyToClipboard = (text: string) => {
+    const el = document.createElement('textarea');
+
+    el.value = text;
+    el.setAttribute('readonly', '');
+    el.style = { position: 'absolute', left: '-9999px' };
+
+    document.body.appendChild(el);
+
+    el.select();
+    document.execCommand('copy');
+
+    document.body.removeChild(el);
+  }
+
   render () {
     const controls = this.props.controls
     return (
@@ -25,6 +40,7 @@ class UtxosTable extends React.PureComponent {
           <thead>
           <tr>
             {this.props.account && <th scope="col">Account</th>}
+            <th scope="col" />
             <th scope="col" className='utxo'>UTXO</th>
             <th scope="col">Amount</th>
             <th scope="col">Pool</th>
@@ -42,6 +58,9 @@ class UtxosTable extends React.PureComponent {
             const allowNoPool = utxo.account === WHIRLPOOL_ACCOUNTS.DEPOSIT
             return <tr key={i} className={utxoReadOnly?'utxo-disabled':''}>
               {this.props.account && <td><small>{utxo.account}</small></td>}
+              <td>
+                <span title='Copy TX ID'><Icon.Clipboard className='clipboard-icon' tabindex={0} size={18} onClick={() => this.copyToClipboard(utxo.hash)} /></span>
+              </td>
               <td>
                 <small><span title={utxo.hash+':'+utxo.index}><LinkExternal href={utils.linkExplorer(utxo)}>{utxo.hash.substring(0,20)}...{utxo.hash.substring(utxo.hash.length-5)}:{utxo.index}</LinkExternal></span> · {utxo.path} · {utxo.confirmations>0?<span>{utxo.confirmations} confirms</span>:<strong>unconfirmed</strong>}</small>
               </td>
