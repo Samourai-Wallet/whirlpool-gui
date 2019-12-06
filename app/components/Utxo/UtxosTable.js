@@ -59,7 +59,7 @@ class UtxosTable extends React.PureComponent {
             return <tr key={i} className={utxoReadOnly?'utxo-disabled':''}>
               {this.props.account && <td><small>{utxo.account}</small></td>}
               <td>
-                <span title='Copy TX ID'><Icon.Clipboard className='clipboard-icon' tabindex={0} size={18} onClick={() => this.copyToClipboard(utxo.hash)} /></span>
+                <span title='Copy TX ID'><Icon.Clipboard className='clipboard-icon' tabIndex={0} size={18} onClick={() => this.copyToClipboard(utxo.hash)} /></span>
               </td>
               <td>
                 <small><span title={utxo.hash+':'+utxo.index}><LinkExternal href={utils.linkExplorer(utxo)}>{utxo.hash.substring(0,20)}...{utxo.hash.substring(utxo.hash.length-5)}:{utxo.index}</LinkExternal></span> · {utxo.path} · {utxo.confirmations>0?<span>{utxo.confirmations} confirms</span>:<strong>unconfirmed</strong>}</small>
