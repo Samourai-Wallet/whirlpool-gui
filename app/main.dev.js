@@ -85,7 +85,10 @@ else {
     mainWindow = new BrowserWindow({
       show: false,
       width: 1280,
-      height: 728
+      height: 728,
+      webPreferences: {
+        nodeIntegration: true
+      }
     });
 
     // init cliLocal
