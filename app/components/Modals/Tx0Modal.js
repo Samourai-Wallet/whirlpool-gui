@@ -81,18 +81,18 @@ export default class Tx0Modal extends AbstractModal {
 
   renderTitle() {
     return <div>
-      TX0: <small>{this.props.utxo.hash}:{this.props.utxo.index}</small>
+      Send to Premix
     </div>
   }
 
   renderButtons() {
-    return <Button onClick={this.handleSubmitTx0}>Tx0 <Icon.ChevronsRight size={12}/></Button>
+    return <Button onClick={this.handleSubmitTx0}>Premix <Icon.ChevronsRight size={12}/></Button>
   }
 
   renderBody() {
     return <div>
-      This will split your deposit UTXO and start mixing.<br/>
-      Value: <strong>{utils.toBtc(this.props.utxo.value)}btc</strong><br/>
+      This will send <strong>{utils.toBtc(this.props.utxo.value)}btc</strong> to Premix and prepare it for mixing.<br/>
+      Spending <strong>{this.props.utxo.hash}:{this.props.utxo.index}</strong><br/>
       <br/>
       {!this.isLoading() && !this.isError() && <div>
         Miner fee:
