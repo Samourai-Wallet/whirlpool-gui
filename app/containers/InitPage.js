@@ -10,9 +10,9 @@ import { cliLocalService } from '../services/cliLocalService';
 import utils from '../services/utils';
 
 const STEP_LAST = 2
-const DEFAULT_CLIHOST = 'http://my-remote-CLI'
+const DEFAULT_CLIHOST = 'https://my-remote-CLI'
 const DEFAULT_APIKEY = ''
-const CLILOCAL_URL = 'http://localhost:'+DEFAULT_CLIPORT
+const CLILOCAL_URL = 'https://localhost:'+DEFAULT_CLIPORT
 class InitPage extends Component<Props> {
   props: Props;
 

@@ -58,3 +58,6 @@ export const CLI_CONFIG_FILENAME = 'whirlpool-cli-config.properties';
 
 const app = electron.app || electron.remote.app;
 export const APP_USERDATA = app.getPath('userData')
+
+// accept CLI self-signed certificate
+app.commandLine.appendSwitch('ignore-certificate-errors');

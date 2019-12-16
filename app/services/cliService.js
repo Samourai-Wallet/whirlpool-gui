@@ -1,6 +1,5 @@
 import * as React from 'react';
 import ifNot from 'if-not-running';
-import Store from 'electron-store';
 import { logger } from '../utils/logger';
 import backendService from './backendService';
 import utils, { CLI_STATUS } from './utils';
@@ -8,15 +7,13 @@ import mixService from './mixService';
 import walletService from './walletService';
 import poolsService from './poolsService';
 import { cliLocalService } from './cliLocalService';
-import { DEFAULT_CLI_LOCAL, STORE_CLILOCAL } from '../const';
+import { DEFAULT_CLI_LOCAL } from '../const';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
-import guiService from './guiService';
+import guiUpdateService from './guiUpdateService';
 import routes from '../constants/routes';
-import { Link } from "react-router-dom";
-
-const STORE_CLIURL = "cli.url"
-const STORE_APIKEY = "cli.apiKey"
+import { Link } from 'react-router-dom';
+import guiConfig from '../mainProcess/guiConfig';
 
 const REFRESH_RATE = 6000;
 class CliService {
@@ -29,7 +26,6 @@ class CliService {
     this.cliUrl = undefined
     this.apiKey = undefined
     this.cliLocal = undefined
-    this.store = new Store()
 
     this.loadConfig()
   }
@@ -122,18 +118,17 @@ class CliService {
     this.cliUrl = cliUrl
     this.apiKey = apiKey
 
-    logger.info('cliService.saveConfig: cliUrl='+cliUrl)
-    this.store.set(STORE_CLIURL, cliUrl)
-    this.store.set(STORE_APIKEY, apiKey)
+    guiConfig.setCliUrl(cliUrl)
+    guiConfig.setCliApiKey(apiKey)
 
     this.setCliLocal(cliLocal)
     this.start()
   }
 
   loadConfig() {
-    this.cliUrl = this.store.get(STORE_CLIURL)
-    this.apiKey = this.store.get(STORE_APIKEY)
-    this.cliLocal = this.store.get(STORE_CLILOCAL)
+    this.cliUrl = guiConfig.getCliUrl()
+    this.apiKey = guiConfig.getCliApiKey()
+    this.cliLocal = guiConfig.getCliLocal()
     console.log('cliService.loadConfig: cliUrl='+this.cliUrl)
 
     if (!this.isConfigured()) {
@@ -145,7 +140,7 @@ class CliService {
   setCliLocal(cliLocal) {
     logger.info("cliService.setCliLocal: "+cliLocal)
     this.cliLocal = cliLocal
-    this.store.set(STORE_CLILOCAL, cliLocal)
+    guiConfig.setCliLocal(cliLocal)
     if (!cliLocal) {
       cliLocalService.deleteConfig()
     }
@@ -171,8 +166,7 @@ class CliService {
   doResetGUIConfig() {
 
     // reset GUI
-    this.store.delete(STORE_CLIURL)
-    this.store.delete(STORE_APIKEY)
+    guiConfig.resetCliConfig()
 
     this.cliUrl = undefined
     this.apiKey = undefined
@@ -339,8 +333,8 @@ class CliService {
           cliUrlError: undefined
         })
 
-        // start guiService
-        guiService.start()
+        // start guiUpdateService
+        guiUpdateService.start()
 
         // notify services
         if (this.isLoggedIn()) {

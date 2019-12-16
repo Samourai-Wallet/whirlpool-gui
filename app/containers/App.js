@@ -39,7 +39,7 @@ import { cliLocalService } from '../services/cliLocalService';
 import { cliApiService, GUI_VERSION } from '../const';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import PoolsPage from './PoolsPage';
-import guiService from '../services/guiService';
+import guiUpdateService from '../services/guiUpdateService';
 import { Alert } from 'react-bootstrap';
 
 type Props = {
@@ -61,7 +61,7 @@ class App extends React.Component<Props> {
     cliService.init(props.cli, cliState =>
       props.cliActions.set(cliState)
     )
-    guiService.init(props.gui, guiState =>
+    guiUpdateService.init(props.gui, guiState =>
       props.guiActions.set(guiState)
     )
     mixService.init(props.mix, mixState =>
@@ -124,7 +124,7 @@ class App extends React.Component<Props> {
     const torIcon = cliService.isConnected() && cliService.getTorProgressIcon() ? <span className='icon'>{cliService.getTorProgressIcon()}</span> : undefined
     const dojoIcon = cliService.isConnected() && cliService.getDojoIcon() ? <span className='icon'>{cliService.getDojoIcon()}</span> : undefined
 
-    const guiUpdate = guiService.getGuiUpdate()
+    const guiUpdate = guiUpdateService.getGuiUpdate()
 
     return <div className='h-100'>
       <Helmet>

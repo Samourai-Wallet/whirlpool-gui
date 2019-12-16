@@ -6,7 +6,7 @@ import guiConfig from '../mainProcess/guiConfig';
 import { API_MODES } from '../mainProcess/cliApiService';
 
 const REFRESH_RATE = 1800000; //30min
-class GuiService {
+class GuiUpdateService {
   constructor () {
     this.setState = undefined
     this.state = undefined
@@ -14,7 +14,7 @@ class GuiService {
   }
 
   init (state, setState) {
-    ifNot.run('guiService:init', () => {
+    ifNot.run('guiUpdateService:init', () => {
       this.setState = setState
       if (this.state === undefined) {
         console.log('guiState: init...')
@@ -65,18 +65,18 @@ class GuiService {
   }
 
   fetchState () {
-    return ifNot.run('guiService:fetchState', () => {
+    return ifNot.run('guiUpdateService:fetchState', () => {
       // fetch GUI_LAST
       return backendService.gui.versions()
         .then(json => {
           // set state
           if (this.state === undefined) {
-            console.log('guiService: initializing new state')
+            console.log('guiUpdateService: initializing new state')
             this.state = {
               guiLast: json.GUI.LAST
             }
           } else {
-            console.log('guiService: updating existing state', Object.assign({}, this.state))
+            console.log('guiUpdateService: updating existing state', Object.assign({}, this.state))
             this.state.guiLast = json.GUI.LAST
           }
           this.pushState()
@@ -89,5 +89,5 @@ class GuiService {
   }
 }
 
-const guiService = new GuiService()
-export default guiService
+const guiUpdateService = new GuiUpdateService()
+export default guiUpdateService
