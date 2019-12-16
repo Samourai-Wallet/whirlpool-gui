@@ -15,7 +15,7 @@ export default class Tx0Modal extends AbstractModal {
       pools: undefined,
       feeTarget: TX0_FEE_TARGET.BLOCKS_2.value,
       poolId: props.utxo.poolId,
-      mixsTarget: props.utxo.mixsTarget > 0 ? props.utxo.mixsTarget : 0
+      mixsTarget: props.utxo.mixsTargetOrDefault
     }
     super(props, 'modal-tx0', initialState)
 

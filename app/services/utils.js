@@ -6,7 +6,7 @@ import { shell } from 'electron';
 
 const AMOUNT_PRECISION = 4
 const BTC_TO_SAT = 100000000
-export const TX0_MIN_CONFIRMATIONS = 1
+export const TX0_MIN_CONFIRMATIONS = 0
 export const MIXSTARGET_UNLIMITED = 0
 export const DATETIME_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 
@@ -118,7 +118,7 @@ class Utils {
     if (utxo.status === UTXO_STATUS.MIX_FAILED) {
       return <FontAwesomeIcon icon={Icons.faSquare} size='xs' color='red' title='MIX FAILED'/>
     }
-    if ((utxo.account === WHIRLPOOL_ACCOUNTS.POSTMIX && utxo.mixsDone >= utxo.mixsTarget && utxo.mixableStatus === MIXABLE_STATUS.MIXABLE) || utxo.status === UTXO_STATUS.MIX_SUCCESS) {
+    if ((utxo.account === WHIRLPOOL_ACCOUNTS.POSTMIX && (utxo.mixsTargetOrDefault != MIXSTARGET_UNLIMITED || utxo.mixsDone >= utxo.mixsTargetOrDefault) && utxo.mixableStatus === MIXABLE_STATUS.MIXABLE) || utxo.status === UTXO_STATUS.MIX_SUCCESS) {
       return <FontAwesomeIcon icon={Icons.faCheck} size='xs' color='green' title='MIXED'/>
     }
 
@@ -144,7 +144,7 @@ class Utils {
   statusLabelText(utxo) {
     switch(utxo.status) {
       case UTXO_STATUS.READY:
-        if (utxo.account === WHIRLPOOL_ACCOUNTS.POSTMIX && utxo.mixsDone >= utxo.mixsTarget) {
+        if (utxo.account === WHIRLPOOL_ACCOUNTS.POSTMIX && (utxo.mixsTargetOrDefault != MIXSTARGET_UNLIMITED || utxo.mixsDone >= utxo.mixsTargetOrDefault)) {
           return 'MIXED'
         }
         if (utxo.mixableStatus === MIXABLE_STATUS.NO_POOL) {

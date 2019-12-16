@@ -18,7 +18,7 @@ class UtxoMixsTargetSelector extends React.PureComponent {
     const targets = [1, 2, 3, 5, 10, 25, 50, 100, MIXSTARGET_UNLIMITED]
 
     return (
-      <DropdownButton size='sm' variant="default" title={utxo.mixsDone+' / '+utils.mixsTargetLabel(utxo.mixsTarget)} className='utxoMixsTargetSelector'>
+      <DropdownButton size='sm' variant="default" title={utxo.mixsDone+' / '+utils.mixsTargetLabel(utxo.mixsTargetOrDefault)} className='utxoMixsTargetSelector'>
         {targets.map(value => {
           value = parseInt(value)
           const label = utils.mixsTargetLabel(value)
