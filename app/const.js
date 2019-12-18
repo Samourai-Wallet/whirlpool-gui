@@ -7,7 +7,7 @@ export const IS_DEV = (process.env.NODE_ENV === 'development')
 
 /* shared with mainProcess */
 
-const API_VERSION = '0.9';
+const API_VERSION = '0.10';
 export const cliApiService = new CliApiService(API_VERSION)
 
 export const GUI_VERSION = version;
