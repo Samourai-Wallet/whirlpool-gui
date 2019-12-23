@@ -18,6 +18,7 @@ export const WHIRLPOOL_ACCOUNTS = {
 
 export const UTXO_STATUS = {
   READY: 'READY',
+  STOP: 'STOP',
 
   TX0: 'TX0',
   TX0_FAILED: 'TX0_FAILED',
@@ -151,6 +152,7 @@ class Utils {
           return undefined
         }
         return 'READY'
+      case UTXO_STATUS.STOP: return 'STOPPED'
       case UTXO_STATUS.TX0: return 'TX0'
       case UTXO_STATUS.TX0_SUCCESS: return 'TX0:SUCCESS'
       case UTXO_STATUS.TX0_FAILED: return 'TX0:ERROR'

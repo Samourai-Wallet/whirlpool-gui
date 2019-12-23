@@ -114,17 +114,10 @@ export default class Tx0Modal extends AbstractModal {
       Spending <strong>{this.props.utxo.hash}:{this.props.utxo.index}</strong><br/>
       <br/>
       {!this.isLoading() && !this.isError() && <div>
-        Pool fee: {this.state.tx0Preview && <span>
-          {this.state.tx0Preview.feeValue > 0 && <span><strong>{utils.toBtc(this.state.tx0Preview.feeValue)} btc</strong></span>}
-          {this.state.tx0Preview.feeChange > 0 && <span><strong>{utils.toBtc(this.state.tx0Preview.feeChange)} btc (refunded by SCODE)</strong></span>}
-        </span>}
+        Pool fee: {this.state.tx0Preview && <span><strong>{utils.toBtc(this.state.tx0Preview.feeValue)} btc</strong></span>}
         <select className="form-control" onChange={this.handleChangePoolTx0} defaultValue={this.state.poolId}>
           {this.state.pools.map(pool => <option key={pool.poolId} value={pool.poolId}>{pool.poolId} · denomination: {utils.toBtc(pool.denomination)} btc · fee: {utils.toBtc(pool.feeValue)} btc</option>)}
-        </select>
-        {this.state.tx0Preview && <div>
-          <strong>{this.state.tx0Preview.nbPremix}</strong> premixs of <strong>{utils.toBtc(this.state.tx0Preview.premixValue)} btc</strong><br/>
-          Change: <strong>{utils.toBtc(this.state.tx0Preview.changeValue)} btc</strong>
-        </div>}<br/>
+        </select><br/>
 
         Miner fee: {this.state.tx0Preview && <strong>{utils.toBtc(this.state.tx0Preview.minerFee)} btc</strong>}
         <select className="form-control" onChange={this.handleChangeFeeTarget} defaultValue={this.state.feeTarget}>
@@ -143,6 +136,10 @@ export default class Tx0Modal extends AbstractModal {
           <option value={10}>10</option>
           <option value={0}>∞</option>
         </select><br/>
+
+        {this.state.tx0Preview && <div>
+          This will generate <strong>{this.state.tx0Preview.nbPremix} premixs</strong> of <strong>{utils.toBtc(this.state.tx0Preview.premixValue)} btc</strong> + <strong>{utils.toBtc(this.state.tx0Preview.changeValue)} btc</strong> change
+        </div>}
       </div>}
     </div>
   }
