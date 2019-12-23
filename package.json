@@ -1,7 +1,7 @@
 {
   "name": "whirlpool-gui",
   "productName": "whirlpool-gui",
-  "version": "0.10.0-QA",
+  "version": "0.10.0-alpha1",
   "description": "Desktop GUI for Whirlpool by Samourai-Wallet",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
