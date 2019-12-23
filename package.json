@@ -118,7 +118,8 @@
   },
   "author": {
     "name": "zeroleak",
-    "url": "https://github.com/zeroleak"
+    "url": "https://github.com/zeroleak",
+    "email" : "zeroleak@samourai.io"
   },
   "license": "Unlicense",
   "bugs": {
