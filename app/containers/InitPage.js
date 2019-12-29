@@ -2,10 +2,13 @@
 import React, { Component } from 'react';
 import { Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { ipcRenderer } from "electron";
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import WebcamPayloadModal from '../components/Modals/WebcamPayloadModal';
 import cliService from '../services/cliService';
-import { CLI_CONFIG_FILENAME, DEFAULT_CLIPORT } from '../const';
+import { CLI_CONFIG_FILENAME, DEFAULT_CLIPORT, IPC_CAMERA } from '../const';
 import { cliLocalService } from '../services/cliLocalService';
 import utils from '../services/utils';
 
@@ -32,13 +35,16 @@ class InitPage extends Component<Props> {
       hasPairingDojo: false,
       dojo: false,
       tor: false,
+      pairingPayload: '',
       pairingError: undefined,
-      cliInitError: undefined
+      cliInitError: undefined,
+      cameraError: null,
+      pairingModal: false,
+      cameraAccessGranted: false,
     }
 
     // configuration data
     this.hasPairingPayload = undefined
-    this.pairingPayload = undefined
 
     this.inputCliHost = React.createRef()
     this.inputCliPort = React.createRef()
@@ -54,6 +60,24 @@ class InitPage extends Component<Props> {
     this.onChangeDojo = this.onChangeDojo.bind(this)
     this.onSubmitInitialize = this.onSubmitInitialize.bind(this)
   }
+
+  componentDidMount() {
+    ipcRenderer.on(IPC_CAMERA.GRANTED, () => {
+      this.setState({ cameraAccessGranted: true })
+    });
+    ipcRenderer.on(IPC_CAMERA.DENIED, () => {
+      this.setState({ cameraAccessGranted: false, pairingModal: false, cameraError: "Camera access was denied or is unavailable." })
+    });
+  }
+
+  openPairingModal = () => {
+    ipcRenderer.send(IPC_CAMERA.REQUEST);
+    this.setState({ pairingModal: true });
+  };
+
+  closePairingModal = () => {
+    this.setState({ pairingModal: false });
+  };
 
   goNextStep () {
     this.goStep(this.state.step+1)
@@ -111,6 +135,9 @@ class InitPage extends Component<Props> {
 
         {this.state.step === STEP_LAST && this.step2()}
         </form>
+        {this.state.pairingModal && this.state.cameraAccessGranted && (
+          <WebcamPayloadModal onClose={this.closePairingModal} onScan={(value) => this.onChangePairingPayload(value)} />
+        )}
       </div>
     );
   }
@@ -239,8 +266,8 @@ class InitPage extends Component<Props> {
   // pairing
 
   resetPairingPayload() {
-    this.pairingPayload = undefined
     this.setState({
+      pairingPayload: '',
       hasPairingPayload: false,
       pairingError: undefined,
       cliInitError: undefined
@@ -248,6 +275,8 @@ class InitPage extends Component<Props> {
   }
 
   onChangePairingPayload(payloadStr) {
+    this.setState({ pairingPayload: payloadStr });
+
     let payload = undefined
     try {
       payload = JSON.parse(payloadStr)
@@ -256,7 +285,6 @@ class InitPage extends Component<Props> {
       const isDojo = payload.dojo && Object.keys(payload.dojo).length > 0
 
       // seems valid
-      this.pairingPayload = payloadStr
       this.setState({
         hasPairingPayload: true,
         hasPairingDojo: isDojo,
@@ -290,7 +318,7 @@ class InitPage extends Component<Props> {
   }
 
   onSubmitInitialize() {
-    cliService.initializeCli(this.state.cliUrl, this.state.currentApiKey, this.state.cliLocal, this.pairingPayload, this.state.tor, this.state.dojo).then(() => {
+    cliService.initializeCli(this.state.cliUrl, this.state.currentApiKey, this.state.cliLocal, this.state.pairingPayload, this.state.tor, this.state.dojo).then(() => {
       // success!
       this.goNextStep()
     }).catch(error => {
@@ -314,17 +342,23 @@ class InitPage extends Component<Props> {
         <div className="col-sm-11">
           <div className="row">
             <div className="col-sm-12">
-              Get your <strong>pairing payload</strong> in Samourai Wallet, go to <strong>Settings/Transactions/Experimental</strong><br/><br/>
+              Get your <strong>pairing payload</strong> in Samourai Wallet, go to <strong>Settings/Transactions/Experimental</strong><br/>
+              <a onClick={(event) => {
+                event.preventDefault();
+                this.openPairingModal();
+              }} href="#">Scan your pairing payload</a> using webcam.<br /><br />
               <input type="text" className='form-control form-control-lg' required autoFocus onChange={e => {
-                  const myValue = e.target.value
-                  this.onChangePairingPayload(myValue)
+                  this.onChangePairingPayload(e.target.value)
                 }} onClick={e => {
                   e.target.value = ''
                   this.resetPairingPayload()
-              }} defaultValue='' id="pairingPayload" placeholder='Paste your pairing payload here'/>
+              }} value={this.state.pairingPayload} id="pairingPayload" placeholder='Paste your pairing payload here'/>
             </div>
             {this.state.pairingError && <div className="col-sm-12"><br/>
               <Alert variant='danger'>{this.state.pairingError}</Alert>
+            </div>}
+            {this.state.cameraError && <div className="col-sm-12"><br/>
+              <Alert variant='danger'>{this.state.cameraError}</Alert>
             </div>}
           </div>
         </div>
