@@ -10,13 +10,13 @@
  *
  * @flow
  */
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, systemPreferences } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { CliLocal } from './mainProcess/cliLocal';
 import fs from "fs";
-import { GUI_LOG_FILE } from './const';
+import { GUI_LOG_FILE, IPC_CAMERA } from './const';
 
 
 export default class AppUpdater {
@@ -88,6 +88,20 @@ else {
       height: 728,
       webPreferences: {
         nodeIntegration: true
+      }
+    });
+
+    ipcMain.on(IPC_CAMERA.REQUEST, async (event) => {
+      if (process.platform !== 'darwin' || systemPreferences.getMediaAccessStatus("camera") !== "granted") {
+        event.reply(IPC_CAMERA.GRANTED)
+      } else {
+        const granted = await systemPreferences.askForMediaAccess("camera");
+
+        if (granted) {
+          event.reply(IPC_CAMERA.GRANTED)
+        } else {
+          event.reply(IPC_CAMERA.DENIED)
+        }
       }
     });
 

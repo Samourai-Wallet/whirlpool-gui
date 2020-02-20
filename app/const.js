@@ -23,6 +23,11 @@ export const IPC_CLILOCAL = {
   RELOAD: 'cliLocal.reload',
   DELETE_CONFIG: 'cliLocal.deleteConfig'
 };
+export const IPC_CAMERA = {
+  REQUEST: 'camera.request',
+  GRANTED: 'camera.granted',
+  DENIED: 'camera.denied'
+};
 export const CLILOCAL_STATUS = {
   DOWNLOADING: 'DOWNLOADING',
   ERROR: 'ERROR',
