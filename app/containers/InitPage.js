@@ -12,7 +12,7 @@ import { CLI_CONFIG_FILENAME, DEFAULT_CLIPORT, IPC_CAMERA } from '../const';
 import { cliLocalService } from '../services/cliLocalService';
 import utils from '../services/utils';
 
-const STEP_LAST = 2
+const STEP_LAST = 3
 const DEFAULT_CLIHOST = 'https://my-remote-CLI'
 const DEFAULT_APIKEY = ''
 const CLILOCAL_URL = 'https://localhost:'+DEFAULT_CLIPORT
@@ -113,8 +113,6 @@ class InitPage extends Component<Props> {
 
         {this.state.cliUrl && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Connected to whirlpool-cli: <strong>{this.state.cliLocal ? 'standalone' : this.state.cliUrl}</strong></div>}
         {this.state.hasPairingPayload && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Ready to pair with Samourai Wallet</div>}
-        {this.state.step > 0 && this.state.hasPairingDojo && <div>{utils.checkedIcon(this.state.dojo)} DOJO is <strong>{this.state.dojo?'enabled':'disabled'}</strong></div>}
-        {this.state.step > 0 && <div>{utils.checkedIcon(this.state.tor)} Tor is <strong>{this.state.tor?'enabled':'disabled'}</strong></div>}
         {this.state.step === STEP_LAST && <div><FontAwesomeIcon icon={Icons.faCheck} color='green' /> Configuration saved</div>}
         <br/>
 
@@ -126,14 +124,9 @@ class InitPage extends Component<Props> {
         }}>
 
         {this.state.step === 0 && this.step0()}
-
-        {(this.state.step === 1 || this.state.step === 2) &&
-          <div>
-            {this.state.step === 1 && this.step1()}
-          </div>
-        }
-
-        {this.state.step === STEP_LAST && this.step2()}
+        {this.state.step === 1 && this.step1()}
+        {this.state.step === 2 && this.step2()}
+        {this.state.step === STEP_LAST && this.step3()}
         </form>
         {this.state.pairingModal && this.state.cameraAccessGranted && (
           <WebcamPayloadModal onClose={this.closePairingModal} onScan={(value) => this.onChangePairingPayload(value)} />
@@ -292,6 +285,7 @@ class InitPage extends Component<Props> {
         tor: isDojo,
         pairingError: undefined
       })
+      this.goNextStep()
     } else {
       // invalid payload
       console.error('Invalid payload: '+payloadStr)
@@ -330,10 +324,6 @@ class InitPage extends Component<Props> {
   }
 
   step1() {
-    const checked = e => {
-      return e.target.checked
-    }
-    const myThis = this
     return <div>
       <div className="form-group row">
         <div className="col-sm-1 text-right">
@@ -342,51 +332,74 @@ class InitPage extends Component<Props> {
         <div className="col-sm-11">
           <div className="row">
             <div className="col-sm-12">
-              Get your <strong>pairing payload</strong> in Samourai Wallet, go to <strong>Settings/Transactions/Experimental</strong><br/>
+              Get your <strong>pairing payload</strong> from Samourai Wallet, go
+              to <strong>Settings/Transactions/Experimental</strong> then{' '}
               <a onClick={(event) => {
                 event.preventDefault();
                 this.openPairingModal();
-              }} href="#">Scan your pairing payload</a> using webcam.<br /><br />
-              <input type="text" className='form-control form-control-lg' required autoFocus onChange={e => {
-                  this.onChangePairingPayload(e.target.value)
-                }} onClick={e => {
-                  e.target.value = ''
-                  this.resetPairingPayload()
-              }} value={this.state.pairingPayload} id="pairingPayload" placeholder='Paste your pairing payload here'/>
+              }} href="#"><strong>scan it using webcam</strong></a>.<br/>
+              <br/>
+              <div className="row">
+                <div className="col-sm-10">
+                  <input type="text" className='form-control form-control-lg' required autoFocus onChange={e => {
+                    this.onChangePairingPayload(e.target.value)
+                  }} onClick={e => {
+                    e.target.value = ''
+                    this.resetPairingPayload()
+                  }} value={this.state.pairingPayload} id="pairingPayload"
+                         placeholder='Scan or paste your pairing payload here'/>
+                </div>
+                <div className="col-sm-2 text-left">
+                  <a title="Scan your pairing payload using webcam" onClick={(event) => {
+                    event.preventDefault();
+                    this.openPairingModal();
+                  }} href="#"><FontAwesomeIcon icon={Icons.faQrcode} size='3x'/></a>
+                </div>
+              </div>
             </div>
-            {this.state.pairingError && <div className="col-sm-12"><br/>
-              <Alert variant='danger'>{this.state.pairingError}</Alert>
-            </div>}
-            {this.state.cameraError && <div className="col-sm-12"><br/>
-              <Alert variant='danger'>{this.state.cameraError}</Alert>
-            </div>}
           </div>
+          {this.state.pairingError && <div className="col-sm-12"><br/>
+            <Alert variant='danger'>{this.state.pairingError}</Alert>
+          </div>}
+          {this.state.cameraError && <div className="col-sm-12"><br/>
+            <Alert variant='danger'>{this.state.cameraError}</Alert>
+          </div>}
         </div>
       </div>
-      {this.state.hasPairingDojo && <div className="row">
-        <div className="col-sm-1"></div>
-        <div className="col-sm-11">
-          <div className='custom-control custom-switch' style={{paddingLeft:'1em'}}>
-            <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeDojo(checked(e))} defaultChecked={myThis.state.dojo} id="dojo"/>
-            <label className="custom-control-label" htmlFor="dojo">Enable DOJO (wallet backend) <FontAwesomeIcon icon={Icons.faHdd}/></label>
-          </div>
-        </div>
-      </div>}
+      {this.navButtons(this.state.pairingPayload)}
+    </div>
+  }
+
+  step2() {
+    const checked = e => {
+      return e.target.checked
+    }
+    const myThis = this
+    return <div>
       <div className="row">
-        <div className="col-sm-1"></div>
-        <div className="col-sm-11">
-          {!this.state.dojo && <div className='custom-control custom-switch' style={{paddingLeft:'1em'}}>
+        <div className="col-sm-1 text-center">
+          {utils.torIcon('100%')}
+        </div>
+        <div className="col-sm-4">
+          {this.state.hasPairingDojo && <div>
+            <div className='custom-control custom-switch'>
+              <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeDojo(checked(e))} defaultChecked={myThis.state.dojo} id="dojo"/>
+              <label className="custom-control-label" htmlFor="dojo">Use Dojo as wallet backend <FontAwesomeIcon icon={Icons.faHdd}/></label>
+            </div>
+            {this.state.dojo && <div>
+              <div className='custom-control custom-switch'>
+                <input type="checkbox" className="custom-control-input" defaultChecked={true} id="torDojo" disabled/>
+                <label className="custom-control-label" htmlFor="torDojo">Tor is required for Dojo</label>
+              </div>
+            </div>}
+          </div>}
+          {!this.state.dojo && <div className='custom-control custom-switch'>
             <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeTor(checked(e))} defaultChecked={myThis.state.tor} id="tor"/>
-            <label className="custom-control-label" htmlFor="tor">Enable Tor {utils.torIcon()}</label>
-          </div>}
-          {this.state.dojo && <div style={{paddingLeft:'1em'}}>
-            <label>Tor+DOJO enabled {utils.torIcon()}</label>
+            <label className="custom-control-label" htmlFor="tor">Enable Tor</label>
           </div>}
         </div>
-      </div>
-      <div className="row">
-        <div className="col-sm-12 text-center">
-          {this.state.hasPairingPayload && <button type="button" className="btn btn-primary btn-lg" onClick={this.onSubmitInitialize}>Initialize GUI</button>}
+        <div className="col-sm-7">
+          <button type="button" className="btn btn-primary btn-lg" onClick={this.onSubmitInitialize}>Initialize GUI</button>
         </div>
       </div>
       {this.state.cliInitError && <div className="row">
@@ -398,7 +411,7 @@ class InitPage extends Component<Props> {
     </div>
   }
 
-  step2() {
+  step3() {
     return <div>
       <p>Success. <b>whirlpool-gui</b> is now configured.</p>
       <p>Reconnecting to CLI...</p>

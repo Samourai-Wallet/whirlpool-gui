@@ -45,7 +45,7 @@ export default class WebcamPayloadModal extends AbstractModal {
   };
 
   renderTitle() {
-    return <span>Pairing Payload</span>;
+    return <span>Scan your pairing payload</span>;
   }
 
   renderButtons() {
@@ -56,8 +56,7 @@ export default class WebcamPayloadModal extends AbstractModal {
     return (
       <div className="row">
         <div className="col-sm-12">
-          Scan your <strong>pairing payload</strong> from Samourai Wallet, go to{' '}
-          <strong>Settings/Transactions/Experimental</strong>
+          Get your <strong>pairing payload</strong> from Samourai Wallet, go to <strong>Settings/Transactions/Experimental</strong>
           <div className="text-center pt-4">
             <Webcam
               ref={this.webcamRef}
