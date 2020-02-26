@@ -23,13 +23,11 @@ class LoginPage extends Component<Props> {
   }
 
   onSubmit() {
-    const seedPassphrase = this.inputPassphrase.current.value
-    cliService.login(seedPassphrase).then(() => {
-        this.setState({
-        loginError: undefined
-      })
+    this.setState({
+      loginError: undefined
     })
-      .catch(e => this.setState({
+    const seedPassphrase = this.inputPassphrase.current.value
+    cliService.login(seedPassphrase).catch(e => this.setState({
       loginError: e.message
     }))
   }
