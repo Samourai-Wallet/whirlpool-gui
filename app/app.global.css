@@ -55,6 +55,10 @@ td.utxoMessage {
   width: 7.5em;
 }
 
+.table-utxos th a {
+  cursor: pointer;
+}
+
 .table-utxos tr.utxo-disabled {
   opacity: 0.5;
 }
