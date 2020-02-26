@@ -67,6 +67,8 @@ const UtxosTable = ({ controls, account, utxos }) => {
     return sortedUtxos;
   }, [utxos, sortBy, ascending]);
 
+  const renderSort = sort => sortBy === sort && (ascending ? "▲" : "▼")
+
   return (
     <div className='table-utxos'>
       <table className="table table-sm table-hover">
@@ -74,39 +76,48 @@ const UtxosTable = ({ controls, account, utxos }) => {
           <tr>
             {account && <th scope="col">
               <a onClick={() => handleSetSort('account')}>
-                Account {sortBy === 'account' && (ascending ? "▲" : "▼")}
+                Account {renderSort('account')}
               </a>
             </th>}
             <th scope="col"/>
-            <th scope="col" className='utxo'>
+            <th scope="col" className='hash'>
+              <a onClick={() => handleSetSort('hash')}>
+                UTXO {renderSort('hash')}
+              </a>
+            </th>
+            <th scope="col" className='path'>
               <a onClick={() => handleSetSort('path')}>
-                UTXO {sortBy === 'path' && (ascending ? "▲" : "▼")}
+                Path {renderSort('path')}
               </a>
             </th>
-            <th scope="col">
+            <th scope="col" className='confirmations'>
+              <a onClick={() => handleSetSort('confirmations')}>
+                Confirms {renderSort('confirmations')}
+              </a>
+            </th>
+            <th scope="col" className='value'>
               <a onClick={() => handleSetSort('value')}>
-                Amount {sortBy === 'value' && (ascending ? "▲" : "▼")}
+                Amount {renderSort('value')}
               </a>
             </th>
-            <th scope="col">
+            <th scope="col" className='poolId'>
               <a onClick={() => handleSetSort('poolId')}>
-                Pool {sortBy === 'poolId' && (ascending ? "▲" : "▼")}
+                Pool {renderSort('poolId')}
+              </a>
+            </th>
+            <th scope="col" className='mixsDone'>
+              <a onClick={() => handleSetSort('mixsDone')}>
+                Mixs {renderSort('mixsDone')}
               </a>
             </th>
             <th scope="col" className='utxoStatus'>
               <a onClick={() => handleSetSort('status')}>
-                Status {sortBy === 'status' && (ascending ? "▲" : "▼")}
-              </a>
-            </th>
-            <th scope="col" />
-            <th scope="col">
-              <a onClick={() => handleSetSort('mixsDone')}>
-                Mixs {sortBy === 'mixsDone' && (ascending ? "▲" : "▼")}
+                Status {renderSort('status')}
               </a>
             </th>
             <th scope="col" colSpan={2}>
               <a onClick={() => handleSetSort('lastActivityElapsed')}>
-                Last activity {sortBy === 'lastActivityElapsed' && (ascending ? "▲" : "▼")}
+                Last activity {renderSort('lastActivityElapsed')}
               </a>
             </th>
             {controls && <th scope="col" className='utxoControls' />}
@@ -137,22 +148,29 @@ const UtxosTable = ({ controls, account, utxos }) => {
                     <LinkExternal href={utils.linkExplorer(utxo)}>
                       {utxo.hash.substring(0, 20)}...{utxo.hash.substring(utxo.hash.length - 5)}:{utxo.index}
                     </LinkExternal>
-                  </span> · {utxo.path} · {utxo.confirmations > 0 ? (
-                  <span>{utxo.confirmations} confirms</span>
+                  </span>
+                </small>
+              </td>
+              <td>
+                <small>{utxo.path}</small>
+              </td>
+              <td>
+                <small>{utxo.confirmations > 0 ? (
+                  <span title="confirmations">{utxo.confirmations}</span>
                 ) : (
                   <strong>unconfirmed</strong>
                 )}
                 </small>
               </td>
               <td>{utils.toBtc(utxo.value)}</td>
-              <td>{!utxoReadOnly && <UtxoPoolSelector utxo={utxo} noPool={allowNoPool}/>}
+              <td>
+                {!utxoReadOnly && <UtxoPoolSelector utxo={utxo} noPool={allowNoPool}/>}
+              </td>
+              <td>
+                {!utxoReadOnly && <UtxoMixsTargetSelector utxo={utxo}/>}
               </td>
               <td>
                 {!utxoReadOnly && <span className='text-primary'>{utils.statusLabel(utxo)}</span>}
-              </td>
-              <td/>
-              <td>
-                {!utxoReadOnly && <UtxoMixsTargetSelector utxo={utxo}/>}
               </td>
               <td className='utxoMessage'>
                 {!utxoReadOnly && <small>{utils.utxoMessage(utxo)}</small>}

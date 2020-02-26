@@ -11,12 +11,20 @@
   line-height: 1em !important;
 }
 
-th.utxo {
-  min-width: 340px;
+th.hash {
+  width: 190px;
 }
 
-th.utxoStatus {
-  min-width: 85px;
+th.path {
+  width: 60px;
+}
+
+th.confirmations {
+  min-width: 120px;
+}
+
+th.value, th.poolId, th.mixsDone, th.utxoStatus {
+  width: 95px;
 }
 
 td.utxoMessage {
