@@ -79,11 +79,16 @@ class GuiConfig {
   }
 
   validate(config) {
-    if (!config || !config.API_MODE || !API_MODES[config.API_MODE]) {
+    if (config) {
+      if (config.API_MODE && API_MODES[config.API_MODE]) {
+        // valid
+        return true
+      }
+      // invalid
       logger.error("guiConfig is invalid: "+GUI_CONFIG_FILEPATH)
-      return false
     }
-    return true
+    // or not existing
+    return false
   }
 
   getApiMode() {
