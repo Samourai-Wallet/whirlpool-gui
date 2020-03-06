@@ -74,12 +74,12 @@ const UtxosTable = ({ controls, account, utxos }) => {
       <table className="table table-sm table-hover">
         <thead>
           <tr>
-            {account && <th scope="col">
+            <th scope="col"/>
+            {account && <th scope="col" className='account'>
               <a onClick={() => handleSetSort('account')}>
                 Account {renderSort('account')}
               </a>
             </th>}
-            <th scope="col"/>
             <th scope="col" className='hash'>
               <a onClick={() => handleSetSort('hash')}>
                 UTXO {renderSort('hash')}
@@ -131,7 +131,6 @@ const UtxosTable = ({ controls, account, utxos }) => {
 
           return (
             <tr key={i} className={utxoReadOnly ? 'utxo-disabled' : ''}>
-              {account && <td><small>{utxo.account}</small></td>}
               <td>
                 <span title='Copy TX ID'>
                   <Icon.Clipboard
@@ -142,6 +141,7 @@ const UtxosTable = ({ controls, account, utxos }) => {
                   />
                 </span>
               </td>
+              {account && <td><small>{utxo.account}</small></td>}
               <td>
                 <small>
                   <span title={utxo.hash + ':' + utxo.index}>

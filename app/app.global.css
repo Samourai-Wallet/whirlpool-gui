@@ -19,11 +19,11 @@ th.path {
   width: 60px;
 }
 
-th.confirmations {
-  min-width: 120px;
+th.account {
+  width: 70px;
 }
 
-th.value, th.poolId, th.mixsDone, th.utxoStatus {
+th.confirmations, th.value, th.poolId, th.mixsDone, th.utxoStatus {
   width: 95px;
 }
 
