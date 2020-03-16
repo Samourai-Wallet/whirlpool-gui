@@ -74,7 +74,7 @@ const UtxosTable = ({ controls, account, utxos }) => {
       <table className="table table-sm table-hover">
         <thead>
           <tr>
-            <th scope="col"/>
+            <th scope="col" className='clipboard'/>
             {account && <th scope="col" className='account'>
               <a onClick={() => handleSetSort('account')}>
                 Account {renderSort('account')}

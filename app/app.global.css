@@ -11,6 +11,10 @@
   line-height: 1em !important;
 }
 
+th.clipboard {
+  width: 20px;
+}
+
 th.hash {
   width: 190px;
 }
