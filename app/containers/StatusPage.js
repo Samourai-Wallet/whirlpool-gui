@@ -66,7 +66,7 @@ export default class StatusPage extends Component<Props> {
                     <strong>GUI logs:</strong>
                   </div>
                   <div className='col-sm-10'>
-                    <div>GUI <strong>{GUI_VERSION}</strong>, CLI API <strong>{cliApiService.getVersionName()}</strong></div>
+                    <div>GUI <strong>{GUI_VERSION}</strong>, API <strong>{cliApiService.getVersionName()}</strong></div>
                     <div><LinkExternal href={'file://'+APP_USERDATA}>{APP_USERDATA}</LinkExternal></div>
                     <div><LinkExternal href={'file://'+this.guiLogFile}>{this.guiLogFile}</LinkExternal></div>
                   </div>

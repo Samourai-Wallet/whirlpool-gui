@@ -82,7 +82,7 @@ class CliLocalService {
     // downloading
     if (cliLocalService.isStatusDownloading()) {
       const progress = this.getProgress()
-      const status = 'CLI '+cliLocalService.getCliVersionStr()+' is being downloaded... '+(progress?progress+'%':'')
+      const status = 'Downloading CLI '+cliLocalService.getCliVersionStr()+'... '+(progress?progress+'%':'')
       const progressBar = progress ? <ProgressBar animated now={progress} label={progress+'%'} title={status}/> : <span></span>
       return format(progressBar, status)
     }
