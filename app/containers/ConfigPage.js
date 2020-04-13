@@ -185,7 +185,7 @@ export default class ConfigPage extends Component<Props> {
                       const myValue = parseInt(e.target.value)
                       myThis.onChangeCliConfig(cliConfig => cliConfig.mix.clientDelay = myValue)
                     }} defaultValue={cliConfig.mix.clientDelay} id="clientDelay"/>
-                    <label className='col-form-label col-sm-11'>Delay between each client connection</label>
+                    <label className='col-form-label col-sm-11'>Delay (in seconds) between each client connection</label>
                   </div>
                 </div>
               </div>
@@ -198,7 +198,7 @@ export default class ConfigPage extends Component<Props> {
                       const myValue = parseInt(e.target.value)
                       myThis.onChangeCliConfig(cliConfig => cliConfig.mix.tx0MaxOutputs = myValue)
                     }} defaultValue={cliConfig.mix.tx0MaxOutputs} id="tx0MaxOutputs"/>
-                    <label className='col-form-label col-sm-11'>Max premixs per TX0 (0 = no limit)</label>
+                    <label className='col-form-label col-sm-11'>Max premixes per TX0 (0 = no limit)</label>
                   </div>
                 </div>
               </div>
@@ -211,6 +211,7 @@ export default class ConfigPage extends Component<Props> {
                       const myValue = e.target.value
                       myThis.onChangeCliConfig(cliConfig => cliConfig.scode = myValue)
                     }} defaultValue={cliConfig.scode} id="scode"/>
+                    <label className='col-form-label col-sm-11'>A Samourai Discount Code for reduced-cost mixing.</label>
                   </div>
                 </div>
               </div>
