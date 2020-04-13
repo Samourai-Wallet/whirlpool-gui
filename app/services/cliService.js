@@ -309,7 +309,12 @@ class CliService {
   }
 
   setCliLocalState(cliLocalState) {
-    this.updateState({cliLocalState: cliLocalState})
+    const newState = {cliLocalState: cliLocalState}
+    if (cliLocalState !== undefined && cliLocalState.error) {
+      // forward local CLI error
+      newState.cliUrlError = cliLocalState.error
+    }
+    this.updateState(newState)
   }
 
   doFetchState(cliUrl=undefined, apiKey=undefined)  {
