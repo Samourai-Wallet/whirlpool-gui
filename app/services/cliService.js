@@ -313,6 +313,7 @@ class CliService {
     if (cliLocalState !== undefined && cliLocalState.error) {
       // forward local CLI error
       newState.cliUrlError = cliLocalState.error
+      newState.cli = undefined
     }
     this.updateState(newState)
   }

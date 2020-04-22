@@ -19,11 +19,8 @@ class ConnectingPage extends Component<Props> {
   }
 
   render() {
-    const cliUrlError = cliService.getCliUrlError()
-    if (cliUrlError) {
-      return this.renderCliUrlError(cliUrlError)
-    }
-    return this.renderConnecting()
+    const cliUrlError = cliService.getCliUrlError() // or undefined
+    return this.renderConnecting(cliUrlError)
   }
 
   // connecting
@@ -32,7 +29,7 @@ class ConnectingPage extends Component<Props> {
     cliService.fetchState()
   }
 
-  renderConnecting() {
+  renderConnecting(cliUrlError) {
     return (
       <form className="form-signin text-center" onSubmit={(e) => {this.onSubmit();e.preventDefault()}}>
         <h1 className="h3 mb-3 font-weight-normal">Connecting...</h1>
@@ -43,6 +40,16 @@ class ConnectingPage extends Component<Props> {
 
         {cliService.getCliMessage() && <Alert variant='info'>{cliService.getCliMessage()}</Alert>}
         <button type='button' className='btn btn-primary' onClick={this.reconnect}><FontAwesomeIcon icon={Icons.faSync} /> Retry to connect</button>
+
+        {cliUrlError && <div>
+          <br/>
+          <Alert variant='danger'>Connection failed: {cliUrlError}</Alert>
+          <br/><br/><br/><br/>
+          <p>You may want to reset GUI settings.</p>
+          <div className='text-center'>
+            <button type='button' className='btn btn-danger btn-sm' onClick={this.onResetConfig}><FontAwesomeIcon icon={Icons.faExclamationTriangle} /> Reset {cliService.getResetLabel()}</button>
+          </div>
+        </div>}
       </form>
     );
   }
@@ -55,27 +62,18 @@ class ConnectingPage extends Component<Props> {
     }
   }
 
-  renderCliUrlError(cliUrlError) {
+  renderCliUrlError() {
     return (
 
       <form className="form-signin text-center" onSubmit={(e) => {this.onSubmit();e.preventDefault()}}>
-        <h1 className="h3 mb-3 font-weight-normal">Connection failed</h1>
+        <h1 className="h3 mb-3 font-weight-normal">Connecting...</h1>
         <div><FontAwesomeIcon icon={Icons.faWifi} size='3x' color='#343a40'/></div>
-        <p>Unable to connect to whirlpool-cli.<br/>
+        <p>Connecting to whirlpool-cli...<br/>
           <strong>{cliService.getCliUrl()}</strong><br/>
           {cliService.isCliLocal() && <div>{cliLocalService.getStatusIcon((icon,text)=><span>{icon} {text}<br/>(might take a minute to start... restart if longer)</span>)}</div>}
         </p>
 
-        <Alert variant='danger'>Connection failed: {cliUrlError}</Alert>
-        <button type='button' className='btn btn-primary' onClick={this.reconnect}><FontAwesomeIcon icon={Icons.faSync} /> Retry to connect</button>
-        <br/>
 
-        <br/><br/><br/><br/>
-
-        <p>You may want to reset GUI settings.</p>
-        <div className='text-center'>
-          <button type='button' className='btn btn-danger btn-sm' onClick={this.onResetConfig}><FontAwesomeIcon icon={Icons.faExclamationTriangle} /> Reset {cliService.getResetLabel()}</button>
-        </div>
       </form>
     );
   }
