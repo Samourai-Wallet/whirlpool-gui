@@ -96,26 +96,22 @@ export default class ConfigPage extends Component<Props> {
           </div>
 
           <Card>
-            <Card.Header>General configuration</Card.Header>
+            <Card.Header>CLI General configuration</Card.Header>
             <Card.Body>
               <div className="form-group row">
                 <label htmlFor="mixsTarget" className="col-sm-2 col-form-label">Mixs target min</label>
-                <div className="col-sm-10">
-                  <div className='row'>
-                    <input type="number" className='form-control col-sm-1' onChange={e => {
-                      const myValue = parseInt(e.target.value)
-                      myThis.onChangeCliConfig(cliConfig => cliConfig.mix.mixsTarget = myValue)
-                    }} defaultValue={cliConfig.mix.mixsTarget} id="mixsTarget"/>
-                    <label className='col-form-label col-sm-11'>Minimum number of mixs to achieve per UTXO</label>
-                  </div>
-                </div>
+                <input type="number" className='form-control col-sm-3' onChange={e => {
+                  const myValue = parseInt(e.target.value)
+                  myThis.onChangeCliConfig(cliConfig => cliConfig.mix.mixsTarget = myValue)
+                }} defaultValue={cliConfig.mix.mixsTarget} id="mixsTarget"/>
+                <label className='col-form-label col-sm-5 text-muted'>Minimum number of mixs to achieve per UTXO</label>
               </div>
 
               <div className="form-group row">
                 <label htmlFor="autoMix" className="col-sm-2 col-form-label">Auto-MIX</label>
                 <div className="col-sm-10 custom-control custom-switch">
                   <input type="checkbox" className="custom-control-input" onChange={e => myThis.onChangeCliConfig(cliConfig => cliConfig.mix.autoMix = checked(e))} defaultChecked={cliConfig.mix.autoMix} id="autoMix"/>
-                  <label className="custom-control-label" htmlFor="autoMix">Automatically QUEUE premix & postmix</label>
+                  <label className="custom-control-label" htmlFor="autoMix">Automatically mix premix & postmix</label>
                 </div>
               </div>
 
@@ -144,32 +140,65 @@ export default class ConfigPage extends Component<Props> {
               </div>
 
               <div className="form-group row">
-                <label htmlFor="proxy" className="col-sm-2 col-form-label">Proxy</label>
-                <div className="col-sm-10">
-                  <div className='row'>
-                    <input type="text" className='form-control col-sm-4' onChange={e => {
-                      const myValue = e.target.value
-                      myThis.onChangeCliConfig(cliConfig => cliConfig.proxy = myValue)
-                    }} defaultValue={cliConfig.proxy} id="proxy"/>
-                    <label className='col-form-label col-sm-8'>
-                      Use SOCKS or HTTP proxy.<br/>
-                      <small>socks://host:port or http://host:port</small>
-                    </label>
-                  </div>
-                </div>
+                <label htmlFor="scode" className="col-sm-2 col-form-label">SCODE</label>
+                  <input type="text" className='form-control col-sm-3' onChange={e => {
+                    const myValue = e.target.value
+                    myThis.onChangeCliConfig(cliConfig => cliConfig.scode = myValue)
+                  }} defaultValue={cliConfig.scode} id="scode"/>
+                  <label className='col-form-label col-sm-5 text-muted'>A Samourai Discount Code for reduced-cost mixing.</label>
               </div>
             </Card.Body>
           </Card>
+
           <small><a onClick={this.toogleDevelopersConfig} style={{cursor:'pointer'}}>Toggle developers settings</a></small><br/>
           <br/>
 
           {this.state.showDevelopersConfig && <Card>
-            <Card.Header>Developers settings</Card.Header>
+            <Card.Header>CLI Developers settings</Card.Header>
             <Card.Body>
 
               <div className="form-group row">
+                <label htmlFor="clientDelay" className="col-sm-2 col-form-label">Client delay</label>
+                <input type="number" className='form-control col-sm-3' onChange={e => {
+                  const myValue = parseInt(e.target.value)
+                  myThis.onChangeCliConfig(cliConfig => cliConfig.mix.clientDelay = myValue)
+                }} defaultValue={cliConfig.mix.clientDelay} id="clientDelay"/>
+                <label className='col-form-label col-sm-5 text-muted'>Delay (in seconds) between each client connection</label>
+              </div>
+
+              <div className="form-group row">
+                <label htmlFor="tx0MaxOutputs" className="col-sm-2 col-form-label">TX0 max outputs</label>
+                  <input type="number" className='form-control col-sm-3' onChange={e => {
+                    const myValue = parseInt(e.target.value)
+                    myThis.onChangeCliConfig(cliConfig => cliConfig.mix.tx0MaxOutputs = myValue)
+                  }} defaultValue={cliConfig.mix.tx0MaxOutputs} id="tx0MaxOutputs"/>
+                <label className='col-form-label col-sm-5 text-muted'>Max premixes per TX0 (0 = no limit)</label>
+              </div>
+
+              {clientsPerPoolEditable && <div className="form-group row">
+                <label htmlFor="clientsPerPool" className="col-sm-2 col-form-label">Max clients per pool</label>
+                <input type="number" className='form-control col-sm-3' onChange={e => {
+                  const myValue = parseInt(e.target.value)
+                  myThis.onChangeCliConfig(cliConfig => cliConfig.mix.clientsPerPool = myValue)
+                }} defaultValue={cliConfig.mix.clientsPerPool} id="clientsPerPool"/>
+                <label className='col-form-label col-sm-5 text-muted'>Max simultaneous mixing clients per pool</label>
+              </div>}
+
+              <div className="form-group row">
+                <label htmlFor="proxy" className="col-sm-2 col-form-label">CLI proxy</label>
+                  <input type="text" className='form-control col-sm-3' onChange={e => {
+                    const myValue = e.target.value
+                    myThis.onChangeCliConfig(cliConfig => cliConfig.proxy = myValue)
+                  }} defaultValue={cliConfig.proxy} id="proxy"/>
+                  <label className='col-form-label col-sm-7 text-muted'>
+                    Set it only when blocked by a firewall (this is not <i>GUI Tor proxy</i>).<br/>
+                    <code>socks://host:port</code> or <code>http://host:port</code>
+                  </label>
+              </div>
+
+              <div className="form-group row">
                 <label htmlFor="server" className="col-sm-2 col-form-label">Server</label>
-                <select className="col-sm-8 form-control" id="server" onChange={e => {
+                <select className="col-sm-3 form-control" id="server" onChange={e => {
                   const myValue = e.target.value
                   myThis.onChangeCliConfig(cliConfig => cliConfig.server = myValue)
                 }} defaultValue={cliConfig.server}>
@@ -177,57 +206,6 @@ export default class ConfigPage extends Component<Props> {
                 </select>
               </div>
 
-              <div className="form-group row">
-                <label htmlFor="clientDelay" className="col-sm-2 col-form-label">Client delay</label>
-                <div className="col-sm-10">
-                  <div className='row'>
-                    <input type="number" className='form-control col-sm-1' onChange={e => {
-                      const myValue = parseInt(e.target.value)
-                      myThis.onChangeCliConfig(cliConfig => cliConfig.mix.clientDelay = myValue)
-                    }} defaultValue={cliConfig.mix.clientDelay} id="clientDelay"/>
-                    <label className='col-form-label col-sm-11'>Delay (in seconds) between each client connection</label>
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label htmlFor="tx0MaxOutputs" className="col-sm-2 col-form-label">TX0 max outputs</label>
-                <div className="col-sm-10">
-                  <div className='row'>
-                    <input type="number" className='form-control col-sm-1' onChange={e => {
-                      const myValue = parseInt(e.target.value)
-                      myThis.onChangeCliConfig(cliConfig => cliConfig.mix.tx0MaxOutputs = myValue)
-                    }} defaultValue={cliConfig.mix.tx0MaxOutputs} id="tx0MaxOutputs"/>
-                    <label className='col-form-label col-sm-11'>Max premixes per TX0 (0 = no limit)</label>
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label htmlFor="scode" className="col-sm-2 col-form-label">SCODE</label>
-                <div className="col-sm-10">
-                  <div className='row'>
-                    <input type="text" className='form-control col-sm-2' onChange={e => {
-                      const myValue = e.target.value
-                      myThis.onChangeCliConfig(cliConfig => cliConfig.scode = myValue)
-                    }} defaultValue={cliConfig.scode} id="scode"/>
-                    <label className='col-form-label col-sm-11'>A Samourai Discount Code for reduced-cost mixing.</label>
-                  </div>
-                </div>
-              </div>
-
-              {clientsPerPoolEditable && <div className="form-group row">
-                <label htmlFor="clientsPerPool" className="col-sm-2 col-form-label">Max clients per pool</label>
-                <div className="col-sm-10">
-                  <div className='row'>
-                    <input type="number" className='form-control col-sm-1' onChange={e => {
-                      const myValue = parseInt(e.target.value)
-                      myThis.onChangeCliConfig(cliConfig => cliConfig.mix.clientsPerPool = myValue)
-                    }} defaultValue={cliConfig.mix.clientsPerPool} id="clientsPerPool"/>
-                    <label className='col-form-label col-sm-11'>Max simultaneous mixing clients per pool</label>
-                  </div>
-                </div>
-              </div>}
             </Card.Body>
           </Card>}
           <br/>

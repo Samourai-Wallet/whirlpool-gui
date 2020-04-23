@@ -59,6 +59,7 @@ export const STORE_CLILOCAL = 'cli.local';
 export const CLI_LOG_FILE = computeLogPath('whirlpool-cli.log');
 export const CLI_LOG_ERROR_FILE = computeLogPath('whirlpool-cli.error.log');
 export const GUI_LOG_FILE = logger.getFile();
+export const GUI_CONFIG_FILENAME = 'config.json';
 export const CLI_CONFIG_FILENAME = 'whirlpool-cli-config.properties';
 
 const app = electron.app || electron.remote.app;

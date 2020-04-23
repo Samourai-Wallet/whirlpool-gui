@@ -1,20 +1,23 @@
 // @flow
 import React, { Component } from 'react';
-import { Alert } from 'react-bootstrap';
+import { Alert, Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { ipcRenderer } from "electron";
+import { ipcRenderer } from 'electron';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import WebcamPayloadModal from '../components/Modals/WebcamPayloadModal';
 import cliService from '../services/cliService';
-import { CLI_CONFIG_FILENAME, DEFAULT_CLIPORT, IPC_CAMERA } from '../const';
+import { DEFAULT_CLIPORT, IPC_CAMERA } from '../const';
 import { cliLocalService } from '../services/cliLocalService';
 import utils from '../services/utils';
+import guiConfig from '../mainProcess/guiConfig';
 
 const STEP_LAST = 3
-const DEFAULT_CLIHOST = 'https://my-remote-CLI'
+const DEFAULT_CLIHOSTPORT = 'https://myRemoteCLI:'+DEFAULT_CLIPORT
 const DEFAULT_APIKEY = ''
+const DEFAUT_GUI_PROXY = 'socks5://127.0.0.1:9050'
+
 const CLILOCAL_URL = 'https://localhost:'+DEFAULT_CLIPORT
 class InitPage extends Component<Props> {
   props: Props;
@@ -27,9 +30,10 @@ class InitPage extends Component<Props> {
       navNextStep: false,
       cliLocal: cliService.isCliLocal(),
       cliUrl: undefined,
-      currentCliHost: DEFAULT_CLIHOST,
-      currentCliPort: DEFAULT_CLIPORT,
+      currentCliHostPort: DEFAULT_CLIHOSTPORT,
       currentApiKey: DEFAULT_APIKEY,
+      showGuiProxy: false,
+      showApiKey: false,
       cliError: undefined,
       hasPairingPayload: false,
       hasPairingDojo: false,
@@ -46,8 +50,7 @@ class InitPage extends Component<Props> {
     // configuration data
     this.hasPairingPayload = undefined
 
-    this.inputCliHost = React.createRef()
-    this.inputCliPort = React.createRef()
+    this.inputCliHostPort = React.createRef()
     this.inputApiKey = React.createRef()
 
     this.goNextStep = this.goNextStep.bind(this)
@@ -58,6 +61,7 @@ class InitPage extends Component<Props> {
     this.onChangePairingPayload = this.onChangePairingPayload.bind(this)
     this.onChangeTor = this.onChangeTor.bind(this)
     this.onChangeDojo = this.onChangeDojo.bind(this)
+    this.onChangeGuiProxy = this.onChangeGuiProxy.bind(this)
     this.onSubmitInitialize = this.onSubmitInitialize.bind(this)
   }
 
@@ -146,29 +150,43 @@ class InitPage extends Component<Props> {
     this.resetCliUrl()
   }
 
-  resetCliUrl() {
-    this.setState({
+  resetCliUrl(resetToggles=true) {
+    const newState = {
       cliUrl: undefined,
       cliError: undefined,
-      currentCliHost: DEFAULT_CLIHOST,
-      currentCliPort: DEFAULT_CLIPORT,
-      currentApiKey: DEFAULT_APIKEY,
-    });
+      currentCliHostPort: DEFAULT_CLIHOSTPORT,
+      currentApiKey: DEFAULT_APIKEY
+    }
+    if (resetToggles) {
+      newState.showApiKey = false
+      newState.showGuiProxy = false
+    }
+    this.setState(newState);
     this.resetPairingPayload()
   }
 
   onChangeInputCliHostPort(e) {
-    this.resetCliUrl()
-    this.setState({
-      currentCliHost: this.inputCliHost.current.value,
-      currentCliPort: this.inputCliPort.current.value,
-      currentApiKey: this.inputApiKey.current.value
-    })
+    this.resetCliUrl(false)
+    const cliHostPort = this.inputCliHostPort.current ? this.inputCliHostPort.current.value : undefined
+    const apiKey = this.inputApiKey.current ? this.inputApiKey.current.value : undefined
+
+    const newState = {
+      currentCliHostPort: cliHostPort,
+      currentApiKey: apiKey
+    }
+    const showGuiProxy = cliHostPort && cliHostPort.indexOf('.onion')!==-1
+    if (showGuiProxy) {
+      newState.showGuiProxy = showGuiProxy
+      if (!guiConfig.getGuiProxy()) {
+        // set default GUI proxy
+        guiConfig.setGuiProxy(DEFAUT_GUI_PROXY)
+      }
+    }
+    this.setState(newState)
   }
 
   computeCliUrl() {
-    const cliUrlRemote = this.state.currentCliHost+':'+this.state.currentCliPort
-    const cliUrl = (this.state.cliLocal ? CLILOCAL_URL:cliUrlRemote)
+    const cliUrl = (this.state.cliLocal ? CLILOCAL_URL:this.state.currentCliHostPort)
     return cliUrl
   }
 
@@ -194,6 +212,9 @@ class InitPage extends Component<Props> {
         this.goNextStep()
       }
     }).catch(error => {
+      if (error && error.message.indexOf('API Key')) {
+        this.setState({showApiKey:true})
+      }
       console.error('testCliUrl failed',error)
       this.setState({
         cliError: error.message
@@ -214,45 +235,79 @@ class InitPage extends Component<Props> {
           <div className="form-check">
             <input className="form-check-input" type="radio" name="cliLocal" id="cliLocalTrue" value='true' checked={this.state.cliLocal} onChange={this.onChangeCliLocal}/>
             <label className="form-check-label" htmlFor="cliLocalTrue">
-              <strong>Standalone GUI</strong>
+              <strong>Standard: standalone GUI</strong>
             </label>
-            {this.state.cliLocal && <div className="col-sm-12"><div className="row">
-              {cliLocalService.getStatusIcon((icon,text)=><div className='col-sm-8'><Alert variant='success'>{icon} {text}</Alert></div>)}
-              {cliLocalService.isValid() && <div className='col-sm-2'><button type='button' className='btn btn-primary' onClick={this.connectCli} disabled={!cliLocalService.isValid()}>Connect</button></div>}
-              {!cliLocalService.isStatusDownloading() && !cliLocalService.isValid() && <div className='col-sm-12'><Alert variant='danger'>No valid CLI found. Please reinstall GUI.</Alert></div>}
-            </div></div>}
           </div>
           <div className="form-check">
             <input className="form-check-input" type="radio" name="cliLocal" id="cliLocalFalse" value='false' checked={!this.state.cliLocal} onChange={this.onChangeCliLocal} />
             <label className="form-check-label" htmlFor="cliLocalFalse">
-              <strong>Connect to remote CLI</strong><br/>
-              {!this.state.cliLocal &&
-              <div className="row">
-                <div className="col-sm-5">
-                  <input type="text" className="form-control" placeholder="host" defaultValue={this.state.currentCliHost} ref={this.inputCliHost} onChange={this.onChangeInputCliHostPort} required/>
-                </div>
-                <div className="col-sm-2">
-                  <input type="number" className="form-control" placeholder="port" defaultValue={this.state.currentCliPort} ref={this.inputCliPort} onChange={this.onChangeInputCliHostPort} required/>
-                </div>
-                <div className="col-sm-2">
-                  <input type="password" className="form-control" placeholder="apiKey" defaultValue={this.state.currentApiKey} ref={this.inputApiKey} onChange={this.onChangeInputCliHostPort} />
-                </div>
-                <div className="col-sm-3">
-                  {this.state.currentCliHost && this.state.currentCliPort
-                  && !this.state.cliUrl && <button type='button' className='btn btn-primary' onClick={this.connectCli}>Connect</button>}
-                </div>
-              </div>
-              }
+              <strong>Advanced: remote CLI</strong>
             </label>
           </div>
         </div>
       </div>
+
+      {this.state.cliLocal && <div>
+        <div className="row">
+          <div className="col-sm-1"></div>
+          {cliLocalService.getStatusIcon((icon,text)=><div className='col-sm-8'><Alert variant='success'>{icon} {text}</Alert></div>)}
+          {!cliLocalService.isStatusDownloading() && !cliLocalService.isValid() && <div className='col-sm-12'><Alert variant='danger'>No valid CLI found. Please reinstall GUI.</Alert></div>}
+        </div>
+        {cliLocalService.isValid() && <div className="row">
+          <div className="col-sm-3"></div>
+          <button type="button" className="btn btn-primary col-sm-3" onClick={this.connectCli}> Continue <FontAwesomeIcon icon={Icons.faArrowRight} /></button>
+        </div>}
+      </div>}
+
+      {!this.state.cliLocal &&
+      <Card>
+        <Card.Header>Remote CLI</Card.Header>
+        <Card.Body>
+          <div className="form-group row">
+            <div className="col-sm-11">
+              <div className="row">
+                <label htmlFor="cliHostPort" className="col-sm-2 col-form-label">CLI address</label>
+                <input type="text" id="cliHostPort" className="form-control col-sm-4" placeholder={DEFAULT_CLIHOSTPORT} defaultValue={this.state.currentCliHostPort} ref={this.inputCliHostPort} onChange={this.onChangeInputCliHostPort} required/>
+                &nbsp;
+                {this.state.currentCliHostPort
+                && !this.state.cliUrl && <button type='button' className='btn btn-primary col-sm-2' onClick={this.connectCli}>Connect</button>}
+              </div>
+              &nbsp;
+              {this.state.showGuiProxy && <div className="row">
+                <label htmlFor="guiProxy" className="col-sm-2 col-form-label">Tor proxy</label>
+                <input type="text" id="guiProxy" className="form-control col-sm-4" defaultValue={guiConfig.getGuiProxy()} onChange={this.onChangeGuiProxy}/>
+                <label className='col-form-label col-sm-6 text-muted'>
+                  Only required when CLI behind a Hidden Service.<br/>
+                  <code>{DEFAUT_GUI_PROXY}</code>
+                </label>
+              </div>}
+              {this.state.showApiKey && <div className="row">
+                <label htmlFor="apiKey" className="col-sm-2 col-form-label">API Key</label>
+                <input type="password" id="apiKey" className="form-control col-sm-4" defaultValue={this.state.currentApiKey} ref={this.inputApiKey} onChange={this.onChangeInputCliHostPort} />
+                <label className='col-form-label col-sm-6 text-muted'>
+                  Only required when CLI already initialized<br/>(<code>cli.apiKey</code> in <code>whirlpool-cli-config.properties</code>)
+                </label>
+              </div>}
+              <div className="row">
+                <div className="col-sm-1"></div>
+                {!this.state.showGuiProxy && <div className="col-sm-3 col-form-label">
+                  <a onClick={() => this.setState({showGuiProxy:true})}>Use a Tor proxy?</a>
+                </div>}
+                {!this.state.showApiKey && <div className="col-sm-3 col-form-label">
+                  <a onClick={() => this.setState({showApiKey:true})}>Configure API key?</a>
+                </div>}
+              </div>
+            </div>
+          </div>
+        </Card.Body>
+      </Card>
+      }
       {this.state.cliError && <div className="row">
-        <div className="col-sm-12">
+        <div className="col-sm-12"><br/>
           <Alert variant='danger'>Connection failed: {this.state.cliError}</Alert>
         </div>
       </div>}
-      {this.navButtons(this.state.cliUrl ? true : false)}
+      {this.navButtons(false)}
     </div>
   }
 
@@ -309,6 +364,11 @@ class InitPage extends Component<Props> {
     this.setState({
       dojo: value
     })
+  }
+
+  onChangeGuiProxy(e) {
+    const value = e.target.value
+    guiConfig.setGuiProxy(value)
   }
 
   onSubmitInitialize() {

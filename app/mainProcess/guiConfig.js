@@ -24,6 +24,7 @@ const GUI_CONFIG_FILEPATH = APP_USERDATA+'/'+GUI_CONFIG_FILENAME
 
 const STORE_CLIURL = "cli.url"
 const STORE_APIKEY = "cli.apiKey"
+const STORE_GUI_PROXY = "gui.proxy"
 const STORE_GUICONFIG_VERSION = "guiConfig.version"
 
 const GUI_CONFIG_VERSION = 1
@@ -134,6 +135,17 @@ class GuiConfig {
 
   getCliLocal() {
     return this.store.get(STORE_CLILOCAL)
+  }
+
+  // GUI CONFIG
+
+  setGuiProxy(guiProxy) {
+    logger.info('guiConfig: set guiProxy='+guiProxy)
+    this.store.set(STORE_GUI_PROXY, guiProxy)
+  }
+
+  getGuiProxy() {
+    return this.store.get(STORE_GUI_PROXY)
   }
 }
 

@@ -17,6 +17,7 @@ import MenuBuilder from './menu';
 import { CliLocal } from './mainProcess/cliLocal';
 import fs from "fs";
 import { GUI_LOG_FILE, IPC_CAMERA } from './const';
+import guiConfig from './mainProcess/guiConfig';
 
 
 export default class AppUpdater {
@@ -90,6 +91,21 @@ else {
         nodeIntegration: true
       }
     });
+
+    // GUI proxy
+    try {
+      const guiProxy = guiConfig.getGuiProxy()
+      if (guiProxy) {
+        // use proxy
+        const session = mainWindow.webContents.session
+        console.log('Using guiProxy:'+guiProxy)
+        session.setProxy({
+          proxyRules: guiProxy
+        })
+      }
+    } catch(e) {
+      console.error(e)
+    }
 
     ipcMain.on(IPC_CAMERA.REQUEST, async (event) => {
       if (process.platform !== 'darwin' || systemPreferences.getMediaAccessStatus("camera") !== "granted") {

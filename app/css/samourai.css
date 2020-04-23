@@ -25,6 +25,15 @@ html,body{height:100%;}
   margin-top: 10%;
 }
 
+code {
+  color: #b71c1c;
+}
+
+.custom-control-input:checked~.custom-control-label::before {
+  border-color: #b71c1c;
+  background-color: #b71c1c;
+}
+
 .dropdown-item.active,
 .dropdown-item:active {
   background-color: #700606 !important;

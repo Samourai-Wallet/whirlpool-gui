@@ -150,7 +150,7 @@ class CliService {
   getResetLabel() {
     let resetLabel = 'GUI'
     if (this.isCliLocal()) {
-      resetLabel += ' + CLI configuration'
+      resetLabel += ' + CLI config'
     }
     return resetLabel
   }
@@ -410,11 +410,11 @@ class CliService {
   getLoginStatusIcon(format) {
     if (cliService.isLoggedIn()) {
       // logged in
-      const status = 'Wallet opened, click to logout'
+      const status = 'Wallet opened'
       return format(<a href='#' title={status} onClick={()=>cliService.logout()} className='icon'><FontAwesomeIcon icon={Icons.faSignOutAlt} color='#CCC'/></a>, status)
     }
 
-    const status = 'Wallet closed, click to login'
+    const status = 'Wallet closed'
     return format(<Link to={routes.HOME} title={status} className='icon'><FontAwesomeIcon icon={Icons.faLock} color='#CCC' /></Link>, status)
   }
 }
