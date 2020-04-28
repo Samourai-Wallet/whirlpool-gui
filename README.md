@@ -3,6 +3,8 @@
 
 # whirlpool-client-gui
 
+# This repository is now maintained at https://code.samourai.io/whirlpool/whirlpool-gui 
+
 Desktop GUI for [Whirlpool](https://github.com/Samourai-Wallet/Whirlpool) by Samourai-Wallet.
 
 ## Requirements
