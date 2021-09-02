@@ -260,7 +260,7 @@
     "feather-icons": "^4.26.0",
     "history": "^4.7.2",
     "if-not-running": "^0.0.15",
-    "immer": "3.3.0",
+    "immer": "9.0.6",
     "jquery": "^3.3.1",
     "lodash": "^4.17.11",
     "md5ify": "^1.0.0",
