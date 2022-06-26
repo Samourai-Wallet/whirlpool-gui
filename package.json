@@ -265,7 +265,7 @@
     "lodash": "^4.17.11",
     "md5ify": "^1.0.0",
     "moment": "^2.24.0",
-    "node-fetch": "^2.3.0",
+    "node-fetch": "^2.6.7",
     "popper.js": "^1.16.1",
     "ps-node": "^0.1.6",
     "qrcode-decoder": "^0.1.2",
